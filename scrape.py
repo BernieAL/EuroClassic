@@ -23,15 +23,16 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotVisibleException
+from selenium.common.exceptions import NoSuchElementException
 import time
 
 
 
 
 
-make = "Mercedes"
+make = "bmw"
 chassis =""
-model ="e63"
+model ="m3"
 # 98-03 for m5
 
 
@@ -114,20 +115,38 @@ driver.find_element_by_class_name('search-open').click()
 time.sleep(2)
 search_bar = driver.find_element_by_class_name('search-terms')
 search_bar.send_keys(vehicle + Keys.RETURN)
-try:
-    show_more = driver.find_element_by_class_name('page-numbers')
-    show_more.click()
 
-except ElementNotVisibleException:
-    pass
+#CLICK ONCE - To be replaced by repeated click logic
+show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
+show_more.click()
 
 
-# 
-model_list = driver.find_elements_by_class_name('previous-listing previous-listing-notext')
+# LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
+# while True:
+#     try:
+#         show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[13]/div[3]/div[4]/button')
+#         show_more.click()
+#     except ElementNotVisibleException:
+#         print('NOTHING MORE TO LOAD')
+#         break
+#     except NoSuchElementException:
+#         print('ELEMENT NOT FOUND')
+#         break
+
+## EXTRACT MODEL,YEAR,PRICE from each itme
+# model_list = driver.find_elements_by_class_name('previous-listing previous-listing-notext')
+# for model in model_list:
+#     model_name = driver.find_element_by_className('previous-listing-image-link').get_Attribute('alt')
+#     print(model_name)
+
+
+model_list = driver.find_elements_by_class_name('block')
+
 for model in model_list:
-    model_name = driver.find_element_by_className('previous-listing-image-link').get_Attribute('alt')
-    print(model_name)
-
+    t = model.find_element_by_class_name('title').get_attribute('innerText')
+    r = model.find_element_by_class_name('subtitle').get_attribute('innerText')
+    print (f'{t} {r}')
+    
 
 
 """
