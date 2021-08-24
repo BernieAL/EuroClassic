@@ -118,6 +118,7 @@ search_bar.send_keys(vehicle + Keys.RETURN)
 
 #CLICK ONCE - To be replaced by repeated click logic
 show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
+time.sleep(.45)
 show_more.click()
 
 
@@ -140,7 +141,10 @@ show_more.click()
 #     print(model_name)
 
 
-model_list = driver.find_elements_by_class_name('block')
+
+prev_listings = driver.find_element_by_class_name('filter-group')
+time.sleep(1)
+model_list = prev_listings.find_elements_by_class_name('block')
 
 for model in model_list:
     t = model.find_element_by_class_name('title').get_attribute('innerText')
