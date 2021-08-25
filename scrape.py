@@ -30,9 +30,9 @@ import time
 
 
 
-make = "bmw"
+make = "jaguar"
 chassis =""
-model ="m3"
+model ="e type"
 # 98-03 for m5
 
 
@@ -61,30 +61,38 @@ driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming
 
 # ===========================================
 # :::::: BEGIN EBAY SECTION 
-# driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
+driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
 # driver.implicitly_wait(15)
 
-# #enter model 
-# search_box = driver.find_element_by_css_selector('#gh-ac')
-# # WebDriverWait(driver,10)
-# time.sleep(1)
-# search_box.send_keys(vehicle + Keys.RETURN)
+
+#enter model 
+ebay_search_box = driver.find_element_by_css_selector('#gh-ac')
+# WebDriverWait(driver,10)
+time.sleep(1)
+ebay_search_box.send_keys(vehicle + Keys.RETURN)
+time.sleep(1.5)
+
+# this gets prices of all cars on page
+ebay_prices = []
+
+ebay_listings = driver.find_elements_by_class_name('s-item__info')
+all_descriptions = driver.find_elements_by_class_name('s-item__title')
+all_prices = driver.find_elements_by_class_name('s-item__price')
 
 
-# # this gets prices of all cars on page
-# prices = []
-# test = driver.find_elements_by_class_name('s-item__price')
-# for i in test:
-#     price = (i.get_attribute('innerHTML'))
-#     prices.append(price)
-# time.sleep(1)
-# print(prices)
+for (descrip,price) in zip(all_descriptions,all_prices):
+    item_description= descrip.get_attribute('innerText')
+    item_price = price.get_attribute('innerText')
+    temp = f'{item_price} {item_description} '
+    ebay_prices.append(temp)
+print(ebay_prices)
 
 # :::::: END EBAY SECTION 
 # ===========================================
 
 
 # :::::: BEGIN CRAIGLIST SECTION
+
 # search route option 1 - longer and more human-like
 # driver.get('https://miami.craigslist.org/mdc/')
 # CL_searchBar = driver.find_element_by_css_selector('#query')
@@ -104,60 +112,55 @@ driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming
 # :::::: END CRAIGLIST SECTION
 # ===========================================
 # :::::: BEGIN BAT SECTION
-driver.get('https://bringatrailer.com/')
+# driver.get('https://bringatrailer.com/')
 
-#this is to get passed "show notifications prompt"
-# driver.send_keys(Keys.TAB)
-# driver.send_keys(Keys.TAB)
-# driver.send_keys(Keys.RETURN)
+# #this is to get passed "show notifications prompt"
+# # driver.send_keys(Keys.TAB)
+# # driver.send_keys(Keys.TAB)
+# # driver.send_keys(Keys.RETURN)
 
-driver.find_element_by_class_name('search-open').click()
-time.sleep(2)
-search_bar = driver.find_element_by_class_name('search-terms')
-search_bar.send_keys(vehicle + Keys.RETURN)
+# driver.find_element_by_class_name('search-open').click()
+# time.sleep(2)
+# search_bar = driver.find_element_by_class_name('search-terms')
+# search_bar.send_keys(vehicle + Keys.RETURN)
 
-#CLICK ONCE - To be replaced by repeated click logic
-show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
-time.sleep(.45)
-show_more.click()
-
-
-# LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
-# while True:
-#     try:
-#         show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[13]/div[3]/div[4]/button')
-#         show_more.click()
-#     except ElementNotVisibleException:
-#         print('NOTHING MORE TO LOAD')
-#         break
-#     except NoSuchElementException:
-#         print('ELEMENT NOT FOUND')
-#         break
-
-## EXTRACT MODEL,YEAR,PRICE from each itme
-# model_list = driver.find_elements_by_class_name('previous-listing previous-listing-notext')
-# for model in model_list:
-#     model_name = driver.find_element_by_className('previous-listing-image-link').get_Attribute('alt')
-#     print(model_name)
+# #CLICK ONCE - To be replaced by repeated click logic
+# show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
+# time.sleep(.45)
+# show_more.click()
 
 
+# # LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
+# # while True:
+# #     try:
+# #         show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[13]/div[3]/div[4]/button')
+# #         show_more.click()
+# #     except ElementNotVisibleException:
+# #         print('NOTHING MORE TO LOAD')
+# #         break
+# #     except NoSuchElementException:
+# #         print('ELEMENT NOT FOUND')
+# #         break
 
-prev_listings = driver.find_element_by_class_name('filter-group')
-time.sleep(1)
-model_list = prev_listings.find_elements_by_class_name('block')
+# #target parent group that holds individual previous listing items
+# prev_listings = driver.find_element_by_class_name('filter-group')
+# time.sleep(1)
+# #extract all block elements from parents group, this gives each indiv listing
+# item_list = prev_listings.find_elements_by_class_name('block')
 
-for model in model_list:
-    t = model.find_element_by_class_name('title').get_attribute('innerText')
-    r = model.find_element_by_class_name('subtitle').get_attribute('innerText')
-    print (f'{t} {r}')
-    
+# ## EXTRACT MODEL,YEAR,PRICE from each item
+# BAT_items = []
+# for item in item_list:
+#     description = item.find_element_by_class_name('title').get_attribute('innerText')
+#     price = item.find_element_by_class_name('subtitle').get_attribute('innerText')
+#     temp = f'{description} {price}'
+#     BAT_items.append(temp)
 
-
-"""
-driver.find_by-xpath('/html/body/div[2]/div[2]/div/div/div[1]).get_attributes
-
-"""
+# print(BAT_items)
 # :::::: END BAT SECTION
+
+
+
 
 # # Get the webelement of the text input box
 # search_box = driver.find_element_by_name("q")
@@ -173,3 +176,38 @@ time.sleep(5)
 
 # # Close the driver
 # driver.quit()
+
+
+
+"""
+
+ebay raw result:
+
+
+CL raw result:
+
+    2012 BMW 5 Series 4dr Sdn 535i RWD 90 Days Car Warranty :$9,800
+    2015 BMW 3 Series 328i SKU:FF607643 Sedan :$16,992
+    2014 BMW 5 Series 528i with :$15,500
+    2013 BMW 7 SERIES 750I XDRIVE SEDAN 4D :$12,950
+    2014 BMW 5 Series 528i with :$15,500
+    2014 BMW Z4 SDRIVE28I ROADSTER 2D :$21,495
+    2010 BMW 3 Series 335i Convertible 2D Convertible Gray - FINANCE :$19,590
+    2012 BMW X5 AWD 4dr 35i 90 Days Car Warranty :$11,199
+    2014 BMW X3 xDrive28i Sport Utility 4D :$0
+    2014 BMW 5 Series 528i with :$15,500
+    2013 BMW 3 Series 328i with :$13,639
+    2002 HONDA S2000 S CONVERTIBLE :$19,995
+    BMW 328i Sedan Sport Package Runs Excellent Clean Title :$9,995
+    2014 BMW 3 Series 4dr Sdn 328d RWD 90 Days Car Warranty :$10,499
+    2016 DODGE CHARGER R/T ROAD & TRACK SEDAN 4D :$16,950
+    2011 Cadillac SRX AWD 4dr Luxury Collection :$8,750
+
+BAT raw result:
+    41k-Mile 2004 BMW M3 Coupe 6-Speed Sold for $38,000 on 7/30/21
+    43k-Mile 1999 BMW M3 Coupe 5-Speed Sold for $45,000 on 7/29/21
+    Modified 1998 BMW M3 Coupe 5-Speed Sold for $34,000 on 7/29/21
+    2004 BMW M3 Convertible Sold for $20,000 on 7/28/21
+
+
+"""
