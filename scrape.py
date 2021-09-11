@@ -30,15 +30,20 @@ import time
 
 
 
-make = "jaguar"
+make = "bmw"
 chassis =""
-model ="e type"
+model ="m3"
 # 98-03 for m5
 
 
+output = open("output_file.txt","a")
 
 
-
+def fileWrite(data,fileIn):
+    for line in data:
+        temp = f"{line} + \n"
+        fileIn.write(temp)
+    fileIn.write('----------------------')
 
 
 
@@ -61,31 +66,35 @@ driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming
 
 # ===========================================
 # :::::: BEGIN EBAY SECTION 
-driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
-# driver.implicitly_wait(15)
+# driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
+# # driver.implicitly_wait(15)
 
 
-#enter model 
-ebay_search_box = driver.find_element_by_css_selector('#gh-ac')
-# WebDriverWait(driver,10)
-time.sleep(1)
-ebay_search_box.send_keys(vehicle + Keys.RETURN)
-time.sleep(1.5)
+# #enter model 
+# ebay_search_box = driver.find_element_by_css_selector('#gh-ac')
+# # WebDriverWait(driver,10)
+# time.sleep(1)
+# ebay_search_box.send_keys(vehicle + Keys.RETURN)
+# time.sleep(1.5)
 
-# this gets prices of all cars on page
-ebay_prices = []
+# # this gets prices of all cars on page
+# ebay_items = []
 
-ebay_listings = driver.find_elements_by_class_name('s-item__info')
-all_descriptions = driver.find_elements_by_class_name('s-item__title')
-all_prices = driver.find_elements_by_class_name('s-item__price')
+# ebay_listings = driver.find_elements_by_class_name('s-item__info')
+# all_descriptions = driver.find_elements_by_class_name('s-item__title')
+# all_prices = driver.find_elements_by_class_name('s-item__price')
 
 
-for (descrip,price) in zip(all_descriptions,all_prices):
-    item_description= descrip.get_attribute('innerText')
-    item_price = price.get_attribute('innerText')
-    temp = f'{item_price} {item_description} '
-    ebay_prices.append(temp)
-print(ebay_prices)
+# for (descrip,price) in zip(all_descriptions,all_prices):
+#     item_description= descrip.get_attribute('innerText')
+#     item_price = price.get_attribute('innerText')
+#     temp = f'{item_price} {item_description} '
+#     ebay_items.append(temp)
+
+# #write items to file
+# fileWrite(ebay_items,output)
+
+# print(ebay_items)
 
 # :::::: END EBAY SECTION 
 # ===========================================
@@ -102,63 +111,72 @@ print(ebay_prices)
 # #search route option 2 - more direct
 # driver.get(f'https://miami.craigslist.org/d/cars-trucks/search/mdc/cta?query={make}%20{model}&sort=rel')
 
-# CL_prices = []
+# CL_prices=[]
+# CL_item = []
 # CL_items = driver.find_elements_by_class_name('result-info')
 # for item in CL_items:
 #     description = item.find_element_by_class_name('result-heading').get_attribute('innerText')
 #     price = item.find_element_by_class_name('result-price').get_attribute('innerText')
-#     print(f" {description}:{price}")
+#     temp = f" {description}:{price}"
+#     CL_prices.append(temp)
+#     # print(f" {description}:{price}")
+
+# #write items to file
+# fileWrite(CL_prices,output)
 
 # :::::: END CRAIGLIST SECTION
 # ===========================================
 # :::::: BEGIN BAT SECTION
-# driver.get('https://bringatrailer.com/')
+driver.get('https://bringatrailer.com/')
 
-# #this is to get passed "show notifications prompt"
-# # driver.send_keys(Keys.TAB)
-# # driver.send_keys(Keys.TAB)
-# # driver.send_keys(Keys.RETURN)
+#this is to get passed "show notifications prompt"
+driver.send_keys(Keys.TAB)
+driver.send_keys(Keys.TAB)
+driver.send_keys(Keys.RETURN)
 
-# driver.find_element_by_class_name('search-open').click()
-# time.sleep(2)
-# search_bar = driver.find_element_by_class_name('search-terms')
-# search_bar.send_keys(vehicle + Keys.RETURN)
+driver.find_element_by_class_name('search-open').click()
+time.sleep(2)
+search_bar = driver.find_element_by_class_name('search-terms')
+search_bar.send_keys(vehicle + Keys.RETURN)
 
-# #CLICK ONCE - To be replaced by repeated click logic
-# show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
-# time.sleep(.45)
-# show_more.click()
+#CLICK ONCE - To be replaced by repeated click logic
+show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
+time.sleep(.45)
+show_more.click()
 
 
-# # LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
-# # while True:
-# #     try:
-# #         show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[13]/div[3]/div[4]/button')
-# #         show_more.click()
-# #     except ElementNotVisibleException:
-# #         print('NOTHING MORE TO LOAD')
-# #         break
-# #     except NoSuchElementException:
-# #         print('ELEMENT NOT FOUND')
-# #         break
+# LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
+# while True:
+#     try:
+#         show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[13]/div[3]/div[4]/button')
+#         show_more.click()
+#     except ElementNotVisibleException:
+#         print('NOTHING MORE TO LOAD')
+#         break
+#     except NoSuchElementException:
+#         print('ELEMENT NOT FOUND')
+#         break
 
-# #target parent group that holds individual previous listing items
-# prev_listings = driver.find_element_by_class_name('filter-group')
-# time.sleep(1)
-# #extract all block elements from parents group, this gives each indiv listing
-# item_list = prev_listings.find_elements_by_class_name('block')
+#target parent group that holds individual previous listing items
+prev_listings = driver.find_element_by_class_name('filter-group')
+time.sleep(1)
+#extract all block elements from parents group, this gives each indiv listing
+item_list = prev_listings.find_elements_by_class_name('block')
 
-# ## EXTRACT MODEL,YEAR,PRICE from each item
-# BAT_items = []
-# for item in item_list:
-#     description = item.find_element_by_class_name('title').get_attribute('innerText')
-#     price = item.find_element_by_class_name('subtitle').get_attribute('innerText')
-#     temp = f'{description} {price}'
-#     BAT_items.append(temp)
+## EXTRACT MODEL,YEAR,PRICE from each item
+BAT_items = []
+for item in item_list:
+    description = item.find_element_by_class_name('title').get_attribute('innerText')
+    price = item.find_element_by_class_name('subtitle').get_attribute('innerText')
+    temp = f'{description} {price}'
+    BAT_items.append(temp)
 
-# print(BAT_items)
+
+#write items to file
+fileWrite(BAT_items,output)
+
+print(BAT_items)
 # :::::: END BAT SECTION
-
 
 
 
@@ -171,13 +189,14 @@ print(ebay_prices)
 # # Submit the input, which starts a search
 # search_box.submit()
 
-# Wait to see the results of the search
-time.sleep(5)
+# # Wait to see the results of the search
+# time.sleep(5)
 
 # # Close the driver
 # driver.quit()
 
-
+def test():
+    print( "hello this is from scrape.py")
 
 """
 
