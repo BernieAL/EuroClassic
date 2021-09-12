@@ -9,5 +9,5 @@ Price analysis tool for euro classics
 -Historical price data is displayed as graph showing price change over the course of several years <br>
 -Price prediction based on historical data is also displayed to user
 
-Back: Python,Flask,Selenium
+Back: Python,Flask,Selenium <br>
 Front: HTML, Bootstrap, JavaScript
