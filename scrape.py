@@ -14,6 +14,14 @@ https://stackoverflow.com/questions/34315533/can-i-find-an-element-using-regex-w
 https://stackoverflow.com/questions/12323403/how-do-i-find-an-element-that-contains-specific-text-in-selenium-webdriver-pyth
 
 https://stackoverflow.com/questions/45990851/how-do-i-iterate-through-a-webelements-list-with-python-and-selenium/46001881
+
+
+UnicodeEncodeError: 'charmap' codec can't encode characters
+https://stackoverflow.com/questions/27092833/unicodeencodeerror-charmap-codec-cant-encode-characters
+
+
+
+
 """
 
 
@@ -22,7 +30,7 @@ from typing import ClassVar
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import ElementNotVisibleException
+from selenium.common.exceptions import ElementNotVisibleException, StaleElementReferenceException
 from selenium.common.exceptions import NoSuchElementException
 import time
 
@@ -32,18 +40,19 @@ import time
 
 make = "bmw"
 chassis =""
-model ="m3"
+model ="m6"
+year =""
 # 98-03 for m5
 
 
-output = open("output_file.txt","a")
+output = open("output_file.txt","a",encoding="utf-8")
 
 
 def fileWrite(data,fileIn):
     for line in data:
         temp = f"{line} + \n"
         fileIn.write(temp)
-    fileIn.write('----------------------')
+    fileIn.write("---------------------- \n")
 
 
 
@@ -52,132 +61,135 @@ print(vehicle)
 # Create a new chromedriver
 driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
 
-# ===========================================
-# :::::: BEGIN WIKI SECTION 
-# """
-# wikiString = f"https://en.wikipedia.org/wiki/{make}_{model}"
-# print(wikiString)
-# driver.get(wikiString)
-# filterString = f"{make} {model} ("
-# specific_model_production = driver.find_elements_by_xpath("//*[contains(text(),'E39 M5 (')]")
-# for i in specific_model_production:
-#     r = i.text
-# :::::: END WIKI SECTION  
-
-# ===========================================
-# :::::: BEGIN EBAY SECTION 
-# driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
-# # driver.implicitly_wait(15)
+# ===========================================================================
+# ===========================================================================
+# # :::::: BEGIN EBAY SECTION 
+def ebay():
+    driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
+    # driver.implicitly_wait(15)
 
 
-# #enter model 
-# ebay_search_box = driver.find_element_by_css_selector('#gh-ac')
-# # WebDriverWait(driver,10)
-# time.sleep(1)
-# ebay_search_box.send_keys(vehicle + Keys.RETURN)
-# time.sleep(1.5)
+    #enter model 
+    ebay_search_box = driver.find_element_by_css_selector('#gh-ac')
+    # WebDriverWait(driver,10)
+    time.sleep(1)
+    ebay_search_box.send_keys(vehicle + Keys.RETURN)
+    time.sleep(1.5)
 
-# # this gets prices of all cars on page
-# ebay_items = []
+    # this gets prices of all cars on page
+    ebay_items = []
+    ebay_listings = driver.find_elements_by_class_name('s-item__info')
+    all_descriptions = driver.find_elements_by_class_name('s-item__title')
+    all_prices = driver.find_elements_by_class_name('s-item__price')
 
-# ebay_listings = driver.find_elements_by_class_name('s-item__info')
-# all_descriptions = driver.find_elements_by_class_name('s-item__title')
-# all_prices = driver.find_elements_by_class_name('s-item__price')
 
+    for (descrip,price) in zip(all_descriptions,all_prices):
+        item_description= descrip.get_attribute('innerText')
+        item_price = price.get_attribute('innerText')
+        temp = f'{item_description} {item_price}'
+        ebay_items.append(temp)
 
-# for (descrip,price) in zip(all_descriptions,all_prices):
-#     item_description= descrip.get_attribute('innerText')
-#     item_price = price.get_attribute('innerText')
-#     temp = f'{item_price} {item_description} '
-#     ebay_items.append(temp)
+    #write items to file
+    fileWrite(ebay_items,output)
 
-# #write items to file
-# fileWrite(ebay_items,output)
+    # print(ebay_items)
 
-# print(ebay_items)
-
-# :::::: END EBAY SECTION 
-# ===========================================
+# # :::::: END EBAY SECTION 
+# ===========================================================================
 
 
 # :::::: BEGIN CRAIGLIST SECTION
+def CL():
+    # search route option 1 - longer and more human-like
+    # driver.get('https://miami.craigslist.org/mdc/')
+    # CL_searchBar = driver.find_element_by_css_selector('#query')
+    # time.sleep(2)
+    # CL_searchBar.send_keys(vehicle + Keys.RETURN)
 
-# search route option 1 - longer and more human-like
-# driver.get('https://miami.craigslist.org/mdc/')
-# CL_searchBar = driver.find_element_by_css_selector('#query')
-# time.sleep(2)
-# CL_searchBar.send_keys(vehicle + Keys.RETURN)
+    #search route option 2 - more direct
+    driver.get(f'https://miami.craigslist.org/d/cars-trucks/search/mdc/cta?query={make}%20{model}&sort=rel')
 
-# #search route option 2 - more direct
-# driver.get(f'https://miami.craigslist.org/d/cars-trucks/search/mdc/cta?query={make}%20{model}&sort=rel')
+    CL_prices=[]
+    CL_items = []
+    CL_items = driver.find_elements_by_class_name('result-info')
+    for item in CL_items:
+        description = item.find_element_by_class_name('result-heading').get_attribute('innerText')
+        price = item.find_element_by_class_name('result-price').get_attribute('innerText')
+        temp = f" {description}:{price}"
+        CL_prices.append(temp)
+        # print(f" {description}:{price}")
 
-# CL_prices=[]
-# CL_item = []
-# CL_items = driver.find_elements_by_class_name('result-info')
-# for item in CL_items:
-#     description = item.find_element_by_class_name('result-heading').get_attribute('innerText')
-#     price = item.find_element_by_class_name('result-price').get_attribute('innerText')
-#     temp = f" {description}:{price}"
-#     CL_prices.append(temp)
-#     # print(f" {description}:{price}")
-
-# #write items to file
-# fileWrite(CL_prices,output)
+    #write items to file
+    fileWrite(CL_prices,output)    
 
 # :::::: END CRAIGLIST SECTION
-# ===========================================
+# ===========================================================================
 # :::::: BEGIN BAT SECTION
-driver.get('https://bringatrailer.com/')
 
-#this is to get passed "show notifications prompt"
-driver.send_keys(Keys.TAB)
-driver.send_keys(Keys.TAB)
-driver.send_keys(Keys.RETURN)
+def bat():
+        # # #this is to get passed "show notifications prompt"
+        # # driver.send_keys(Keys.TAB)
+        # # driver.send_keys(Keys.TAB)
+        # # driver.send_keys(Keys.RETURN)
 
-driver.find_element_by_class_name('search-open').click()
-time.sleep(2)
-search_bar = driver.find_element_by_class_name('search-terms')
-search_bar.send_keys(vehicle + Keys.RETURN)
-
-#CLICK ONCE - To be replaced by repeated click logic
-show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
-time.sleep(.45)
-show_more.click()
+        # # driver.find_element_by_class_name('search-open').click()
+        # # time.sleep(2)
+        # # search_bar = driver.find_element_by_class_name('search-terms')
+        # # search_bar.send_keys(vehicle + Keys.RETURN)
 
 
-# LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
-# while True:
-#     try:
-#         show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[13]/div[3]/div[4]/button')
-#         show_more.click()
-#     except ElementNotVisibleException:
-#         print('NOTHING MORE TO LOAD')
-#         break
-#     except NoSuchElementException:
-#         print('ELEMENT NOT FOUND')
-#         break
+        driver.get(f'https://bringatrailer.com/{make}/{model}')
+        # # https://bringatrailer.com/bmw/e39-m5/?q=e39%20m5
 
-#target parent group that holds individual previous listing items
-prev_listings = driver.find_element_by_class_name('filter-group')
-time.sleep(1)
-#extract all block elements from parents group, this gives each indiv listing
-item_list = prev_listings.find_elements_by_class_name('block')
+        # # #CLICK ONCE - To be replaced by repeated click logic
+        # show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
+        show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[4]/div[3]/div[4]/button')
+        time.sleep(.45)
+        # show_more.click()
 
-## EXTRACT MODEL,YEAR,PRICE from each item
-BAT_items = []
-for item in item_list:
-    description = item.find_element_by_class_name('title').get_attribute('innerText')
-    price = item.find_element_by_class_name('subtitle').get_attribute('innerText')
-    temp = f'{description} {price}'
-    BAT_items.append(temp)
+        # # # LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
+        while show_more:
+            try:
+                show_more.click()
+                time.sleep(2)
+            except ElementNotVisibleException:
+                print('NOTHING MORE TO LOAD')
+                break
+            except NoSuchElementException:
+                print('ELEMENT NOT FOUND')
+                break
+            except StaleElementReferenceException:
+                print('NO MORE RESULTS TO LOAD')
+                break
+
+        # #target parent group that holds individual previous listing items
+        # prev_listings = driver.find_element_by_class_name('filter-group')
+        # time.sleep(1)
+        # #extract all block elements from parents group, this gives each indiv listing
+        # item_list = prev_listings.find_elements_by_class_name('block')
+
+        # ## EXTRACT MODEL,YEAR,PRICE from each item
+        # BAT_items = []
+        # for item in item_list:
+        #     description = item.find_element_by_class_name('title').get_attribute('innerText')
+        #     price = item.find_element_by_class_name('subtitle').get_attribute('innerText')
+        #     temp = f'{description} {price}'
+        #     BAT_items.append(temp)
 
 
-#write items to file
-fileWrite(BAT_items,output)
+        # #write items to file
+        # # fileWrite(BAT_items,output)
 
-print(BAT_items)
+        # print(BAT_items)
 # :::::: END BAT SECTION
+# ==============================================================================
 
+#CALLING ALL SCRAPE FUNCTIONS
+# ebay()
+# time.sleep(3)
+# CL()
+# time.sleep(3)
+bat()
 
 
 # # Get the webelement of the text input box
