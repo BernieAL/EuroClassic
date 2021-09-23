@@ -1,0 +1,8 @@
+This file is going to hold the historic sales data from BAT
+seperate from the CL and ebay data. 
+
+CL and ebay data are current prices
+BAT collected data is all sold.
+Need to incorporate REGEX to get date from BAT listings as well
+
+Write the CL and ebay data to a sepereate file from the BAT data
