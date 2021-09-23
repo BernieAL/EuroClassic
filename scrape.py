@@ -50,7 +50,7 @@ output = open("output_file.txt","a",encoding="utf-8")
 
 def fileWrite(data,fileIn):
     for line in data:
-        temp = f"{line} + \n"
+        temp = f"{line} \n"
         fileIn.write(temp)
     fileIn.write("---------------------- \n")
 
