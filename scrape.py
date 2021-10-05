@@ -28,6 +28,7 @@ https://stackoverflow.com/questions/27092833/unicodeencodeerror-charmap-codec-ca
 from threading import Thread
 from typing import ClassVar
 from selenium import webdriver
+from datetime import date
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotVisibleException, StaleElementReferenceException
@@ -38,14 +39,16 @@ import time
 
 
 
-make = "bmw"
+make = "audi"
 chassis =""
-model ="m6"
+model ="rs5"
 year =""
 # 98-03 for m5
 
 
-output = open("output_file.txt","a",encoding="utf-8")
+current_listing_output = open("CURRENT_LISTINGS.txt","a",encoding="utf-8")
+sold_output = open("SOLD_DATA.txt","a",encoding="utf-8")
+
 
 
 def fileWrite(data,fileIn):
@@ -85,14 +88,23 @@ def ebay():
 
     for (descrip,price) in zip(all_descriptions,all_prices):
         item_description= descrip.get_attribute('innerText')
+        item_description = item_description.replace('NEW LISTING','')
         item_price = price.get_attribute('innerText')
         temp = f'{item_description} {item_price}'
         ebay_items.append(temp)
 
-    #write items to file
-    fileWrite(ebay_items,output)
+    
+    #write date of scrape to file right before data
+    today = date.today()
+    # dd/mm/YY
+    current_date = today.strftime("%d/%m/%Y")
+    date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
+    current_listing_output.write(date_string)   
 
-    # print(ebay_items)
+    #write items to file
+    fileWrite(ebay_items,current_listing_output)
+
+    print(ebay_items)
 
 # # :::::: END EBAY SECTION 
 # ===========================================================================
@@ -119,8 +131,15 @@ def CL():
         CL_prices.append(temp)
         # print(f" {description}:{price}")
 
+    #write date of scrape to file right before data
+    today = date.today()
+    # dd/mm/YY
+    current_date = today.strftime("%d/%m/%Y")
+    date_string = f" :::CRAIGLIST - DATA SCRAPED ON: {current_date} \n"
+    current_listing_output.write(date_string)   
+
     #write items to file
-    fileWrite(CL_prices,output)    
+    fileWrite(CL_prices,current_listing_output)    
 
 # :::::: END CRAIGLIST SECTION
 # ===========================================================================
@@ -162,33 +181,40 @@ def bat():
                 print('NO MORE RESULTS TO LOAD')
                 break
 
-        # #target parent group that holds individual previous listing items
-        # prev_listings = driver.find_element_by_class_name('filter-group')
-        # time.sleep(1)
-        # #extract all block elements from parents group, this gives each indiv listing
-        # item_list = prev_listings.find_elements_by_class_name('block')
+        #target parent group that holds individual previous listing items
+        prev_listings = driver.find_element_by_class_name('filter-group')
+        time.sleep(1)
+        #extract all block elements from parents group, this gives each indiv listing
+        item_list = prev_listings.find_elements_by_class_name('block')
+    
+        ## EXTRACT MODEL,YEAR,PRICE from each item
+        BAT_items = []
+        for item in item_list:
+            description = item.find_element_by_class_name('title').get_attribute('innerText')
+            price = item.find_element_by_class_name('subtitle').get_attribute('innerText')
+            temp = f'{description} {price}'
+            BAT_items.append(temp)
 
-        # ## EXTRACT MODEL,YEAR,PRICE from each item
-        # BAT_items = []
-        # for item in item_list:
-        #     description = item.find_element_by_class_name('title').get_attribute('innerText')
-        #     price = item.find_element_by_class_name('subtitle').get_attribute('innerText')
-        #     temp = f'{description} {price}'
-        #     BAT_items.append(temp)
 
+        #write date of scrape to file right before data
+        today = date.today()
+        # dd/mm/YY
+        current_date = today.strftime("%d/%m/%Y")
+        date_string = f"DATA SCRAPED: {current_date} \n"
+        sold_output.write(date_string)
 
-        # #write items to file
-        # # fileWrite(BAT_items,output)
+        #write items to sold output file
+        fileWrite(BAT_items,sold_output)
 
         # print(BAT_items)
 # :::::: END BAT SECTION
 # ==============================================================================
 
 #CALLING ALL SCRAPE FUNCTIONS
-# ebay()
-# time.sleep(3)
-# CL()
-# time.sleep(3)
+ebay()
+time.sleep(3)
+CL()
+time.sleep(3)
 bat()
 
 
