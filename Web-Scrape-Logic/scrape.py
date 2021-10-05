@@ -41,13 +41,15 @@ import time
 
 make = "audi"
 chassis =""
-model ="r8"
+model ="rs5"
 year =""
 # 98-03 for m5
 
 
 current_listing_output = open("CURRENT_LISTINGS.txt","a",encoding="utf-8")
 sold_output = open("SOLD_DATA.txt","a",encoding="utf-8")
+
+
 
 def fileWrite(data,fileIn):
     for line in data:
@@ -211,9 +213,9 @@ def bat():
 #CALLING ALL SCRAPE FUNCTIONS
 ebay()
 time.sleep(3)
-# CL()
-# time.sleep(3)
-# bat()
+CL()
+time.sleep(3)
+bat()
 
 
 # # Get the webelement of the text input box

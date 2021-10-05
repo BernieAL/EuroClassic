@@ -24,7 +24,7 @@ unclean_input = open("CURRENT_LISTINGS.txt","r",encoding="utf-8")
 clean_output = []
 
 make = 'Audi'
-model = 'R8'
+model = 'RS5'
 temp = []
 
 for line in unclean_input:
