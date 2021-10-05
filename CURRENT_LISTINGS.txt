@@ -1,0 +1,184 @@
+"""
+THIS IS WHERE CURRENT LISTINGS WILL GO
+ORDER OF RESULTS: EBAY THEN CL
+"""
+
+DATA SCRAPED: 05/10/2021 
+ 
+NEW LISTING 2017 Audi R8 $190,000.00 
+2017 Audi R8 $120,000.00 
+2021 Audi R8 $61,999.00 
+2009 Audi R8 4.2 QUATTRO $131,100.00 
+2018 Audi R8 RWS $100,000.00 
+2018 Audi R8 V10 Plus, Black Optic Pkg, $89,900.00 
+2011 Audi R8 4.2 quattro $88,500.00 
+2012 Audi R8 Coupe * Carbon * Stunning $200,800.00 
+2020 Audi R8 5.2 quattro V10 performance $217K+MSRP $99,999.00 
+NEW LISTING2014 AUDI R8 4.2 QUATTRO $129,900.00 
+NEW LISTING2017 Audi R8 One Owner $99,999.00 
+2011 Audi R8 5.2L V10 SPYDER CONVERTIBLE 5.2 - LOADED UP - BEST DEAL ON EBAY $88,500.00 
+2014 Audi R8 V10 5.2 QUATTRO $239,800.00 
+2020 Audi R8 5.2 Quattro V10 Performance Decennium Edition! MSR $63,899.00 
+2009 Audi R8 4.2 QUATTRO $339,000.00 
+2018 Audi R8 Underground Racing Twin Turbo Warranty $156,500.00 
+2018 Audi R8 V10 Spyder quattro S tronic $105,000.00 
+2014 Audi R8 Carbon Fiber, Alcantera $109,500.00 
+2012 Audi R8 5.2 QUATTRO $179,800.00 
+NEW LISTING2018 Audi R8 V10 Spyder quattro S tronic MSRP $208K+ Carbon Cer $155,000.00 
+2017 Audi R8 5.2 PLUS QUATTRO $189,995.00 
+2012 Audi R8 5.2 $193,500.00 
+2020 Audi R8 performance $69,900.00 
+2011 Audi R8 4.2 quattro Spyder LOW MILES* LOADED! $123,245.75 
+NEW LISTING2011 Audi R8 5.2L $99,950.00 
+2014 Audi R8 V8 $119,900.00 
+2012 Audi R8 4.2 (6-Speed Manual) $112,995.00 
+2015 Audi R8 Spyder V8 $100,000.00 
+2014 Audi R8 4.2 V8 Coupe 6-Speed $84,698.60 
+Audi: R8 $96,900.00 
+2012 Audi R8 5.2L $59,642.92 
+Audi: R8 $84,400.00 
+NEW LISTING2012 Audi R8 4.2L $79,790.00 
+2010 Audi R8 4.2 Coupe quattro with Auto R tronic $152,888.00 
+2017 Audi R8 5.2 quattro V10 Spyder AWD 2dr Convertible $69,998.00 
+2009 Audi R8 quattro $169,500.00 
+2017 Audi R8 5.2 Plus $69,998.00 
+2011 Audi R8 4.2 quattro Spyder $104,995.00 
+2009 Audi R8 quattro $119,999.00 
+2011 Audi R8 Spyder $125,000.00 
+2012 Audi R8 $209,777.00 
+2020 Audi R8 V10 performance quattro Coupe $164,500.00 
+2017 Audi R8 V10 plus $168,500.00 
+2017 Audi R8 V10 plus $115,000.00 
+2011 Audi R8 5.2 quattro Spyder AWD 2dr Convertible 6A $209,895.00 
+2020 Audi R8 5.2 $204,996.00 
+2020 Audi R8 5.2 quattro V10 performance $149,999.00 
+2018 Mercedes-Benz AMG GTR GT-R - GREEN HELL - 8K LOW MILES - BEST DEAL ON EBAY $142,999.00 
+2016 Bentley Continental GT GTC V8 CONVERTIBLE - 10K MILES - BEST DEAL ON EBAY $99,790.00 
+---------------------- 
+DATA SCRAPED: 05/10/2021 
+ 2009 Audi R8 :$70,000 
+ 2009 Audi R8 :$70,000 
+ 2016 Audi A5 2dr Cpe Auto Premium 90 Days Car Warranty :$16,300 
+ 2010 Audi R8 2dr Cpe Auto quattro 4.2L :$76,995 
+ 2016 Audi A5 2dr Cpe Auto Premium 90 Days Car Warranty :$16,300 
+ 2016 Tesla Model S P90D :$32,500 
+ ___ 2004 LAMBORGHINI GALLARDO COUPE**BEST COLOR COMBO**NO CREDIT CHECK :$99,950 
+ ______ 2020 LAMBORGHINI URUS**CLEAN TITLE**BEAUTIFUL**EASY APPROVALS** :$299,998 
+ _____ 2016 MCLAREN 650S SPIDER CONVERTIBLE**AMAZING**EASY APPROVALS** :$169,998 
+ 2012 Audi A6 3.0 Premium Plus with :$14,000 
+ 2012 Audi A6 3.0 Premium Plus with :$14,000 
+ 2016 Tesla Model S P90D :$32,500 
+ 2016 Tesla Model S P90D :$32,500 
+ 2016 Tesla Model S P90D :$32,500 
+ 2006 Porsche 911 Carrera 4S Cabriolet :$29,700 
+ ____ 2015 FERRARI CALIFORNIA CONVERTIBLE**CLEAN TITLE**EASY APPROVALS* :$169,998 
+ 2013 Audi Q5 3.0T quattro Premium Plus AWD 4dr SUV :$14,998 
+ 2013 Audi Q5 3.0T quattro Premium Plus AWD 4dr SUV :$14,998 
+ 2010 Audi R8 2dr Cpe Auto quattro 4.2L :$76,995 
+ 2016 AUDI A7 SUPERCHARG - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$24,999 
+ 2013 Audi Q5 3.0T quattro Premium Plus AWD 4dr SUV :$14,998 
+ 2014 GMC TERRAIN - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$10,499 
+ 2011 PORSCHE PANAMERA 4 - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$23,999 
+ 2019 FORD F150 XLT - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$41,999 
+ 2019 Ford Transit Van Cargo Van T-250 Full-size Cargo Van :$44,900 
+ 2015 Ford Transit Cargo Van Medium Roof Cargo Van 148 Full-size Cargo :$30,800 
+ 2013 BMW 335 - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$10,499 
+ 2016 MERCEDES BENZ C300 - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$19,899 
+ 2017 LEXUS RC200t - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$27,499 
+ 2017 JAGUAR XE 25t - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$18,499 
+ 2017 Chevrolet SS :$54,900 
+ 2009 ROLLS-ROYCE PHANTOM **CLEAN TITLE** :$114,495 
+ 2012 Audi A6 3.0 Premium Plus with :$14,000 
+ 2017 Nissan NV Cargo Work Van Full-size Cargo Van :$27,500 
+ 2014 Mercedes-Benz SLK-Class SLK250 SLK 250 Convertible :$37,900 
+ 2016 BMW 6 Series 650i Convertible :$45,800 
+ 2014 Nissan NV SV Full-size Cargo Van :$25,500 
+ 2015 Ford Transit Cargo Van Medium Roof Cargo Van 148 Full-size Cargo :$30,800 
+ 2003 Ford Thunderbird Deluxe Convertible :$19,500 
+ 2011 BMW 3 Series 3-Series 335i Convertible :$26,900 
+ 2013 Chevrolet Silverado 2500HD 4x4 4WD Chevy Work Truck Standard Cab :$24,900 
+ 2020 Ford Mustang EcoBoost Premium Convertible :$32,800 
+ 2012 BMW 3 Series 3-Series 328i Convertible :$23,900 
+ 2011 BMW 3 Series 3-Series 335i Convertible :$26,900 
+ 2015 Ford Mustang EcoBoost Premium Convertible :$28,900 
+ 2010 Lexus IS 350C 2dr Convertible Convertible :$27,800 
+ 2017 Mercedes-Benz C-Class AWD All Wheel Drive C300 C 300 Convertible :$47,900 
+ 2006 Chevrolet Corvette Chevy 2dr Convertible Convertible :$39,900 
+ 2017 Ford Transit Van Medium Roof Cargo Van 148 Full-size Cargo Van :$35,900 
+ 2019 Chevrolet Express Cargo Van Chevy VAN Full-size Cargo Van :$38,900 
+ 2016 Mercedes-Benz SL SL 550 Mille Miglia 417 Convertible :$74,900 
+ 2017 Mercedes-Benz C-Class AWD All Wheel Drive C300 C 300 Convertible :$47,900 
+ 2018 Ford Transit Van Medium Roof Cargo Van 148 Full-size Cargo Van :$38,900 
+ 2006 Chevrolet Corvette Chevy 2dr Convertible Convertible :$39,900 
+ 2008 BMW 3 Series 3-Series 328i Convertible :$20,800 
+ 2011 BMW 3 Series 3-Series 335i Convertible :$26,900 
+ 2011 Mercedes-Benz E-Class E350 E 350 Convertible :$25,500 
+ 2011 BMW 3 Series 3-Series 335i Convertible :$21,900 
+ 2009 Volkswagen Eos VW Komfort Convertible :$12,900 
+ 2018 Mercedes-Benz C-Class C300 C 300 Convertible :$48,800 
+ 2013 BMW 3 Series 3-Series 328i Convertible :$25,900 
+ 2007 Pontiac Solstice 2dr Convertible Convertible :$16,500 
+ 2011 BMW 3 Series 3-Series 335i Convertible :$26,900 
+ 2011 Mercedes-Benz SLK-Class SLK300 SLK 300 Convertible :$21,700 
+ 2015 Ford Transit Cargo Van Medium Roof Cargo Van 148 Full-size Cargo Van :$29,900 
+ 2010 Lexus IS 250C Convertible :$20,900 
+ 2002 Lexus SC 430 2dr Convertible Convertible :$27,800 
+ 2014 Nissan NV SV Full-size Cargo Van :$25,500 
+ 2011 Mercedes-Benz E-Class E350 E 350 Convertible :$27,900 
+ 2017 Buick Cascada Premium Convertible :$29,500 
+ 2005 Lexus SC 430 2dr Convertible Convertible :$24,900 
+ 2014 Ford Transit Connect XL Minivan, Cargo :$21,900 
+ 2017 Ford Transit Van Medium Roof Cargo Van 148 Full-size Cargo Van :$35,900 
+ 2002 Lexus SC 430 2dr Convertible Convertible :$24,800 
+ 2015 Ford Mustang EcoBoost Premium Convertible :$28,900 
+ 2013 Mercedes-Benz E-Class E350 E 350 Convertible :$28,900 
+ 2016 Chevrolet Colorado Chevy Truck 2WD WT Extended Cab :$18,500 
+ 2017 Ford F-150 F150 XL Standard Cab :$18,400 
+ 2010 Ford Mustang GT500 Coupe :$34,900 
+ 2015 Ford Transit Cargo Van Low Roof Cargo Van 130 in Minivan, Cargo :$29,300 
+ 2000 CAROLINA SKIFF 25HP 4 STROKE YAMAHA BOAT BOAT :$10,900 
+ 2016 Chevrolet Corvette Chevy Z06 2LZ Coupe :$65,900 
+ 2016 Ford Mustang GT COYOTE Coupe :$33,900 
+ 2012 Volkswagen Eos VW Komfort Convertible :$15,500 
+ 2011 Mercedes-Benz E-Class E350 E 350 Convertible :$25,500 
+ 2016 Ford Transit Cargo Van Medium Roof Cargo Van 148 Full-size Cargo Van :$32,900 
+ 2015 BMW 2 Series AWD All Wheel Drive 228i xDrive Convertible :$32,800 
+ 2016 Ford Transit Cargo Van Low Roof Cargo Van 130 in Minivan, Cargo :$28,800 
+ 2018 Audi A5 Cabriolet AWD All Wheel Drive Premium Plus Convertible :$47,800 
+ 2018 Audi S5 Cabriolet AWD All Wheel Drive Premium Plus Convertible :$49,900 
+ 2008 Lexus SC 430 2dr Convertible Convertible :$38,900 
+ 2008 BMW 3 Series 3-Series 328i Convertible :$20,800 
+ 2017 Ram ProMaster Cargo Van Dodge Cargo Van 136 in. WB Low Full-size :$30,900 
+ 2016 Cadillac Escalade 4x4 4WD Luxury Collection SUV :$54,900 
+ 2017 Nissan NV Cargo Work Van Full-size Cargo Van :$27,500 
+ 2015 Ram ProMaster City Cargo Van Dodge Tradesman Minivan, Cargo :$0 
+ 2016 Ram ProMaster Cargo Van Dodge Cargo Van 136 in. WB Low Full-size Cargo Van :$26,900 
+ 2010 Lexus IS 350C 2dr Convertible Convertible :$27,800 
+ 2004 BMW Z4 3.0i LIMITED EDITION Convertible :$18,900 
+ 2015 Ford Transit Cargo Van Medium Roof Cargo Van 148 Full-size Cargo Van :$30,800 
+ 2013 Ford Econoline Cargo Van Commercial Full-size Cargo Van :$26,900 
+ 2006 Mercedes-Benz CLK-Class 3.5L Convertible :$13,900 
+ 2012 Chevrolet Tahoe Chevy LT SUV :$22,900 
+ 2013 Audi A5 Premium Plus Convertible :$21,900 
+ 2016 BMW 6 Series 650i Convertible :$45,800 
+ 2017 Buick Cascada Premium Convertible :$31,800 
+ 2008 Chevrolet Corvette Chevy 2dr Convertible Convertible :$35,900 
+ 2009 BMW Z4 sDrive35i Convertible :$25,900 
+ 2018 BMW 4 Series 430i Convertible :$33,900 
+ 2006 Chevrolet Corvette Chevy 2dr Convertible Convertible :$39,900 
+ 2015 Audi Q7 3.0T S line Prestige~ 3RD ROW SEAT~GREAT COLORS~ NAVI~ LEATHER~ :$24,480 
+ 2014 Audi S5 S5 CONVERTIBLE~ Premium Plus~ ONLY 69K MILES~ TURBOCHARGED 6 CY :$25,499 
+ 2013 Audi A7 3.0 Prestige~ SUPERCHARGED 6 CYL~ LOADED~ BEST COLORS~ LOOKS NA :$28,500 
+ 2015 Audi SQ5 Premium Plus~ SQ5~ S-LINE~ ONLY 61K MILES~ 6 CYL SUPERCHARGED :$28,970 
+ 2013 Audi A7 3.0 Prestige~ SUPERCHARGED 6 CYL~ LOADED~ BEST COLORS~ LOOKS NA :$28,500 
+ 2014 Audi S5 S5 CONVERTIBLE~ Premium Plus~ ONLY 69K MILES~ TURBOCHARGED 6 CY :$25,580 
+ 2015 Audi Q7 3.0T S line Prestige~ 3RD ROW SEAT~GREAT COLORS~ NAVI~ LEATHER~ :$24,480 
+ 2015 Audi SQ5 Premium Plus~ SQ5~ S-LINE~ ONLY 61K MILES~ 6 CYL SUPERCHARGED :$28,970 
+ 2007 Audi A4 :$6,600 
+ 2014 Audi S5 S5 CONVERTIBLE~ Premium Plus~ ONLY 69K MILES~ TURBOCHARGED 6 CY :$25,919 
+ 2013 Audi A7 3.0 Prestige~ SUPERCHARGED 6 CYL~ LOADED~ BEST COLORS~ LOOKS NA :$28,980 
+ 2017 Audi Q5 Premium Plus~ NAVIGATION~ CAMERA~ PANO ROOF~ GREAT COLOR~ 2-OWN :$19,750 
+ 2016 Audi A6 3.0T Prestige~NAVIGATION~BACKUP CAMERA~PARKING AID~NICE RIDE~ON :$19,880 
+ 2014 Audi S5 S5 CONVERTIBLE~ Premium Plus~ ONLY 69K MILES~ TURBOCHARGED 6 CY :$26,780 
+ 2014 Audi Q7 3.0T Premium Plus ~ 3RD ROIW SEAT~ 6 CYL~ LEATHER~ PANO ROOF~ N :$17,288 
+---------------------- 

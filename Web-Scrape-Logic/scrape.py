@@ -46,7 +46,7 @@ year =""
 # 98-03 for m5
 
 
-output = open("output_file.txt","a",encoding="utf-8")
+current_listing_output = open("CURRENT_LISTINGS.txt","a",encoding="utf-8")
 sold_output = open("SOLD_DATA.txt","a",encoding="utf-8")
 
 def fileWrite(data,fileIn):
@@ -86,14 +86,23 @@ def ebay():
 
     for (descrip,price) in zip(all_descriptions,all_prices):
         item_description= descrip.get_attribute('innerText')
+        item_description = item_description.replace('NEW LISTING','')
         item_price = price.get_attribute('innerText')
         temp = f'{item_description} {item_price}'
         ebay_items.append(temp)
 
-    #write items to file
-    fileWrite(ebay_items,output)
+    
+    #write date of scrape to file right before data
+    today = date.today()
+    # dd/mm/YY
+    current_date = today.strftime("%d/%m/%Y")
+    date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
+    current_listing_output.write(date_string)   
 
-    # print(ebay_items)
+    #write items to file
+    fileWrite(ebay_items,current_listing_output)
+
+    print(ebay_items)
 
 # # :::::: END EBAY SECTION 
 # ===========================================================================
@@ -120,8 +129,15 @@ def CL():
         CL_prices.append(temp)
         # print(f" {description}:{price}")
 
+    #write date of scrape to file right before data
+    today = date.today()
+    # dd/mm/YY
+    current_date = today.strftime("%d/%m/%Y")
+    date_string = f" :::CRAIGLIST - DATA SCRAPED ON: {current_date} \n"
+    current_listing_output.write(date_string)   
+
     #write items to file
-    fileWrite(CL_prices,output)    
+    fileWrite(CL_prices,current_listing_output)    
 
 # :::::: END CRAIGLIST SECTION
 # ===========================================================================
@@ -193,11 +209,11 @@ def bat():
 # ==============================================================================
 
 #CALLING ALL SCRAPE FUNCTIONS
-# ebay()
-# time.sleep(3)
+ebay()
+time.sleep(3)
 # CL()
 # time.sleep(3)
-bat()
+# bat()
 
 
 # # Get the webelement of the text input box
