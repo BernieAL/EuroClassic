@@ -19,35 +19,48 @@ As of 10/5, only set up to clean ebay data, not CL
 import re
 
 # unclean_input = open("output_file.txt","r",encoding="utf-8")
-# clean_output= open("cleaned_data.txt","a",encoding="utf-8")
+
 unclean_input = open("CURRENT_LISTINGS.txt","r",encoding="utf-8")
-clean_output = []
+clean_output_file= open("cleaned_data.txt","a",encoding="utf-8")
+clean_output_array = []
 
 make = 'Audi'
 model = 'RS5'
 temp = []
 
-for line in unclean_input:
-    # only target lines with specific model
-    
-    if model in line:
-        #remove commas from price
-        line = line.replace(',','')
-        #if current line start with 4 digits, this is year, get it. Otherwise skip line
-        if re.findall('^\d{4}',line):
-            try:
-                year = (re.findall('^\d{4}',line))[0]
-            except NameError:
-                year = 0000
-        
-        #get price
-        price = (re.findall('\$\d[0-9][0-9].+',line))[0]
-        if not year:
-            year = 0000
-        print(f"year:{year}, make:{make}, model:{model}, price:{price}")
-       
 
-    
+def fileWrite(data,fileIn):
+    for line in data:
+        temp = f"{line} \n"
+        fileIn.write(temp)
+    fileIn.write("---------------------- \n")
+
+def clean_the_data(unclean_input):
+    for line in unclean_input:
+        # only target lines with specific model
+        
+        if model in line:
+            #remove commas from price
+            line = line.replace(',','')
+            #if current line start with 4 digits, this is year, get it. Otherwise skip line
+            if re.findall('^\d{4}',line):
+                try:
+                    year = (re.findall('^\d{4}',line))[0]
+                except NameError:
+                    year = 0000
+            
+            #get price
+            price = (re.findall('\$\d[0-9][0-9].+',line))[0]
+            if not year:
+                year = 0000
+            item_line = f"year:{year}, make:{make}, model:{model}, price:{price}"
+            print(item_line)
+            clean_output_array.append(item_line)
+
+    fileWrite(clean_output_array,clean_output_file)
+
+
+clean_the_data(unclean_input)
 
 """
 make,model,year,price
