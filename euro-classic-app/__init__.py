@@ -7,6 +7,7 @@ from flask import Flask,render_template,request
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from data_processing_scripts import handle_data
 # from models import Car
 
 
@@ -15,6 +16,10 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
+
+
+handle_data()
+
 
 @app.route('/')
 def homepage():
@@ -30,10 +35,6 @@ def search():
       return "hello"
    else:
       return "not post req"
-
-
-
-
 
 @app.route('/about')
 def about():
