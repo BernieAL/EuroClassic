@@ -12,4 +12,12 @@
     
 
 </body>
+
+
+{% block script %}
+    <script>
+      var car_results = JSON.parse('{{ car_results|safe }}')
+      console.log(car_results)
+    </script>
+{% endblock script %}
 </html>

@@ -21,7 +21,7 @@ import re
 # unclean_input = open("output_file.txt","r",encoding="utf-8")
 
 unclean_input = open("CURRENT_LISTINGS.txt","r",encoding="utf-8")
-clean_output_file= open("cleaned_data.txt","a",encoding="utf-8")
+clean_output_file= open("cleaned_data.csv","w",encoding="utf-8")
 clean_output_array = []
 
 make = 'Audi'
@@ -53,10 +53,16 @@ def clean_the_data(unclean_input):
             price = (re.findall('\$\d[0-9][0-9].+',line))[0]
             if not year:
                 year = 0000
-            item_line = f"year:{year}, make:{make}, model:{model}, price:{price}"
-            print(item_line)
+            price = price.replace('$','')
+            item_line = f"{year},{make},{model},{price}"
+            # print(item_line)
             clean_output_array.append(item_line)
+    
 
+    
+    col_headers = f"Year,Make,Model,Price \n"
+    clean_output_file.write(col_headers)
+    
     fileWrite(clean_output_array,clean_output_file)
 
 
