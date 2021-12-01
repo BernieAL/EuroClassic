@@ -21,23 +21,38 @@
           <form class="form-inline" action="/search" method="POST">
             <div class="input-group">
               
-              <input class="form-control mr-sm-2" type="search" placeholder="YEAR" id="Year" aria-label="Search">
+              <input class="form-control mr-sm-2"  name="Year" type="search" placeholder="Year" id="Year" aria-label="Search">
              
-              <select class="form-control" aria-placeholder="Make" id="Make">
+              <select name="Make"class="form-control mr-sm-2" aria-placeholder="Make" id="Make">
+                <!-- NEED TO MAKE THESE DYNAMIC, FED IN FROM DB -->
+                <option value="" disable selected>Make</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
                 <option>4</option>
                 <option>5</option>
               </select>
+              
+              <select name="Model"class="form-control mr-sm-2" aria-placeholder="Model" id="Model">
+                   <!-- NEED TO MAKE THESE DYNAMIC, FED IN FROM DB, FILTERED BY YEAR AND MAKE -->
+                   <option value="" disable selected>Model</option>
+                   <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+               </select>
+              
+               
+               <select name="Chassis"class="form-control mr-sm-2" aria-placeholder="Chassis" id="Chassis">
+                  <!-- NEED TO MAKE THESE DYNAMIC, FED IN FROM DB, FILTERED BY YEAR AND MAKE -->
+                <option value="" disable selected>Chassis</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+               </select>
 
-              <select class="form-control mr-sm-2" aria-placeholder="Model" id="Model">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
 
             </div>
             
@@ -55,6 +70,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 <script>
+
 
 
 </script>

@@ -55,8 +55,8 @@ def search():
    
   
    if request.method == 'POST':
-      car = request.form['car']
       
+      print(request.form)
       # hit backend API to retrieve results for the specific car
       # api_response = handle_data(car)
 
@@ -69,7 +69,7 @@ def search():
             {"model":"Skyline", "doors":2}
         ],
       }
-      return render_template('data.html',car=car, car_results=json.dumps(car_results))
+      return render_template('data.html',car="test", car_results=json.dumps(car_results))
       # return "hello"
    else:
       return "not post req"
