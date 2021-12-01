@@ -39,35 +39,23 @@ import time
 
 
 
-make = "audi"
-chassis =""
-model ="rs5"
-year =""
-# 98-03 for m5
+# make = "audi"
+# chassis =""
+# model ="rs5"
+# year =""
+# # 98-03 for m5
 
-
+#files for current listing data and sold data
 current_listing_output = open("CURRENT_LISTINGS.txt","a",encoding="utf-8")
 sold_output = open("SOLD_DATA.txt","a",encoding="utf-8")
 
-
-
-def fileWrite(data,fileIn):
-    for line in data:
-        temp = f"{line} \n"
-        fileIn.write(temp)
-    fileIn.write("---------------------- \n")
-
-
-
-vehicle = f"{make} {model}"
-print(vehicle)
 # Create a new chromedriver
 driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
 
 # ===========================================================================
 # ===========================================================================
 # # :::::: BEGIN EBAY SECTION 
-def ebay():
+def ebay(car):
     driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
     # driver.implicitly_wait(15)
 
@@ -76,7 +64,7 @@ def ebay():
     ebay_search_box = driver.find_element_by_css_selector('#gh-ac')
     # WebDriverWait(driver,10)
     time.sleep(1)
-    ebay_search_box.send_keys(vehicle + Keys.RETURN)
+    ebay_search_box.send_keys(car + Keys.RETURN)
     time.sleep(1.5)
 
     # this gets prices of all cars on page
@@ -111,7 +99,7 @@ def ebay():
 
 
 # :::::: BEGIN CRAIGLIST SECTION
-def CL():
+def CL(car):
     # search route option 1 - longer and more human-like
     # driver.get('https://miami.craigslist.org/mdc/')
     # CL_searchBar = driver.find_element_by_css_selector('#query')
@@ -145,7 +133,7 @@ def CL():
 # ===========================================================================
 # :::::: BEGIN BAT SECTION
 
-def bat():
+def bat(car):
         # # #this is to get passed "show notifications prompt"
         # # driver.send_keys(Keys.TAB)
         # # driver.send_keys(Keys.TAB)
@@ -211,11 +199,27 @@ def bat():
 # ==============================================================================
 
 #CALLING ALL SCRAPE FUNCTIONS
-ebay()
-time.sleep(3)
-CL()
-time.sleep(3)
-bat()
+
+def fileWrite(data,fileIn):
+    for line in data:
+        temp = f"{line} \n"
+        fileIn.write(temp)
+        fileIn.write("---------------------- \n")
+
+
+
+def scrape(car):
+
+   
+    vehicle = f"{make} {model}"
+    print(vehicle)
+
+    ebay(car)
+    CL(car)
+    bat(car)
+
+
+ 
 
 
 # # Get the webelement of the text input box

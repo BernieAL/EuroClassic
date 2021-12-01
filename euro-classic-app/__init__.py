@@ -57,8 +57,8 @@ def search():
    if request.method == 'POST':
       car = request.form['car']
       
-
-      
+      # hit backend API to retrieve results for the specific car
+      # api_response = handle_data(car)
 
       # hit backend API to retrieve results for the specific car
       # Return results to here and pass this to template to be rendered

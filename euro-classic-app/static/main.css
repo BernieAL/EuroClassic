@@ -43,3 +43,10 @@
     background-color: DodgerBlue !important;
     color: #ffffff;
   }
+
+  canvas{
+
+    width:1000px !important;
+    height:600px !important;
+  
+  }

@@ -5,168 +5,59 @@
     
 
     <div class="container w-50">
-        <h2>This is coming from home template</h2>
+        <h2>^^^^^This is coming from home template^^^^</h2>
+        <br>
         <div class="jumbotron">
-            <h1 class="display-4">Search for a classic</h1>
+            <h1 class="display-5">Search for a classic</h1>
             <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
             <hr class="my-4">
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-            <!-- <form action="" method="POST">
-                <input type="text" name="car"></input>
-                <a class="btn btn-primary btn-md" href="/search" method="POST" input type="submit"role="button">Search</a>
-            </form> -->
-          </div>
+            <p>Enter Year, Make, and Model for price and sale data of your selected vehicle</p>
+        </div>
           
           
-          <form action="/search" method="POST" autocomplete="off">
-            <div class='col-xs-12 col-sm-12 col-md-10 col-lg-10'>
-                <div class='input-group'>
-                    <input id="autocomplete" class='form-control' type='text' name='car'
-                           placeholder='Enter ingredients separated by commas...'value=></input>
-                           <button class="btn btn-primary btn-md" href="/search" method="" input type="submit"role="button">Search</a>
-                           </button>
-                </div>
-            </div>
-        </form>
-        
-        <!-- <form action="/search" method="POST">
-            <input type="text" placeholder="test">
-            <button>search</button>
-        </form> -->
 
-      </div>
+
+
+          <form class="form-inline" action="/search" method="POST">
+            <div class="input-group">
+              
+              <input class="form-control mr-sm-2" type="search" placeholder="YEAR" id="Year" aria-label="Search">
+             
+              <select class="form-control" aria-placeholder="Make" id="Make">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+
+              <select class="form-control mr-sm-2" aria-placeholder="Model" id="Model">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+
+            </div>
+            
+            <br>
+            <button class="btn btn-success btn-lg" type="submit">Search</button>
+            
+          </form>
+
+          
+
 
 {% endblock homeA %}
 
 {% block script %}
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 <script>
-function autocomplete(inp, arr) {
-  /*the autocomplete function takes two arguments,
-  the text field element and an array of possible autocompleted values:*/
-  var currentFocus;
-  /*execute a function when someone writes in the text field:*/
-  inp.addEventListener("input", function(e) {
-      var a, b, i, val = this.value;
-      /*close any already open lists of autocompleted values*/
-      closeAllLists();
-      if (!val) { return false;}
-      currentFocus = -1;
-      /*create a DIV element that will contain the items (values):*/
-      a = document.createElement("DIV");
-      a.setAttribute("id", this.id + "autocomplete-list");
-      a.setAttribute("class", "autocomplete-items");
-      /*append the DIV element as a child of the autocomplete container:*/
-      this.parentNode.appendChild(a);
-      /*for each item in the array...*/
-      for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-          /*create a DIV element for each matching element:*/
-          b = document.createElement("DIV");
-          /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].substr(val.length);
-          /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
-              b.addEventListener("click", function(e) {
-              /*insert the value for the autocomplete text field:*/
-              inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
-              closeAllLists();
-          });
-          a.appendChild(b);
-        }
-      }
-  });
-  /*execute a function presses a key on the keyboard:*/
-  inp.addEventListener("keydown", function(e) {
-      var x = document.getElementById(this.id + "autocomplete-list");
-      if (x) x = x.getElementsByTagName("div");
-      if (e.keyCode == 40) {
-        /*If the arrow DOWN key is pressed,
-        increase the currentFocus variable:*/
-        currentFocus++;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 38) { //up
-        /*If the arrow UP key is pressed,
-        decrease the currentFocus variable:*/
-        currentFocus--;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 13) {
-        /*If the ENTER key is pressed, prevent the form from being submitted,*/
-        e.preventDefault();
-        if (currentFocus > -1) {
-          /*and simulate a click on the "active" item:*/
-          if (x) x[currentFocus].click();
-        }
-      }
-  });
-  function addActive(x) {
-    /*a function to classify an item as "active":*/
-    if (!x) return false;
-    /*start by removing the "active" class on all items:*/
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    /*add class "autocomplete-active":*/
-    x[currentFocus].classList.add("autocomplete-active");
-  }
-  function removeActive(x) {
-    /*a function to remove the "active" class from all autocomplete items:*/
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
-    }
-  }
-  function closeAllLists(elmnt) {
-    /*close all autocomplete lists in the document,
-    except the one passed as an argument:*/
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != inp) {
-      x[i].parentNode.removeChild(x[i]);
-    }
-  }
-}
-/*execute a function when someone clicks in the document:*/
-document.addEventListener("click", function (e) {
-    closeAllLists(e.target);
-});
-}
-
-/*An array containing ingredients*/
-// var ingredients = ["avocado","apple","allspice","almonds","aspargus","aubergine","arugula","ananas",
-// "butter", "bread", "beef", "baking soda", "bell peper", "basil", "brown sugar","broccoli","banana",
-// "cinnamon", "carrot", "chicken", "cream", "cheese","cauliflower",
-// "dijon", "dill", "dark chocolate", "dry mustard",
-// "egg", "entrecote", "egg yolk", "eggplant",
-// "flour", "fusilli", "farfalle",
-// "garlic", "ginger", "ground beef", "green pepper", "ground meat",
-// "honey", "heavy cream", "hot pepper sauce", "hot sauce",
-// "ice", "ice cream", "italian herbs",
-// "jalapeno", "jam",
-// "ketchup", "kale", "kiwi", "kosher salt",
-// "lemon", "lime", "light cream", "lettuce", "lentils", "leek",
-// "mayonnaise", "mustard", "meat", "milk", "mushrooms",
-// "nutmeg", "noodles", "nutella",
-// "olive oil", "onion", "olives", "oregano", "orange",
-// "pear", "peach", "parmesan", "potatoes", "pineapple",
-// "quinoa", "red lentils", "red pepper", "romaine lettuce",
-// "sugar", "sour cream", "soy sauce",
-// "tomatoes", "thyme", "tomato sauce","tuna",
-// "vegetable oil", "vanilla", "vodka", "vinegar", "vegetable broth",
-// "wheat", "walnut", "white wine", "whipped cream", "worcestershire sauce",
-// "yoghurt", "yeast", "zuchinni"];
-var car_directory = JSON.parse('{{ car_directory|safe }}')
 
 
-autocomplete(document.getElementById("autocomplete"), car_directory);
-
-    </script>
+</script>
 
 
 

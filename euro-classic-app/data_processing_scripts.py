@@ -3,5 +3,5 @@ from Web_Scrape_Logic import scrape
 
 
 
-def handle_data():
-    scrape()
+def handle_data(car):
+    scrape(car)
