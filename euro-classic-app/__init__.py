@@ -9,6 +9,8 @@
 # https://www.mongodb.com/community/forums/t/keep-getting-serverselectiontimeouterror/126190/18
 # https://stackabuse.com/integrating-mongodb-with-flask-using-flask-pymongo/
 # https://www.mongodb.com/compatibility/setting-up-flask-with-mongodb
+# https://github.com/mongodb-developer/flask-pymongo-example/blob/main/mflix/db.py
+# https://analyticsindiamag.com/guide-to-pymongo-a-python-wrapper-for-mongodb/
 
 from dns import message
 from flask import Flask, config,render_template,request
@@ -38,13 +40,19 @@ mongodb_client = PyMongo(app)
 db = mongodb_client.db
 
 
-# db.cars.insert_many([
-#       { "year": 2001, "make": "BMW", "Model": "M5", "Chassis":"E39"},
-#       { "year": 1984, "make": "BMW", "Model": "M3", "Chassis":"E30"},
-#       { "year": 2007, "make": "BMW", "Model": "M5", "Chassis":"E60"},
-#       { "year": 2003, "make": "BMW", "Model": "M5", "Chassis":"E39"},
-# ])
+db.cars.insert_many([
+      { "year": 2001, "make": "BMW", "model": "M5", "chassis":"E39"},
+      { "year": 1984, "make": "Ferrari", "model": "M3", "chassis":"E30"},
+      { "year": 2007, "make": "Jaguar", "model": "M5", "chassis":"E60"},
+      { "year": 2003, "make": "Keonigsegg", "model": "M5", "chassis":"E39"},
+])
 
+
+# db.car_makes.insert_many([
+#    'Ferrar',
+#    'BMW',
+#    'Jaguar'
+# ])
 
 # #this calls function from data_processing_scripts which handles all the collecting and cleaning of data
 # handle_data()
@@ -60,17 +68,30 @@ def homepage():
    #load full directory of cars and pass to template for autocomplete
    # car_directory = ['2000 BMW E39 m5', '2003 bmw e39 m5', '2001 bmw e39 m5']
    
-   # user_collection = db.todos.drop()
-   #hit db from here and load in all car brands and chasis
-   query = [db.cars.aggregate("Make")]
-   car_directory = db.cars.find({make.data})
-   for i in car_directory:
-      print (i)
-   #retrieve car brands and send as object to be iterated through in template
-   #is there a way to load models once a brand has been selected so that they show up when model tab is selected
+   
+   #hit db from here and load in all car brands and models
+   
+   #display brand options in dropdown
+   makes_query = db.cars.find({},{"make":1,"_id":0})
+   makes_array = []
+   #extract literal make name from returned cursor object
+   for makes in makes_query:
+      makes_array.append(makes['make'])
+   print(makes_array)
+   
+   
+   # MODELS QUERY
+   """If we send all models in db to template, we can use autocomplete in js
+   to match to a model but first we have to pull all models from db and send to the template"""
+   # models_query = db.cars.find({},{"make":1,"_id":0})
+   # makes_array = []
+   # #extract literal make name from returned cursor object
+   # for makes in makes_query:
+   #    makes_array.append(makes['make'])
+   # print(makes_array)
 
 
-   return render_template('home.html',car_directory=car_directory)
+   return render_template('home.html',makes_directory = makes_array)
 
 @app.route('/search',methods=['GET','POST'])
 def search():
@@ -83,6 +104,7 @@ def search():
       make = request.form['Make']
       model = request.form['Model']
 
+      car = f"{year} {make} {model}" 
       print(year)
       print(make)
       print(model)
@@ -98,7 +120,7 @@ def search():
             {"model":"Skyline", "doors":2}
         ],
       }
-      return render_template('data.html',car="test", car_results=json.dumps(car_results))
+      return render_template('data.html',car=car, car_results=json.dumps(car_results))
       # return "hello"
    else:
       return "not post req"

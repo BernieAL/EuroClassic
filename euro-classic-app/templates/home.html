@@ -14,48 +14,50 @@
             <p>Enter Year, Make, and Model for price and sale data of your selected vehicle</p>
         </div>
           
-          
-
+         
 
 
           <form class="form-inline" action="/search" method="POST">
             <div class="input-group">
               
               <input class="form-control mr-sm-2"  name="Year" type="search" placeholder="Year" id="Year" aria-label="Search">
-             
+              
               <select name="Make"class="form-control mr-sm-2" aria-placeholder="Make" id="Make">
                   <!-- NEED TO MAKE THESE DYNAMIC, FED IN FROM DB
                   https://stackoverflow.com/questions/32019733/getting-value-from-select-tag-using-flask -->
                   <option value="" disable selected>Make</option>
-                  <!-- {% for car in car_directory  %}
-                    
-                  {% endfor %} -->
-                  <option>1</option>
+                    {% for i in makes_directory  %}
+                      <option>{{i}}</option>
+                    {% endfor %}
+                  <!-- <option>1</option>
                   <option>2</option>
                   <option>3</option>
                   <option>4</option>
-                  <option>5</option>
+                  <option>5</option> -->
               </select>
               
-              <select name="Model"class="form-control mr-sm-2" aria-placeholder="Model" id="Model">
+
+              <!-- ADD AUTOCOMPLETE TO MODEL TYPING -->
+              <input class="form-control mr-sm-2"  name="Model" type="search" placeholder="Model" id="Model" aria-label="Search">
+              <!-- <select name="Model"class="form-control mr-sm-2" aria-placeholder="Model" id="Model"> -->
                   <!-- NEED TO MAKE THESE DYNAMIC, FED IN FROM DB, FILTERED BY YEAR AND MAKE -->
-                  <option value="" disable selected>Model</option>
+                  <!-- <option value="" disable selected>Model</option>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
                   <option>4</option>
                   <option>5</option>
-               </select>
+               </select> -->
               
-               
-               <select name="Chassis"class="form-control mr-sm-2" aria-placeholder="Chassis" id="Chassis">
+               <input class="form-control mr-sm-2"  name="Chassis" type="search" placeholder="Chassis" id="Chassis" aria-label="Search">
+               <!-- <select name="Chassis"class="form-control mr-sm-2" aria-placeholder="Chassis" id="Chassis"> -->
                   <!-- NEED TO MAKE THESE DYNAMIC, FED IN FROM DB, FILTERED BY YEAR AND MAKE -->
-                  <option value="" disable selected>Chassis</option>
+                  <!-- <option value="" disable selected>Chassis</option>
                   <option>2</option>
                   <option>3</option>
                   <option>4</option>
                   <option>5</option>
-               </select>
+               </select> -->
 
 
             </div>
