@@ -4,7 +4,7 @@ Clean data
 write to new file
 Done
 """
-"""THIS FILE TAKES IN THE RAW DATA AND CLEANS IT OUTPUT FORMAT IS:
+"""THIS FILE TAKES IN THE RAW DATA AND CLEANS IT. OUTPUT FORMAT IS:
     year:1987, make:BMW, model:M6, price:$84997.00 +
     year:1987, make:BMW, model:M6, price:$39950.00 +
     year:1987, make:BMW, model:M6, price:$19750.00 +

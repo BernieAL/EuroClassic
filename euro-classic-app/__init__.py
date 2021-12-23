@@ -40,12 +40,12 @@ mongodb_client = PyMongo(app)
 db = mongodb_client.db
 
 
-db.cars.insert_many([
-      { "year": 2001, "make": "BMW", "model": "M5", "chassis":"E39"},
-      { "year": 1984, "make": "Ferrari", "model": "M3", "chassis":"E30"},
-      { "year": 2007, "make": "Jaguar", "model": "M5", "chassis":"E60"},
-      { "year": 2003, "make": "Keonigsegg", "model": "M5", "chassis":"E39"},
-])
+# db.cars.insert_many([
+#       { "year": 2001, "make": "BMW", "model": "M5", "chassis":"E39"},
+#       { "year": 1984, "make": "Ferrari", "model": "M3", "chassis":"E30"},
+#       { "year": 2007, "make": "Jaguar", "model": "M5", "chassis":"E60"},
+#       { "year": 2003, "make": "Keonigsegg", "model": "M5", "chassis":"E39"},
+# ])
 
 
 # db.car_makes.insert_many([
@@ -71,27 +71,45 @@ def homepage():
    
    #hit db from here and load in all car brands and models
    
+   # This gets all db entries excluding their ID's
+   """
+   {'year': 2001, 'make': 'BMW', 'model': 'M5', 'chassis': 'E39'}
+   {'year': 1984, 'make': 'Ferrari', 'model': 'M3', 'chassis': 'E30'}
+   {'year': 2007, 'make': 'Jaguar', 'model': 'M5', 'chassis': 'E60'}
+   {'year': 2003, 'make': 'Keonigsegg', 'model': 'M5', 'chassis': 'E39'}
+   """
+   all_db_entries = db.cars.find({},{"_id":0})
+   all_db_entries_array = []
+
+   for i in all_db_entries:
+      all_db_entries_array.append(i)
+
+   print(all_db_entries_array)
+
    #display brand options in dropdown
    makes_query = db.cars.find({},{"make":1,"_id":0})
    makes_array = []
    #extract literal make name from returned cursor object
    for makes in makes_query:
       makes_array.append(makes['make'])
-   print(makes_array)
+   # print(makes_array)
+   
+
    
    
    # MODELS QUERY
    """If we send all models in db to template, we can use autocomplete in js
    to match to a model but first we have to pull all models from db and send to the template"""
-   # models_query = db.cars.find({},{"make":1,"_id":0})
-   # makes_array = []
-   # #extract literal make name from returned cursor object
-   # for makes in makes_query:
-   #    makes_array.append(makes['make'])
-   # print(makes_array)
+   models_query = db.cars.find({},{"model":1,"_id":0})
+   models_array = []
+   #extract literal make name from returned cursor object
+   for model in models_query:
+      models_array.append(model['model'])
+   # print(models_array)
 
 
-   return render_template('home.html',makes_directory = makes_array)
+
+   return render_template('home.html',makes_directory = makes_array,models_directory = models_array,all_db_entries_array=json.dumps(all_db_entries_array))
 
 @app.route('/search',methods=['GET','POST'])
 def search():
