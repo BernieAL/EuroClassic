@@ -36,10 +36,10 @@
               <!-- <input class="form-control mr-sm-2"  name="Model" type="search" placeholder="Model" id="Model" aria-label="Search"> -->
               <select name="Model"class="form-control mr-sm-2" aria-placeholder="Model" id="Model">
                   <!-- NEED TO MAKE THESE DYNAMIC, FED IN FROM DB, FILTERED BY YEAR AND MAKE -->
-                  <option value="" disable selected>Model</option>
-                  {% for i in models_directory  %}
-                  <option>{{i}}</option>
-                {% endfor %}
+                  <option id="option_id" value="" disable selected>Model</option>
+                  <!-- {% for i in models_directory  %}
+                    <option>{{i}}</option>
+                  {% endfor %} -->
                </select>
               
                <input class="form-control mr-sm-2"  name="Chassis" type="search" placeholder="Chassis" id="Chassis" aria-label="Search">
@@ -75,19 +75,34 @@
   const getModelsFromMake = ()=>{
 
     entered_make = document.querySelector('#Make')
-    console.log(entered_make.value)
+    entered_make_value = entered_make.value
     
+    console.log(entered_make_value)
+    testFunc(entered_make_value)
     
   }
 
-  testFunc=()=>{
+  testFunc=(target_make)=>{
      all_entries = JSON.parse('{{ all_db_entries_array|safe }}')
+     test = []
      
-     for(i in all_entries){
-        
+     
+     
+    //  m = all_entries.filter( x =>
+    //    x.make = target_make
+    //  )
+    //  console.log(m)
+
+     for(i = 0; i<all_entries.length;i++){
+          if (all_entries[i]['make'] == target_make){
+            test.push(all_entries[i]['model'])
+          }
      }
 
-  testFunc()
+    //  model_dropdown = document.querySelector('#Model')
+    //  model_dropdown.createElement("option")
+    dropdown_test
+  
 </script>
 
 

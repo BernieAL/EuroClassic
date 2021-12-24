@@ -41,10 +41,19 @@ db = mongodb_client.db
 
 
 # db.cars.insert_many([
-#       { "year": 2001, "make": "BMW", "model": "M5", "chassis":"E39"},
-#       { "year": 1984, "make": "Ferrari", "model": "M3", "chassis":"E30"},
-#       { "year": 2007, "make": "Jaguar", "model": "M5", "chassis":"E60"},
-#       { "year": 2003, "make": "Keonigsegg", "model": "M5", "chassis":"E39"},
+#       { "year": 2001, "make": "BMW", "model": "M3", "chassis":""},
+#       { "year": 1984, "make": "Ferrari", "model": "Laferrari", "chassis":""},
+#       { "year": 1993, "make": "Ferrari", "model": "f50", "chassis":""},
+#       { "year": 1993, "make": "Ferrari", "model": "Dino", "chassis":""},
+#       { "year": 2015, "make": "Jaguar", "model": "xqj", "chassis":""},
+#       { "year": 2015, "make": "Jaguar", "model": "M Type", "chassis":""},
+#       { "year": 2015, "make": "Jaguar", "model": "R Type", "chassis":""},
+#       { "year": 2015, "make": "Jaguar", "model": "s90", "chassis":""},
+#       { "year": 2020, "make": "Keonigsegg", "model": "Agera", "chassis":""},
+#       { "year": 2021, "make": "Keonigsegg", "model": "ccx", "chassis":""},
+#       { "year": 2021, "make": "Keonigsegg", "model": "cc", "chassis":""},
+#       { "year": 2001, "make": "BMW", "model": "335i", "chassis":""},
+#       { "year": 2001, "make": "BMW", "model": "745i", "chassis":""},
 # ])
 
 
@@ -88,10 +97,10 @@ def homepage():
 
    #display brand options in dropdown
    makes_query = db.cars.find({},{"make":1,"_id":0})
-   makes_array = []
+   makes_array = set()
    #extract literal make name from returned cursor object
    for makes in makes_query:
-      makes_array.append(makes['make'])
+      makes_array.add(makes['make'])
    # print(makes_array)
    
 
