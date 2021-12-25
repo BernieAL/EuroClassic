@@ -36,7 +36,7 @@
               <!-- <input class="form-control mr-sm-2"  name="Model" type="search" placeholder="Model" id="Model" aria-label="Search"> -->
               <select name="Model"class="form-control mr-sm-2" aria-placeholder="Model" id="Model">
                   <!-- NEED TO MAKE THESE DYNAMIC, FED IN FROM DB, FILTERED BY YEAR AND MAKE -->
-                  <option id="option_id" value="" disable selected>Model</option>
+                  <option id="" value="" disable selected>Model</option>
                   <!-- {% for i in models_directory  %}
                     <option>{{i}}</option>
                   {% endfor %} -->
@@ -77,32 +77,53 @@
     entered_make = document.querySelector('#Make')
     entered_make_value = entered_make.value
     
-    console.log(entered_make_value)
-    testFunc(entered_make_value)
+    // console.log(entered_make_value)
+    get_make_specific_models(entered_make_value)
     
   }
 
-  testFunc=(target_make)=>{
-     all_entries = JSON.parse('{{ all_db_entries_array|safe }}')
-     test = []
-     
-     
-     
-    //  m = all_entries.filter( x =>
-    //    x.make = target_make
-    //  )
-    //  console.log(m)
+  /* 
+  this function recieves the selected make value from the make dropdown
+  using this, we find the 
+  
+  */
+  get_make_specific_models=(target_make)=>{
+    
+    model_dropdown = document.querySelector('#Model')
 
+    // this removes the existing models if any, added from previously selected make.
+    while(model_dropdown.firstChild){
+        model_dropdown.removeChild(model_dropdown.firstChild)
+    }
+
+    // recieving entries from flask 
+     all_entries = JSON.parse('{{ all_db_entries_array|safe }}')
+
+    //  array to hold models that have a make matching the target make
+     make_specific_models = []
+     
+     
+    //This loop gets targets all elements that have the target make selected by user
+    // if an entry has the target make we are looking for, we retrieve the model from this current element
      for(i = 0; i<all_entries.length;i++){
           if (all_entries[i]['make'] == target_make){
-            test.push(all_entries[i]['model'])
+            make_specific_models.push(all_entries[i]['model'])
           }
      }
+    
 
-    //  model_dropdown = document.querySelector('#Model')
-    //  model_dropdown.createElement("option")
-    dropdown_test
-  
+    // This loop creates an 'option' element for each model in the models array
+    // and appends it the models select dropdown element
+    // This loop display the models specific to a make in the dropdown once a make is selected
+    for(i=0; i<make_specific_models.length;i++){
+      opt = document.createElement("option")
+      opt.value = make_specific_models[i]
+      opt.textContent = make_specific_models[i]
+      model_dropdown.appendChild(opt)
+    }
+
+
+    }
 </script>
 
 
