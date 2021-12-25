@@ -84,7 +84,11 @@
 
   /* 
   this function recieves the selected make value from the make dropdown
-  using this, we find the 
+  using the make, we go through all_entries array sent in from flask
+  and check if the current element's make matches the target_make
+  if it does, we get the model from this element and add it to models array
+
+  The models array holds the models for the selected make
   
   */
   get_make_specific_models=(target_make)=>{
