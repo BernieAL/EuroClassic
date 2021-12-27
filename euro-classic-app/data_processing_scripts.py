@@ -23,8 +23,8 @@ from Data_Clean_Logic import clean_data
 
 
 #after running scrape, the files will be populated with dirty data
-current_listing_output_unclean = open("CURRENT_LISTINGS.txt","a",encoding="utf-8")
-sold_listings_unclean = open("SOLD_DATA.txt","a",encoding="utf-8")
+# current_listing_unclean = open("CURRENT_LISTINGS.txt","a",encoding="utf-8")
+# sold_listings_unclean = open("SOLD_DATA.txt","a",encoding="utf-8")
 
 
 
@@ -32,8 +32,19 @@ sold_listings_unclean = open("SOLD_DATA.txt","a",encoding="utf-8")
 
 def handle_data(car):
     # scrape(car)
-    clean_data.clean_the_data(current_listing_output_unclean,car['year'],car['make'],car['model'])
+    try:
+        clean_data.clean_the_data("CURRENT_LISTINGS.txt",car['year'],car['make'],car['model'])
+    
+    except:
+        print('didnt work')
+    
+    try:
+        clean_data.clean_the_data("SOLD_DATA.txt",car['year'],car['make'],car['model'])
+    except:
+        print('didnt work')
+        
 
+    
 
 car = {
     'year':2001,

@@ -20,22 +20,38 @@ import re
 
 # unclean_input = open("output_file.txt","r",encoding="utf-8")
 
-unclean_input = open("CURRENT_LISTINGS.txt","r",encoding="utf-8")
-clean_output_file= open("cleaned_data.csv","w",encoding="utf-8")
+# unclean_input = open("CURRENT_LISTINGS.txt","r",encoding="utf-8")
+# clean_output_file_CURRENT_LISTINGS= open("cleaned_data_CURRENT_LISTINGS.csv","w",encoding="utf-8")
+# clean_output_file_SOLD_DATA= open("cleaned_data_SOLD_DATA.csv","w",encoding="utf-8")
 clean_output_array = []
 
 make = 'Audi'
 model = 'RS5'
+
 temp = []
-
-
 def fileWrite(data,fileIn):
     for line in data:
         temp = f"{line} \n"
         fileIn.write(temp)
     fileIn.write("---------------------- \n")
 
-def clean_the_data(unclean_input,year,make,model):
+def clean_the_data(dirty_file,year,make,model):
+    
+
+    #output files to write to
+    clean_output_file_CURRENT_LISTINGS= open("cleaned_data_CURRENT_LISTINGS.csv","w",encoding="utf-8")
+    clean_output_file_SOLD_DATA= open("cleaned_data_SOLD_DATA.csv","w",encoding="utf-8")
+    clean_output_array = []
+    to_output_file = ""
+
+    unclean_input = open(dirty_file,"r",encoding="utf-8")
+    
+    if dirty_file == "CURRENT_LISTINGS.txt":
+        to_output_file = clean_output_file_CURRENT_LISTINGS
+
+    elif dirty_file == "SOLD_DATA.txt":
+        to_output_file = clean_output_file_SOLD_DATA
+
     for line in unclean_input:
         # only target lines with specific model
         
@@ -61,12 +77,13 @@ def clean_the_data(unclean_input,year,make,model):
 
     
     col_headers = f"Year,Make,Model,Price \n"
-    clean_output_file.write(col_headers)
+    to_output_file.write(col_headers)
     
-    fileWrite(clean_output_array,clean_output_file)
+    fileWrite(clean_output_array,to_output_file)
 
-
-clean_the_data(unclean_input,'2012','BMW','M5')
+    to_output_file.close()
+    unclean_input.close()
+# clean_the_data(unclean_input,'2012','BMW','M5')
 
 """
 make,model,year,price

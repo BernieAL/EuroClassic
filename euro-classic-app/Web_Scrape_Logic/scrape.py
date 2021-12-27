@@ -219,7 +219,7 @@ def scrape(car):
 
     ebay(car)
     CL(car)
-    # bat(car)
+    bat(car)
 
 
 car  = {
