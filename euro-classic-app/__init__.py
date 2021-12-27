@@ -25,8 +25,8 @@ from flask_pymongo import PyMongo
 # from config import Config
 
 
-# from data_processing_scripts import handle_data
-# from models import Car
+from data_processing_scripts import handle_data
+
 
 import os
 import configparser
@@ -130,16 +130,26 @@ def search():
       year = request.form['Year']
       make = request.form['Make']
       model = request.form['Model']
+      # print(year)
+      # print(make)
+      # print(model)
 
       car = f"{year} {make} {model}" 
-      print(year)
-      print(make)
-      print(model)
+
+      car_object = {
+         'year':year,
+         'make':make,
+         'model':model
+      }
+      handle_data(car_object)
+      # car results = scrape(car)
+   
       # hit backend API to retrieve results for the specific car
       # api_response = handle_data(car)
 
       # hit backend API to retrieve results for the specific car
       # Return results to here and pass this to template to be rendered
+
       car_results = {
           "Nissan": [
             {"model":"Sentra", "doors":4},

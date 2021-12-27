@@ -59,12 +59,12 @@ def ebay(car):
     driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
     # driver.implicitly_wait(15)
 
-
+    target_car = f"{car['make']} {car['model']}"
     #enter model 
     ebay_search_box = driver.find_element_by_css_selector('#gh-ac')
     # WebDriverWait(driver,10)
     time.sleep(1)
-    ebay_search_box.send_keys(car + Keys.RETURN)
+    ebay_search_box.send_keys(target_car + Keys.RETURN)
     time.sleep(1.5)
 
     # this gets prices of all cars on page
@@ -107,6 +107,8 @@ def CL(car):
     # CL_searchBar.send_keys(vehicle + Keys.RETURN)
 
     #search route option 2 - more direct
+    make = car['make']
+    model = car['model']
     driver.get(f'https://miami.craigslist.org/d/cars-trucks/search/mdc/cta?query={make}%20{model}&sort=rel')
 
     CL_prices=[]
@@ -144,7 +146,8 @@ def bat(car):
         # # search_bar = driver.find_element_by_class_name('search-terms')
         # # search_bar.send_keys(vehicle + Keys.RETURN)
 
-
+        make = car['make']
+        model = car['model']
         driver.get(f'https://bringatrailer.com/{make}/{model}')
         # # https://bringatrailer.com/bmw/e39-m5/?q=e39%20m5
 
@@ -211,15 +214,22 @@ def fileWrite(data,fileIn):
 def scrape(car):
 
    
-    vehicle = f"{make} {model}"
-    print(vehicle)
+    # vehicle = f"{make} {model}"
+    # print(vehicle)
 
     ebay(car)
     CL(car)
-    bat(car)
+    # bat(car)
 
 
- 
+car  = {
+    'year':2001,
+    'make':'BMW',
+    'model':'M5'
+}
+scrape(car)
+
+
 
 
 # # Get the webelement of the text input box

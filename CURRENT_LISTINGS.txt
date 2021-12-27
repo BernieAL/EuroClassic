@@ -1,134 +1,337 @@
-"""
-THIS IS WHERE CURRENT LISTINGS WILL GO
-ORDER OF RESULTS: EBAY THEN CL
-"""
-
-DATA SCRAPED: 05/10/2021 
-  :::EBAY - DATA SCRAPED ON: 05/10/2021 
- $78,000.00 
-2019 Audi RS5 $44,999.00 
-2015 Audi RS5 $69,900.00 
-2018 Audi RS 5 Coupe 2.9 TFSI quattro tiptronic $72,900.00 
-2018 Audi RS5 2D Quattro - V6 2.9T TFSI - Rare NARDO Grey Color! $43,990.00 
-2014 Audi RS5 Coupe 2D $52,500.00 
-2014 Audi RS5 $32,995.00 
-2013 Audi RS5 4.2 $74,595.00 
-2018 Audi RS5 2.9T $68,999.00 
-2019 AUDI RS5 2.9 TFSI QUATTRO - NEW MSRP $100,800.00 $109,888.00 
-2019 Audi Other RS 5 Sportback ABT Kit 530 HP Carbon Fiber Package $71,009.00 
-2019 Audi RS 5 Sportback $138,900.00 
-2021 Audi RS6 Avant $39,500.00 
-2012 Audi TT Quattro TT RS prestige $54,849.00 
-2019 Audi RS 3 2.5 TFSI $35,000.00 
-2017 Audi A5 Quattro S line with extra sport package $136,800.00 
-2021 Audi RSQ8 4.0T quattro RS Design Package! RARE Matador Red! $9,000.00 
-2009 Audi A5 Quattro QUATTRO $28,995.00 
-2008 RS 4 quattro $48,395.00 
-2021 Audi Q5 Premium 45 TFSI quattro $35,900.00 
-2018 Audi Q5 2.0 TFSI Premium $42,900.00 
-2020 Audi Q5 $34,900.00 
-2018 Audi Q5 Premium $36,900.00 
-2018 Audi Q5 $35,900.00 
-2018 Audi Q5 Premium $39,900.00 
-2019 Audi Q5 2.0 TFSI Premium $42,900.00 
-2019 Audi Q5 Premium $44,900.00 
-2019 Audi Q5 Premium $36,000.00 
-2018 Audi Q5 2.0 TFSI Premium $79,999.99 
-2017 Audi RS7 $149,980.00 
-2021 Audi RS7 Audi RS7 Finished in special order RIVIERA BLUE 1 of 1 combo $63,900.00 
-2017 Audi RS7 Performance with Rare NARDO GREY Color! $8,355.00 
-2012 Audi S5 Prestige $24,999.00 
-2009 Audi S5 QUATTRO $18,950.00 
-2010 Audi S5 2dr Cabriolet Prestige $100.00 
-2018 Audi S5 Convertible 3.0T Prestige Quattro (1-Owner) LOADED $18,986.00 
-2010 Audi S5 PRESTIGE $39,900.00 
-2019 Audi S5 Premium $13,500.00 
-2020 Audi S5 $47,925.00 
-2018 Audi S5 Sportback 3.0 TFSI Premium Plus $39,995.00 
-2013 Audi S5 Premium Plus Coupe 2D $51,500.00 
-2017 Audi S5 Cabriolet 2D $27,990.00 
-2003 Audi RS6 4.2 $42,990.00 
-2013 Audi A5 PREMIUM PLUS $20,000.00 
-2012 Audi S5 Prestige Convertible 2-Owner 62,674 Miles Keyless $27,500.00 
-2016 Audi S5 Premium Plus Convertible 2D $25,888.00 
-2019 Audi SQ5 Prestige $37,590.00 
-2018 Audi SQ5 PREMIUM PLUS $55,995.00 
-2019 Audi SQ5 Prestige S-Sport/Black Optic Pkg $39,500.00 
-2011 Audi Q5 PREMIUM PLUS $25,700.00 
-2018 Audi SQ5 3.0T Prestige $2,700.00 
-1969 Chevrolet Camaro $40,300.00 
-2007 Audi RS4 QUATTRO $114,995.00 
-2018 Audi SQ5 3.0T Prestige $17,900.00 
-2007 Audi RS4 Sedan $39,186.40 
 ---------------------- 
- :::CRAIGLIST - DATA SCRAPED ON: 05/10/2021 
- 2016 AUDI A7 SUPERCHARG - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$24,999 
- 2014 GMC TERRAIN - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$10,499 
- 2011 PORSCHE PANAMERA 4 - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$23,999 
- 2019 FORD F150 XLT - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$41,999 
- 2013 BMW 335 - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$10,499 
- 2016 MERCEDES BENZ C300 - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$19,899 
- 2017 LEXUS RC200t - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$27,499 
- 2017 JAGUAR XE 25t - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$18,499 
- 2016 MERCEDES BENZ C300 - CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$4,000 
- 2015 MERCEDES BENZ ML350-CALL 9543940462 - BAD CREDIT✔️ - NO CREDIT✔️ :$21,499 
+ :::EBAY - DATA SCRAPED ON: 27/12/2021 
+ $68,500.00 
 ---------------------- 
- :::EBAY - DATA SCRAPED ON: 15/11/2021 
- $18,400.00 
-2013 Audi RS5 quattro AWD 2dr Coupe $37,990.00 
-2014 Audi RS5 $32,000.00 
-2014 Audi RS5 RS5 RS 5 $43,977.00 
-2014 Audi RS5 RS5 RS 5 $40,977.00 
-2013 Audi RS5 $31,500.00 
-2013 Audi RS5 APR Stage 1 $45,500.00 
-2019 AUDI RS5 2.9 TFSI QUATTRO - NEW MSRP $100,800.00 $68,999.00 
-2019 Audi Other RS 5 Sportback ABT Kit 530 HP Carbon Fiber Package $105,888.00 
-2003 Audi RS 6 Quattro AT5 $790.00 
-2017 Audi A5 Quattro S-line/Sport trim $46,000.00 
-2019 Audi RS3 $33,000.00 
-2016 Audi S7 4.0T quattro Prestige $63,900.00 
-2018 Audi RS 3 Sedan 4D $36,850.00 
-2019 Audi RS3 $60,990.00 
-2017 Audi RS7 $61,000.00 
-2009 Audi A5 Quattro QUATTRO $74,999.00 
-2016 Audi S5 Premium Plus $9,000.00 
-2021 Audi RS7 Audi RS7 Finished in special order RIVIERA BLUE 1 of 1 combo $39,977.00 
-2017 Audi RS7 560HP - Rare NARDO GREY Quattro Tiptronic $149,980.00 
-2022 Audi RS7 RS7 $65,500.00 
-2014 Audi RS7 $147,000.00 
-2016 Audi S5 premium plus $59,000.00 
-2020 Audi SQ5 PRESTIGE $25,000.00 
-2015 Audi S5 Prestige Convertible 2D $61,900.00 
-2011 Audi S5 PREMIUM PLUS $41,990.00 
-2018 Audi S5 3.0 TFSI Premium Plus $14,200.00 
-2010 Audi S5 PRESTIGE $51,495.00 
-2016 Audi S5 $13,500.00 
-2011 Audi S5 $47,995.00 
-2016 Audi S5 Premium Plus Coupe 2D $24,500.00 
-2009 Audi S5 $33,990.00 
-2010 Audi S5 3.0T Quattro Cabriolet 2D $17,900.00 
-2016 Audi S5 Premium Plus Convertible 2D $26,990.00 
-2010 Audi S5 4.2 V8 QUATTRO AWD - PREMIUM PLUS - 6 SPEED MANUAL $37,590.00 
-2013 Audi S5 QUATTRO AWD PREMIUM PLUS-EDITION(CONVERTIBLE) $19,900.00 
-2019 Audi S5 $19,995.00 
-2012 Audi S5 Prestige Convertible 2-Owner 62,674 Miles Keyless $52,800.00 
-2014 Audi S5 Premium Plus Convertible 2D $26,488.00 
-2014 Audi S5 Premium Plus $33,590.00 
-2014 Audi A5 $24,495.00 
-2018 Audi S5 Premium Plus Convertible 2D $12,000.00 
-2013 Audi A5 PREMIUM PLUS $52,590.00 
-2003 Audi RS6 $25,000.00 
-2017 Audi Q5 Premium Plus $15,000.00 
-2014 Audi SQ5 Prestige Sport Utility 4D $21,900.00 
-2014 Audi A5 Premium Coupe 2D $14,497.50 
-2003 Audi RS6 450 HP Twin Turbo V8 with 89,000 Miles $20,997.00 
-2015 Audi A5 Premium Coupe 2D $4,050.00 
-2003 Audi RS6 $18,500.00 
-2014 Audi A5 2.0T Premium $25,990.00 
-2008 Audi RS4 quattro $18,997.00 
-2016 Audi Q5 Premium Plus $21,881.00 
+2018 BMW M5 $59,950.00 
 ---------------------- 
- :::CRAIGLIST - DATA SCRAPED ON: 15/11/2021 
- 2014 Mercedes Benz CLA 250 Edition 1-FULLY LOADED! :$20,950 
- 2019 Nissan GTR Fully Loaded MSRP+OVER $20K In Mods w/FULL BOLT-ONS! :$109,950 
+2000 BMW M5 $30,500.00 
+---------------------- 
+2001 BMW M5 $62,100.00 
+---------------------- 
+2018 BMW M5 $7,600.00 
+---------------------- 
+2006 BMW M5 Base 4dr Sedan $23,390.00 
+---------------------- 
+2006 BMW M5 Base 4dr Sedan $19,995.00 
+---------------------- 
+2019 BMW M5 $80,950.00 
+---------------------- 
+2022 BMW M5 CS $190,000.00 
+---------------------- 
+2015 BMW M5 $67,500.00 
+---------------------- 
+2018 BMW M5 $35,100.00 
+---------------------- 
+2008 BMW M5 SMG $2,000.00 
+---------------------- 
+2010 BMW M5 M5 $24,995.00 
+---------------------- 
+2018 BMW M5 First Edition 1/400 Sedan $34,000.00 
+---------------------- 
+2001 BMW M5 6-Speed $78,631.00 
+---------------------- 
+2019 BMW M5 $56,995.00 
+---------------------- 
+2015 BMW M5 4DR SDN $91,995.00 
+---------------------- 
+2003 BMW M5 $53,950.00 
+---------------------- 
+2013 BMW M5 4dr Sdn $41,988.00 
+---------------------- 
+2020 BMW M5 4DR SDN $36,595.00 
+---------------------- 
+2014 BMW M5 $99,900.00 
+---------------------- 
+2013 BMW M5 4dr Sedan $60,995.00 
+---------------------- 
+2001 BMW M5 M5 $49,900.00 
+---------------------- 
+2016 BMW M5 $28,000.00 
+---------------------- 
+2019 BMW M5 $57,500.00 
+---------------------- 
+2015 BMW M5 Sedan 4D $89,999.00 
+---------------------- 
+2013 BMW M5 $53,495.00 
+---------------------- 
+2006 BMW M5 $32,495.00 
+---------------------- 
+2001 BMW M5 $49,995.00 
+---------------------- 
+2013 BMW M5 4dr Sedan $72,995.00 
+---------------------- 
+2020 BMW M5 $33,995.00 
+---------------------- 
+2015 BMW M5 $105,000.00 
+---------------------- 
+2008 M5 LOADED 70K LOW MILES HUGIN SEATS CLEAN $39,998.00 
+---------------------- 
+2013 BMW M5 $26,995.00 
+---------------------- 
+2019 BMW M5 AWD $33,998.00 
+---------------------- 
+2021 BMW M5 $88,995.00 
+---------------------- 
+2019 BMW M5 $113,662.00 
+---------------------- 
+2019 BMW M5 $86,880.00 
+---------------------- 
+2002 BMW M5 Sedan $95,888.00 
+---------------------- 
+2018 BMW M5 $149,900.00 
+---------------------- 
+2022 BMW M5 CS - MOST POWERFUL "M" CAR EVER BUILT - EXTREMELY HARD TO FIND $85,881.00 
+---------------------- 
+2018 BMW M5 $184,999.00 
+---------------------- 
+1993 BMW M5 $83,988.00 
+---------------------- 
+2006 BMW 5-Series M5 $69,997.00 
+---------------------- 
+2006 BMW 5-Series M5 $19,998.00 
+---------------------- 
+2017 Porsche 911 CARRERA 4S - ULTRA LOW 7K MILES - BEST DEAL ON EBAY $24,998.00 
+---------------------- 
+2016 Porsche 911 TARGA 4 GTS - SUPER LOW 35K MILES - BEST DEAL ON EBAY $106,999.00 
+---------------------- 
+ :::CRAIGLIST - DATA SCRAPED ON: 27/12/2021 
+ 2006 BMW M5 SEDAN AUTOMATIC :$29,999 
+---------------------- 
+ 2011 BMW 5 Series 535i Sedan 4D :$0 
+---------------------- 
+ 2014 BMW 5 Series 528i with :$17,400 
+---------------------- 
+ 2012 BMW 3 Series 328i with :$14,000 
+---------------------- 
+ 2013 BMW 5 Series 4dr Sdn 535i RWD BAD CREDIT NO PROBLEM! :$13,300 
+---------------------- 
+ 2014 BMW 5 Series 550i Sedan 4D sedan White - FINANCE ONLINE :$28,990 
+---------------------- 
+ 2000 BMW 5-Series :$33,899 
+---------------------- 
+ 2018 BMW 530xdrive :$27,500 
+---------------------- 
+ 2009 BMW 128i Series 128i with Front side-impact airbags :$11,485 
+---------------------- 
+ 2013 BMW 3 Series 328i with :$13,300 
+---------------------- 
+ 2013 BMW 3 Series 328i with :$13,300 
+---------------------- 
+ 2012 BMW X5 AWD 4dr 35i Premium BAD CREDIT NO PROBLEM! :$10,400 
+---------------------- 
+ 2004 BMW Z4 2dr Roadster 2.5i BAD CREDIT NO PROBLEM! :$4,700 
+---------------------- 
+ 2012 BMW 1 Series 2dr Cpe 128i SULEV BAD CREDIT NO PROBLEM! :$6,300 
+---------------------- 
+ 2014 BMW 5 Series 528i with :$17,400 
+---------------------- 
+ 2017 Toyota Tundra FULLY LOADED - Or Best Offer :$44,000 
+---------------------- 
+ 2005 Caddy Cadillac Escalade Platinum Edition Sport Utility 4D su :$5,750 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,450 
+---------------------- 
+ 2007 GMC Yukon Sport Limited - FULLY LOADED :$6,350 
+---------------------- 
+ 2012 BMW 5 Series 550i Sedan 4D sedan Black - FINANCE ONLINE :$21,590 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2007 GMC Yukon Sport Limited - FULLY LOADED :$6,350 
+---------------------- 
+ 2007 Dodge Caliber Sport - Super Clean - Low Miles :$4,750 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,450 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2005 Caddy Cadillac Escalade Platinum Edition Sport Utility 4D su :$5,750 
+---------------------- 
+ 2007 GMC Yukon Sport Limited - FULLY LOADED :$6,350 
+---------------------- 
+ BMW 535i 5 speed manual for sale with lots of desirable parts :$5,000 
+---------------------- 
+ 2005 Caddy Cadillac Escalade Platinum Edition Sport Utility 4D su :$5,750 
+---------------------- 
+ 2007 GMC Yukon Sport Limited - FULLY LOADED :$6,350 
+---------------------- 
+ BMW E92 M3 :$38,000 
+---------------------- 
+ 2009 SMART CAR BRABUS :$24,000 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,450 
+---------------------- 
+ 2005 Caddy Cadillac Escalade Platinum Edition Sport Utility 4D su :$5,750 
+---------------------- 
+ 2007 GMC Yukon Sport Limited - FULLY LOADED :$6,350 
+---------------------- 
+ 2008 BMW 5 Series 528i with :$7,240 
+---------------------- 
+ 2007 GMC Yukon Sport Limited - FULLY LOADED :$6,350 
+---------------------- 
+ 2005 Caddy Cadillac Escalade Platinum Edition Sport Utility 4D su :$5,750 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,950 
+---------------------- 
+ 2004 BMW Z4 2dr Roadster 2.5i 90 Days Car Warranty :$4,700 
+---------------------- 
+ 2012 BMW X5 AWD 4dr 35i Premium BAD CREDIT NO PROBLEM! :$10,400 
+---------------------- 
+ 2012 BMW 1 Series 2dr Cpe 128i SULEV BAD CREDIT NO PROBLEM! :$6,300 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2010 DODGE RAM 3500 / CREW PICKUP 6.7L I6 F OHV 2 :$28,999 
+---------------------- 
+ 2012 Dodge Durango R/T/1 OWNER/CLEAN TITLE :$18,999 
+---------------------- 
+ 2012 BMW 3 Series 328i with :$14,000 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,950 
+---------------------- 
+ 2007 GMC Yukon Sport Limited - FULLY LOADED :$6,350 
+---------------------- 
+ ____ 2018 MCLAREN 570S SPIDER**CLEAN TITLE**EASY APPROVALS**NO CREDIT* :$189,998 
+---------------------- 
+ 2008 BMW 5 Series 528i with :$7,240 
+---------------------- 
+ 2014 BMW 5 Series 528i with :$17,400 
+---------------------- 
+ 2012 INFINITI QX QX56 Sport Utility 4D SUV 3RD ROW SEATS - LOW MILES :$15,350 
+---------------------- 
+ 2007 FORD F-150 2WD 5.4L V8 HARLEY -DAVIDSON/99K MILES/ :$15,999 
+---------------------- 
+ 2014 DODGE JOURNEY CROSSROAD/3RD SEAT/NAVEG/1 OWNER :$6,999 
+---------------------- 
+ 2008 NISSAN PATHFINDER V6/3RD SEAT/1 0WNER /135K MILES APROX :$6,999 
+---------------------- 
+ 2015 RAM 1500 4WD V8 SPORT/1 OWNER/CLEAN TITLE :$15,999 
+---------------------- 
+ _____ 2009 LAMBORGHINI GALLARDO SPYDER**CLEAN TITLE**EASY APPROVALS** :$129,998 
+---------------------- 
+ 2004 BMW Z4 2dr Roadster 2.5i BAD CREDIT NO PROBLEM! :$4,700 
+---------------------- 
+ 2013 BMW 5 Series 535i Gran Turismo xDrive Sedan 4D sedan Blue - :$22,590 
+---------------------- 
+ 2012 INFINITI QX QX56 Sport Utility 4D SUV 3RD ROW SEATS - LOW MILES :$15,350 
+---------------------- 
+ 2007 BMW 3 Series 328i Sedan 4D • 5 Series 528 :$4,495 
+---------------------- 
+ 2015 Chevy Chevrolet Cruze LT Sport Sedan :$7,850 
+---------------------- 
+ 2007 Dodge Caliber Sport - Super Clean - Low Miles :$4,750 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,950 
+---------------------- 
+ 2005 Caddy Cadillac Escalade Platinum Edition Sport Utility 4D su :$5,750 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2012 INFINITI QX QX56 Sport Utility 4D SUV 3RD ROW SEATS - LOW MILES :$15,350 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2012 INFINITI QX QX56 Sport Utility 4D SUV 3RD ROW SEATS - LOW MILES :$15,350 
+---------------------- 
+ 2005 Caddy Cadillac Escalade Platinum Edition Sport Utility 4D su :$5,750 
+---------------------- 
+ 2007 BMW 3 SERIES 328I :$6,490 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2012 INFINITI QX QX56 Sport Utility 4D SUV 3RD ROW SEATS - LOW MILES :$15,200 
+---------------------- 
+ 2015 KIA OPTIMA *$2500 DOWN-NO CREDIT CHECK*ON 22S :$2,500 
+---------------------- 
+ 2005 Caddy Cadillac Escalade Platinum Edition Sport Utility 4D su :$5,750 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2012 INFINITI QX QX56 Sport Utility 4D SUV 3RD ROW SEATS - LOW MILES :$15,200 
+---------------------- 
+ 2007 Dodge Caliber Sport - Super Clean - Low Miles :$4,750 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,950 
+---------------------- 
+ 2015 Chevy Chevrolet Cruze LT Sport Sedan :$7,850 
+---------------------- 
+ 2012 BMW X5 AWD 4dr 35i Premium BAD CREDIT NO PROBLEM! :$10,400 
+---------------------- 
+ 2012 BMW 1 Series 2dr Cpe 128i SULEV 90 Days Car Warranty :$6,300 
+---------------------- 
+ 2016 MERCEDES C300/SEDAN/ 4MATIC/PANORAMIC SUNROOF/1 OWNER :$19,999 
+---------------------- 
+ 2004 BMW Z4 2dr Roadster 2.5i 90 Days Car Warranty :$4,700 
+---------------------- 
+ 2015 Chevy Chevrolet Cruze LT Sport Sedan :$7,850 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,950 
+---------------------- 
+ 2007 Dodge Caliber Sport - Super Clean - Low Miles :$4,750 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2005 Caddy Cadillac Escalade Platinum Edition Sport Utility 4D su :$5,750 
+---------------------- 
+ 2012 INFINITI QX QX56 Sport Utility 4D SUV 3RD ROW SEATS - LOW MILES :$15,200 
+---------------------- 
+ 2014 BMW 5 Series 528i with :$17,400 
+---------------------- 
+ 2012 INFINITI QX QX56 Sport Utility 4D SUV 3RD ROW SEATS - LOW MILES :$13,750 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2018 GMC YUKON DENALI SPORT UTILITY 4D :$5,000 
+---------------------- 
+ 2007 Dodge Caliber Sport - Super Clean - Low Miles :$4,750 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,950 
+---------------------- 
+ 2015 Chevy Chevrolet Cruze LT Sport Sedan :$7,850 
+---------------------- 
+ 2021 Maserati Ghibli S Luxury Sedan :$67,995 
+---------------------- 
+ 2014 BMW 3 Series 328i GT Sedan 4D Grand Coupe :$16,750 
+---------------------- 
+ 2008 Lexus IS 250 :$6,995 
+---------------------- 
+ 2015 Chevy Chevrolet Cruze LT Sport Sedan :$7,850 
+---------------------- 
+ 2016 TOYOTA TUNDRA 2WD CREW CAB/CLEAN TITLE/1 OWNER :$18,999 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,950 
+---------------------- 
+ 2007 Dodge Caliber Sport - Super Clean - Low Miles :$4,750 
+---------------------- 
+ 2015 Chevy Chevrolet Cruze LT Sport Sedan :$7,850 
+---------------------- 
+ 2012 INFINITI QX QX56 Sport Utility 4D SUV 3RD ROW SEATS - LOW MILES :$13,750 
+---------------------- 
+ 2018 GMC YUKON DENALI SPORT UTILITY 4D :$5,000 
+---------------------- 
+ 2007 BMW 3 Series 328i Sedan 4D Grand Coupe :$4,495 
+---------------------- 
+ 2005 Caddy Cadillac Escalade Platinum Edition Sport Utility 4D su :$5,750 
+---------------------- 
+ 2015 Chevy Chevrolet Cruze LT Sport Sedan :$7,850 
+---------------------- 
+ 2007 Dodge Caliber Sport - Super Clean - Low Miles :$4,750 
+---------------------- 
+ 2016 Ford Focus SE Sedan 4D sedan • Ford Fusion :$7,950 
+---------------------- 
+ 2012 JEEP WRANGLER UNLIMITED SPORT :$14,999 
+---------------------- 
+ 2015 TOYOTA TACOMA 2WD V6/1 OWNER/CLEAN TITLE/TITULO LIMPIO :$17,999 
+---------------------- 
+ 2016 FORD F-150 LARIAT 2WD PANORAMIC SUNROOF/1 OWNER :$17,999 
+---------------------- 
+ 2016 CADILLAC ESCALADE PREMIUM/1 OWNER/CLEAN TITLE :$27,999 
+---------------------- 
+ 2016 FORD F-150 4X4/1 OWNER/CLEAN TITLE :$17,999 
+---------------------- 
+ 2008 TOYOTA FJ CRUISER 4WD 4DR MAN (NATL)1 OWNER :$16,999 
+---------------------- 
+ 2016 RAM 3500 4WD CREW CAB 169"/ DULLY/DIESEL :$29,999 
 ---------------------- 
