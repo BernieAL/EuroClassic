@@ -211,7 +211,9 @@ def fileWrite(data,fileIn):
 
 
 
-def scrape(car):
+
+
+def scrapeFunc(car):
 
    
     # vehicle = f"{make} {model}"
@@ -222,12 +224,12 @@ def scrape(car):
     bat(car)
 
 
-car  = {
-    'year':2001,
-    'make':'BMW',
-    'model':'M5'
-}
-scrape(car)
+# car  = {
+#     'year':2001,
+#     'make':'BMW',
+#     'model':'M5'
+# }
+# scrape(car)
 
 
 

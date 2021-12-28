@@ -10,17 +10,26 @@ Done
     year:1987, make:BMW, model:M6, price:$19750.00 +
     year:2005, make:BMW, model:M6, price:$25000.00 +
 
-
+!!!
 As of 12/27 it can clean ebay and CL data
+
+Issue right now is the call from data_process_scripts is only handling SOLD_DATA
+when both calls are uncommented.
+When SOLD_DATA call is commented, CURRENT_LISTINGS works.
+
+Only when both are uncommented, CURRENT_LISTINGS is not handled, its skipped over
+Nothing gets written to cleaned_data_CURRENT_LISTINGS.csv
 """
 
 
 
 import re
+clean_output_file_CURRENT_LISTINGS= open("cleaned_data_CURRENT_LISTINGS.csv","w",encoding="utf-8")
+clean_output_file_SOLD_DATA= open("cleaned_data_SOLD_DATA.csv","w",encoding="utf-8")
 
-# unclean_input = open("output_file.txt","r",encoding="utf-8")
+unclean_input_CURRENT_LISTINGS = open("CURRENT_LISTINGS.txt","r",encoding="utf-8")
+unclean_input_SOLD_DATA = open("SOLD_DATA.txt","r",encoding="utf-8")
 
-# unclean_input = open("CURRENT_LISTINGS.txt","r",encoding="utf-8")
 # clean_output_file_CURRENT_LISTINGS= open("cleaned_data_CURRENT_LISTINGS.csv","w",encoding="utf-8")
 # clean_output_file_SOLD_DATA= open("cleaned_data_SOLD_DATA.csv","w",encoding="utf-8")
 clean_output_array = []
@@ -39,10 +48,9 @@ def clean_the_data(dirty_file,year,make,model):
     
 
     #output files to write to
-    clean_output_file_CURRENT_LISTINGS= open("cleaned_data_CURRENT_LISTINGS.csv","w",encoding="utf-8")
-    clean_output_file_SOLD_DATA= open("cleaned_data_SOLD_DATA.csv","w",encoding="utf-8")
+    
     clean_output_array = []
-    to_output_file = ""
+    to_output_file = clean_output_file_SOLD_DATA
 
     unclean_input = open(dirty_file,"r",encoding="utf-8")
     
@@ -83,7 +91,9 @@ def clean_the_data(dirty_file,year,make,model):
 
     to_output_file.close()
     unclean_input.close()
-# clean_the_data(unclean_input,'2012','BMW','M5')
+
+
+# clean_the_data(unclean_input_CURRENT_LISTINGS,'2012','BMW','M5')
 
 """
 make,model,year,price
