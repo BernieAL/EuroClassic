@@ -103,11 +103,11 @@ def clean_the_data(dirty_file,year,make,model):
                  #remove extra space between price and sale date Ex. ['45000 ', ' 11/23/20 '] -> 44250,12/22/21 
                  item_line = item_line.replace(' ','')
                  clean_output_array.append(item_line)
-                 col_headers = f"Year,Make,Model,Price,Sale Date \n"    
+                 col_headers = f"Year,Make,Model,Price,DateSold\n"    
             else:
                 item_line = f"{year},{make},{model},{price}"
                 clean_output_array.append(item_line)
-                col_headers = f"Year,Make,Model,Price \n"
+                col_headers = f"Year,Make,Model,Price\n"
     # print(item_line)
 
     
