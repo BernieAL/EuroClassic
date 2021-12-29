@@ -50,9 +50,10 @@ def clean_the_data(dirty_file,year,make,model):
     #output files to write to
     
     clean_output_array = []
-    to_output_file = clean_output_file_SOLD_DATA
+    to_output_file = ""
 
     unclean_input = open(dirty_file,"r",encoding="utf-8")
+    # unclean_input = dirty_file
     
     if dirty_file == "CURRENT_LISTINGS.txt":
         to_output_file = clean_output_file_CURRENT_LISTINGS
@@ -78,13 +79,39 @@ def clean_the_data(dirty_file,year,make,model):
             if not year:
                 year = 0000
             price = price.replace('$','')
-            item_line = f"{year},{make},{model},{price}"
-            # print(item_line)
-            clean_output_array.append(item_line)
-    
+            
+            #THIS ONLY RUNS IF THE LINE HAS 'ON' in it, otherwise we go to else and dont include sale date because there is none
+            #if no sale date, then we are dealing with current listing
+            # for handling the 'on' in the sold data
+            #we first check if the data line has 'on' in it because if we are handling current listings, it wont have 'sold on'
+            #if there is an 'on' in the current line, we need to split at the on to get the price and sale data
+            """
+            checks for 'on' in - 2001,BMW,M5,45000 on 11/23/20 
+            if line has 'on', we split at it and get  ['45000 ', ' 11/23/20 ']
+            reassign price to be the first element in array returned from split
+            set sale_Date to be second element in the array returned from split
+            set item_line string to include price and sale_Date
+            """
+            
+            if dirty_file == "SOLD_DATA.txt" and price.find('on'):
+                 price_sale_date_split = price.split('on')
+                 price = price_sale_date_split[0]
+                 sale_Date = price_sale_date_split[1]
+                 #replace / with - in sale_Date
+                 sale_Date = sale_Date.replace('/','-')
+                 item_line = f"{year},{make},{model},{price},{sale_Date}"
+                 #remove extra space between price and sale date Ex. ['45000 ', ' 11/23/20 '] -> 44250,12/22/21 
+                 item_line = item_line.replace(' ','')
+                 clean_output_array.append(item_line)
+                 col_headers = f"Year,Make,Model,Price,Sale Date \n"    
+            else:
+                item_line = f"{year},{make},{model},{price}"
+                clean_output_array.append(item_line)
+                col_headers = f"Year,Make,Model,Price \n"
+    # print(item_line)
 
     
-    col_headers = f"Year,Make,Model,Price \n"
+    # col_headers = f"Year,Make,Model,Price \n"
     to_output_file.write(col_headers)
     
     fileWrite(clean_output_array,to_output_file)
@@ -93,8 +120,8 @@ def clean_the_data(dirty_file,year,make,model):
     unclean_input.close()
 
 
-# clean_the_data(unclean_input_CURRENT_LISTINGS,'2012','BMW','M5')
-
+# clean_the_data("SOLD_DATA.txt",'2012','BMW','M5')
+# clean_the_data("CURRENT_LISTINGS.txt",'2012','BMW','M5')
 """
 make,model,year,price
 """

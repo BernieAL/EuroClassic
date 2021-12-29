@@ -38,10 +38,6 @@ def handle_data(car):
     
      
 
-        
-
-    
-
 car = {
     'year':2001,
     'make':'BMW',

@@ -10,26 +10,28 @@ split data:
 
 """
 
+
 import pandas as pd
 import numpy as np
-
-import matplotlib.pyplot as plt 
-%matplotlib inline
-from matplotlib.pylab import rcParams
-rcParams['figure.figsize']=20,10
-from keras.models import Sequential
-from keras.layers import LSTM,Dropout,Dense
-from sklearn.preprocessing import MinMaxScaler
-
-# Make numpy values easier to read.
-np.set_printoptions(precision=3, suppress=True)
-
-import tensorflow as tf
-from tensorflow.keras import layers
-from tensorflow.keras.layers.experimental import preprocessing
-
-df = pd.read_csv("cleaned_data_CSV_dummy.csv")
-df.head()
+from sklearn import linear_model
+from sklearn.model_selection import train_test_split
 
 
-df["Price"]
+clean_output_file_CURRENT_LISTINGS= open("cleaned_data_CURRENT_LISTINGS.csv","r",encoding="utf-8")
+clean_output_file_SOLD_DATA= open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
+
+
+for line in clean_output_file_SOLD_DATA:
+
+
+
+
+
+# #makes dataframes from csv
+# df_CURRENT_LISTINGS = pd.read_csv(clean_output_file_CURRENT_LISTINGS)
+# df_SOLD_DATA = pd.read_csv(clean_output_file_SOLD_DATA)
+
+# print(df_SOLD_DATA.describe())
+
+# # df_x = pd.DataFrame(df_CURRENT_LISTINGS, columns = df_CURRENT_LISTINGS['Price'])
+# # print(df_x)
