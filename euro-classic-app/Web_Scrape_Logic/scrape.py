@@ -219,7 +219,7 @@ def scrapeFunc(car):
         ebay(car,driver)
         CL(car,driver)
         bat(car,driver)
-
+        driver.close
 
 # car  = {
 #     'year':2001,

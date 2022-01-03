@@ -57,28 +57,26 @@ db = mongodb_client.db
 # ])
 
 
+
 # db.car_makes.insert_many([
 #    'Ferrar',
 #    'BMW',
 #    'Jaguar'
 # ])
 
-# #this calls function from data_processing_scripts which handles all the collecting and cleaning of data
-# handle_data()
 
-
-
+# db.last_updated.insert_many([
+#     { "make": "BMW", "model": "M3", last_scraped='12-27-2021'}
+# ])
 
 
 
 @app.route('/')
 def homepage():
 
-   #load full directory of cars and pass to template for autocomplete
-   # car_directory = ['2000 BMW E39 m5', '2003 bmw e39 m5', '2001 bmw e39 m5']
    
    
-   #hit db from here and load in all car brands and models
+   #HIT DB AND RETRIEVE ALL MAKES AND MODELS
    
    # This gets all db entries excluding their ID's
    """
@@ -87,15 +85,17 @@ def homepage():
    {'year': 2007, 'make': 'Jaguar', 'model': 'M5', 'chassis': 'E60'}
    {'year': 2003, 'make': 'Keonigsegg', 'model': 'M5', 'chassis': 'E39'}
    """
+   
+   #MAKES QUERY
    all_db_entries = db.cars.find({},{"_id":0})
    all_db_entries_array = []
 
    for i in all_db_entries:
       all_db_entries_array.append(i)
 
-   print(all_db_entries_array)
+   # print(all_db_entries_array)
 
-   #display brand options in dropdown
+   #display make options in dropdown
    makes_query = db.cars.find({},{"make":1,"_id":0})
    makes_array = set()
    #extract literal make name from returned cursor object
@@ -104,27 +104,32 @@ def homepage():
    # print(makes_array)
    
 
-   
-   
    # MODELS QUERY
-   """If we send all models in db to template, we can use autocomplete in js
-   to match to a model but first we have to pull all models from db and send to the template"""
    models_query = db.cars.find({},{"model":1,"_id":0})
    models_array = []
    #extract literal make name from returned cursor object
    for model in models_query:
       models_array.append(model['model'])
-   # print(models_array)
+   print(models_array)
 
 
+   """all_db_entries is sent to home template and actively filtered in JS 
+      we listen for changes in makes dropdown, take the selected value in makes dropdown
+      and use it to get models who have the selected make
 
+      this is done by iterating all_entries and finding elements that have makes which match
+      the selected target make, we then get the 'model' value from this matching element and store it in array
+      we then iterate this models array and create html elements in the dropdown for each model that has the target make
+      
+
+   """
    return render_template('home.html',makes_directory = makes_array,models_directory = models_array,all_db_entries_array=json.dumps(all_db_entries_array))
 
 @app.route('/search',methods=['GET','POST'])
 def search():
 
    
-  
+  #get entered car entered in search form by user
    if request.method == 'POST':
       
       year = request.form['Year']
@@ -141,8 +146,18 @@ def search():
          'make':make,
          'model':model
       }
-      # handle_data(car_object)
-      # car results = scrape(car)
+
+      #check db for last scrape data
+
+
+      # if handle_data(car_object):
+      #       pass
+      #       # # current_listing_clean = open("cleaned_data_CURRENT_LISTINGS.txt","r",encoding="utf-8")
+      #       # # sold_listings_clean = open("cleaned_data_SOLD_DATA.txt","r",encoding="utf-8")
+      #       # predictionsAndStats()
+
+
+      #car results = predictionsAndStats()
    
       # hit backend API to retrieve results for the specific car
       # api_response = handle_data(car)
