@@ -75,12 +75,15 @@ def clean_the_data(dirty_file,year,make,model):
                     year = 0000
             
             #get price
-            price = (re.findall('\$\d[0-9][0-9].+',line))[0]
-            print(price)
-            if not year:
-                year = 0000
-            price = price.replace('$','')
-            
+            try:
+                price = (re.findall('\$\d[0-9][0-9].+',line))[0]
+                print(price)
+                if not year:
+                    year = 0000
+                price = price.replace('$','')
+            except IndexError as error:
+                pass
+
             #THIS ONLY RUNS IF THE LINE HAS 'ON' in it, otherwise we go to else and dont include sale date because there is none
             #if no sale date, then we are dealing with current listing
             # for handling the 'on' in the sold data
