@@ -25,7 +25,7 @@ from flask_pymongo import PyMongo
 # from config import Config
 
 
-# from data_processing_scripts import handle_data
+from data_processing_scripts import handle_data
 
 
 import os

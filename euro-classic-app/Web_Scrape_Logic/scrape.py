@@ -216,19 +216,19 @@ def fileWrite(data,fileIn):
 
 def scrapeFunc(car):
         driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
-        # ebay(car,driver)
-        # CL(car,driver)
+        ebay(car,driver)
+        CL(car,driver)
         bat(car,driver)
 
 
-car  = {
-    'year':2001,
-    'make':'BMW',
-    'model':'M5'
-}
+# car  = {
+#     'year':2001,
+#     'make':'BMW',
+#     'model':'M5'
+# }
 
 
-scrapeFunc(car)
+# scrapeFunc(car)
 
 
 

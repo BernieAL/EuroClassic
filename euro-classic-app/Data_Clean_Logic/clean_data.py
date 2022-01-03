@@ -77,7 +77,6 @@ def clean_the_data(dirty_file,year,make,model):
             #get price
             try:
                 price = (re.findall('\$\d[0-9][0-9].+',line))[0]
-                print(price)
                 if not year:
                     year = 0000
                 price = price.replace('$','')
@@ -125,7 +124,7 @@ def clean_the_data(dirty_file,year,make,model):
 
 
 # clean_the_data("SOLD_DATA.txt",'2012','BMW','M5')
-clean_the_data("CURRENT_LISTINGS.txt",'2012','BMW','M5')
+# clean_the_data("CURRENT_LISTINGS.txt",'2012','BMW','M5')
 """
 make,model,year,price
 """
