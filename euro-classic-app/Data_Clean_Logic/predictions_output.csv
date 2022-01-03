@@ -1,2 +1,0 @@
-clean_output_file_CURRENT_LISTINGS= open("cleaned_data_CURRENT_LISTINGS.csv","r",encoding="utf-8")
-clean_output_file_SOLD_DATA= open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")

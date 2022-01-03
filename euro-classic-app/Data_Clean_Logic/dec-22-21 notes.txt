@@ -1,7 +1,0 @@
-retrieve all makes and models on initial visit to home
-send to home 
-filter in home template using javscript
-
-
-
-hit james edition for cars also

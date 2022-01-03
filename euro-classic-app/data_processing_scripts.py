@@ -34,7 +34,7 @@ def handle_data(car):
     # scrape.scrapeFunc(car)
 
     clean_data.clean_the_data("CURRENT_LISTINGS.txt",car['year'],car['make'],car['model'])
-    clean_data.clean_the_data("SOLD_DATA.txt",car['year'],car['make'],car['model'])
+    # clean_data.clean_the_data("SOLD_DATA.txt",car['year'],car['make'],car['model'])
     
      
 

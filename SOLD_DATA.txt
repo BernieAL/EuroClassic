@@ -1,15 +1,8 @@
-"""
-This file is going to hold the historic sales data from BAT
-seperate from the CL and ebay data. 
-
-CL and ebay data are current prices
-BAT collected data is all sold.
-Need to incorporate REGEX to get date from BAT listings as well
-
-Write the CL and ebay data to a sepereate file from the BAT data
-"""
-
-DATA SCRAPED: 27/12/2021 
+DATA SCRAPED: 03/01/2022 
+2008 BMW M5 6-Speed Sold for $36,000 on 12/29/21 
+---------------------- 
+No Reserve: 1995 BMW M5 Touring Sold for $65,000 on 12/28/21 
+---------------------- 
 43k-Mile 2000 BMW M5 Sold for $44,250 on 12/22/21 
 ---------------------- 
 2008 BMW M5 6-Speed Sold for $28,500 on 12/21/21 

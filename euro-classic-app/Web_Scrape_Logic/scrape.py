@@ -50,12 +50,12 @@ current_listing_output = open("CURRENT_LISTINGS.txt","a",encoding="utf-8")
 sold_output = open("SOLD_DATA.txt","a",encoding="utf-8")
 
 # Create a new chromedriver
-driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
+# driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
 
 # ===========================================================================
 # ===========================================================================
 # # :::::: BEGIN EBAY SECTION 
-def ebay(car):
+def ebay(car,driver):
     driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
     # driver.implicitly_wait(15)
 
@@ -99,7 +99,7 @@ def ebay(car):
 
 
 # :::::: BEGIN CRAIGLIST SECTION
-def CL(car):
+def CL(car,driver):
     # search route option 1 - longer and more human-like
     # driver.get('https://miami.craigslist.org/mdc/')
     # CL_searchBar = driver.find_element_by_css_selector('#query')
@@ -135,7 +135,7 @@ def CL(car):
 # ===========================================================================
 # :::::: BEGIN BAT SECTION
 
-def bat(car):
+def bat(car,driver):
         # # #this is to get passed "show notifications prompt"
         # # driver.send_keys(Keys.TAB)
         # # driver.send_keys(Keys.TAB)
@@ -153,8 +153,9 @@ def bat(car):
 
         # # #CLICK ONCE - To be replaced by repeated click logic
         # show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
-        show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[4]/div[3]/div[4]/button')
-        time.sleep(.45)
+        # show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[4]/div[3]/div[4]/button')
+        show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[3]/div[3]/div[4]/button')
+        time.sleep(2)
         # show_more.click()
 
         # # # LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
@@ -174,7 +175,7 @@ def bat(car):
 
         #target parent group that holds individual previous listing items
         prev_listings = driver.find_element_by_class_name('filter-group')
-        time.sleep(1)
+        time.sleep(1.5)
         #extract all block elements from parents group, this gives each indiv listing
         item_list = prev_listings.find_elements_by_class_name('block')
     
@@ -214,45 +215,29 @@ def fileWrite(data,fileIn):
 
 
 def scrapeFunc(car):
-
-   
-    # vehicle = f"{make} {model}"
-    # print(vehicle)
-
-    ebay(car)
-    CL(car)
-    bat(car)
+        driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
+        # ebay(car,driver)
+        # CL(car,driver)
+        bat(car,driver)
 
 
-# car  = {
-#     'year':2001,
-#     'make':'BMW',
-#     'model':'M5'
-# }
-# scrape(car)
+car  = {
+    'year':2001,
+    'make':'BMW',
+    'model':'M5'
+}
 
 
+scrapeFunc(car)
 
 
-# # Get the webelement of the text input box
-# search_box = driver.find_element_by_name("q")
-
-# # Send the string "Selenium!" to the input box
-# search_box.send_keys("Selenium!")
-
-# # Submit the input, which starts a search
-# search_box.submit()
-
-# # Wait to see the results of the search
-# time.sleep(5)
-
-# # Close the driver
-# driver.quit()
 
 def test():
     print( "hello this is from scrape.py")
 
 """
+RAW DATA EXAMPLES::
+
 
 ebay raw result:
     '$91,000.00  ', '$40,100.00 NEW LISTING1966 Jaguar E-Type ', '$60,099.00 1969 Jaguar E-Type Roadster ', '$35,100.00 1969 Jaguar E-Type ', '$89,500.00 1969 Jaguar E-Type Convertible ', '$79,900.00 1968 Jaguar E-Type ', '$45,100.00 1970 Jaguar E-Type Convertible ', '$102,000.00 1963 Jaguar E-Type ', '$187,500.00 1964 Jaguar E-Type ', '$84,987.00 1974 Jaguar E-Type ', '$109,500.00 1963 Jaguar E-Type ', '$158,995.00 1966 Jaguar E-Type Series 1 4.2 Liter Fixed-head coupe ', '$89,900.00 1971 Jaguar E-Type Fixed Head Coupe ', '$56,995.00 1969 Jaguar E-Type XK-E 2+2 Series 2 ', '$74,625.00 1968 Jaguar E-Type XKE Series II 4.2L 6 cyl 4 spd Convertible ', '$99,500.00 1973 Jaguar 
