@@ -44,9 +44,14 @@
     color: #ffffff;
   }
 
-  canvas{
+  .chart {
+    position: relative;
+    width: 50vw;
+    height: 50vh;
+  }
+  /* canvas{
 
     width:1000px !important;
     height:600px !important;
   
-  }
+  } */

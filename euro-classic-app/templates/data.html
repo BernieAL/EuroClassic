@@ -13,9 +13,13 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
   <link href="https://data.jsdelivr.com/v1/package/npm/chart.js/badge)](https://www.jsdelivr.com/package/npm/chart.js">
   <h1>this is data.html page</h1>
   <h2>You searched: {{car}} </h2>
-  
-{% endblock DataA %}
     
+
+  <div class="chart">
+    <canvas id="myChart" width="400" height="400"></canvas>
+  </div>
+{% endblock DataA %}
+
 
 </body>
 
@@ -29,37 +33,44 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
       
 
       const ctx = document.getElementById('myChart').getContext('2d');
-      const myChart = new Chart(ctx, {
-                                type: 'line',
-                                data: {
-                                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                                    datasets: [{
-                                        label: 'Sold Prices over time',
-                                        data: [23400, 19000, 35000, 51000, 12000, 31000],
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                           
-                                        ],
-                                        borderColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)'
-                                        ],
-                                        borderWidth: 10
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
-                                    }
-                                }
-                            });
+      let Prices = ['6-2020','12-2020','6-2021'];
+      const labels = Prices
+      
+      const data = {
+          labels,
+          datasets: [{
+              data:[45000,29500,31000],
+              label:"Historic Sale Data",
+              fill:true,
+              backgroundColor: '#8fbc8f',
+              borderColor:'#www',
+              pointBackgroundColor:'rgb(189,195,199)',
+              tension:0.05,
+          },
+        ],
+      };
 
+      const config = {
+          type: 'line',
+          data: data,
+          options: {
+              radius: 5,
+              hitRadius:10,
+              responsive:true,
+              scales: {
+                  y:{
+                      ticks:{
+                        //   callback just for attaching '$' to value
+                          callback: function(value){
+                              return  '$'+ value
+                          }
+                      }
+                  }
+              }
+          }
+      }
+
+      const myChart = new Chart(ctx,config)
 
     </script>
 {% endblock script %}

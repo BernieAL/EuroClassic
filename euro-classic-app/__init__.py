@@ -25,7 +25,7 @@ from flask_pymongo import PyMongo
 # from config import Config
 
 
-from data_processing_scripts import handle_data
+# from data_processing_scripts import handle_data
 
 
 import os
@@ -68,6 +68,7 @@ db = mongodb_client.db
 # db.last_updated.insert_many([
 #     { "make": "BMW", "model": "M3", last_scraped='12-27-2021'}
 # ])
+
 
 
 
@@ -120,7 +121,7 @@ def homepage():
       this is done by iterating all_entries and finding elements that have makes which match
       the selected target make, we then get the 'model' value from this matching element and store it in array
       we then iterate this models array and create html elements in the dropdown for each model that has the target make
-      
+
 
    """
    return render_template('home.html',makes_directory = makes_array,models_directory = models_array,all_db_entries_array=json.dumps(all_db_entries_array))
@@ -152,9 +153,10 @@ def search():
 
       # if handle_data(car_object):
       #       pass
-      #       # # current_listing_clean = open("cleaned_data_CURRENT_LISTINGS.txt","r",encoding="utf-8")
-      #       # # sold_listings_clean = open("cleaned_data_SOLD_DATA.txt","r",encoding="utf-8")
+      #       # # current_listing_clean = open("cleaned_data_CURRENT_LISTINGS.csv","r",encoding="utf-8")
+      #       # # sold_listings_clean = open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
       #       # predictionsAndStats()
+      
 
 
       #car results = predictionsAndStats()
@@ -172,6 +174,19 @@ def search():
             {"model":"Skyline", "doors":2}
         ],
       }
+
+      sold_listings_clean = open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
+      # print(sold_listings_clean)
+      sold_prices_for_car = []
+      
+      for i in sold_listings_clean:
+            indiv_line = i.split(',')
+            try:
+               sold_prices_for_car.append(indiv_line[3])
+               
+            except IndexError as e:
+               pass
+      # print(len(sold_prices_for_car))   
       return render_template('data.html',car=car, car_results=json.dumps(car_results))
       # return "hello"
    else:

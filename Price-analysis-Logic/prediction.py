@@ -29,20 +29,20 @@ df_SOLD_DATA = pd.read_csv("cleaned_data_SOLD_DATA.csv")
 # print(df_SOLD_DATA.describe(include='object'))
 
 # print(df_SOLD_DATA['DateSold'])
-
+ 
 
 
 df_x = df_SOLD_DATA['Price']
 df_y = df_SOLD_DATA['DateSold']
 
-# print(df_x.describe())
-# print(df_y.describe())
+print(df_x.describe())
+print(df_y.describe())
 
-# initialize linear regression model
-reg = linear_model.LinearRegression()
+# # initialize linear regression model
+# reg = linear_model.LinearRegression()
 
-x_train, x_test, y_train,y_test = train_test_split(df_x,df_y,test_size=0.33,random_state=42)
-x_train = x_train.values.reshape(-1,1)
-x_test = x_test.values.reshape(-1,1)
-#train model
-reg.fit(x_train,y_train)
+# x_train, x_test, y_train,y_test = train_test_split(df_x,df_y,test_size=0.33,random_state=42)
+# x_train = x_train.values.reshape(-1,1)
+# x_test = x_test.values.reshape(-1,1)
+# #train model
+# reg.fit(x_train,y_train)
