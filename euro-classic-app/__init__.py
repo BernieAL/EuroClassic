@@ -20,7 +20,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import json
 from flask_pymongo import PyMongo
-
+from pymongo import InsertMany
 # from scrape import test
 # from config import Config
 
@@ -68,6 +68,8 @@ db = mongodb_client.db
 # db.last_updated.insert_many([
 #     { "make": "BMW", "model": "M3", last_scraped='12-27-2021'}
 # ])
+
+
 
 
 
@@ -121,8 +123,6 @@ def homepage():
       this is done by iterating all_entries and finding elements that have makes which match
       the selected target make, we then get the 'model' value from this matching element and store it in array
       we then iterate this models array and create html elements in the dropdown for each model that has the target make
-
-
    """
    return render_template('home.html',makes_directory = makes_array,models_directory = models_array,all_db_entries_array=json.dumps(all_db_entries_array))
 
@@ -194,6 +194,38 @@ def search():
 
 @app.route('/about')
 def about():
+
+   veh_year = []
+   veh_model = []
+   veh_sale_price = []
+   veh_sale_date = []
+   
+   sold_listings_clean = open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
+   
+
+   for line in sold_listings_clean:
+      listing = line.split(',')
+      try:
+         veh_year.append(listing[0])
+         veh_model.append(listing[2])
+         veh_sale_price.append(listing[3])
+         veh_sale_date.append(listing[4])
+      except IndexError as E:
+         pass
+   
+   # bulk = db.sale_data.initializeUnorderedBulkOp();
+   # sale_data_collection = db.sale_data
+   # for i in len(veh_model):
+   #    data = [
+   #       InsertMany({
+   #             "model":veh_model[i],
+   #             "year":veh_year[i],
+   #             "Sale price": veh_sale_price[i],
+   #             "Sale Date":veh_sale_date[i]
+   #             })]
+   # db.sale_date.bulk_write(data)
+   db.sale_data.insert_many([{'model':veh_model[i]} for i in range(len(veh_model))])
+
    return render_template('data.html')
    
 @app.route('/login')

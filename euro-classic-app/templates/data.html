@@ -14,10 +14,35 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
   <h1>this is data.html page</h1>
   <h2>You searched: {{car}} </h2>
     
+  <div class="container">
+        <div class="chart">
+            <canvas id="myChart1" ></canvas>
+        </div>
 
-  <div class="chart">
-    <canvas id="myChart" width="400" height="400"></canvas>
-  </div>
+        <!-- <div class="chart">
+            <canvas id="myChart2" width="400" height="400"></canvas>
+        </div> -->
+   </div>
+<!-- 
+    <div class="container">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+              <h1 class="h2">Dashboard</h1>
+              <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group mr-2">
+                  <button class="btn btn-sm btn-outline-secondary">Share</button>
+                  <button class="btn btn-sm btn-outline-secondary">Export</button>
+                </div>
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  This week
+                </button>
+              </div>
+            </div>
+  
+            <canvas class="my-4 chartjs-render-monitor" id="myChart1" style="display: block;"></canvas>
+            <canvas class="my-4 chartjs-render-monitor" id="myChart2" style="display: block;"></canvas>
+    </div> -->
 {% endblock DataA %}
 
 
@@ -32,12 +57,12 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
       console.log(car_results)
       
 
-      const ctx = document.getElementById('myChart').getContext('2d');
-      let Prices = ['6-2020','12-2020','6-2021'];
-      const labels = Prices
+      const ctx1 = document.getElementById('myChart1').getContext('2d');
+    //   let dates1 = 
+      let labels = ['6-2020','12-2020','6-2021'];
       
-      const data = {
-          labels,
+      const data1 = {
+          labels =['6-2020','12-2020','6-2021'],
           datasets: [{
               data:[45000,29500,31000],
               label:"Historic Sale Data",
@@ -52,7 +77,7 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
 
       const config = {
           type: 'line',
-          data: data,
+          data: data1,
           options: {
               radius: 5,
               hitRadius:10,
@@ -70,7 +95,53 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
           }
       }
 
-      const myChart = new Chart(ctx,config)
+      const myChart1 = new Chart(ctx1,config)
+    
+      //========================================
+      var car_results = JSON.parse('{{ car_results|safe }}')
+      console.log(car_results)
+      
+      //===================================================
+      const ctx2 = document.getElementById('myChart2').getContext('2d');
+      let dates2 = ['6-2020','12-2020','6-2021'];
+      let labels = dates2
+      
+      const data2 = {
+          labels,
+          datasets: [{
+              data:[45000,29500,31000],
+              label:"Historic Sale Data",
+              fill:true,
+              backgroundColor: '#8fbc8f',
+              borderColor:'#www',
+              pointBackgroundColor:'rgb(189,195,199)',
+              tension:0.05,
+          },
+        ],
+      };
+
+      const config2 = {
+          type: 'line',
+          data: data2,
+          options: {
+              radius: 5,
+              hitRadius:10,
+              responsive:true,
+              scales: {
+                  y:{
+                      ticks:{
+                        //   callback just for attaching '$' to value
+                          callback: function(value){
+                              return  '$'+ value
+                          }
+                      }
+                  }
+              }
+          }
+      }
+
+      const myChart2 = new Chart(ctx2,config2)
+
 
     </script>
 {% endblock script %}
