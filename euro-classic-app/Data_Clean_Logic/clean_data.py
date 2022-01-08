@@ -40,7 +40,7 @@ model = 'RS5'
 temp = []
 def fileWrite(data,fileIn):
     for line in data:
-        temp = f"{line} \n"
+        temp = f"{line} \n" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! try writing to file without \n to see if reading the data is easier for prediction
         fileIn.write(temp)
     fileIn.write("---------------------- \n")
 

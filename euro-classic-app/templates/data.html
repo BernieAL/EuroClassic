@@ -53,8 +53,12 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
 <link href="https://data.jsdelivr.com/v1/package/npm/chart.js/badge)](https://www.jsdelivr.com/package/npm/chart.js">
 
     <script>
+
+
       var car_results = JSON.parse('{{ car_results|safe }}')
       console.log(car_results)
+
+      var sales_records_for_car = JSON.parse()
       
 
       const ctx1 = document.getElementById('myChart1').getContext('2d');
