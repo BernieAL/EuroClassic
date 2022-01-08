@@ -58,17 +58,26 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
       var car_results = JSON.parse('{{ car_results|safe }}')
       console.log(car_results)
 
-      var sales_records_for_car = JSON.parse()
+      var sales_records_for_car = JSON.parse('{{ sales_records|safe }}')
+      console.log(sales_records_for_car[0]['Make'])
+      
+      sale_prices = []
+      sale_dates = []
+
+      for (i=0; i < sales_records_for_car.length;i++){
+          sale_prices.push(sales_records_for_car[i]['Price'])
+          sale_dates.push(sales_records_for_car[i]['SaleDate'])
+      }
       
 
       const ctx1 = document.getElementById('myChart1').getContext('2d');
     //   let dates1 = 
-      let labels = ['6-2020','12-2020','6-2021'];
+      let labels = sale_dates;
       
       const data1 = {
-          labels =['6-2020','12-2020','6-2021'],
+          labels,
           datasets: [{
-              data:[45000,29500,31000],
+              data:sale_prices,
               label:"Historic Sale Data",
               fill:true,
               backgroundColor: '#8fbc8f',
@@ -106,45 +115,45 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
       console.log(car_results)
       
       //===================================================
-      const ctx2 = document.getElementById('myChart2').getContext('2d');
-      let dates2 = ['6-2020','12-2020','6-2021'];
-      let labels = dates2
+      // const ctx2 = document.getElementById('myChart2').getContext('2d');
+      // let dates2 = ['6-2020','12-2020','6-2021'];
+      // let labels = dates2
       
-      const data2 = {
-          labels,
-          datasets: [{
-              data:[45000,29500,31000],
-              label:"Historic Sale Data",
-              fill:true,
-              backgroundColor: '#8fbc8f',
-              borderColor:'#www',
-              pointBackgroundColor:'rgb(189,195,199)',
-              tension:0.05,
-          },
-        ],
-      };
+      // const data2 = {
+      //     labels,
+      //     datasets: [{
+      //         data:[45000,29500,31000],
+      //         label:"Historic Sale Data",
+      //         fill:true,
+      //         backgroundColor: '#8fbc8f',
+      //         borderColor:'#www',
+      //         pointBackgroundColor:'rgb(189,195,199)',
+      //         tension:0.05,
+      //     },
+      //   ],
+      // };
 
-      const config2 = {
-          type: 'line',
-          data: data2,
-          options: {
-              radius: 5,
-              hitRadius:10,
-              responsive:true,
-              scales: {
-                  y:{
-                      ticks:{
-                        //   callback just for attaching '$' to value
-                          callback: function(value){
-                              return  '$'+ value
-                          }
-                      }
-                  }
-              }
-          }
-      }
+      // const config2 = {
+      //     type: 'line',
+      //     data: data2,
+      //     options: {
+      //         radius: 5,
+      //         hitRadius:10,
+      //         responsive:true,
+      //         scales: {
+      //             y:{
+      //                 ticks:{
+      //                   //   callback just for attaching '$' to value
+      //                     callback: function(value){
+      //                         return  '$'+ value
+      //                     }
+      //                 }
+      //             }
+      //         }
+      //     }
+      // }
 
-      const myChart2 = new Chart(ctx2,config2)
+      // const myChart2 = new Chart(ctx2,config2)
 
 
     </script>

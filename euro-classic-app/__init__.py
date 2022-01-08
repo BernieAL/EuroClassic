@@ -201,7 +201,7 @@ def search():
             except IndexError as e:
                pass
       # print(len(sold_prices_for_car))   
-      return render_template('data.html',car=car, car_results=json.dumps(car_results),sale_records=json.dumps(sale_records_array))
+      return render_template('data.html',car=car, car_results=json.dumps(car_results),sales_records=json.dumps(sale_records_array))
       # return "hello"
    else:
       return "not post req"
