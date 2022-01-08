@@ -19,9 +19,9 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
             <canvas id="myChart1" ></canvas>
         </div>
 
-        <!-- <div class="chart">
+        <div class="chart">
             <canvas id="myChart2" width="400" height="400"></canvas>
-        </div> -->
+        </div>
    </div>
 <!-- 
     <div class="container">
@@ -59,8 +59,8 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
       console.log(car_results)
 
       var sales_records_for_car = JSON.parse('{{ sales_records|safe }}')
-      console.log(sales_records_for_car[0]['Make'])
-      
+       
+      model = sales_records_for_car[0]['Model']
       sale_prices = []
       sale_dates = []
 
@@ -71,24 +71,55 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
       
 
       const ctx1 = document.getElementById('myChart1').getContext('2d');
+      const ctx2 = document.getElementById('myChart2').getContext('2d');
     //   let dates1 = 
-      let labels = sale_dates;
+      let labels = sale_dates.reverse();
       
       const data1 = {
           labels,
           datasets: [{
               data:sale_prices,
-              label:"Historic Sale Data",
+              label: "Historic Sale Price",
               fill:true,
               backgroundColor: '#8fbc8f',
               borderColor:'#www',
               pointBackgroundColor:'rgb(189,195,199)',
               tension:0.05,
-          },
+          },{
+              data:0,
+              label: "Historic Sale Price",
+              fill:true,
+              backgroundColor: '#8fbc8f',
+              borderColor:'#www',
+              pointBackgroundColor:'rgb(189,195,199)',
+              tension:0.05,
+            }
+        ],
+      };
+      
+      const data2 = {
+          labels,
+          datasets: [{
+              data:[10,20,30],
+              label: "Historic Sale Price",
+              fill:true,
+              backgroundColor: '#8fbc8f',
+              borderColor:'#www',
+              pointBackgroundColor:'rgb(189,195,199)',
+              tension:0.05,
+          },{
+              data:0,
+              label: "Historic Sale Price",
+              fill:true,
+              backgroundColor: '#8fbc8f',
+              borderColor:'#www',
+              pointBackgroundColor:'rgb(189,195,199)',
+              tension:0.05,
+            }
         ],
       };
 
-      const config = {
+      const config1 = {
           type: 'line',
           data: data1,
           options: {
@@ -107,8 +138,28 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
               }
           }
       }
+      const config2 = {
+          type: 'line',
+          data: data2,
+          options: {
+              radius: 5,
+              hitRadius:10,
+              responsive:true,
+              scales: {
+                  y:{
+                      ticks:{
+                        //   callback just for attaching '$' to value
+                          callback: function(value){
+                              return  '$'+ value
+                          }
+                      }
+                  }
+              }
+          }
+      }
 
-      const myChart1 = new Chart(ctx1,config)
+      const myChart1 = new Chart(ctx1,config1)
+      const myChart2 = new Chart(ctx2,config2)
     
       //========================================
       var car_results = JSON.parse('{{ car_results|safe }}')
