@@ -12,6 +12,9 @@
 # https://github.com/mongodb-developer/flask-pymongo-example/blob/main/mflix/db.py
 # https://analyticsindiamag.com/guide-to-pymongo-a-python-wrapper-for-mongodb/
 
+# BY ROWS BY COL VAL PANDAS - https://stackoverflow.com/a/17071908
+
+
 from dns import message
 from flask import Flask, config,render_template,request
 from flask_pymongo.wrappers import MongoClient
@@ -227,8 +230,8 @@ def search():
 def about():
 
   
-# #check db for last scrape data
-#       #retrieving all sale records for specific model
+# check db for last scrape data
+# retrieving all sale records for specific model
    model = "M5"
    
    sale_records_query = db.sale_data.find({'Model':model},{'_id':0,'make':0,})
@@ -334,9 +337,24 @@ def get_all_sale_records():
 
 
 
-#HELPER FUNCTIONS:
+# ::: HELPER FUNCTIONS :::
 
 
+
+"""
+Reads in csv to DF, drops na columns
+gets unique years as array
+set up dictionary where each key is a unique year
+iterate unique years, for each year, find rows in Df that have matching year,
+   push to dictionary under year as key
+
+ideal structure for dictionary:
+   mydict = {
+         1988: [all car record rows for 1988],
+         1991: [all car reords rows for 1991],
+         .....
+      }
+"""
 def sortByYear(file):
 
    data = file
@@ -360,6 +378,9 @@ def sortByYear(file):
    print(mydict)
    
 
+
+
+#  ::: END HELPERS :::
 
 
 
