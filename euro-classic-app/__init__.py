@@ -24,7 +24,6 @@ from flask_pymongo import PyMongo
 # from scrape import test
 # from config import Config
 
-
 # from data_processing_scripts import handle_data
 
 
@@ -34,8 +33,9 @@ import configparser
 
 
 app = Flask(__name__)
+
+#MONGO CONNECTION AND CONFIGURATION
 app.config['MONGO_URI'] = "mongodb+srv://admin:s15koukie39@cluster0.7sxfp.mongodb.net/EURO_CLASSIC?retryWrites=true&w=majority"
-#set up mongodb
 mongodb_client = PyMongo(app) 
 db = mongodb_client.db
 
@@ -79,17 +79,15 @@ def homepage():
 
    
    
-   #HIT DB AND RETRIEVE ALL MAKES AND MODELS
+   #HIT DB AND RETRIEVE ALL MAKES AND MODELS TO POPULATE JS DROPDROWN ON TEMPLATE
    
-   # This gets all db entries excluding their ID's
-   """
+   """:::::::ALL ENTRIES RESULT FORMAT:::::
    {'year': 2001, 'make': 'BMW', 'model': 'M5', 'chassis': 'E39'}
    {'year': 1984, 'make': 'Ferrari', 'model': 'M3', 'chassis': 'E30'}
    {'year': 2007, 'make': 'Jaguar', 'model': 'M5', 'chassis': 'E60'}
    {'year': 2003, 'make': 'Keonigsegg', 'model': 'M5', 'chassis': 'E39'}
    """
-   
-   #MAKES QUERY
+   #RETRIEVE ALL VEHICLE SEARCH OPTIONS (MAKES,MODELS)
    all_db_entries = db.cars.find({},{"_id":0})
    all_db_entries_array = []
 
@@ -97,8 +95,9 @@ def homepage():
       all_db_entries_array.append(i)
    # print(all_db_entries_array)
 
-   #MAKES QUERY - for dropdown make options
+   #MAKES QUERY - for dropdown MAKE options, 1 = include this attribute, 0 = exclude this attribute
    makes_query = db.cars.find({},{"make":1,"_id":0})
+   # Using set to omit duplicates
    makes_array = set()
    #extract literal make name from returned cursor object
    for makes in makes_query:
@@ -106,12 +105,12 @@ def homepage():
    # print(makes_array)
    
 
-   # MODELS QUERY - for dropdown  model options
+   # MODELS QUERY - for dropdown MODEL options 1 = include this attribute,0 = exclude this attribute
    models_query = db.cars.find({},{"model":1,"_id":0})
-   models_array = []
+   models_array = set()
    #extract literal make name from returned cursor object
    for model in models_query:
-      models_array.append(model['model'])
+      models_array.add(model['model'])
    print(models_array)
 
 
@@ -143,10 +142,7 @@ def search():
       year = request.form['Year']
       make = request.form['Make']
       model = request.form['Model']
-      # print(year)
-      # print(make)
-      # print(model)
-
+      
       car = f"{year} {make} {model}" 
 
       car_object = {
@@ -200,11 +196,27 @@ def search():
                
             except IndexError as e:
                pass
-      # print(len(sold_prices_for_car))   
+      # print(len(sold_prices_for_car)) 
+
+
+
       return render_template('data.html',car=car, car_results=json.dumps(car_results),sales_records=json.dumps(sale_records_array))
-      # return "hello"
+      
    else:
       return "not post req"
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/about')
 def about():
