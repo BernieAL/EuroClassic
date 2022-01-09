@@ -79,6 +79,9 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
         </tr>
       </table>
     </div>
+
+
+
 {% endblock DataA %}
 
 
@@ -98,6 +101,15 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
       var sales_records_for_car = JSON.parse('{{ sales_records|safe }}')
       console.log(sales_records_for_car)
        
+
+
+      for (i=0; i < sales_records_for_car;i++){
+          console.log(sales_records_for_car[0])
+      }
+
+
+
+
       model = sales_records_for_car[0]['Model']
       sale_prices = []
       sale_dates = []

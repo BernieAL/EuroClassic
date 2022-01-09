@@ -20,6 +20,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import json
 from flask_pymongo import PyMongo
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 # from scrape import test
 # from config import Config
@@ -126,7 +129,8 @@ def homepage():
 
 
 
-
+def test():
+   print("this is a test function call")
 #SEARCH CALLED FROM FORM SUBMISSION ON HOMEPAGE
 #SEARCH CHECKS IS POST REQ
 #GETS THE PARAMETERS OFF THE FORM
@@ -162,7 +166,7 @@ def search():
 
          for model in sale_records_query:
                sale_records_array.append(model)
-      print(sale_records_array)
+      # print(sale_records_array)
 
       #FOR PRICE PREDICTION
       #CALL TO SCRAPE AND CLEANING FUNCTION - HANDLEDATA
@@ -199,6 +203,7 @@ def search():
       # print(len(sold_prices_for_car)) 
 
 
+      sortByYear(sold_listings_clean)
 
       return render_template('data.html',car=car, car_results=json.dumps(car_results),sales_records=json.dumps(sale_records_array))
       
@@ -281,6 +286,8 @@ def account():
    return render_template('data.html')
 
 
+# :::: END ROUTE HANDLERS ::::
+
 
 #reads from csv to individual arrays specific to the parameter read in from csv
 def insert_all_from_csv_to_db():
@@ -324,7 +331,33 @@ def get_all_sale_records():
          models_array.append(model['model'])
     print(models_array)
 
-      
+
+
+
+#HELPER FUNCTIONS:
+
+
+def sortByYear(file):
+
+   data = file
+   data = pd.read_csv('./cleaned_data_SOLD_DATA.csv')
+   data.dropna
+
+   unique_years = np.unique(data['Year'])
+   # print(unique_years)
+
+   # populate dictionary with unique years
+   mydict = {}
+   for i in unique_years:
+      mydict[i] = i
+   # print(mydict)
+
+   #for each year in dict, find all rows with matching year,
+   #store in in array under that key
+   for i in unique_years:
+      t = data.loc[data['Year']==i]
+      mydict[i] = t
+   print(mydict)
    
 
 
