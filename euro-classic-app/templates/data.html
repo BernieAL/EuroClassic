@@ -3,6 +3,8 @@
 <!-- https://www.cargurus.com/Cars/price-trends/BMW-M5-d391 -->
 <!-- SENDING STUFF TO GRAPH FROM FLASK
 
+
+GRAPH REFERENCE - https://codepen.io/Ruddy/pen/yyqZqX?editors=1000
 https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-to-the-javascript-code-of-another-view-->
 
 <title>THIS IS DATA PAGE</title>
@@ -11,7 +13,7 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
 
 {% block DataA %}
   <link href="https://data.jsdelivr.com/v1/package/npm/chart.js/badge)](https://www.jsdelivr.com/package/npm/chart.js">
-  <h1>this is data.html page</h1>
+  <!-- <h1>this is data.html page</h1> -->
   <h2>You searched: {{car}} </h2>
     
   <div class="container">
@@ -43,6 +45,40 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
             <canvas class="my-4 chartjs-render-monitor" id="myChart1" style="display: block;"></canvas>
             <canvas class="my-4 chartjs-render-monitor" id="myChart2" style="display: block;"></canvas>
     </div> -->
+
+    <!-- Some sales records results -->
+    <table id ="sales_records_table">
+        <tr>
+          <th>November Sales</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+
+        <tr>
+          <td>Dallas Oak Dining Chair</td>
+          <td>20</td>
+          <td>$1,342</td>
+        </tr>
+
+        <tr>
+          <td>Benmore Glass Coffee Table</td>
+          <td>18</td>
+          <td>$1,550</td>
+        </tr>
+
+        <tr>
+          <td>Aoraki Leather Sofa</td>
+          <td>15</td>
+          <td>$4,170</td>
+        </tr>
+
+        <tr>
+          <td>Bali Outdoor Wicker Chair</td>
+          <td>25</td>
+          <td>$2,974</td>
+        </tr>
+      </table>
+    </div>
 {% endblock DataA %}
 
 
@@ -52,74 +88,42 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
 {% block script %}
 <link href="https://data.jsdelivr.com/v1/package/npm/chart.js/badge)](https://www.jsdelivr.com/package/npm/chart.js">
 
-    <script>
+<script>
 
-
+    //   Parsing object of all car_results sent in from flask
       var car_results = JSON.parse('{{ car_results|safe }}')
       console.log(car_results)
-
+    
+    //  Parsing object of all sales records for car sent in from flask
       var sales_records_for_car = JSON.parse('{{ sales_records|safe }}')
+      console.log(sales_records_for_car)
        
       model = sales_records_for_car[0]['Model']
       sale_prices = []
       sale_dates = []
 
+    //   Extract sales_prices and sales_dates from sales_records_for_Car for use in graph
       for (i=0; i < sales_records_for_car.length;i++){
           sale_prices.push(sales_records_for_car[i]['Price'])
           sale_dates.push(sales_records_for_car[i]['SaleDate'])
       }
       
 
+    //  GRAPH FOR DISPLAYING ALL SALES RECORDS FOR CAR
       const ctx1 = document.getElementById('myChart1').getContext('2d');
-      const ctx2 = document.getElementById('myChart2').getContext('2d');
-    //   let dates1 = 
-      let labels = sale_dates.reverse();
       
-      const data1 = {
-          labels,
-          datasets: [{
+      var data1 = {
+          datasets:[{
               data:sale_prices,
-              label: "Historic Sale Price",
               fill:true,
               backgroundColor: '#8fbc8f',
               borderColor:'#www',
               pointBackgroundColor:'rgb(189,195,199)',
               tension:0.05,
-          },{
-              data:0,
-              label: "Historic Sale Price",
-              fill:true,
-              backgroundColor: '#8fbc8f',
-              borderColor:'#www',
-              pointBackgroundColor:'rgb(189,195,199)',
-              tension:0.05,
-            }
-        ],
-      };
-      
-      const data2 = {
-          labels,
-          datasets: [{
-              data:[10,20,30],
-              label: "Historic Sale Price",
-              fill:true,
-              backgroundColor: '#8fbc8f',
-              borderColor:'#www',
-              pointBackgroundColor:'rgb(189,195,199)',
-              tension:0.05,
-          },{
-              data:0,
-              label: "Historic Sale Price",
-              fill:true,
-              backgroundColor: '#8fbc8f',
-              borderColor:'#www',
-              pointBackgroundColor:'rgb(189,195,199)',
-              tension:0.05,
-            }
-        ],
-      };
-
-      const config1 = {
+          }],
+          labels: sale_dates
+      }
+      var config1 = {
           type: 'line',
           data: data1,
           options: {
@@ -138,7 +142,32 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
               }
           }
       }
-      const config2 = {
+      var myChart1 = new Chart(ctx1,config1)
+      
+
+    //  GRAPH FOR SHOWING AVG PRICE FOR YEAR
+      var ctx2 = document.getElementById('myChart2').getContext('2d');
+
+      var data2 = {
+          datasets:[
+            {
+              data:[20000,23000,15000],
+              fill:"rgba(195, 40, 96, 0.1)",
+              backgroundColor: '#8fbc8f',
+              borderColor:'#www',
+              pointBackgroundColor:'rgb(189,195,199)',
+              tension:0.05,
+          },{
+              data:[11000,9000,31000],
+              fill:"rgba(255, 172, 100, 0.1)",
+              backgroundColor: '#8fbc8f',
+              borderColor:'#www',
+              pointBackgroundColor:'rgb(189,195,199)',
+              tension:0.05,
+          }],
+          labels: ["Monday","Tuesday","Thursday"]
+      }
+      var config2 = {
           type: 'line',
           data: data2,
           options: {
@@ -157,54 +186,15 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
               }
           }
       }
-
-      const myChart1 = new Chart(ctx1,config1)
-      const myChart2 = new Chart(ctx2,config2)
+      var myChart2 = new Chart(ctx2,config2)
     
-      //========================================
-      var car_results = JSON.parse('{{ car_results|safe }}')
-      console.log(car_results)
-      
-      //===================================================
-      // const ctx2 = document.getElementById('myChart2').getContext('2d');
-      // let dates2 = ['6-2020','12-2020','6-2021'];
-      // let labels = dates2
-      
-      // const data2 = {
-      //     labels,
-      //     datasets: [{
-      //         data:[45000,29500,31000],
-      //         label:"Historic Sale Data",
-      //         fill:true,
-      //         backgroundColor: '#8fbc8f',
-      //         borderColor:'#www',
-      //         pointBackgroundColor:'rgb(189,195,199)',
-      //         tension:0.05,
-      //     },
-      //   ],
-      // };
 
-      // const config2 = {
-      //     type: 'line',
-      //     data: data2,
-      //     options: {
-      //         radius: 5,
-      //         hitRadius:10,
-      //         responsive:true,
-      //         scales: {
-      //             y:{
-      //                 ticks:{
-      //                   //   callback just for attaching '$' to value
-      //                     callback: function(value){
-      //                         return  '$'+ value
-      //                     }
-      //                 }
-      //             }
-      //         }
-      //     }
-      // }
 
-      // const myChart2 = new Chart(ctx2,config2)
+    // CODE TO POPULATE SOME ENTRIES IN TABLE
+     
+
+
+
 
 
     </script>
