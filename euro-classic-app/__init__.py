@@ -171,6 +171,8 @@ def search():
       #GET ALL SALES RECORDS and CURRENT LISTINGS FROM DB FOR VEHICLE IF THEY EXIST - TO BE SENT TO TEMPLATE AND USED IN JS FOR GRAPHING
       sale_records_array = get_all_sale_records_from_db(model)
       current_listing_records_array = get_all_current_listing_records_from_db(model)
+      # print(sale_records_array)
+      # print(current_listing_records_array)
       if len(sale_records_array) == 0 or len(current_listing_records_array) == 0:
          print("NO RECORDS FOR THIS VEHICLE - INITIAL SCRAPE NEEDED")
          
@@ -186,10 +188,13 @@ def search():
 
          insert_cleaned_scraped_sale_records_from_csv_to_db()
          insert_cleaned_scraped_current_listings_from_csv_to_db()
-         sale_records_array = get_all_sale_records_from_db(model)
-         current_listing_records_array = get_all_current_listing_records_from_db(model)
-         print(sale_records_array)
-         print(current_listing_records_array)
+         sale_records_array = print(get_all_sale_records_from_db(model))
+         # current_listing_records_array = get_all_current_listing_records_from_db(model)
+         # print(sale_records_array)
+         # print(current_listing_records_array)
+         
+      print(sale_records_array)
+
    # AFTER SCRAPE AND INSERT OF ALL RECORDS TO DB, PERFORM STATS
 
       #  current_listing_clean = open("cleaned_data_CURRENT_LISTINGS.csv","r",encoding="utf-8")
@@ -326,14 +331,13 @@ def get_all_sale_records_from_db(model):
       # Find by model exclude Make and ID fields ONLY
       sale_records_query = db.sold_listings_clean.find({'Model':model},{'_id':0,'make':0,})
       #check if query returned empty
-      print(sale_records_query)
       if(sale_records_query):
          sale_records_array = []
 
          for model in sale_records_query:
             sale_records_array.append(model)
 
-      print(sale_records_array)
+      # print(sale_records_array)
       return sale_records_array
       # print(sale_records_array
 
@@ -356,7 +360,7 @@ def get_all_current_listing_records_from_db(model):
 
          for model in current_listing_records_query:
                current_listing_records_array.append(model)
-      print(current_listing_records_array)
+      # print(current_listing_records_array)
       return current_listing_records_array
 
 

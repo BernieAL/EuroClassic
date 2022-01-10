@@ -104,22 +104,24 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
 
 
       for (i=0; i < sales_records_for_car;i++){
-          console.log(sales_records_for_car[0])
+          console.log("sales records" + sales_records_for_car[i])
       }
 
 
 
 
       model = sales_records_for_car[0]['Model']
+      // console.log(model)
       sale_prices = []
       sale_dates = []
 
     //   Extract sales_prices and sales_dates from sales_records_for_Car for use in graph
       for (i=0; i < sales_records_for_car.length;i++){
-          sale_prices.push(sales_records_for_car[i]['Price'])
+          sale_prices.push(sales_records_for_car[i]['Sale_price'])
           sale_dates.push(sales_records_for_car[i]['SaleDate'])
       }
       
+      console.log(sale_prices)
 
     //  GRAPH FOR DISPLAYING ALL SALES RECORDS FOR CAR
       const ctx1 = document.getElementById('myChart1').getContext('2d');
