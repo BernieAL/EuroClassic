@@ -181,8 +181,8 @@ def search():
          
          # handle_data(car_object)
          
-   #After handle_data populates clean_data_SOLD_DATA.csv and cleaned_data_CURRENT_LISTINGS.csv, write all records from SOLD_DATA to Sale_data DB collection 
-   #And from CURRENT_LISTINGS to current_listings_data DB collection
+   #After handle_data populates clean_data_SOLD_DATA.csv and cleaned_data_CURRENT_LISTINGS.csv, write all records from SOLD_DATA to Sold_listings_clean DB collection 
+   #And from CURRENT_LISTINGS to current_listings_clean DB collection
 
          insert_cleaned_scraped_sale_records_from_csv_to_db()
          insert_cleaned_scraped_current_listings_from_csv_to_db()
@@ -197,9 +197,6 @@ def search():
       
       #  predictionsAndStats()
     
-   
-     
-
       car_results = {
           "Nissan": [
             {"model":"Sentra", "doors":4},
@@ -288,10 +285,10 @@ def insert_cleaned_scraped_sale_records_from_csv_to_db():
       
    
       # This inserts all entries from arrays into db in one go. Using inner for loop in insert_many
-      db.sold_listings_clean.insert_many([{'year':veh_year[i],   
-                                 'make':veh_make[i],
-                                 'model':veh_model[i],
-                                 'sale_price':veh_sale_price[i],
+      db.sold_listings_clean.insert_many([{'Year':veh_year[i],   
+                                 'Make':veh_make[i],
+                                 'Model':veh_model[i],
+                                 'Sale_price':veh_sale_price[i],
                                  'SaleDate':veh_sale_date[i]} for i in range(len(veh_model))])
 
 
@@ -316,23 +313,26 @@ def insert_cleaned_scraped_current_listings_from_csv_to_db():
       
    
       # This inserts all entries from arrays into db in one go. Using inner for loop in insert_many
-      db.current_listings_data.insert_many([{'year':veh_year[i],   
-                                 'make':veh_make[i],
-                                 'model':veh_model[i],
-                                 'list_price':veh_list_price[i]}for i in range(len(veh_model))])
+      db.current_listings_clean.insert_many([{'Year':veh_year[i],   
+                                 'Make':veh_make[i],
+                                 'Model':veh_model[i],
+                                 'List_price':veh_list_price[i]}for i in range(len(veh_model))])
                                  
 
 
 #retrieve all entries from db for specific model to be sent to template and used in JS
 def get_all_sale_records_from_db(model):
-   
-      sale_records_query = db.sale_data.find({'Model':model},{'_id':0,'make':0,})
+
+      # Find by model exclude Make and ID fields ONLY
+      sale_records_query = db.sold_listings_clean.find({'Model':model},{'_id':0,'make':0,})
       #check if query returned empty
+      print(sale_records_query)
       if(sale_records_query):
          sale_records_array = []
 
          for model in sale_records_query:
-               sale_records_array.append(model)
+            sale_records_array.append(model)
+
       print(sale_records_array)
       return sale_records_array
       # print(sale_records_array
@@ -348,7 +348,8 @@ def get_all_sale_records_from_db(model):
       #  print(models_array)
 
 def get_all_current_listing_records_from_db(model):
-      current_listing_records_query = db.current_listings_data.find({'Model':model},{'_id':0,'make':0,})
+      # Find by model exclude Make and ID fields ONLY
+      current_listing_records_query = db.current_listings_clean.find({'Model':model},{'_id':0,'make':0,})
       #check if query returned empty
       if(current_listing_records_query):
          current_listing_records_array = []
