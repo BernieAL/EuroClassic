@@ -37,10 +37,12 @@ clean_output_array = []
 make = 'Audi'
 model = 'RS5'
 
+
+
 temp = []
 def fileWrite(data,fileIn):
     for line in data:
-        temp = f"{line} \n" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! try writing to file without \n to see if reading the data is easier for prediction
+        temp = f"{line} \n" #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! try writing to file without \n to see if reading the data is easier for prediction
         fileIn.write(temp)
     fileIn.write("---------------------- \n")
 
@@ -115,8 +117,10 @@ def clean_the_data(dirty_file,year,make,model):
 
     
     # col_headers = f"Year,Make,Model,Price \n"
-    to_output_file.write(col_headers)
-    
+    if col_headers:
+        to_output_file.write(col_headers)
+    else:
+        to_output_file.write("ISSUE w/ Current listings")
     fileWrite(clean_output_array,to_output_file)
 
     to_output_file.close()

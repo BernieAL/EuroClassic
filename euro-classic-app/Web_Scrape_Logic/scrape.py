@@ -49,6 +49,12 @@ import time
 current_listing_output = open("CURRENT_LISTINGS.txt","a",encoding="utf-8")
 sold_output = open("SOLD_DATA.txt","a",encoding="utf-8")
 
+
+#CLEAR EXISTING FILE CONTENTS BEFORE EACH NEW SCRAPE FOR VEHICLE
+
+current_listing_output.truncate(0)
+sold_output.truncate(0)
+
 # Create a new chromedriver
 # driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
 
@@ -85,7 +91,7 @@ def ebay(car,driver):
     #write date of scrape to file right before data
     today = date.today()
     # dd/mm/YY
-    current_date = today.strftime("%d/%m/%Y")
+    current_date = today.strftime("%m/%d/%Y")
     date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
     current_listing_output.write(date_string)   
 
@@ -124,7 +130,7 @@ def CL(car,driver):
     #write date of scrape to file right before data
     today = date.today()
     # dd/mm/YY
-    current_date = today.strftime("%d/%m/%Y")
+    current_date = today.strftime("%m/%d/%Y")
     date_string = f" :::CRAIGLIST - DATA SCRAPED ON: {current_date} \n"
     current_listing_output.write(date_string)   
 
@@ -150,28 +156,37 @@ def bat(car,driver):
         model = car['model']
         driver.get(f'https://bringatrailer.com/{make}/{model}')
         # # https://bringatrailer.com/bmw/e39-m5/?q=e39%20m5
-
+        
+        
+        
+        time.sleep(2)
         # # #CLICK ONCE - To be replaced by repeated click logic
         # show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
         # show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[4]/div[3]/div[4]/button')
-        show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[3]/div[3]/div[4]/button')
+        # show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[3]/div[3]/div[4]/button')
+        # /html/body/div[2]/div[2]/div/div/div[37]/div[3]/div[4]/button/span[1]
+        try:
+            show_more = driver.find_element_by_link_text('Show More')
+             # # # LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
+            while show_more:
+                try:
+                    show_more.click()
+                    time.sleep(2)
+                except ElementNotVisibleException:
+                    print('NOTHING MORE TO LOAD')
+                    break
+                except NoSuchElementException:
+                    print('ELEMENT NOT FOUND')
+                    break
+                except StaleElementReferenceException:
+                    print('NO MORE RESULTS TO LOAD')
+                    break
+        except NoSuchElementException as e:
+            pass
         time.sleep(2)
         # show_more.click()
 
-        # # # LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
-        while show_more:
-            try:
-                show_more.click()
-                time.sleep(2)
-            except ElementNotVisibleException:
-                print('NOTHING MORE TO LOAD')
-                break
-            except NoSuchElementException:
-                print('ELEMENT NOT FOUND')
-                break
-            except StaleElementReferenceException:
-                print('NO MORE RESULTS TO LOAD')
-                break
+       
 
         #target parent group that holds individual previous listing items
         prev_listings = driver.find_element_by_class_name('filter-group')
@@ -191,7 +206,7 @@ def bat(car,driver):
         #write date of scrape to file right before data
         today = date.today()
         # dd/mm/YY
-        current_date = today.strftime("%d/%m/%Y")
+        current_date = today.strftime("%m/%d/%Y")
         date_string = f"DATA SCRAPED: {current_date} \n"
         sold_output.write(date_string)
 
@@ -221,14 +236,14 @@ def scrapeFunc(car):
         bat(car,driver)
         driver.close
 
-# car  = {
-#     'year':2001,
-#     'make':'BMW',
-#     'model':'M5'
-# }
+car  = {
+    'year':2001,
+    'make':'Audi',
+    'model':'RS4'
+}
 
 
-# scrapeFunc(car)
+scrapeFunc(car)
 
 
 

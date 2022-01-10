@@ -30,7 +30,7 @@ import numpy as np
 # from scrape import test
 # from config import Config
 
-# from data_processing_scripts import handle_data
+from data_processing_scripts import handle_data
 
 
 import os
@@ -47,6 +47,15 @@ db = mongodb_client.db
 
 
 # db.cars.insert_many([
+#         { "year": 2014, "make": "Audi", "model": "RS5", "chassis":""},
+#         { "year": 2015, "make": "Audi", "model": "R8", "chassis":""},
+#         { "year": 2001, "make": "Porsche", "model": "911", "chassis":""},
+#         { "year": 2001, "make": "Porsche", "model": "911 GT2", "chassis":""},
+#       { "year": 2001, "make": "BMW", "model": "M3", "chassis":""},
+#       { "year": 1984, "make": "Ferrari", "model": "Laferrari", "chassis":""},
+#       { "year": 1993, "make": "Ferrari", "model": "f50", "chassis":""},
+#       { "year": 1993, "make": "Ferrari", "model": "Dino", "chassis":""},
+#       { "year": 2015, "make": "Jaguar", "model": "xqj", "chassis":""},
 #       { "year": 2001, "make": "BMW", "model": "M3", "chassis":""},
 #       { "year": 1984, "make": "Ferrari", "model": "Laferrari", "chassis":""},
 #       { "year": 1993, "make": "Ferrari", "model": "f50", "chassis":""},
@@ -175,7 +184,7 @@ def search():
       #CALL TO SCRAPE AND CLEANING FUNCTION - HANDLEDATA
       #FILES WILL BE POPULATED ONCE HANDLEDATA RUNS
       #THEN PASS TO PERFORM PREDICTION
-      #handle_data(car_object):
+      handle_data(car_object)
       #
       #  current_listing_clean = open("cleaned_data_CURRENT_LISTINGS.csv","r",encoding="utf-8")
       #  sold_listings_clean = open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
