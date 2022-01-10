@@ -20,7 +20,7 @@ from flask import Flask, config,render_template,request
 from flask_pymongo.wrappers import MongoClient
 import pymongo
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask_migrate import Migrate, current
 import json
 from flask_pymongo import PyMongo
 import pandas as pd
@@ -30,7 +30,7 @@ import numpy as np
 # from scrape import test
 # from config import Config
 
-from data_processing_scripts import handle_data
+# from data_processing_scripts import handle_data
 
 
 import os
@@ -168,11 +168,10 @@ def search():
       }
 
       #CHECK IF DB HAS RECORDS FOR VEHICLE
-      #RETRIEVE ALL SALES RECORDS FOR SPECIFIC VEHICLE - TO BE SENT TO TEMPLATE AND USED IN JS FOR GRAPH
-      #GET ALL SALES RECORDS
+      #GET ALL SALES RECORDS and CURRENT LISTINGS FROM DB FOR VEHICLE IF THEY EXIST - TO BE SENT TO TEMPLATE AND USED IN JS FOR GRAPHING
       sale_records_array = get_all_sale_records_from_db(model)
       current_listing_records_array = get_all_current_listing_records_from_db(model)
-      if len(sale_records_array) == 0:
+      if len(sale_records_array) == 0 or len(current_listing_records_array) == 0:
          print("NO RECORDS FOR THIS VEHICLE - INITIAL SCRAPE NEEDED")
          
          #FOR PRICE PREDICTION
@@ -182,10 +181,15 @@ def search():
          
          # handle_data(car_object)
          
-   #After handle_data populates SOLD_DATA.csv, write all records to Sale_Data DB collection
-         # insert_cleaned_scraped_sale_records_from_csv_to_db()
-         # insert_cleaned_scraped_current_listings_from_csv_to_db()
-            
+   #After handle_data populates clean_data_SOLD_DATA.csv and cleaned_data_CURRENT_LISTINGS.csv, write all records from SOLD_DATA to Sale_data DB collection 
+   #And from CURRENT_LISTINGS to current_listings_data DB collection
+
+         insert_cleaned_scraped_sale_records_from_csv_to_db()
+         insert_cleaned_scraped_current_listings_from_csv_to_db()
+         sale_records_array = get_all_sale_records_from_db(model)
+         current_listing_records_array = get_all_current_listing_records_from_db(model)
+         print(sale_records_array)
+         print(current_listing_records_array)
    # AFTER SCRAPE AND INSERT OF ALL RECORDS TO DB, PERFORM STATS
 
       #  current_listing_clean = open("cleaned_data_CURRENT_LISTINGS.csv","r",encoding="utf-8")
@@ -284,9 +288,10 @@ def insert_cleaned_scraped_sale_records_from_csv_to_db():
       
    
       # This inserts all entries from arrays into db in one go. Using inner for loop in insert_many
-      db.sale_data.insert_many([{'year':veh_year[i],   
+      db.sold_listings_clean.insert_many([{'year':veh_year[i],   
                                  'make':veh_make[i],
                                  'model':veh_model[i],
+                                 'sale_price':veh_sale_price[i],
                                  'SaleDate':veh_sale_date[i]} for i in range(len(veh_model))])
 
 
@@ -296,26 +301,26 @@ def insert_cleaned_scraped_current_listings_from_csv_to_db():
       veh_list_price = []
       veh_make = []
 
-      sold_listings_clean = open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
+      current_listings_clean = open("cleaned_data_CURRENT_LISTINGS.csv","r",encoding="utf-8")
       
       #splits line into individual attributes all stored in their own arrays
-      for line in sold_listings_clean:
+      for line in current_listings_clean:
          listing = line.split(',')
          try:
             veh_year.append(listing[0])
             veh_make.append(listing[1])
             veh_model.append(listing[2])
-            veh_sale_price.append(listing[3])
-            veh_sale_date.append(listing[4].rstrip()) 
+            veh_list_price.append(listing[3].rstrip())
          except IndexError as E:
             pass
       
    
       # This inserts all entries from arrays into db in one go. Using inner for loop in insert_many
-      db.sale_data.insert_many([{'year':veh_year[i],   
+      db.current_listings_data.insert_many([{'year':veh_year[i],   
                                  'make':veh_make[i],
                                  'model':veh_model[i],
-                                 'SaleDate':veh_sale_date[i]} for i in range(len(veh_model))])
+                                 'list_price':veh_list_price[i]}for i in range(len(veh_model))])
+                                 
 
 
 #retrieve all entries from db for specific model to be sent to template and used in JS
@@ -343,7 +348,7 @@ def get_all_sale_records_from_db(model):
       #  print(models_array)
 
 def get_all_current_listing_records_from_db(model):
-      current_listing_records_query = db.current_listing.find({'Model':model},{'_id':0,'make':0,})
+      current_listing_records_query = db.current_listings_data.find({'Model':model},{'_id':0,'make':0,})
       #check if query returned empty
       if(current_listing_records_query):
          current_listing_records_array = []
