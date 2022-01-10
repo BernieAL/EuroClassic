@@ -167,27 +167,30 @@ def search():
          'model':model
       }
 
-      #CHECK DB FOR LAST SCRAPE FOR VEHICLE 
+      #CHECK IF DB HAS RECORDS FOR VEHICLE
       #RETRIEVE ALL SALES RECORDS FOR SPECIFIC VEHICLE - TO BE SENT TO TEMPLATE AND USED IN JS FOR GRAPH
-      model = model
-   
-      sale_records_query = db.sale_data.find({'Model':model},{'_id':0,'make':0,})
-      #check if query returned empty
-      if(sale_records_query):
-         sale_records_array = []
+      #GET ALL SALES RECORDS
+      sale_records_array = get_all_sale_records_from_db(model)
+      current_listing_records_array = get_all_current_listing_records_from_db(model)
+      if len(sale_records_array) == 0:
+         print("NO RECORDS FOR THIS VEHICLE - INITIAL SCRAPE NEEDED")
+         
+         #FOR PRICE PREDICTION
+         #CALL TO SCRAPE AND CLEANING FUNCTION - HANDLEDATA
+         #FILES WILL BE POPULATED ONCE HANDLEDATA RUNS
+         #THEN PASS TO PERFORM PREDICTION
+         
+         # handle_data(car_object)
+         
+   #After handle_data populates SOLD_DATA.csv, write all records to Sale_Data DB collection
+         # insert_cleaned_scraped_sale_records_from_csv_to_db()
+         # insert_cleaned_scraped_current_listings_from_csv_to_db()
+            
+   # AFTER SCRAPE AND INSERT OF ALL RECORDS TO DB, PERFORM STATS
 
-         for model in sale_records_query:
-               sale_records_array.append(model)
-      # print(sale_records_array)
-
-      #FOR PRICE PREDICTION
-      #CALL TO SCRAPE AND CLEANING FUNCTION - HANDLEDATA
-      #FILES WILL BE POPULATED ONCE HANDLEDATA RUNS
-      #THEN PASS TO PERFORM PREDICTION
-      handle_data(car_object)
-      #
       #  current_listing_clean = open("cleaned_data_CURRENT_LISTINGS.csv","r",encoding="utf-8")
       #  sold_listings_clean = open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
+      
       #  predictionsAndStats()
     
    
@@ -209,13 +212,12 @@ def search():
             indiv_line = i.split(',')
             try:
                sold_prices_for_car.append(indiv_line[3])
-               
             except IndexError as e:
                pass
       # print(len(sold_prices_for_car)) 
 
-
-      sortByYear(sold_listings_clean)
+      #PANDAS WORK
+      # sortByYear(sold_listings_clean)
 
       return render_template('data.html',car=car, car_results=json.dumps(car_results),sales_records=json.dumps(sale_records_array))
       
@@ -237,51 +239,6 @@ def search():
 
 @app.route('/about')
 def about():
-
-  
-# check db for last scrape data
-# retrieving all sale records for specific model
-   model = "M5"
-   
-   sale_records_query = db.sale_data.find({'Model':model},{'_id':0,'make':0,})
-   if(sale_records_query):
-      sale_records_array = []
-
-
-      for model in sale_records_query:
-         sale_records_array.append(model)
-   print(sale_records_array)
-    
-
-   # ---------------------
-   # veh_year = []
-   # veh_model = []
-   # veh_sale_price = []
-   # veh_sale_date = []
-   # veh_make = []
-
-   # sold_listings_clean = open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
-   
-
-   # for line in sold_listings_clean:
-   #    listing = line.split(',')
-   #    try:
-   #       veh_year.append(listing[0])
-   #       veh_make.append(listing[1])
-   #       veh_model.append(listing[2])
-   #       veh_sale_price.append(listing[3])
-   #       veh_sale_date.append(listing[4].rstrip())
-   #    except IndexError as E:
-   #       pass
-   
- 
-   # # db.sale_date.bulk_write(data)
-   # db.sale_data.insert_many([{'Year':veh_year[i],   
-   #                            'Make':veh_make[i],
-   #                            'Model':veh_model[i],
-   #                            'Price':veh_sale_price[i],
-   #                            'SaleDate':veh_sale_date[i]} for i in range(len(veh_model))])
-
    return render_template('data.html')
    
 @app.route('/login')
@@ -297,12 +254,13 @@ def signup():
 def account():
    return render_template('data.html')
 
-
 # :::: END ROUTE HANDLERS ::::
 
 
-#reads from csv to individual arrays specific to the parameter read in from csv
-def insert_all_from_csv_to_db():
+# :::: BEGIN HELPER FUNCTIONS ::::
+
+#reads in cleaned data from SOLD_DATA.csv and inserts into SALE_DATA collection in DB
+def insert_cleaned_scraped_sale_records_from_csv_to_db():
       
       veh_year = []
       veh_model = []
@@ -331,22 +289,70 @@ def insert_all_from_csv_to_db():
                                  'model':veh_model[i],
                                  'SaleDate':veh_sale_date[i]} for i in range(len(veh_model))])
 
-#retrieve all entries from db for specific model to be sent to template and used in JS
-def get_all_sale_records():
-    model = "M5"
-    models_query = db.sale_data.find({'model':model})
-    if models_query != -1:
-      models_array = []
 
+def insert_cleaned_scraped_current_listings_from_csv_to_db():
+      veh_year = []
+      veh_model = []
+      veh_list_price = []
+      veh_make = []
+
+      sold_listings_clean = open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
       
-      for model in models_query:
-         models_array.append(model['model'])
-    print(models_array)
+      #splits line into individual attributes all stored in their own arrays
+      for line in sold_listings_clean:
+         listing = line.split(',')
+         try:
+            veh_year.append(listing[0])
+            veh_make.append(listing[1])
+            veh_model.append(listing[2])
+            veh_sale_price.append(listing[3])
+            veh_sale_date.append(listing[4].rstrip()) 
+         except IndexError as E:
+            pass
+      
+   
+      # This inserts all entries from arrays into db in one go. Using inner for loop in insert_many
+      db.sale_data.insert_many([{'year':veh_year[i],   
+                                 'make':veh_make[i],
+                                 'model':veh_model[i],
+                                 'SaleDate':veh_sale_date[i]} for i in range(len(veh_model))])
 
 
+#retrieve all entries from db for specific model to be sent to template and used in JS
+def get_all_sale_records_from_db(model):
+   
+      sale_records_query = db.sale_data.find({'Model':model},{'_id':0,'make':0,})
+      #check if query returned empty
+      if(sale_records_query):
+         sale_records_array = []
 
+         for model in sale_records_query:
+               sale_records_array.append(model)
+      print(sale_records_array)
+      return sale_records_array
+      # print(sale_records_array
 
-# ::: HELPER FUNCTIONS :::
+      # PREVIOUS CODE HERE:
+      #  model = "M5"
+      #  models_query = db.sale_data.find({'model':model})
+      #  if models_query != -1:
+      #    models_array = []
+      
+      #    for model in models_query:
+      #       models_array.append(model['model'])
+      #  print(models_array)
+
+def get_all_current_listing_records_from_db(model):
+      current_listing_records_query = db.current_listing.find({'Model':model},{'_id':0,'make':0,})
+      #check if query returned empty
+      if(current_listing_records_query):
+         current_listing_records_array = []
+
+         for model in current_listing_records_query:
+               current_listing_records_array.append(model)
+      print(current_listing_records_array)
+      return current_listing_records_array
+
 
 
 
