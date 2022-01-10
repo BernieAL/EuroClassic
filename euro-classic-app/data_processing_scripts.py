@@ -19,7 +19,7 @@ read it from a file back in main app
 
 
 from os import name
-# from Web_Scrape_Logic import scrape
+from Web_Scrape_Logic.scrape import scrapeFunc
 from Data_Clean_Logic import clean_data
 
 
@@ -28,26 +28,27 @@ from Data_Clean_Logic import clean_data
 # sold_listings_unclean = open("SOLD_DATA.txt","a",encoding="utf-8")
 
 
-
+def run_scrape(car):
+    scrapeFunc(car)
+    
 
 
 def handle_data(car):
-    # scrape.scrapeFunc(car)
-     
-    clean_data.clean_the_data("SOLD_DATA.txt",car['year'],car['make'],car['model'])
+    
     clean_data.clean_the_data("CURRENT_LISTINGS.txt",car['year'],car['make'],car['model'])
-   
+    clean_data.clean_the_data("SOLD_DATA.txt",car['year'],car['make'],car['model'])
+    
     return True
      
 
 
 
-if __name__=='__main__':
+# if __name__=='__main__':
 
-    car = {
+car = {
     'year':2001,
     'make':'Audi',
     'model':'R8'
-    }
-
-    handle_data(car)
+}
+run_scrape(car)
+handle_data(car)

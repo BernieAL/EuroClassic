@@ -9,17 +9,17 @@
 ---------------------- 
 2018 Audi R8 5.2 quattro V10 Plus Spyder $139,950.00 
 ---------------------- 
-2012 Audi R8 5.2 QUATTRO $106,900.00 
----------------------- 
-2012 Audi R8 $107,000.00 
----------------------- 
 2009 Audi R8 $50,101.00 
 ---------------------- 
-2017 Audi R8 V10 $80,000.00 
+2012 Audi R8 $80,000.00 
+---------------------- 
+2017 Audi R8 V10 $107,000.00 
 ---------------------- 
 2017 Audi R8 $179,998.00 
 ---------------------- 
-2014 Audi R8 V10 $115,999.00 
+2012 Audi R8 V10 5.2 QUATTRO $115,999.00 
+---------------------- 
+2014 Audi R8 V10 $106,900.00 
 ---------------------- 
 2015 Audi R8 5.2 Spyder $129,900.00 
 ---------------------- 
@@ -29,17 +29,17 @@
 ---------------------- 
 2011 Audi R8 4.2L $100,100.00 
 ---------------------- 
-2014 Audi R8 Coupe $279,000.00 
+2012 Audi R8 4.2L $279,000.00 
 ---------------------- 
-2008 Audi R8 4.2 QUATTRO $79,995.00 
+2014 Audi R8 Coupe $79,995.00 
 ---------------------- 
-2012 Audi R8 4.2L $109,999.00 
+2008 Audi R8 4.2 QUATTRO $110,000.00 
 ---------------------- 
-2009 Audi R8 $50,000.00 
+2009 Audi R8 $109,999.00 
 ---------------------- 
-2011 Audi R8 5.2 quattro $92,000.00 
+2011 Audi R8 5.2 quattro $50,000.00 
 ---------------------- 
-2018 Audi R8 V10 $110,000.00 
+2018 Audi R8 V10 $92,000.00 
 ---------------------- 
 2011 Audi R8 4.2L $86,995.00 
 ---------------------- 
@@ -47,27 +47,27 @@
 ---------------------- 
 2011 Audi R8 $500.00 
 ---------------------- 
-2014 Audi R8 5.2 Quattro Spyder $76,495.75 
+2011 Audi R8 $76,495.75 
 ---------------------- 
-2020 Audi R8 5.2 quattro V10 performance Spyder Audi Sport Pack $140,000.00 
+2014 Audi R8 5.2 Quattro Spyder $140,000.00 
 ---------------------- 
 2018 Audi R8 V10 plus $139,900.00 
 ---------------------- 
+2020 Audi R8 5.2 quattro V10 performance Spyder Audi Sport Pack $200,000.00 
+---------------------- 
 2018 Audi R8 V10 $124,900.00 
 ---------------------- 
-2021 Audi R8 5.2 Quattro V10 Performance Spyder $219,800.00 
+2021 Audi R8 5.2 Quattro V10 Performance Spyder $189,900.00 
 ---------------------- 
-2017 Audi R8 5.2 quattro V10 Plus $189,900.00 
+2017 Audi R8 5.2 quattro V10 Plus $219,800.00 
 ---------------------- 
 2009 Audi R8 Quattro $159,950.00 
 ---------------------- 
-2011 Audi R8 $239,900.00 
+2011 Audi R8 5.2 FSI Quattro R-Tronic Coupe $239,900.00 
 ---------------------- 
-2011 Audi R8 5.2 FSI Quattro R-Tronic Coupe $199,996.00 
+2017 Audi R8 5.2 PLUS QUATTRO $199,996.00 
 ---------------------- 
-2017 Audi R8 5.2 PLUS QUATTRO $89,900.00 
----------------------- 
-2015 Audi R8 V10 Coupe $200,000.00 
+2015 Audi R8 V10 Coupe $89,900.00 
 ---------------------- 
 2008 Audi R8 Coupe quattro with Auto R tronic $97,995.00 
 ---------------------- 
@@ -79,11 +79,13 @@
 ---------------------- 
 2017 Audi R8 5.2 quattro V10 Plus $169,900.00 
 ---------------------- 
-2011 Audi R8 5.2L $114,900.00 
+2018 Audi R8 V10 plus Full Custom Upgrades $114,900.00 
 ---------------------- 
-2009 Audi R8 Quattro $176,900.00 
+2011 Audi R8 5.2L $176,900.00 
 ---------------------- 
-2014 AUDI R8 Ceramic Coated New Tires 2 Owner $199,996.00 
+2009 Audi R8 Quattro $199,996.00 
+---------------------- 
+2014 AUDI R8 Ceramic Coated New Tires 2 Owner $189,999.00 
 ---------------------- 
 2012 Audi R8 5.2 $109,995.00 
 ---------------------- 
@@ -91,15 +93,13 @@
 ---------------------- 
 2020 Audi R8 5.2 quattro V10 $129,900.00 
 ---------------------- 
-2018 Audi R8 V10 plus Full Custom Upgrades $135,995.00 
+2014 Audi R8 V8 $135,995.00 
 ---------------------- 
-2021 Audi R8 V10 $98,999.00 
+2018 Audi R8 Coupe Premium V10 $98,999.00 
 ---------------------- 
-2018 Audi R8 Coupe Premium V10 $199,900.00 
+2018 Audi R8 ONLY 5K MILES...Carbon Fiber EVERYTHING! $199,900.00 
 ---------------------- 
-2018 Audi R8 ONLY 5K MILES...Carbon Fiber EVERYTHING! $189,999.00 
----------------------- 
-2017 Audi R8 V10 DynamicSteering DiamondStitchLthrPkg CarbonExt $175,491.00 
+2017 Audi R8 V10 DynamicSteering DiamondStitchLthrPkg CarbonExt $119,200.00 
 ---------------------- 
  :::CRAIGLIST - DATA SCRAPED ON: 01/10/2022 
  2018 Audi R8 SPYDER :$214,995 
@@ -110,9 +110,9 @@
 ---------------------- 
  _____ 2008 LAMBORGHINI GALLARDO SPYDER**CLEAN TITLE**EASY APPROVALS** :$124,998 
 ---------------------- 
- 2015 Audi A6 4dr Sdn FrontTrak 2.0T Premium BAD CREDIT NO PROBLEM! :$10,400 
----------------------- 
  2016 Audi A5 2dr Cpe Auto Premium BAD CREDIT NO PROBLEM! :$16,300 
+---------------------- 
+ 2015 Audi A6 4dr Sdn FrontTrak 2.0T Premium BAD CREDIT NO PROBLEM! :$10,400 
 ---------------------- 
  ___ 2018 LAMBORGHINI HURACAN**AMAZING COLOR COMBO**NO CREDIT CHECK!!!! :$249,950 
 ---------------------- 
@@ -122,7 +122,9 @@
 ---------------------- 
  2015 Audi A6 4dr Sdn FrontTrak 2.0T Premium BAD CREDIT NO PROBLEM! :$10,400 
 ---------------------- 
- ____ 2018 PORSCHE BOXSTER GTS**CLEAN TITLE**EASY APPROVALS**MUST SEE** :$99,998 
+ ____ 2019 LAMBORGHINI URUS**CLEAN TITLE****EASY APPROVALS**NO CREDIT* :$299,998 
+---------------------- 
+ _____ 2009 LAMBORGHINI GALLARDO SPYDER**CLEAN TITLE**EASY APPROVALS** :$129,998 
 ---------------------- 
  ____ 2017 AUDI R8 COUPE V10**EXCELLENT**EASY APPROVALS**MUST SEE**CALL :$179,998 
 ---------------------- 
@@ -143,6 +145,8 @@
  2013 Audi Q5 2.0T quattro Premium AWD 4dr SUV :$15,898 
 ---------------------- 
  BMW X5 Diesel :$19,500 
+---------------------- 
+ ____ 2018 PORSCHE BOXSTER GTS**CLEAN TITLE**EASY APPROVALS**MUST SEE** :$99,998 
 ---------------------- 
  2010 Audi A6 3.0T quattro Premium Plus AWD 4dr Sedan :$9,999 
 ---------------------- 
@@ -182,6 +186,10 @@
 ---------------------- 
  2015 Audi Q7 3.0T S line Prestige~ 3RD ROW SEAT~GREAT COLORS~ NAVI~ LEATHER~ :$22,499 
 ---------------------- 
+ 2015 Toyota HIGHLANDER XLE _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS :$27,990 
+---------------------- 
+ 2019 Ford MUSTANG _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100% :$27,990 
+---------------------- 
  2015 Audi Q5 Premium Plus~ 2.0 TURBO~ NAVIGATION~ CAMERA~ PANO ROOF~ AWESOME :$18,799 
 ---------------------- 
  2015 Audi A4 Premium Plus~ 2.0 TURBO~ NAVI~ CAMERA~ LOADED~ALL WHEEL DRIVE~ :$20,888 
@@ -192,13 +200,13 @@
 ---------------------- 
  2014 Cadillac CTS LUXURY COLLECTION _WE FINANANCE EVERYONE 100%_APROBACION P :$21,990 
 ---------------------- 
+ 2015 Infiniti Q50 PREMIUM _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS :$20,990 
+---------------------- 
  2015 Audi A4 Premium Plus~ 2.0 TURBO~ NAVI~ CAMERA~ LOADED~ALL WHEEL DRIVE~ :$20,888 
 ---------------------- 
  2015 Audi Q5 Premium Plus~ 2.0 TURBO~ NAVIGATION~ CAMERA~ PANO ROOF~ AWESOME :$18,799 
 ---------------------- 
  2015 Audi Q7 3.0T S line Prestige~ 3RD ROW SEAT~GREAT COLORS~ NAVI~ LEATHER~ :$22,499 
----------------------- 
- 2015 Infiniti Q50 PREMIUM _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS :$20,990 
 ---------------------- 
  2017 Ford EXPLORER XLT _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100 :$24,990 
 ---------------------- 

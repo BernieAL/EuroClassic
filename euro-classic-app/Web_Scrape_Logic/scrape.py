@@ -34,7 +34,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotVisibleException, StaleElementReferenceException
 from selenium.common.exceptions import NoSuchElementException
 import time
-
+# from clean_data import clean_the_data
 
 
 
@@ -46,14 +46,14 @@ import time
 # # 98-03 for m5
 
 #files for current listing data and sold data
-current_listing_output = open("CURRENT_LISTINGS.txt","a",encoding="utf-8")
-sold_output = open("SOLD_DATA.txt","a",encoding="utf-8")
+current_listing_output = open("CURRENT_LISTINGS.txt","w",encoding="utf-8")
+sold_output = open("SOLD_DATA.txt","w",encoding="utf-8")
 
 
 #CLEAR EXISTING FILE CONTENTS BEFORE EACH NEW SCRAPE FOR VEHICLE
 
-current_listing_output.truncate(0)
-sold_output.truncate(0)
+# current_listing_output.truncate(0)
+# sold_output.truncate(0)
 
 # Create a new chromedriver
 # driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
@@ -231,28 +231,38 @@ def fileWrite(data,fileIn):
 
 
 def scrapeFunc(car):
+        current_listing_output.truncate(0)
+        sold_output.truncate(0)
+
         driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
         ebay(car,driver)
         CL(car,driver)
         bat(car,driver)
         driver.close
 
+        current_listing_output.close()
+        sold_output.close()
 
 
 # if __name__ == '__main__':
 
-#     # car  = {
-#     # 'year':2001,
-#     # 'make':'Porsche',
-#     # 'model':'911'
-#     # }
+#     car  = {
+#     'year':2001,
+#     'make':'Audi',
+#     'model':'R8'
+#     }
 
 #     scrapeFunc(car)
 
 
 
-def test():
-    print( "hello this is from scrape.py")
+# def clean_the_date():
+
+
+
+
+# def test():
+#     print( "hello this is from scrape.py")
 
 """
 RAW DATA EXAMPLES::

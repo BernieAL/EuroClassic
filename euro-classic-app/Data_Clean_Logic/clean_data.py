@@ -38,7 +38,7 @@ clean_output_array = []
 temp = []
 def fileWrite(data,fileIn):
     for line in data:
-        temp = f"{line} \n" #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! try writing to file without \n to see if reading the data is easier for prediction
+        temp = f"{line}\n" #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! try writing to file without \n to see if reading the data is easier for prediction
         fileIn.write(temp)
     fileIn.write("---------------------- \n")
 
@@ -61,13 +61,11 @@ def clean_the_data(dirty_file,year,make,model):
         to_output_file = clean_output_file_SOLD_DATA
 
     for line in unclean_input:
-        print(line)
-        # only target lines with specific model
         
+        # only target lines with specific model
         if model in line:
             #remove commas from price
             line = line.replace(',','')
-            print(line)
             #if current line start with 4 digits, this is year, get it. Otherwise skip line
             if re.findall('^\d{4}',line):
                 try:
@@ -97,24 +95,6 @@ def clean_the_data(dirty_file,year,make,model):
             set item_line string to include price and sale_Date
             """
             
-            # if dirty_file == "SOLD_DATA.txt" and price.find('Sold on'):
-            #      price_sale_date_split = price.split('on')
-            #      price = price_sale_date_split[0]
-            #      sale_Date = price_sale_date_split[1]
-            #      #replace / with - in sale_Date
-            #      sale_Date = sale_Date.replace('/','-')
-            #      item_line = f"{year},{make},{model},{price},{sale_Date}"
-            #      #remove extra space between price and sale date Ex. ['45000 ', ' 11/23/20 '] -> 44250,12/22/21 
-            #      item_line = item_line.replace(' ','')
-            #      clean_output_array.append(item_line)
-            #      col_headers = f"Year,Make,Model,Price,DateSold\n"    
-            # else:
-            #     item_line = f"{year},{make},{model},{price}"
-            #     clean_output_array.append(item_line)
-            #     col_headers = f"Year,Make,Model,Price\n"
-
-
-
             if dirty_file == "SOLD_DATA.txt" and price.find('on'):
                  price_sale_date_split = price.split('on')
                  price = price_sale_date_split[0]
@@ -126,31 +106,39 @@ def clean_the_data(dirty_file,year,make,model):
                  item_line = item_line.replace(' ','')
                  clean_output_array.append(item_line)
                  option = 1
-                 col_headers = f"Year,Make,Model,Price,DateSold\n"
+                #  col_headers = f"Year,Make,Model,Price,DateSold\n"
             else:
                  item_line = f"{year},{make},{model},{price}"
                  clean_output_array.append(item_line)
                  option = 2
-                 col_headers = f"Year,Make,Model,Price\n"
-                 
+                #  col_headers = f"Year,Make,Model,Price\n"
 
-    to_output_file.write(col_headers)
-    # if option == 1:
-    #     col_headers = f"Year,Make,Model,Price,DateSold\n"
-    #     to_output_file.write(col_headers)
-    # elif option == 2:
-    #     col_headers = f"Year,Make,Model,Price\n"
-    #     to_output_file.write(col_headers)
+
+    if dirty_file == "CURRENT_LISTINGS.txt":
+        to_output_file = clean_output_file_CURRENT_LISTINGS
+        print(to_output_file)
     
+    elif dirty_file == "SOLD_DATA.txt":
+        to_output_file = clean_output_file_SOLD_DATA
+        print(to_output_file)             
+
+    # to_output_file.write(col_headers)
+    if option == 1:
+        col_headers = f"Year,Make,Model,Price,DateSold\n"
+        to_output_file.write(col_headers)
+    elif option == 2:
+        col_headers = f"Year,Make,Model,Price\n"
+        to_output_file.write(col_headers)
     
+    # print(clean_output_array)
     fileWrite(clean_output_array,to_output_file)
 
-    # to_output_file.close()
-    # unclean_input.close()
+    to_output_file.close()
+    unclean_input.close()
 
 
 # clean_the_data("SOLD_DATA.txt",'2012','Audi','R8')
-clean_the_data("CURRENT_LISTINGS.txt",'2012','Audi','R8')
+# clean_the_data("CURRENT_LISTINGS.txt",'2012','Audi','R8')
 """
 make,model,year,price
 """
