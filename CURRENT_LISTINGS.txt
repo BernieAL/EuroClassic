@@ -1,106 +1,274 @@
  :::EBAY - DATA SCRAPED ON: 01/10/2022 
- $10,000.00 
+ $97,500.00 
 ---------------------- 
-2008 Audi RS4 $32,750.00 
+2010 Audi R8 $84,999.00 
 ---------------------- 
-2007 Audi RS4 QUATTRO $19,000.00 
+2008 Audi R8 Coupe quattro $95,996.00 
 ---------------------- 
-2007 Audi RS4 QUATTRO $26,000.00 
+2012 Audi R8 5.2 quattro $119,995.00 
 ---------------------- 
-2008 Audi RS4 $23,500.00 
+2018 Audi R8 5.2 quattro V10 Plus Spyder $139,950.00 
 ---------------------- 
-2007 RS4 $34,900.00 
+2012 Audi R8 5.2 QUATTRO $106,900.00 
 ---------------------- 
-2002 Audi S4 $74,950.00 
+2012 Audi R8 $107,000.00 
 ---------------------- 
-2021 Audi RS 6 Avant 4.0T quattro Avant $29,900.00 
+2009 Audi R8 $50,101.00 
 ---------------------- 
-2021 Audi RS5 2.9T $169,000.00 
+2017 Audi R8 V10 $80,000.00 
 ---------------------- 
-2021 Audi RS6 4.0T Quattro Avant Hatchback LOADED w/OPTIONS! DME $94,598.00 
+2017 Audi R8 $179,998.00 
 ---------------------- 
-2003 Audi RS6 $164,800.00 
+2014 Audi R8 V10 $115,999.00 
 ---------------------- 
-2020 Audi A4 Sedan Premium Plus $23,450.00 
+2015 Audi R8 5.2 Spyder $129,900.00 
 ---------------------- 
-2003 Audi RS6 C5 RS6 $20,100.00 
+2014 Audi R8 Quattro V10 *SUPERCHARGED* $100,007.00 
 ---------------------- 
-2006 Audi S4 $18,900.00 
+2020 Audi R8 V10 PERFORMANCE $140,000.00 
 ---------------------- 
-2015 Audi RS7 Prestige $11,000.00 
+2011 Audi R8 4.2L $100,100.00 
 ---------------------- 
-2019 Audi S4 Premium Plus $13,500.00 
+2014 Audi R8 Coupe $279,000.00 
 ---------------------- 
-2014 Audi RS5 RS5 RS 5 $61,950.00 
+2008 Audi R8 4.2 QUATTRO $79,995.00 
 ---------------------- 
-2019 Audi RS 5 Sportback $49,400.00 
+2012 Audi R8 4.2L $109,999.00 
 ---------------------- 
-2014 Audi RS5 Convertible 2D $39,977.00 
+2009 Audi R8 $50,000.00 
 ---------------------- 
-2013 Audi RS5 Coupe 2D $79,640.00 
+2011 Audi R8 5.2 quattro $92,000.00 
 ---------------------- 
-2007 Audi S4 4.2 $51,590.00 
+2018 Audi R8 V10 $110,000.00 
 ---------------------- 
-2021 Audi RS5 2.9T $43,990.00 
+2011 Audi R8 4.2L $86,995.00 
 ---------------------- 
-2014 Audi RS5 RS5 RS 5 $11,463.00 
+2015 Audi R8 5.2 V10 Spyder $91,199.00 
 ---------------------- 
-2012 Audi S4 4dr Sedan S Tronic Premium Plus $87,990.00 
+2011 Audi R8 $500.00 
 ---------------------- 
-2013 Audi S4 Premium Plus $43,977.00 
+2014 Audi R8 5.2 Quattro Spyder $76,495.75 
 ---------------------- 
-2021 Audi RS 6 Avant 4.0 TFSI quattro $8,100.00 
+2020 Audi R8 5.2 quattro V10 performance Spyder Audi Sport Pack $140,000.00 
 ---------------------- 
-2018 Audi RS5 2.9 TFSI quattro tiptronic $19,986.00 
+2018 Audi R8 V10 plus $139,900.00 
 ---------------------- 
-2016 Audi S4 3.0T quattro Premium Plus $1,925.00 
+2018 Audi R8 V10 $124,900.00 
 ---------------------- 
-2018 Audi S4 3.0T Prestige $17,999.00 
+2021 Audi R8 5.2 Quattro V10 Performance Spyder $219,800.00 
 ---------------------- 
-2013 Audi S4 3.0T quattro Premium Plus AWD 4dr Sedan 7A $199,997.00 
+2017 Audi R8 5.2 quattro V10 Plus $189,900.00 
 ---------------------- 
-2019 Audi S4 3.0 TFSI Prestige quattro AWD $65,895.00 
+2009 Audi R8 Quattro $159,950.00 
 ---------------------- 
-2013 Audi S4 $42,995.00 
+2011 Audi R8 $239,900.00 
 ---------------------- 
-2009 Audi A4 Quattro 2.0T QUATTRO $46,798.00 
+2011 Audi R8 5.2 FSI Quattro R-Tronic Coupe $199,996.00 
 ---------------------- 
-2019 Audi RS5 2.9T quattro $24,995.00 
+2017 Audi R8 5.2 PLUS QUATTRO $89,900.00 
 ---------------------- 
-2018 Audi S4 Premium Plus Sedan 4D $53,990.00 
+2015 Audi R8 V10 Coupe $200,000.00 
 ---------------------- 
-2012 Audi S4 4dr Sedan Manual Prestige $25,900.00 
+2008 Audi R8 Coupe quattro with Auto R tronic $97,995.00 
 ---------------------- 
-2008 Audi S4 Cabriolet Quattro V8 AWD $6,000.00 
+2017 Audi R8 5.2 Quattro V10 Plus $165,000.00 
 ---------------------- 
-2013 Audi S4 PREMIUM PLUS $8,500.00 
+2012 Audi R8 V10 Coupe $139,999.00 
 ---------------------- 
-2015 Audi S4 Premium Plus $79,900.00 
+2018 Audi R8 V10 $74,790.00 
 ---------------------- 
-2008 S4 quattro AWD 104K V8 4.2L 6 SPEED MANUAL Leather $41,990.00 
+2017 Audi R8 5.2 quattro V10 Plus $169,900.00 
 ---------------------- 
-2012 Audi S4 Quattro Premium Plus Sedan 4D $31,997.00 
+2011 Audi R8 5.2L $114,900.00 
 ---------------------- 
-2013 Audi S4 3.0T quattro Premium Plus $17,995.00 
+2009 Audi R8 Quattro $176,900.00 
 ---------------------- 
-2007 Audi S4 Quattro Cabriolet 2D $27,000.00 
+2014 AUDI R8 Ceramic Coated New Tires 2 Owner $199,996.00 
 ---------------------- 
-2009 Audi S4 Convertible 2-Owner 56,024 Miles Heated Front Rear $22,998.00 
+2012 Audi R8 5.2 $109,995.00 
 ---------------------- 
-2014 Audi S4 Premium Plus $15,995.00 
+2011 Audi R8 5.2L V10 SPYDER CONVERTIBLE 5.2 - LOADED UP - BEST DEAL ON EBAY $89,900.00 
 ---------------------- 
-2013 Audi S4 Premium Plus Sedan 4D $25,990.00 
+2020 Audi R8 5.2 quattro V10 $129,900.00 
 ---------------------- 
-2021 Audi RS Q8 4.0T quattro $25,995.00 
+2018 Audi R8 V10 plus Full Custom Upgrades $135,995.00 
 ---------------------- 
-2018 Audi S4 3.0T Premium Plus $9,990.00 
+2021 Audi R8 V10 $98,999.00 
 ---------------------- 
-2015 Audi S4 3.0T Premium Plus $19,988.00 
+2018 Audi R8 Coupe Premium V10 $199,900.00 
 ---------------------- 
-2018 Audi S4 Premium Plus Sedan 4D $26,995.00 
+2018 Audi R8 ONLY 5K MILES...Carbon Fiber EVERYTHING! $189,999.00 
 ---------------------- 
-2018 Audi S4 Premium Plus Sedan 4D $27,590.00 
+2017 Audi R8 V10 DynamicSteering DiamondStitchLthrPkg CarbonExt $175,491.00 
 ---------------------- 
  :::CRAIGLIST - DATA SCRAPED ON: 01/10/2022 
+ 2018 Audi R8 SPYDER :$214,995 
+---------------------- 
+ 2018 Audi R8 - Call Now! :$139,950 
+---------------------- 
  2018 Nissan GTR Fully Loaded MSRP+OVER $20K In Mods*LOTS Carbon Fiber! :$99,950 
+---------------------- 
+ _____ 2008 LAMBORGHINI GALLARDO SPYDER**CLEAN TITLE**EASY APPROVALS** :$124,998 
+---------------------- 
+ 2015 Audi A6 4dr Sdn FrontTrak 2.0T Premium BAD CREDIT NO PROBLEM! :$10,400 
+---------------------- 
+ 2016 Audi A5 2dr Cpe Auto Premium BAD CREDIT NO PROBLEM! :$16,300 
+---------------------- 
+ ___ 2018 LAMBORGHINI HURACAN**AMAZING COLOR COMBO**NO CREDIT CHECK!!!! :$249,950 
+---------------------- 
+ 2012 Audi TT 2.0T Premium Plus with :$13,464 
+---------------------- 
+ 2016 Audi A5 2dr Cpe Auto Premium 90 Days Car Warranty :$16,300 
+---------------------- 
+ 2015 Audi A6 4dr Sdn FrontTrak 2.0T Premium BAD CREDIT NO PROBLEM! :$10,400 
+---------------------- 
+ ____ 2018 PORSCHE BOXSTER GTS**CLEAN TITLE**EASY APPROVALS**MUST SEE** :$99,998 
+---------------------- 
+ ____ 2017 AUDI R8 COUPE V10**EXCELLENT**EASY APPROVALS**MUST SEE**CALL :$179,998 
+---------------------- 
+ 2015 JEEP COMPASS :$6,500 
+---------------------- 
+ 2015 KIA FORTE LX :$7,800 
+---------------------- 
+ 2015 JEEP COMPASS :$6,500 
+---------------------- 
+ 2010 Audi A6 3.0T quattro Premium Plus AWD 4dr Sedan :$9,999 
+---------------------- 
+ 2012 Audi TT 2.0T Premium Plus with :$13,464 
+---------------------- 
+ 2012 Audi Q5 2.0T quattro Premium Plus AWD 4dr SUV :$16,998 
+---------------------- 
+ 2012 Audi A4 2.0T Premium 4dr Sedan :$10,998 
+---------------------- 
+ 2013 Audi Q5 2.0T quattro Premium AWD 4dr SUV :$15,898 
+---------------------- 
+ BMW X5 Diesel :$19,500 
+---------------------- 
+ 2010 Audi A6 3.0T quattro Premium Plus AWD 4dr Sedan :$9,999 
+---------------------- 
+ 2018 Audi A5 Cabriolet Premium Plus :$53,900 
+---------------------- 
+ 2018 Audi A5 Cabriolet Premium Plus :$58,900 
+---------------------- 
+ 2013 Audi Q7 3.0T S line Prestige :$34,900 
+---------------------- 
+ 2013 Audi A5 Premium Plus :$25,900 
+---------------------- 
+ 2018 Audi A5 Cabriolet Premium Plus :$53,900 
+---------------------- 
+ 2018 Audi A5 Cabriolet Premium Plus :$58,900 
+---------------------- 
+ 2018 Audi A5 Cabriolet Premium Plus :$53,900 
+---------------------- 
+ 2018 Audi A5 Cabriolet Premium Plus :$58,900 
+---------------------- 
+ 1998 Lincoln Town Car Singature Series ( Ultra Low Miles ) Must See :$10,000 
+---------------------- 
+ 2013 Audi A8 L 3.0L~ LONG WHEEL BASE~ ONLY 57K MILES~ NAVIGATION~ NOUGAT BRO :$29,970 
+---------------------- 
+ 2015 Audi A4 Premium Plus~ 2.0 TURBO~ NAVI~ CAMERA~ LOADED~ALL WHEEL DRIVE~ :$19,699 
+---------------------- 
+ 2018 Audi S5 Coupe~ Premium Plus~AWD~ 3.0L V6 SUPERCHARGED~ WHITE/ BLACK DIA :$41,997 
+---------------------- 
+ 2018 Audi A4 Premium~ ONLY 21K MILES~ CLEAN CARFAX~ MINT~BACK UP CAMERA~NAVI :$31,997 
+---------------------- 
+ Audi R8 :$115,999 
+---------------------- 
+ 2015 Audi A4 Premium Plus~ 2.0 TURBO~ NAVI~ CAMERA~ LOADED~ALL WHEEL DRIVE~ :$20,888 
+---------------------- 
+ 2015 Audi Q5 Premium Plus~ 2.0 TURBO~ NAVIGATION~ CAMERA~ PANO ROOF~ AWESOME :$18,799 
+---------------------- 
+ 2013 Audi A7 3.0 Prestige~ SUPERCHARGED 6 CYL~ LOADED~ BEST COLORS~ LOOKS NA :$24,997 
+---------------------- 
+ 2015 Audi Q7 3.0T S line Prestige~ 3RD ROW SEAT~GREAT COLORS~ NAVI~ LEATHER~ :$22,499 
+---------------------- 
+ 2015 Audi Q5 Premium Plus~ 2.0 TURBO~ NAVIGATION~ CAMERA~ PANO ROOF~ AWESOME :$18,799 
+---------------------- 
+ 2015 Audi A4 Premium Plus~ 2.0 TURBO~ NAVI~ CAMERA~ LOADED~ALL WHEEL DRIVE~ :$20,888 
+---------------------- 
+ 2015 Audi Q7 3.0T S line Prestige~ 3RD ROW SEAT~GREAT COLORS~ NAVI~ LEATHER~ :$22,499 
+---------------------- 
+ 2013 BMW 320i :$12,500 
+---------------------- 
+ 2014 Cadillac CTS LUXURY COLLECTION _WE FINANANCE EVERYONE 100%_APROBACION P :$21,990 
+---------------------- 
+ 2015 Audi A4 Premium Plus~ 2.0 TURBO~ NAVI~ CAMERA~ LOADED~ALL WHEEL DRIVE~ :$20,888 
+---------------------- 
+ 2015 Audi Q5 Premium Plus~ 2.0 TURBO~ NAVIGATION~ CAMERA~ PANO ROOF~ AWESOME :$18,799 
+---------------------- 
+ 2015 Audi Q7 3.0T S line Prestige~ 3RD ROW SEAT~GREAT COLORS~ NAVI~ LEATHER~ :$22,499 
+---------------------- 
+ 2015 Infiniti Q50 PREMIUM _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS :$20,990 
+---------------------- 
+ 2017 Ford EXPLORER XLT _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100 :$24,990 
+---------------------- 
+ 2016 Ford F250 LARIAT SUPER DUTY _WE FINANANCE EVERYONE 100%_APROBACION PARA :$50,990 
+---------------------- 
+ 2015 Audi Q7 3.0T S line Prestige~ 3RD ROW SEAT~GREAT COLORS~ NAVI~ LEATHER~ :$22,499 
+---------------------- 
+ 2018 Audi S5 Cabriolet Prestige EDITION~ ONLY 35K MILES~ 6 CYL SUPERCHARGED~ :$48,500 
+---------------------- 
+ 2015 Audi A4 Premium Plus~ 2.0 TURBO~ NAVI~ CAMERA~ LOADED~ALL WHEEL DRIVE~ :$20,888 
+---------------------- 
+ 2015 Audi Q5 Premium Plus~ 2.0 TURBO~ NAVIGATION~ CAMERA~ PANO ROOF~ AWESOME :$18,799 
+---------------------- 
+ 2013 Audi A7 3.0 Prestige~ SUPERCHARGED 6 CYL~ LOADED~ BEST COLORS~ LOOKS NA :$24,997 
+---------------------- 
+ 2013 Subaru BRZ 2.0 PREMIUM _WE FINANANCE EVERYONE 100%_APROBACION PARA TODO :$21,990 
+---------------------- 
+ 2015 Audi Q7 3.0T S line Prestige~ 3RD ROW SEAT~GREAT COLORS~ NAVI~ LEATHER~ :$22,997 
+---------------------- 
+ 2015 LEXUS GX 460 _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100% :$35,990 
+---------------------- 
+ 2015 GMC YUKON DENALI _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100% :$36,990 
+---------------------- 
+ 2017 Ford F150 SPORT SUPERCREW _WE FINANANCE EVERYONE 100%_APROBACION PARA T :$32,990 
+---------------------- 
+ 2017 Toyota TUNDRA CREWMAX SR5 _WE FINANANCE EVERYONE 100%_APROBACION PARA T :$34,990 
+---------------------- 
+ 2017 Toyota TACOMA TRD DOUBLE CAB _WE FINANANCE EVERYONE 100%_APROBACION PAR :$40,990 
+---------------------- 
+ 2014 Ford EXPLORER SPORT _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 1 :$16,990 
+---------------------- 
+ 2016 Infiniti QX50 _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100% :$17,990 
+---------------------- 
+ 2016 Honda CIVIC TOURING _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 1 :$20,990 
+---------------------- 
+ 2016 Hyundai TUCSON LIMITED _WE FINANANCE EVERYONE 100%_APROBACION PARA TODO :$17,990 
+---------------------- 
+ 2014 Chevrolet CAMARO LT _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 1 :$20,990 
+---------------------- 
+ 2020 TOYOTA COROLLA LE _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100 :$19,990 
+---------------------- 
+ 2011 NISSAN TITAN SV _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100% :$16,990 
+---------------------- 
+ 2014 Mercedes-Benz CLA 250 4MATIC _WE FINANANCE EVERYONE 100%_APROBACION PAR :$17,990 
+---------------------- 
+ 2015 KIA SORENTO LX _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100% :$14,990 
+---------------------- 
+ 2017 Toyota RAV4 LE _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100% :$22,990 
+---------------------- 
+ 2015 Chevrolet SILVERADO 1500 LT _WE FINANANCE EVERYONE 100%_APROBACION PARA :$35,990 
+---------------------- 
+ 2016 Chevrolet SILVERADO 1500 _WE FINANANCE EVERYONE 100%_APROBACION PARA T :$19,990 
+---------------------- 
+ 2021 RAM 1500 LIMITED _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100% :$69,990 
+---------------------- 
+ 2013 Audi A7 3.0 Prestige~ SUPERCHARGED 6 CYL~ LOADED~ BEST COLORS~ LOOKS NA :$24,997 
+---------------------- 
+ 2018 Chevrolet CRUZE LT _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 10 :$18,990 
+---------------------- 
+ 2017 - 3500 _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 100% :$37,990 
+---------------------- 
+ 2013 Mercedes-Benz E-CLASS E350 _WE FINANANCE EVERYONE 100%_APROBACION PARA :$16,990 
+---------------------- 
+ 2014 Hyundai SONATA LIMTED _WE FINANANCE EVERYONE 100%_APROBACION PARA :$11,990 
+---------------------- 
+ 2017 Ford F250 LARIAT SUPER DUTY _WE FINANANCE EVERYONE 100%_APROBACION PARA :$53,990 
+---------------------- 
+ 2020 FORD F250 SUPER DUTY _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS :$64,990 
+---------------------- 
+ 2018 Ford F150 SUPERCREW _WE FINANANCE EVERYONE 100%_APROBACION PARA TODOS 1 :$35,990 
+---------------------- 
+ 2006 Mitsubishi Galant :$4,800 
 ---------------------- 

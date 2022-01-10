@@ -219,6 +219,7 @@ def bat(car,driver):
 
 #CALLING ALL SCRAPE FUNCTIONS
 
+
 def fileWrite(data,fileIn):
     for line in data:
         temp = f"{line} \n"
@@ -236,14 +237,17 @@ def scrapeFunc(car):
         bat(car,driver)
         driver.close
 
-car  = {
-    'year':2001,
-    'make':'Audi',
-    'model':'RS4'
-}
 
 
-scrapeFunc(car)
+# if __name__ == '__main__':
+
+#     # car  = {
+#     # 'year':2001,
+#     # 'make':'Porsche',
+#     # 'model':'911'
+#     # }
+
+#     scrapeFunc(car)
 
 
 
