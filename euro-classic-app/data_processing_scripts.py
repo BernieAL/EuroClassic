@@ -31,24 +31,29 @@ from Data_Clean_Logic import clean_data
 def run_scrape(car):
     scrapeFunc(car)
     
+def clean_all_data(car):
 
-
-def handle_data(car):
-    
     clean_data.clean_the_data("CURRENT_LISTINGS.txt",car['year'],car['make'],car['model'])
     clean_data.clean_the_data("SOLD_DATA.txt",car['year'],car['make'],car['model'])
     
     return True
+
+def handle_data(car):
+    
+    scrapeFunc(car)
+    
+    clean_all_data(car)
      
 
 
 
-# if __name__=='__main__':
+if __name__=='__main__':
+    handle_data()
 
-car = {
-    'year':2001,
-    'make':'Audi',
-    'model':'R8'
-}
-run_scrape(car)
-handle_data(car)
+# car = {
+#      'year':2001,
+#      'make':'Audi',
+#      'model':'R8'
+# }
+
+# handle_data(car)
