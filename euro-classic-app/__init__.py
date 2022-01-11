@@ -191,7 +191,7 @@ def search():
 
          insert_cleaned_scraped_sale_records_from_csv_to_db()
          insert_cleaned_scraped_current_listings_from_csv_to_db()
-         sale_records_array = print(get_all_sale_records_from_db(model))
+         sale_records_array = get_all_sale_records_from_db(model)
          current_listing_records_array = get_all_current_listing_records_from_db(model)
          print(f"SALE RECORDS ARRAY {sale_records_array}")
          print(f"CURRENT LISTING RECORDS ARRAY {current_listing_records_array}")
