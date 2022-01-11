@@ -46,8 +46,8 @@ import time
 # # 98-03 for m5
 
 #files for current listing data and sold data
-current_listing_output = open("CURRENT_LISTINGS.txt","w",encoding="utf-8")
-sold_output = open("SOLD_DATA.txt","w",encoding="utf-8")
+current_listing_output = open("CURRENT_LISTINGS.txt","a",encoding="utf-8")
+sold_output = open("SOLD_DATA.txt","a",encoding="utf-8")
 
 
 #CLEAR EXISTING FILE CONTENTS BEFORE EACH NEW SCRAPE FOR VEHICLE

@@ -3,6 +3,7 @@
 <!-- https://www.cargurus.com/Cars/price-trends/BMW-M5-d391 -->
 <!-- SENDING STUFF TO GRAPH FROM FLASK
 
+https://github.com/Makanz/chartjs-plugin-trendline#readme
 
 GRAPH REFERENCE - https://codepen.io/Ruddy/pen/yyqZqX?editors=1000
 https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-to-the-javascript-code-of-another-view-->
@@ -22,8 +23,43 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
         </div>
 
         <div class="chart">
-            <canvas id="myChart2" width="400" height="400"></canvas>
+            <canvas id="myChart2" width="25%" height="25%"></canvas>
         </div>
+
+
+        <!-- Some sales records results -->
+        <table id ="sales_records_table">
+          <tr>
+            <th>November Sales</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+  
+          <tr>
+            <td>Dallas Oak Dining Chair</td>
+            <td>20</td>
+            <td>$1,342</td>
+          </tr>
+  
+          <tr>
+            <td>Benmore Glass Coffee Table</td>
+            <td>18</td>
+            <td>$1,550</td>
+          </tr>
+  
+          <tr>
+            <td>Aoraki Leather Sofa</td>
+            <td>15</td>
+            <td>$4,170</td>
+          </tr>
+  
+          <tr>
+            <td>Bali Outdoor Wicker Chair</td>
+            <td>25</td>
+            <td>$2,974</td>
+          </tr>
+        </table>
+      </div>
    </div>
 <!-- 
     <div class="container">
@@ -46,39 +82,8 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
             <canvas class="my-4 chartjs-render-monitor" id="myChart2" style="display: block;"></canvas>
     </div> -->
 
-    <!-- Some sales records results -->
-    <table id ="sales_records_table">
-        <tr>
-          <th>November Sales</th>
-          <th>Quantity</th>
-          <th>Total</th>
-        </tr>
-
-        <tr>
-          <td>Dallas Oak Dining Chair</td>
-          <td>20</td>
-          <td>$1,342</td>
-        </tr>
-
-        <tr>
-          <td>Benmore Glass Coffee Table</td>
-          <td>18</td>
-          <td>$1,550</td>
-        </tr>
-
-        <tr>
-          <td>Aoraki Leather Sofa</td>
-          <td>15</td>
-          <td>$4,170</td>
-        </tr>
-
-        <tr>
-          <td>Bali Outdoor Wicker Chair</td>
-          <td>25</td>
-          <td>$2,974</td>
-        </tr>
-      </table>
-    </div>
+   
+    
 
 
 
@@ -134,8 +139,13 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
               borderColor:'#www',
               pointBackgroundColor:'rgb(189,195,199)',
               tension:0.05,
+              trendlineLinear: {
+                style: "rgb(43 ,66 ,255, 0.3)",
+                lineStyle: "solid",
+                width: 5
+             }
           }],
-          labels: sale_dates
+          labels: (sale_dates).reverse()
       }
       var config1 = {
           type: 'line',

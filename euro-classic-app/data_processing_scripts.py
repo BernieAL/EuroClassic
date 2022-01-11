@@ -33,8 +33,8 @@ def run_scrape(car):
     
 def clean_all_data(car):
 
-    clean_data.clean_the_data("CURRENT_LISTINGS.txt",car['year'],car['make'],car['model'])
-    clean_data.clean_the_data("SOLD_DATA.txt",car['year'],car['make'],car['model'])
+    clean_data.clean_the_data_CURRENT("CURRENT_LISTINGS.txt",car['year'],car['make'],car['model'])
+    clean_data.clean_the_data_SOLD("SOLD_DATA.txt",car['year'],car['make'],car['model'])
     
     return True
 

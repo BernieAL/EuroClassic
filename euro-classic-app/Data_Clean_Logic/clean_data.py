@@ -24,8 +24,8 @@ Nothing gets written to cleaned_data_CURRENT_LISTINGS.csv
 
 
 import re
-clean_output_file_CURRENT_LISTINGS= open("cleaned_data_CURRENT_LISTINGS.csv","w",encoding="utf-8")
-clean_output_file_SOLD_DATA= open("cleaned_data_SOLD_DATA.csv","w",encoding="utf-8")
+# clean_output_file_CURRENT_LISTINGS= open("cleaned_data_CURRENT_LISTINGS.csv","w",encoding="utf-8")
+# clean_output_file_SOLD_DATA= open("cleaned_data_SOLD_DATA.csv","w",encoding="utf-8")
 
 # unclean_input_CURRENT_LISTINGS = open("CURRENT_LISTINGS.txt","r",encoding="utf-8")
 # unclean_input_SOLD_DATA = open("SOLD_DATA.txt","r",encoding="utf-8")
@@ -42,26 +42,20 @@ def fileWrite(data,fileIn):
         fileIn.write(temp)
     fileIn.write("---------------------- \n")
 
-def clean_the_data(dirty_file,year,make,model):
+def clean_the_data_SOLD(unclean_SOLD,year,make,model):
     
-
-    
-    option = 0
-    #output files to write to
+    clean_output_file_SOLD_DATA= open("cleaned_data_SOLD_DATA.csv","w",encoding="utf-8")
+    # clean_output_file_SOLD_DATA.truncate(0)
+    to_output_file = clean_output_file_SOLD_DATA
     
     clean_output_array = []
-    to_output_file = ""
-
-    unclean_input = open(dirty_file,"r",encoding="utf-8")
+    unclean_input = open(unclean_SOLD,"r",encoding="utf-8")
     
-    if dirty_file == "CURRENT_LISTINGS.txt":
-        to_output_file = clean_output_file_CURRENT_LISTINGS
+  
     
-    elif dirty_file == "SOLD_DATA.txt":
-        to_output_file = clean_output_file_SOLD_DATA
-
+    
     for line in unclean_input:
-        
+        print(line)
         # only target lines with specific model
         if model in line:
             #remove commas from price
@@ -95,40 +89,25 @@ def clean_the_data(dirty_file,year,make,model):
             set item_line string to include price and sale_Date
             """
             
-            if dirty_file == "SOLD_DATA.txt" and price.find('on'):
-                 price_sale_date_split = price.split('on')
-                 price = price_sale_date_split[0]
-                 sale_Date = price_sale_date_split[1]
-                 #replace / with - in sale_Date
-                 sale_Date = sale_Date.replace('/','-')
-                 item_line = f"{year},{make},{model},{price},{sale_Date}"
-                 #remove extra space between price and sale date Ex. ['45000 ', ' 11/23/20 '] -> 44250,12/22/21 
-                 item_line = item_line.replace(' ','')
-                 clean_output_array.append(item_line)
-                 option = 1
-                #  col_headers = f"Year,Make,Model,Price,DateSold\n"
-            else:
-                 item_line = f"{year},{make},{model},{price}"
-                 clean_output_array.append(item_line)
-                 option = 2
-                #  col_headers = f"Year,Make,Model,Price\n"
+            price_sale_date_split = price.split('on')
+            price = price_sale_date_split[0]
+            sale_Date = price_sale_date_split[1]
+            #replace / with - in sale_Date
+            sale_Date = sale_Date.replace('/','-')
+            item_line = f"{year},{make},{model},{price},{sale_Date}"
+            #remove extra space between price and sale date Ex. ['45000 ', ' 11/23/20 '] -> 44250,12/22/21 
+            item_line = item_line.replace(' ','')
+            clean_output_array.append(item_line)
+            # col_headers = f"Year,Make,Model,Price,DateSold\n"
+            
+    # to_output_file = clean_output_file_SOLD_DATA
+        # print(to_output_file)             
 
-
-    if dirty_file == "CURRENT_LISTINGS.txt":
-        to_output_file = clean_output_file_CURRENT_LISTINGS
-        print(to_output_file)
+        # to_output_file.write(col_headers)
+ 
+    col_headers = f"Year,Make,Model,Price,DateSold\n"
+    to_output_file.write(col_headers)
     
-    elif dirty_file == "SOLD_DATA.txt":
-        to_output_file = clean_output_file_SOLD_DATA
-        print(to_output_file)             
-
-    # to_output_file.write(col_headers)
-    if option == 1:
-        col_headers = f"Year,Make,Model,Price,DateSold\n"
-        to_output_file.write(col_headers)
-    elif option == 2:
-        col_headers = f"Year,Make,Model,Price\n"
-        to_output_file.write(col_headers)
     
     # print(clean_output_array)
     fileWrite(clean_output_array,to_output_file)
@@ -137,8 +116,51 @@ def clean_the_data(dirty_file,year,make,model):
     unclean_input.close()
 
 
-# clean_the_data("SOLD_DATA.txt",'2012','Audi','R8')
-# clean_the_data("CURRENT_LISTINGS.txt",'2012','Audi','R8')
+
+
+def clean_the_data_CURRENT(unclean_CURRENT,year,make,model):
+
+    clean_output_file_CURRENT_LISTINGS= open("cleaned_data_CURRENT_LISTINGS.csv","w",encoding="utf-8")
+    # clean_output_file_CURRENT_LISTINGS.truncate(0)
+    to_output_file = clean_output_file_CURRENT_LISTINGS
+
+    clean_output_array = []
+    unclean_input = open(unclean_CURRENT,"r",encoding="utf-8")
+
+    for line in unclean_input:
+        
+        # only target lines with specific model
+        if model in line:
+            #remove commas from price
+            line = line.replace(',','')
+            #if current line start with 4 digits, this is year, get it. Otherwise skip line
+            if re.findall('^\d{4}',line):
+                try:
+                    year = (re.findall('^\d{4}',line))[0]
+                except NameError:
+                    year = 0000
+            
+            #get price
+            try:
+                price = (re.findall('\$\d[0-9][0-9].+',line))[0]
+                if not year:
+                    year = 0000
+                price = price.replace('$','')
+            except IndexError as error:
+                pass
+            
+            item_line = f"{year},{make},{model},{price}"
+            clean_output_array.append(item_line)
+            # col_headers = f"Year,Make,Model,Price\n"
+
+    col_headers = f"Year,Make,Model,Price\n"
+    to_output_file.write(col_headers)
+    
+    # print(clean_output_array)
+    fileWrite(clean_output_array,to_output_file)
+
+# clean_the_data_SOLD("SOLD_DATA.txt",'2012','BMW','M3')
+# clean_the_data_CURRENT("CURRENT_LISTINGS.txt",'2012','BMW','M3')
 """
 make,model,year,price
 """

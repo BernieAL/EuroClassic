@@ -30,7 +30,7 @@ import numpy as np
 # from scrape import test
 # from config import Config
 
-# from data_processing_scripts import handle_data
+from data_processing_scripts import handle_data
 
 
 import os
@@ -151,6 +151,8 @@ def test():
 @app.route('/search',methods=['GET','POST'])
 def search():
 
+   sale_records_array = []
+   current_listing_records_array = []
    
   #get entered car entered in search form by user
    if request.method == 'POST':
@@ -171,8 +173,9 @@ def search():
       #GET ALL SALES RECORDS and CURRENT LISTINGS FROM DB FOR VEHICLE IF THEY EXIST - TO BE SENT TO TEMPLATE AND USED IN JS FOR GRAPHING
       sale_records_array = get_all_sale_records_from_db(model)
       current_listing_records_array = get_all_current_listing_records_from_db(model)
-      # print(sale_records_array)
-      # print(current_listing_records_array)
+      print(f"SALE RECORDS ARRAY {sale_records_array}")
+      print(f"CURRENT LISTING RECORDS ARRAY {current_listing_records_array}")
+      
       if len(sale_records_array) == 0 or len(current_listing_records_array) == 0:
          print("NO RECORDS FOR THIS VEHICLE - INITIAL SCRAPE NEEDED")
          
@@ -181,19 +184,19 @@ def search():
          #FILES WILL BE POPULATED ONCE HANDLEDATA RUNS
          #THEN PASS TO PERFORM PREDICTION
          
-         # handle_data(car_object)
+         handle_data(car_object)
          
-   #After handle_data populates clean_data_SOLD_DATA.csv and cleaned_data_CURRENT_LISTINGS.csv, write all records from SOLD_DATA to Sold_listings_clean DB collection 
-   #And from CURRENT_LISTINGS to current_listings_clean DB collection
+         #After handle_data populates clean_data_SOLD_DATA.csv and cleaned_data_CURRENT_LISTINGS.csv, write all records from SOLD_DATA to Sold_listings_clean DB collection 
+         #And from CURRENT_LISTINGS to current_listings_clean DB collection
 
          insert_cleaned_scraped_sale_records_from_csv_to_db()
          insert_cleaned_scraped_current_listings_from_csv_to_db()
          sale_records_array = print(get_all_sale_records_from_db(model))
-         # current_listing_records_array = get_all_current_listing_records_from_db(model)
-         # print(sale_records_array)
-         # print(current_listing_records_array)
-         
-      print(sale_records_array)
+         current_listing_records_array = get_all_current_listing_records_from_db(model)
+         print(f"SALE RECORDS ARRAY {sale_records_array}")
+         print(f"CURRENT LISTING RECORDS ARRAY {current_listing_records_array}")
+   
+     
 
    # AFTER SCRAPE AND INSERT OF ALL RECORDS TO DB, PERFORM STATS
 
@@ -209,22 +212,24 @@ def search():
             {"model":"Skyline", "doors":2}
         ],
       }
-
-      sold_listings_clean = open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
-      # print(sold_listings_clean)
-      sold_prices_for_car = []
+      # ------------------
+      # sold_listings_clean = open("cleaned_data_SOLD_DATA.csv","r",encoding="utf-8")
+      # # print(sold_listings_clean)
+      # sold_prices_for_car = []
       
-      for i in sold_listings_clean:
-            indiv_line = i.split(',')
-            try:
-               sold_prices_for_car.append(indiv_line[3])
-            except IndexError as e:
-               pass
-      # print(len(sold_prices_for_car)) 
-
+      # for i in sold_listings_clean:
+      #       indiv_line = i.split(',')
+      #       try:
+      #          sold_prices_for_car.append(indiv_line[3])
+      #       except IndexError as e:
+      #          pass
+      # # print(len(sold_prices_for_car)) 
+      # ------------------
+      
       #PANDAS WORK
       # sortByYear(sold_listings_clean)
-
+      
+      print(f"SALE RECORDS ARRAY {sale_records_array}")
       return render_template('data.html',car=car, car_results=json.dumps(car_results),sales_records=json.dumps(sale_records_array))
       
    else:
@@ -339,17 +344,6 @@ def get_all_sale_records_from_db(model):
 
       # print(sale_records_array)
       return sale_records_array
-      # print(sale_records_array
-
-      # PREVIOUS CODE HERE:
-      #  model = "M5"
-      #  models_query = db.sale_data.find({'model':model})
-      #  if models_query != -1:
-      #    models_array = []
-      
-      #    for model in models_query:
-      #       models_array.append(model['model'])
-      #  print(models_array)
 
 def get_all_current_listing_records_from_db(model):
       # Find by model exclude Make and ID fields ONLY
@@ -360,7 +354,7 @@ def get_all_current_listing_records_from_db(model):
 
          for model in current_listing_records_query:
                current_listing_records_array.append(model)
-      # print(current_listing_records_array)
+      print(current_listing_records_array)
       return current_listing_records_array
 
 
@@ -384,23 +378,25 @@ def sortByYear(file):
 
    data = file
    data = pd.read_csv('./cleaned_data_SOLD_DATA.csv')
-   data.dropna
+   data.dropna()
 
-   unique_years = np.unique(data['Year'])
-   # print(unique_years)
+   t = data.groupby(['Year'])
+   print(t)
+   # unique_years = np.unique(data['Year'])
+   # # print(unique_years)
 
-   # populate dictionary with unique years
-   mydict = {}
-   for i in unique_years:
-      mydict[i] = i
+   # # populate dictionary with unique years
+   # mydict = {}
+   # for i in unique_years:
+   #    mydict[i] = i
+   # # print(mydict)
+
+   # #for each year in dict, find all rows with matching year,
+   # #store in in array under that key
+   # for i in unique_years:
+   #    t = data.loc[data['Year']==i]
+   #    mydict[i] = t
    # print(mydict)
-
-   #for each year in dict, find all rows with matching year,
-   #store in in array under that key
-   for i in unique_years:
-      t = data.loc[data['Year']==i]
-      mydict[i] = t
-   print(mydict)
    
 
 
