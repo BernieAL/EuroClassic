@@ -44,6 +44,9 @@
     color: #ffffff;
   }
 
+  #myChart1{
+    padding-bottom: 50px;
+  }
   /* .chart {
     position: relative;
     width: 50vw;

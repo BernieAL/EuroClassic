@@ -17,15 +17,26 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
   <!-- <h1>this is data.html page</h1> -->
   <h2>You searched: {{car}} </h2>
     
-  <div class="container">
+  <div class="main">
+    
+
+    
+    <div class="container">
         <div class="chart">
             <canvas id="myChart1" ></canvas>
         </div>
+    </div>
 
-        <div class="chart">
-            <canvas id="myChart2" width="25%" height="25%"></canvas>
-        </div>
+    <div class="container">
+       <div class="chart">
+            <canvas id="myChart2"></canvas>
+       </div>
+    </div>
 
+      
+  </div>
+  
+  
 
         <!-- Some sales records results -->
         <table id ="sales_records_table">
@@ -154,15 +165,28 @@ https://stackoverflow.com/questions/48234240/passing-an-array-from-a-flask-view-
               radius: 5,
               hitRadius:10,
               responsive:true,
+              legend:{
+                position: 'bottom'
+              },
               scales: {
-                  y:{
+                  y:[{
+                    scaleLabel: {
+					            display: true,
+					            labelString: 'Sale Prices'
+                    },
                       ticks:{
                         //   callback just for attaching '$' to value
                           callback: function(value){
                               return  '$'+ value
                           }
                       }
-                  }
+                  }],
+                  x: [{
+                    scaleLabel: {
+					            display: true,
+					            labelString: 'Period of Sale Records'
+                    },
+                  }]
               }
           }
       }
