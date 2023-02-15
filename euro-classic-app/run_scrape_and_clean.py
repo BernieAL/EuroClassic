@@ -1,11 +1,10 @@
 
 """
-This script runs the scraping then the cleaning
-and returns the clean result back to main app 
+This script runs the scraping then the cleaning and returns the clean result back to main app 
 clean data is then sent and  displayed in data.html template
 
 
-scrape takes car object in and performs search on 3 sources
+scrape takes car object in and performs search on 3 sources (ebay,cl,BAT)
 takes resutls and writes to 2 files, one current listing and one for already sold listings
 
 after scrape runs, we pass the file with dirty data to the clean_data function
@@ -46,14 +45,13 @@ def handle_data(car):
      
 
 
-
+# Uncomment the below for manual testing
+#this value would normally be coming from the user
 if __name__=='__main__':
-    handle_data()
-
-# car = {
-#      'year':2001,
-#      'make':'Audi',
-#      'model':'R8'
-# }
-
-# handle_data(car)
+  
+    car = {
+     'year':2015,
+     'make':'Audi',
+     'model':'R8'
+    }
+    handle_data(car)
