@@ -1,108 +1,123 @@
- :::EBAY - DATA SCRAPED ON: 01/10/2022 
- $10,000.00 
+ :::EBAY - DATA SCRAPED ON: 02/15/2023 
+Shop on eBay $20.00 
 ---------------------- 
-2008 Audi RS4 $32,750.00 
+2008 Audi R8 4.2 QUATTRO $72,000.00 
 ---------------------- 
-2007 Audi RS4 QUATTRO $19,000.00 
+2009 Audi R8 Quattro $59,992.50 
 ---------------------- 
-2007 Audi RS4 QUATTRO $26,000.00 
+2018 Audi R8 5.2 quattro V10 $139,800.00 
 ---------------------- 
-2008 Audi RS4 $23,500.00 
+2018 Audi R8 V10 plus $130,100.00 
 ---------------------- 
-2007 RS4 $34,900.00 
+2017 Audi R8 5.2 PLUS QUATTRO $120,000.00 
 ---------------------- 
-2002 Audi S4 $74,950.00 
+2012 Audi R8 4.2L Spyder $89,950.00 
 ---------------------- 
-2021 Audi RS 6 Avant 4.0T quattro Avant $29,900.00 
+2009 Audi R8 2dr Cpe 4.2L quattro $50,100.00 
 ---------------------- 
-2003 Audi RS6 C5 RS6 $169,000.00 
+2020 Audi R8 V10 Coupe 2D $144,995.00 
 ---------------------- 
-2003 Audi RS6 $18,900.00 
+2022 Audi R8 V10 performance $199,950.00 
 ---------------------- 
-2019 Audi RS 5 Sportback $23,450.00 
+2009 Audi R8 4.2L $73,900.00 
 ---------------------- 
-2021 Audi RS5 2.9T $79,640.00 
+2017 Audi R8 5.2 QUATTRO $138,000.00 
 ---------------------- 
-2018 Audi RS 3 $94,598.00 
+2023 Audi R8 V10 Performance RWD $209,900.00 
 ---------------------- 
-2014 Audi RS5 RS5 RS 5 $63,950.00 
+2017 Audi R8 5.2 quattro V10 Plus AUDI Exclusive Paint! TWIN-TU $239,800.00 
 ---------------------- 
-2021 Audi RS Q8 4.0T quattro $39,977.00 
+2014 AUDI R8 4.2 QUATTRO $88,599.00 
 ---------------------- 
-2014 Audi RS7 $165,000.00 
+2014 Audi R8 $101,000.00 
 ---------------------- 
-2019 Audi RS 3 2.5T $68,000.00 
+2008 Audi R8 Supercharged 6 speed $85,995.00 
 ---------------------- 
-2017 Audi RS7 $21,900.00 
+2012 Audi R8 5.2L $89,245.75 
 ---------------------- 
-2021 Audi RS7 4.0T $78,800.00 
+2021 Audi R8 V10 RWD $166,990.00 
 ---------------------- 
-2021 Audi RS7 4.0T quattro $139,852.00 
+2020 Audi R8 Performance Coupe Quattro $183,900.00 
 ---------------------- 
-2014 Audi RS7 $137,500.00 
+2014 Audi R8 $112,999.00 
 ---------------------- 
-2021 Audi RS 6 Avant 4.0T Quattro $44,999.00 
+2011 Audi R8 4.2 quattro AWD 2dr Coupe 6M $97,900.00 
 ---------------------- 
-2021 Audi RS 6 Avant 4.0T Quattro $49,999.00 
+2017 Audi R8 V10 $155,956.00 
 ---------------------- 
-2012 Audi S4 4dr Sedan S Tronic Premium Plus $144,900.00 
+2010 Audi R8 5.2 quattro $104,995.00 
 ---------------------- 
-2014 Audi S4 Premium Plus $146,900.00 
+2022 Audi R8 $243,000.00 
 ---------------------- 
-2013 Audi S4 Premium Plus $8,100.00 
+2017 Audi R8 5.2 quattro V10 Spyder $149,980.00 
 ---------------------- 
-2021 Audi RS5 2.9T $19,986.00 
+2014 Audi R8 5.2 QUATTRO SPYDER $119,000.00 
 ---------------------- 
-2019 Audi S4 Premium Plus $36,000.00 
+2018 Audi R8 V10 Coupe RWS $144,999.00 
 ---------------------- 
-2007 Audi S4 4.2 $2,950.00 
+2012 Audi R8 5.2L $93,495.75 
 ---------------------- 
-2013 Audi RS5 Coupe 2D $17,999.00 
+2017 Audi R8 V10 $149,950.00 
 ---------------------- 
-2021 Audi RS 6 Avant 4.0 TFSI quattro $87,990.00 
+2010 Audi R8 5.2L quattro $145,000.00 
 ---------------------- 
-2021 Audi RS6 4.0T Quattro Avant Hatchback LOADED w/OPTIONS! DME $49,400.00 
+2020 Audi R8 $190,000.00 
 ---------------------- 
-2014 Audi RS5 RS5 RS 5 $11,463.00 
+2014 Audi R8 V10 $108,795.75 
 ---------------------- 
-2018 Audi RS5 2.9 TFSI quattro tiptronic $43,990.00 
+2011 Audi R8 5.2 $175,000.00 
 ---------------------- 
-2013 Audi S4 $199,997.00 
+2018 Audi R8 V10 plus $179,908.00 
 ---------------------- 
-2019 Audi S4 3.0 TFSI Prestige quattro AWD $164,800.00 
+2017 Audi R8 5.2 $159,999.00 
 ---------------------- 
-2013 Audi S4 3.0T quattro Premium Plus AWD 4dr Sedan 7A $43,977.00 
+2012 Audi R8 4.2L $83,995.00 
 ---------------------- 
-2009 Audi A4 Quattro 2.0T QUATTRO $65,895.00 
+2017 Audi R8 V10 $145,900.00 
 ---------------------- 
-2014 Audi RS5 Convertible 2D $25,900.00 
+2012 Audi R8 2dr Coupe Automatic quattro 4.2L $95,250.00 
 ---------------------- 
-2008 Audi S4 Cabriolet Quattro V8 AWD $53,990.00 
+2015 Audi R8 V10 $139,000.00 
 ---------------------- 
-2018 Audi S4 3.0T Prestige $24,995.00 
+2017 Audi R8 5.2 quattro V10 Spyder Convertible HOT Spec! BOTH $155,800.00 
 ---------------------- 
-2016 Audi S4 3.0T quattro Premium Plus $6,000.00 
+2012 Audi R8 5.2 Quattro Coupe 2D $103,995.00 
 ---------------------- 
-2013 Audi S4 PREMIUM PLUS $8,500.00 
+2017 Audi R8 5.2 QUATTRO $99,900.00 
 ---------------------- 
-2009 Audi S4 Convertible 2-Owner 56,024 Miles Heated Front Rear $51,590.00 
+2008 Audi R8 V8 $64,999.00 
 ---------------------- 
-2019 Audi RS5 2.9T quattro $17,995.00 
+2010 Audi R8 V8 Heffner Twin-Turbo $92,499.00 
 ---------------------- 
-2008 S4 quattro AWD 104K V8 4.2L 6 SPEED MANUAL Leather $46,798.00 
+2020 Audi R8 V10 performance quattro Coupe $224,979.00 
 ---------------------- 
-2019 Audi RS5 2.9T $42,995.00 
+2012 Audi R8 5.2L $89,998.00 
 ---------------------- 
-2007 Audi S4 Quattro Cabriolet 2D $27,000.00 
+2017 Audi R8 V10 Plus quattro TS-825 Supercharger Whipple Gen4 $199,991.00 
 ---------------------- 
-2012 Audi S4 4dr Sedan Manual Prestige $19,988.00 
+2020 Audi R8 V10 performance $199,999.00 
 ---------------------- 
-2014 Audi S4 Premium Plus $79,900.00 
+2018 Audi R8 V10 $139,998.00 
 ---------------------- 
-2013 Audi S4 3.0T quattro Premium Plus $15,995.00 
+2014 Audi R8 V10 DCT $179K MSRP $94,995.00 
 ---------------------- 
- :::CRAIGLIST - DATA SCRAPED ON: 01/10/2022 
- 2018 Nissan GTR Fully Loaded MSRP+OVER $20K In Mods*LOTS Carbon Fiber! :$99,950 
+2012 Audi R8 4.2 Coupe quattro $92,790.00 
 ---------------------- 
- 2006 Porsche Cayman S - Rare! :$23,964 
+2014 Audi R8 V10 Spyder $100,999.00 
+---------------------- 
+2018 Audi R8 V10 Spyder AWD $157,499.00 
+---------------------- 
+2017 Audi R8 V10 $149,998.00 
+---------------------- 
+2011 Audi R8 Quattro Spyder $79,900.00 
+---------------------- 
+2021 Audi R8 V10 $169,998.00 
+---------------------- 
+2017 Audi R8 Coupe V10 quattro AWD $155,990.00 
+---------------------- 
+2021 Audi R8 Coupe *V10 RWD* *Premium Package* *Full Leather Pkg* $174,900.00 
+---------------------- 
+2008 Audi R8 Coupe quattro with Auto R tronic $72,790.00 
+---------------------- 
+2015 Audi R8 V10 $109,950.00 
 ---------------------- 

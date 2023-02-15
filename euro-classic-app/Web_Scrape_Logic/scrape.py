@@ -29,6 +29,7 @@ from threading import Thread
 from typing import ClassVar
 from selenium import webdriver
 from datetime import date
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotVisibleException, StaleElementReferenceException
@@ -67,7 +68,7 @@ def ebay(car,driver):
 
     target_car = f"{car['make']} {car['model']}"
     #enter model 
-    ebay_search_box = driver.find_element_by_css_selector('#gh-ac')
+    ebay_search_box = driver.find_element(By.CSS_SELECTOR,'#gh-ac')
     # WebDriverWait(driver,10)
     time.sleep(1)
     ebay_search_box.send_keys(target_car + Keys.RETURN)
@@ -75,9 +76,9 @@ def ebay(car,driver):
 
     # this gets prices of all cars on page
     ebay_items = []
-    ebay_listings = driver.find_elements_by_class_name('s-item__info')
-    all_descriptions = driver.find_elements_by_class_name('s-item__title')
-    all_prices = driver.find_elements_by_class_name('s-item__price')
+    ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
+    all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
+    all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
 
     for (descrip,price) in zip(all_descriptions,all_prices):
@@ -119,10 +120,10 @@ def CL(car,driver):
 
     CL_prices=[]
     CL_items = []
-    CL_items = driver.find_elements_by_class_name('result-info')
+    CL_items = driver.find_elements(By.CLASS_NAME,'result-info')
     for item in CL_items:
-        description = item.find_element_by_class_name('result-heading').get_attribute('innerText')
-        price = item.find_element_by_class_name('result-price').get_attribute('innerText')
+        description = driver.find_elements(By.CLASS_NAME,'result-heading').get_attribute('innerText')
+        price = item.find_element(By.CLASS_NAME,'result-price').get_attribute('innerText')
         temp = f" {description}:{price}"
         CL_prices.append(temp)
         # print(f" {description}:{price}")
@@ -166,7 +167,7 @@ def bat(car,driver):
         # show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[3]/div[3]/div[4]/button')
         # /html/body/div[2]/div[2]/div/div/div[37]/div[3]/div[4]/button/span[1]
         try:
-            show_more = driver.find_element_by_link_text('Show More')
+            show_more = driver.find_element(By.LINK_TEXT,'Show More')
              # # # LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
             while show_more:
                 try:
@@ -189,16 +190,16 @@ def bat(car,driver):
        
 
         #target parent group that holds individual previous listing items
-        prev_listings = driver.find_element_by_class_name('filter-group')
+        prev_listings = driver.find_element(By.CLASS_NAME,'filter-group')
         time.sleep(1.5)
         #extract all block elements from parents group, this gives each indiv listing
-        item_list = prev_listings.find_elements_by_class_name('block')
+        item_list = prev_listings.find_elements(By.CLASS_NAME,'block')
     
         ## EXTRACT MODEL,YEAR,PRICE from each item
         BAT_items = []
         for item in item_list:
-            description = item.find_element_by_class_name('title').get_attribute('innerText')
-            price = item.find_element_by_class_name('subtitle').get_attribute('innerText')
+            description = item.find_element(By.CLASS_NAME,'title').get_attribute('innerText')
+            price = item.find_element(By.CLASS_NAME,'subtitle').get_attribute('innerText')
             temp = f'{description} {price}'
             BAT_items.append(temp)
 
@@ -234,25 +235,26 @@ def scrapeFunc(car):
         current_listing_output.truncate(0)
         sold_output.truncate(0)
 
-        driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
+        driver = webdriver.Chrome()
         ebay(car,driver)
-        CL(car,driver)
-        bat(car,driver)
+        # CL(car,driver)
+        # bat(car,driver)
         driver.close
 
         current_listing_output.close()
         sold_output.close()
 
 
-# if __name__ == '__main__':
+# If going to run this file individually uncomment the below
+if __name__ == '__main__':
 
-#     car  = {
-#     'year':2001,
-#     'make':'Audi',
-#     'model':'R8'
-#     }
+    car  = {
+    'year':2001,
+    'make':'Audi',
+    'model':'R8'
+    }
 
-#     scrapeFunc(car)
+    scrapeFunc(car)
 
 
 
