@@ -29,6 +29,7 @@ from threading import Thread
 from typing import ClassVar
 from selenium import webdriver
 from datetime import date
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotVisibleException, StaleElementReferenceException
@@ -67,7 +68,7 @@ def ebay(car,driver):
 
     target_car = f"{car['make']} {car['model']}"
     #enter model 
-    ebay_search_box = driver.find_element_by_css_selector('#gh-ac')
+    ebay_search_box = driver.find_element(By.CSS_SELECTOR,'#gh-ac')
     # WebDriverWait(driver,10)
     time.sleep(1)
     ebay_search_box.send_keys(target_car + Keys.RETURN)
@@ -75,9 +76,9 @@ def ebay(car,driver):
 
     # this gets prices of all cars on page
     ebay_items = []
-    ebay_listings = driver.find_elements_by_class_name('s-item__info')
-    all_descriptions = driver.find_elements_by_class_name('s-item__title')
-    all_prices = driver.find_elements_by_class_name('s-item__price')
+    ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
+    all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
+    all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
 
     for (descrip,price) in zip(all_descriptions,all_prices):
@@ -98,7 +99,7 @@ def ebay(car,driver):
     #write items to file
     fileWrite(ebay_items,current_listing_output)
 
-    print(ebay_items)
+    # print(ebay_items)
 
 # # :::::: END EBAY SECTION 
 # ===========================================================================
@@ -119,10 +120,10 @@ def CL(car,driver):
 
     CL_prices=[]
     CL_items = []
-    CL_items = driver.find_elements_by_class_name('result-info')
+    CL_items = driver.find_elements(By.CLASS_NAME,'result-info')
     for item in CL_items:
-        description = item.find_element_by_class_name('result-heading').get_attribute('innerText')
-        price = item.find_element_by_class_name('result-price').get_attribute('innerText')
+        description = driver.find_elements(By.CLASS_NAME,'result-heading').get_attribute('innerText')
+        price = item.find_element(By.CLASS_NAME,'result-price').get_attribute('innerText')
         temp = f" {description}:{price}"
         CL_prices.append(temp)
         # print(f" {description}:{price}")
@@ -142,12 +143,12 @@ def CL(car,driver):
 # :::::: BEGIN BAT SECTION
 
 def bat(car,driver):
-        # # #this is to get passed "show notifications prompt"
-        # # driver.send_keys(Keys.TAB)
-        # # driver.send_keys(Keys.TAB)
-        # # driver.send_keys(Keys.RETURN)
+    # this is to get passed "show notifications prompt"
+        # driver.send_keys(Keys.TAB)
+        # driver.send_keys(Keys.TAB)
+        # driver.send_keys(Keys.RETURN)
 
-        # # driver.find_element_by_class_name('search-open').click()
+    # # driver.find_element_by_class_name('search-open').click()
         # # time.sleep(2)
         # # search_bar = driver.find_element_by_class_name('search-terms')
         # # search_bar.send_keys(vehicle + Keys.RETURN)
@@ -155,18 +156,23 @@ def bat(car,driver):
         make = car['make']
         model = car['model']
         driver.get(f'https://bringatrailer.com/{make}/{model}')
-        # # https://bringatrailer.com/bmw/e39-m5/?q=e39%20m5
+        # URL EXAMPLE:  https://bringatrailer.com/bmw/e39-m5/?q=e39%20m5
         
         
         
         time.sleep(2)
-        # # #CLICK ONCE - To be replaced by repeated click logic
-        # show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
-        # show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[4]/div[3]/div[4]/button')
-        # show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[3]/div[3]/div[4]/button')
-        # /html/body/div[2]/div[2]/div/div/div[37]/div[3]/div[4]/button/span[1]
+    # CLICK ONCE - To be replaced by repeated click logic
+            # show_more = driver.find_element_by_css_selector('body > div.site-content > div.container > div > div > div.filter-group > div.overlayable > div.auctions-footer.auctions-footer-previous > button')
+            # show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[4]/div[3]/div[4]/button')
+            # show_more = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[3]/div[3]/div[4]/button')
+            # /html/body/div[2]/div[2]/div/div/div[37]/div[3]/div[4]/button/span[1]
+
+    # this is to get passed "show notifications prompt" - SHOULDNT BE NEEDED, SCRAPE STILL WORKS WITHOUT DISMISSING PROMPT
+        # driver.send_keys(Keys.TAB)
+        # driver.send_keys(Keys.TAB)
+        # driver.send_keys(Keys.RETURN)
         try:
-            show_more = driver.find_element_by_link_text('Show More')
+            show_more = driver.find_element(By.LINK_TEXT,'Show More')
              # # # LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
             while show_more:
                 try:
@@ -189,16 +195,16 @@ def bat(car,driver):
        
 
         #target parent group that holds individual previous listing items
-        prev_listings = driver.find_element_by_class_name('filter-group')
+        prev_listings = driver.find_element(By.CLASS_NAME,'filter-group')
         time.sleep(1.5)
         #extract all block elements from parents group, this gives each indiv listing
-        item_list = prev_listings.find_elements_by_class_name('block')
+        item_list = prev_listings.find_elements(By.CLASS_NAME,'block')
     
         ## EXTRACT MODEL,YEAR,PRICE from each item
         BAT_items = []
         for item in item_list:
-            description = item.find_element_by_class_name('title').get_attribute('innerText')
-            price = item.find_element_by_class_name('subtitle').get_attribute('innerText')
+            description = item.find_element(By.CLASS_NAME,'title').get_attribute('innerText')
+            price = item.find_element(By.CLASS_NAME,'subtitle').get_attribute('innerText')
             temp = f'{description} {price}'
             BAT_items.append(temp)
 
@@ -214,6 +220,7 @@ def bat(car,driver):
         fileWrite(BAT_items,sold_output)
 
         # print(BAT_items)
+
 # :::::: END BAT SECTION
 # ==============================================================================
 
@@ -234,9 +241,9 @@ def scrapeFunc(car):
         current_listing_output.truncate(0)
         sold_output.truncate(0)
 
-        driver = webdriver.Chrome(executable_path=r'C:\Users\balma\Documents\Programming\chromedriver.exe')
-        ebay(car,driver)
-        CL(car,driver)
+        driver = webdriver.Chrome()
+        # ebay(car,driver)
+        # CL(car,driver)
         bat(car,driver)
         driver.close
 
@@ -244,35 +251,29 @@ def scrapeFunc(car):
         sold_output.close()
 
 
-# if __name__ == '__main__':
+# If going to run this file individually uncomment the below
+if __name__ == '__main__':
 
-#     car  = {
-#     'year':2001,
-#     'make':'Audi',
-#     'model':'R8'
-#     }
+    car  = {
+    'year':2017,
+    'make':'Audi',
+    'model':'Rs6'
+    }
 
-#     scrapeFunc(car)
-
-
-
-# def clean_the_date():
+    scrapeFunc(car)
 
 
 
-
-# def test():
-#     print( "hello this is from scrape.py")
 
 """
-RAW DATA EXAMPLES::
+RETURNED RAW DATA EXAMPLES::
 
 
-ebay raw result:
+EVAY RAW RESULT:
     '$91,000.00  ', '$40,100.00 NEW LISTING1966 Jaguar E-Type ', '$60,099.00 1969 Jaguar E-Type Roadster ', '$35,100.00 1969 Jaguar E-Type ', '$89,500.00 1969 Jaguar E-Type Convertible ', '$79,900.00 1968 Jaguar E-Type ', '$45,100.00 1970 Jaguar E-Type Convertible ', '$102,000.00 1963 Jaguar E-Type ', '$187,500.00 1964 Jaguar E-Type ', '$84,987.00 1974 Jaguar E-Type ', '$109,500.00 1963 Jaguar E-Type ', '$158,995.00 1966 Jaguar E-Type Series 1 4.2 Liter Fixed-head coupe ', '$89,900.00 1971 Jaguar E-Type Fixed Head Coupe ', '$56,995.00 1969 Jaguar E-Type XK-E 2+2 Series 2 ', '$74,625.00 1968 Jaguar E-Type XKE Series II 4.2L 6 cyl 4 spd Convertible ', '$99,500.00 1973 Jaguar 
 E-Type Roadster v12 ', '$69,750.00 1970 Jaguar E-Type 1970 JAGUAR XKE 2+2 E-TYPE ',
 
-CL raw result:
+CL RAW RESULT:
 
     2012 BMW 5 Series 4dr Sdn 535i RWD 90 Days Car Warranty :$9,800
     2015 BMW 3 Series 328i SKU:FF607643 Sedan :$16,992
@@ -291,7 +292,7 @@ CL raw result:
     2016 DODGE CHARGER R/T ROAD & TRACK SEDAN 4D :$16,950
     2011 Cadillac SRX AWD 4dr Luxury Collection :$8,750
 
-BAT raw result:
+BAT RAW RESULT:
     41k-Mile 2004 BMW M3 Coupe 6-Speed Sold for $38,000 on 7/30/21
     43k-Mile 1999 BMW M3 Coupe 5-Speed Sold for $45,000 on 7/29/21
     Modified 1998 BMW M3 Coupe 5-Speed Sold for $34,000 on 7/29/21
