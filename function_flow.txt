@@ -1,9 +1,0 @@
-run_scrape_and_clean() 
-    imports scrapeFunc from web_scrape_logic
-    import clean_data from Data_clean_logic
-
-    scrapeFunc() takes car object to go get scrape data for
-    and populates the files
-
-    clean_data() also takes the car object, cleans the data and omits any data that isnt target vehicle
-    then writes to new files, one for sold cleaned_sold_data and one for cleaned_current_data
