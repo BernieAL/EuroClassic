@@ -1,0 +1,30 @@
+
+findBy_type_and_text(element_type,element_text,driver)
+-Takes type of element you are searching for or (* as wildcard for any matching elements)
+-The literal text of the element as you see it displayed on the web page
+-web driver instance
+
+Ex. Usage
+
+    we want to get the web element reference to an input field and perform an action on it. 
+
+    const username_input = await findBy_type_and_text('input','Phone number, username, or email',driver)
+
+    This gets a reference to the input element of the Instagram form login, that accepts username, phone number, or email
+
+    From looking at the webpage, we can identify the form field as an 'input' type and the literal text shown in the input element is 'Phone number, username, or email'
+
+    We dont know the specific attribute of the target element thats displaying the target text
+    (it could be an aria-label, placeholder,name,value and so on...)
+
+    The function exhaustively generates Xpath expressions for all possible text-displaying element attributes - with placeholders for the element type if provided and the literal text
+
+    the xpaths with placeholders are mapped over and the target element type and literal text dynamically replace the placeholders in the template string
+
+    The function then performs web driver location using the dynamically generated xpaths
+
+    When an element is found, its reference is stored and returned to the calling statement, where we can now interact with it
+    
+    If element matching the criteria is not found, we return the error the console.
+
+    The function provides a layer of abstraction over the selenium locator method and takes the guess work out of what attribute of the target element has the literal text you are seeing on the web page, by creating the xpaths for all possible text-display attributes

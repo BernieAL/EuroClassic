@@ -1,0 +1,37 @@
+<!-- This is a form template - use fields passed in from form obj in view function -->
+
+
+{% extends "index.html" %}
+
+
+{% block form %}
+
+    <h1>Enter Vehicle Here</h1>
+    <!--  When the action is set to an empty string the form is submitted to the URL that is currently in the address bar, which is the URL that rendered the form on the page -->
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.vehicle_year.label }}
+            {{ form.vehicle_year(size = 32) }}
+            {%for error in form.vehicle_year.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {%endfor%}
+        </p>
+        <p>
+            {{ form.vehicle_make.label }}
+            {{ form.vehicle_make(size = 32) }}
+            {%for error in form.vehicle_make.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {%endfor%}
+        </p>
+        <p>
+            {{ form.vehicle_model.label }}
+            {{ form.vehicle_model(size = 32) }}
+            {%for error in form.vehicle_model.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {%endfor%}
+        </p>
+        <p> {{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

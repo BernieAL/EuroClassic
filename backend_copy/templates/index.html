@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title></title>
+</head>
+
+<body>
+
+
+    <div class="form-div">
+        <!-- this display flashed messages if any -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for messages in messages %}
+            <li> {{message }}</li>
+            {%endfor%}
+        </ul>
+        {%endif%}
+        {%endwith%}
+
+        <!-- this displays the form -->
+        {% block form %}
+
+            <h1>Enter Vehicle Here</h1>
+            <!--  When the action is set to an empty string the form is submitted to the URL that is currently in the address bar, which is the URL that rendered the form on the page -->
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.vehicle_year.label }}
+                    {{ form.vehicle_year(size = 32) }}
+                    {%for error in form.vehicle_year.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {%endfor%}
+                </p>
+                <p>
+                    {{ form.vehicle_make.label }}
+                    {{ form.vehicle_make(size = 32) }}
+                    {%for error in form.vehicle_make.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {%endfor%}
+                </p>
+                <p>
+                    {{ form.vehicle_model.label }}
+                    {{ form.vehicle_model(size = 32) }}
+                    {%for error in form.vehicle_model.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {%endfor%}
+                </p>
+                <p> {{ form.submit() }}</p>
+            </form>
+
+        {% endblock %}
+    </div>      
+    
+    <div class="results_div">
+        {% block veh_results %}
+            {% if data %}
+                <p>
+                    {{ data.t2 }}
+                </p>
+            {% endif %}
+        {% endblock %}
+    </div>
+
+    <div>
+        <canvas id="myChart">
+            
+        </canvas>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    
+
+</body>
+</html>
