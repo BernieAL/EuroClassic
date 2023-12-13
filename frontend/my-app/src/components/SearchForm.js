@@ -19,7 +19,7 @@ export default function SearchForm(){
 
         // make call to backend api
         try{
-            const response = await fetch('http://127.0.0.1:5000/',{
+            const response = await fetch('http://127.0.0.1:5000/vehicle-query',{
                 method: 'POST',
                 headers: {
                     'Content-Type':'application/json',
@@ -28,13 +28,15 @@ export default function SearchForm(){
             })
             if (!response.ok){
                 throw new Error ('Problem with response from server')
+            } else {
+                // render other components to display the data
+                console.log('Form submitted successfully',response)
             }
-            console.log('Form submitted successfully')
         } catch (error) {
             //handle fetch errors
             console.error('Error with form submission', error.message)
         } finally {
-            setRecievedData()
+            
             setSubmitting(false);
         }
     }

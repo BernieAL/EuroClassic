@@ -3,6 +3,7 @@
 
 from datetime import date
 from flask import Flask, redirect, url_for, request,flash,jsonify,session
+from flask_cors import CORS
 from flask import render_template
 import json
 from forms import SearchForm
@@ -19,6 +20,7 @@ import psycopg2
 from Postgres.config import config
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_object(Config)
 app.secret_key = 'secret_key'
 
@@ -167,6 +169,32 @@ def return_db_data():
     return jsonify(data)
 
 
+"""
+end point called when form submitted on front end
+recieves user search query
+
+"""
+@app.route('/vehicle-query',methods=['POST'])
+def vehicleQuery():
+    try:
+        
+        data = request.json
+
+        make = data.get('make')
+        model = data.get('model')
+        year = data.get('year')
+        
+
+        # data = execute_queries_and_store_results(cur,make,model,year)
+
+        # return jsonify(data)
+    except Exception as e:
+        print('Error',str(e))
+        return jsonify({'error':str(e)})
+    
+    return "ok"
+
+# ==============================================================
 # HELPER FUNCTIONS
 
 def execute_queries_and_store_results(cur, make, model, year):
