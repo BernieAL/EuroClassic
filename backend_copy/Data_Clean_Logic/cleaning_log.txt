@@ -931,3 +931,11 @@ INFO:werkzeug:127.0.0.1 - - [13/Dec/2023 16:17:25] "POST /vehicle-query HTTP/1.1
 INFO:werkzeug:127.0.0.1 - - [13/Dec/2023 16:17:27] "POST /vehicle-query HTTP/1.1" 200 -
 INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
 INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug:127.0.0.1 - - [13/Dec/2023 16:17:37] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [13/Dec/2023 16:17:37] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070

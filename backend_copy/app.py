@@ -193,7 +193,7 @@ def vehicleQuery():
         return jsonify({'error':str(e)})
     
     return "ok"
-
+test
 # ==============================================================
 # HELPER FUNCTIONS
 
