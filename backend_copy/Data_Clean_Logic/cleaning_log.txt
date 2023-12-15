@@ -2095,3 +2095,5 @@ INFO:werkzeug:127.0.0.1 - - [15/Dec/2023 18:17:59] "OPTIONS /vehicle-query HTTP/
 INFO:werkzeug:127.0.0.1 - - [15/Dec/2023 18:17:59] "POST /vehicle-query HTTP/1.1" 200 -
 INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
 INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
