@@ -284,20 +284,17 @@ def DB_check_new_scrape_needed(veh:object):
         #TESTING
         # print(f"retrieved_veh - {retrieved_veh}")
 
-        
-
-        
         #if veh found
         if retrieved_veh:
+            
+            #get last_scrape_date off returned tuple 
             last_scrape_date = (retrieved_veh[3])
 
-            
- 
-
-
+            #update veh_scrape_status indicating veh was found
+            veh_scrape_status['veh_found']=True
 
             #update veh_scrape_status with last_scrape_date
-            veh_scrape_status['last_scrape_date']: last_scrape_date
+            veh_scrape_status['last_scrape_date']= last_scrape_date
 
 
             curr_date = date.today()
@@ -305,13 +302,12 @@ def DB_check_new_scrape_needed(veh:object):
 
             #if last_scrape_date older than 7 days
             if date_difference_days > 7:
-              veh_scrape_status['scrape_needed']:True
-    
-            return veh_scrape_status
+              veh_scrape_status['scrape_needed']=True
+              return veh_scrape_status
         
-        # #if veh not found, default obj values already set to False, return obj as is
-        # else:
-        #     return veh_scrape_status
+        #if veh not found, default obj values already set to False, return obj as is
+        else:
+            return veh_scrape_status
     
     except Exception as e:
         # Handle exceptions (print or log the error, or take appropriate action)

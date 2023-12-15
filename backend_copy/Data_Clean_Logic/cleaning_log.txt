@@ -2005,3 +2005,29 @@ WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 879-334-070
 INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
 INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug:127.0.0.1 - - [15/Dec/2023 17:47:18] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [15/Dec/2023 17:47:18] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [15/Dec/2023 17:47:18] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [15/Dec/2023 17:47:18] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug:127.0.0.1 - - [15/Dec/2023 17:58:31] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [15/Dec/2023 17:58:31] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
+INFO:werkzeug: * Restarting with stat
