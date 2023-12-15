@@ -21,58 +21,61 @@ def create_tables():
     commands = ( 
         #  # id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         """
-        CREATE TABLE IF NOT EXISTS vehicles (
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            make VARCHAR(50) NOT NULL,
-            model VARCHAR(50) NOT NULL,
-            year INTEGER NOT NULL,
-            last_scrape_date date
-        )
+        CREATE TABLE IF NOT EXISTS VEHICLES (
+            ID UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
+            MAKE VARCHAR(50) NOT NULL,
+            MODEL VARCHAR(50) NOT NULL,
+            YEAR INTEGER NOT NULL,
+            LAST_SCRAPE_DATE DATE
+        );
+
         """,
         """
-        CREATE TABLE IF NOT EXISTS sold_listings (
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            year INTEGER NOT NULL,
-            make VARCHAR(50) NOT NULL,
-            model VARCHAR(50) NOT NULL,
-            salePrice FLOAT,
-            dateSold DATE
-        )
+        CREATE TABLE IF NOT EXISTS SOLD_LISTINGS (
+            ID UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
+            YEAR INTEGER NOT NULL,
+            MAKE VARCHAR(50) NOT NULL,
+            MODEL VARCHAR(50) NOT NULL,
+            SALEPRICE FLOAT,
+            DATESOLD DATE
+        );
+
         """,
         """
-        CREATE TABLE IF NOT EXISTS current_listings (
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            year INTEGER  NOT NULL,
-            make VARCHAR(50) NOT NULL,
-            model VARCHAR(50) NOT NULL,
-            listPrice FLOAT
-        )
+        CREATE TABLE IF NOT EXISTS CURRENT_LISTINGS (
+            ID UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
+            YEAR INTEGER NOT NULL,
+            MAKE VARCHAR(50) NOT NULL,
+            MODEL VARCHAR(50) NOT NULL,
+            LISTPRICE FLOAT
+        );
+
         """,
         """
-        CREATE TABLE IF NOT EXISTS sold_listing_stats (
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            year INTEGER  NOT NULL,
-            make VARCHAR(50) NOT NULL,
-            model VARCHAR(50) NOT NULL,
-            salePrice FLOAT,
-            avg_sale_price FLOAT,
-            max_sale_price FLOAT,
-            low_sale_price FLOAT,
-            moving_avg FLOAT
-        )
+        CREATE TABLE IF NOT EXISTS SOLD_LISTING_STATS (
+            ID UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
+            YEAR INTEGER NOT NULL,
+            MAKE VARCHAR(50) NOT NULL,
+            MODEL VARCHAR(50) NOT NULL,
+            SALEPRICE FLOAT,
+            AVG_SALE_PRICE FLOAT,
+            MAX_SALE_PRICE FLOAT,
+            LOW_SALE_PRICE FLOAT,
+            MOVING_AVG FLOAT
+        );
+
         """,
         """
-        CREATE TABLE IF NOT EXISTS current_listing_stats(
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            year INTEGER  NOT NULL,
-            make VARCHAR(50) NOT NULL,
-            model VARCHAR(50) NOT NULL,
-            listPrice FLOAT, 
-            vehicle_id UUID
-        )
-        
+        CREATE TABLE IF NOT EXISTS CURRENT_LISTING_STATS (
+            ID UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
+            YEAR INTEGER NOT NULL,
+            MAKE VARCHAR(50) NOT NULL,
+            MODEL VARCHAR(50) NOT NULL,
+            LISTPRICE FLOAT, 
+            VEHICLE_ID UUID
+        );
         """
-        )
+    )
 
     conn = None
     try:

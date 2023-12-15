@@ -1,7 +1,7 @@
 last_scrape_date_query = """
-            SELECT last_scrape_date
+            SELECT *
             FROM vehicles
-            WHERE MAKE = make AND MODEL = model AND Year = year 
+            WHERE MODEL = %s AND YEAR = %s and MAKE = %s
         """
 
 

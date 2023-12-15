@@ -1,0 +1,14 @@
+
+
+To run postgres scripts
+    make sure to be in backend_copy root dir
+    then run -> .\postgres\drop_tables.py
+    clicking execute button in vscode doesnt work - it will say cant find db.ini
+----------------------------------------
+If parameterized queries not working
+    check the case of what youre sending in vs whats in the db -> AUDI != Audi, AUDI != audi 
+
+    The absolute way to standardize case is to:
+        -convert user form input to upper before requesting from db
+        -convert scraped data to upper before storing in db 
+        

@@ -28,11 +28,15 @@ def populate_vehicles_table(cur,veh_dir_file_path):
     next(csvreader)
     for line in csvreader:
         try:
+
+            #convert all values in line to uppercase to standardize and elminate failed queries due to mismatch case
+            line_uppercase = [value.upper() for value in line]
+
             sql = """
-                INSERT INTO vehicles(make,model,year,last_scrape_date)
+                INSERT INTO VEHICLES(MAKE,MODEL,YEAR,LAST_SCRAPE_DATE)
                 values(%s,%s,%s,%s)
                 """
-            cur.execute(sql,line)
+            cur.execute(sql,line_uppercase)
             
         except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
@@ -48,12 +52,14 @@ def insert_sold_data(cur,clean_output_SOLD_DATA_file_path):
     next(csvreader)
     for line in csvreader:  
         # print(line)
+        #convert all values in line to uppercase to standardize and elminate failed queries due to mismatch case
+        line_uppercase = [value.upper() for value in line]
         try:
             sql = """
-                INSERT INTO sold_listings(year,make,model,saleprice,datesold)
+                INSERT INTO SOLD_LISTINGS(YEAR,MAKE,MODEL,SALEPRICE,DATESOLD)
                 VALUES(%s,%s,%s,%s,%s)
                 """
-            cur.execute(sql,line)
+            cur.execute(sql,line_uppercase)
         except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
 
@@ -70,7 +76,7 @@ def insert_current_listing_data(cur,clean_output_file_CURRENT_LISTINGS_file_path
         # print(line)
         try:
             sql = """
-                INSERT INTO current_listings(year,make,model,listPrice)
+                INSERT INTO CURRENT_LISTINGS(YEAR,MAKE,MODEL,LISTPRICE)
                 VALUES(%s,%s,%s,%s)
                 """
             cur.execute(sql,line)

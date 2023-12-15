@@ -58,9 +58,9 @@ def home():
         flash('Success')
         #if post and form validation successful, get form data and pass into scrape function
         #when scrape function completed - display data to user on another page
-        year = form.vehicle_year.data
-        make = form.vehicle_make.data
-        model = form.vehicle_model.data
+        year = (form.vehicle_year.data).upper()
+        make = (form.vehicle_make.data).upper()
+        model = (form.vehicle_model.data).upper()
         
         vehicle = {
             'year':year,
@@ -78,9 +78,9 @@ def home():
         last_scrape_date_query = """
             SELECT *
             FROM vehicles
-            WHERE MODEL = %s AND YEAR = %s
+            WHERE MODEL = %s AND YEAR = %s and MAKE = %s
         """
-        cur.execute(last_scrape_date_query,(model,year))
+        cur.execute(last_scrape_date_query,(model,year,make))
         records = cur.fetchall()
         print(records)
         return 'ok'
