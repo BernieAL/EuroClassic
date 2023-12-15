@@ -16,7 +16,7 @@ export default function SearchForm(){
 
     const handleFormSubmit = async (e) =>{
         e.preventDefault()
-test
+
         // make call to backend api
         try{
             const response = await fetch('http://127.0.0.1:5000/vehicle-query',{

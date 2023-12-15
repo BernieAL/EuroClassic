@@ -76,13 +76,14 @@ def home():
         #returns datetime object in tuple -> (datetime.date(2021, 10, 5),)
         #to get date, use [0]
         last_scrape_date_query = """
-            SELECT last_scrape_date
+            SELECT *
             FROM vehicles
-            WHERE MAKE = make AND MODEL = model AND Year = year 
+            WHERE MODEL = %s AND YEAR = %s
         """
-        cur.execute(last_scrape_date_query)
-        last_scrape_date = cur.fetchone()[0]
-        
+        cur.execute(last_scrape_date_query,(model,year))
+        records = cur.fetchall()
+        print(records)
+        return 'ok'
 
         #check date not greater than 7 days
         curr_date = date.today()
@@ -91,7 +92,7 @@ def home():
 
         if date_difference < 7:
             # Call the function to execute queries and store results
-            results = execute_queries_and_store_results(cur, make, model, year)
+            results = DB_execute_queries_and_store_results(cur, make, model, year)
             formatted_res = json.dumps(results, indent=2, default=custom_encoder)
             print(formatted_res)
 
@@ -136,68 +137,181 @@ def home():
     # scrapeFunc(car)
     
 
-"""
-TESTING
-endpoint for js script to request  non db data
-returned data will be used to populate the graphs/charts etc
-"""
+
 @app.route('/get_data',methods=['GET'])
 def return_data():
-   
+   """TESTING
+    endpoint for js script to request  non db data
+    returned data will be used to populate the graphs/charts etc
+   """
 #    print(session['db_data'])
    pd_result = SOLD_max_and_avg_price_per_veh_year()
    print(pd_result)
    return pd_result
    
 
-"""
-endpoint for js script to request db data
-returned data will be used to populate the graphs/charts etc
 
-"""
+
 @app.route('/get_db_data',methods=['GET'])
 def return_db_data():
-    
+    """
+    endpoint for js script to request db data
+    returned data will be used to populate the graphs/charts etc
+    """
 
     #get params off request
     make = request.args.get('make')
     model = request.args.get('model')
     year = request.args.get('year')
 
-    data = execute_queries_and_store_results(cur,make,model,year)
+    data = DB_execute_queries_and_store_results(cur,make,model,year)
 
     return jsonify(data)
 
 
-"""
-end point called when form submitted on front end
-recieves user search query
 
-"""
 @app.route('/vehicle-query',methods=['POST'])
 def vehicleQuery():
+    """end point called when form submitted on front end
+       recieves user search query
+    """
     try:
         
         data = request.json
 
-        make = data.get('make')
-        model = data.get('model')
-        year = data.get('year')
+        veh = {
+            'year' : data.get('year'),
+            'make': data.get('make'),
+            'model': data.get('model')
+        }
+        # print(veh)
+        
+        veh_scrape_status = DB_check_new_scrape_needed(veh)
+        print(veh_scrape_status)
+        # if veh_scrape_status['scrape_needed'] == False:
+        #     #get veh records from all tables and return
+        #     print("veh scrape not needed")
+        
+        # else:
+        #     #perform new scrape and update the db
+        #     print("veh scrape needed")
+            
         
 
+
+       
         # data = execute_queries_and_store_results(cur,make,model,year)
 
         # return jsonify(data)
+        return "ok"
+
     except Exception as e:
         print('Error',str(e))
         return jsonify({'error':str(e)})
-    
-    return "ok"
-test
+        
+  
+
 # ==============================================================
 # HELPER FUNCTIONS
 
-def execute_queries_and_store_results(cur, make, model, year):
+def DB_check_new_scrape_needed(veh:object):
+
+    """ Accepts: user request veh (year,make,model)
+
+        Performs: 
+            queries vehicles directory table in db to find target vehicle and get the last_scraped date
+
+            See CASES below
+
+
+        Returns: 
+                veh_scrape_status = {
+                    'veh_found':True or False,
+                    'last_scrape_date': None or found date,
+                    'scrape_needed':True or False
+                }
+        
+        Cases:
+            -veh not found in db , return initial obj with default values
+                {
+                    'veh_found':False,
+                    'last_scrape_date': None,
+                    'scrape_needed':False
+                }
+            -veh found, last_scrape_date > 7 days ago, return initial obj with modified values
+                {
+                'veh_found':True,
+                'last_scrape_date': date,
+                'scrape_needed':True
+                }
+            
+            -veh found, last_scrape_date < 7 days ago, return initial obj with modified values
+            {
+                'veh_found':True,
+                'last_scrape_date': date,
+                'scrape_needed':False
+            }
+            
+    """
+
+    veh_scrape_status={
+                'veh_found':False,
+                'last_scrape_date': None,
+                'scrape_needed':False
+            }
+    
+    year = veh['year']
+    make = veh['make']
+    model = veh['model']
+    # print(veh)
+    
+    last_scrape_date_query = """
+            SELECT *
+            FROM vehicles
+            WHERE MAKE = %s AND MODEL = %s AND Year = %s  
+        """
+    try:
+        cur.execute("""
+            SELECT *
+            FROM vehicles
+            WHERE MAKE = %s AND MODEL = %s AND Year = %s  
+        """, (make,model,year))
+        records = cur.fetchall()
+        for record in records:
+            print(record)
+    except Exception as e:
+        print(f"Error: {str(e)}")
+    # try:
+    #     cur.execute(last_scrape_date_query,(year,make,model))
+    #     for record in cur:
+    #         print(record)
+   
+    #     retrieved_veh = 
+    #     print(retrieved_veh)
+        
+    #     if veh found
+    #     if retrieved_veh['veh_exists']:
+    #         last_scrape_date = retrieved_veh()
+    #         veh_scrape_status['last_scrape_date']: last_scrape_date
+    #         #if last_scrape_date older than 7 days
+    #         if abs(last_scrape_date - date.today) > 7:
+    #           veh_scrape_status['scrape_needed']:True
+
+    #         return veh_scrape_status
+        
+    #     #if veh not found, default obj values already set to False, return obj as is
+    #     else:
+    #         return veh_scrape_status
+    
+    # except Exception as e:
+    #     # Handle exceptions (print or log the error, or take appropriate action)
+    #     print(f"Error: {str(e)}")
+    
+
+
+
+
+def DB_execute_queries_and_store_results(cur, make, model, year):
     # Execute the queries
     cur.execute(all_sales_records_query, (make, model, year))
     all_sales_records_result = cur.fetchall()
