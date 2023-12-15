@@ -178,13 +178,14 @@ def vehicleQuery():
     try:
         
         data = request.json
-
+        
         veh = {
-            'year' : data.get('year'),
-            'make': data.get('make'),
-            'model': data.get('model')
+            'year' : (data.get('year')),
+            'make': (data.get('make')).upper(),
+            'model': (data.get('model')).upper()
         }
-        # print(veh)
+        #TESTING
+        print(f"vehicleQuery {veh}")
         
         veh_scrape_status = DB_check_new_scrape_needed(veh)
         print(veh_scrape_status)
@@ -263,49 +264,47 @@ def DB_check_new_scrape_needed(veh:object):
     year = veh['year']
     make = veh['make']
     model = veh['model']
-    # print(veh)
-    
-    last_scrape_date_query = """
-            SELECT *
-            FROM vehicles
-            WHERE MAKE = %s AND MODEL = %s AND Year = %s  
-        """
-    try:
-        cur.execute("""
-            SELECT *
-            FROM vehicles
-            WHERE MAKE = %s AND MODEL = %s AND Year = %s  
-        """, (make,model,year))
-        records = cur.fetchall()
-        for record in records:
-            print(record)
-    except Exception as e:
-        print(f"Error: {str(e)}")
-    # try:
-    #     cur.execute(last_scrape_date_query,(year,make,model))
-    #     for record in cur:
-    #         print(record)
-   
-    #     retrieved_veh = 
-    #     print(retrieved_veh)
-        
-    #     if veh found
-    #     if retrieved_veh['veh_exists']:
-    #         last_scrape_date = retrieved_veh()
-    #         veh_scrape_status['last_scrape_date']: last_scrape_date
-    #         #if last_scrape_date older than 7 days
-    #         if abs(last_scrape_date - date.today) > 7:
-    #           veh_scrape_status['scrape_needed']:True
 
-    #         return veh_scrape_status
-        
-    #     #if veh not found, default obj values already set to False, return obj as is
-    #     else:
-    #         return veh_scrape_status
+    #TESTING
+    print(f"DB_check_new_scrape_needed- {veh}")
     
-    # except Exception as e:
-    #     # Handle exceptions (print or log the error, or take appropriate action)
-    #     print(f"Error: {str(e)}")
+    #check for last_scrape date of veh
+    #returns datetime object in tuple -> (datetime.date(2021, 10, 5),)
+    #to get date, use [0]
+    last_scrape_date_query = """
+            SELECT MAKE,MODEL,YEAR,LAST_SCRAPE_DATE
+            FROM vehicles
+            WHERE MODEL = %s AND YEAR = %s and MAKE = %s
+    """
+
+    try:
+        cur.execute(last_scrape_date_query,(model,year,make))
+        
+        retrieved_veh = cur.fetchone() #returns tuple
+        #TESTING
+        # print(f"retrieved_veh - {retrieved_veh}")
+
+        
+
+        
+        #if veh found
+        if retrieved_veh:
+            last_scrape_date = (retrieved_veh[3])
+            #update veh_scrape_status with last_scrape_date
+            veh_scrape_status['last_scrape_date']: last_scrape_date
+            #if last_scrape_date older than 7 days
+            if abs(last_scrape_date - date.today) > 7:
+              veh_scrape_status['scrape_needed']:True
+
+            return veh_scrape_status
+        
+        # #if veh not found, default obj values already set to False, return obj as is
+        # else:
+        #     return veh_scrape_status
+    
+    except Exception as e:
+        # Handle exceptions (print or log the error, or take appropriate action)
+        print(f"Error: {str(e)}")
     
 
 
