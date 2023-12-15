@@ -290,12 +290,23 @@ def DB_check_new_scrape_needed(veh:object):
         #if veh found
         if retrieved_veh:
             last_scrape_date = (retrieved_veh[3])
+
+            
+ 
+
+
+
             #update veh_scrape_status with last_scrape_date
             veh_scrape_status['last_scrape_date']: last_scrape_date
-            #if last_scrape_date older than 7 days
-            if abs(last_scrape_date - date.today) > 7:
-              veh_scrape_status['scrape_needed']:True
 
+
+            curr_date = date.today()
+            date_difference_days = (abs(last_scrape_date - curr_date)).days
+
+            #if last_scrape_date older than 7 days
+            if date_difference_days > 7:
+              veh_scrape_status['scrape_needed']:True
+    
             return veh_scrape_status
         
         # #if veh not found, default obj values already set to False, return obj as is
