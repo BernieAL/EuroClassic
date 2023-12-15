@@ -185,17 +185,18 @@ def vehicleQuery():
             'model': (data.get('model')).upper()
         }
         #TESTING
-        print(f"vehicleQuery {veh}")
+        # print(f"vehicleQuery {veh}")
         
         veh_scrape_status = DB_check_new_scrape_needed(veh)
-        print(veh_scrape_status)
-        # if veh_scrape_status['scrape_needed'] == False:
-        #     #get veh records from all tables and return
-        #     print("veh scrape not needed")
+        # print(veh_scrape_status)
         
-        # else:
-        #     #perform new scrape and update the db
-        #     print("veh scrape needed")
+        if veh_scrape_status['scrape_needed'] == False:
+            #get veh records from all tables and return
+            print(chalk.green("veh scrape not needed"))
+        
+        else:
+            #perform new scrape and update the db
+            print(chalk.red("veh scrape needed"))
             
         
 
@@ -220,7 +221,7 @@ def DB_check_new_scrape_needed(veh:object):
     """ Accepts: user request veh (year,make,model)
 
         Performs: 
-            queries vehicles directory table in db to find target vehicle and get the last_scraped date
+            queries vehicles directory table in db to find target vehicle and get the last_scraped_date
 
             See CASES below
 
