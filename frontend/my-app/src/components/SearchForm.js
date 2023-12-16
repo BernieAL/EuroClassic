@@ -30,8 +30,13 @@ export default function SearchForm(){
                 throw new Error ('Problem with response from server')
             } else {
                 // render other components to display the data
-                console.log('Form submitted successfully',response)
+               
+                /*Parsing JSON involves asynchronous operations, especially if the response body is large or if the content is being streamed. As a result, await is used to ensure that the parsing is complete before proceeding. */
+                
+                const responseData = await response.json()
+                console.log('Form submitted successfully',responseData)
             }
+            
         } catch (error) {
             //handle fetch errors
             console.error('Error with form submission', error.message)
