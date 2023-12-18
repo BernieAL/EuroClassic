@@ -18,7 +18,13 @@ export default function App(){
 
 
     return(
-        <SearchForm onDataSubmit={handleDataFromSearchForm}/>
-        <Graphs/>
+        <div>
+            <SearchForm onDataSubmit={handleDataFromSearchForm}/>
+            
+            {/* if recievedData not null, render the graphs and pass them the data */}
+            {recievedData !== null && (
+                <Graphs recievedData={recievedData}/> 
+            )}
+        </div>
     )
 }

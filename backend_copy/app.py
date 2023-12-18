@@ -198,7 +198,9 @@ def vehicleQuery():
         veh_scrape_status = DB_check_new_scrape_needed(veh)
         # print(veh_scrape_status)
         
-        veh_scrape_status['scrape_needed'] == False
+       #TESTING
+        veh_scrape_status['scrape_needed'] = False
+        
         if veh_scrape_status['scrape_needed'] == False:
             """ If scrape not needed - means data isnt old, go to db and retrieve all records from all tables for this veh
             Then return to front end
@@ -333,6 +335,10 @@ def DB_check_new_scrape_needed(veh:object):
 
 
 def DB_execute_queries_and_store_results(cur, make, model, year):
+    """
+    Query results are type list
+    
+    """
     # Execute the queries
     cur.execute(all_sales_records_query, (make, model, year))
     all_sales_records_result = cur.fetchall()
@@ -345,7 +351,7 @@ def DB_execute_queries_and_store_results(cur, make, model, year):
 
     cur.execute(current_stats_query, (make, model, year))
     current_stats_result = cur.fetchall()
-    
+    print(type(all_sales_records_result))
     
     # Return the results as a dictionary
     return {
