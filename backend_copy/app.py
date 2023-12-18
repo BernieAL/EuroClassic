@@ -217,7 +217,7 @@ def vehicleQuery():
             """
             #perform new scrape and update the db
             print(chalk.red("veh scrape needed"))
-            return "ok"
+            return jsonify("scrape needed")
             
         
 

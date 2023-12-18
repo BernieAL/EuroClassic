@@ -2224,3 +2224,48 @@ INFO:werkzeug:127.0.0.1 - - [16/Dec/2023 01:06:42] "OPTIONS /vehicle-query HTTP/
 INFO:werkzeug:127.0.0.1 - - [16/Dec/2023 01:06:42] "POST /vehicle-query HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [16/Dec/2023 01:22:25] "OPTIONS /vehicle-query HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [16/Dec/2023 01:22:25] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 21:53:24] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 21:53:24] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 21:58:25] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 21:58:25] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 21:59:06] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 21:59:06] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 21:59:09] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:00:58] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:00:58] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:00:59] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:01:00] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:01:39] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:01:39] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:08:56] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:08:56] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:10:03] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:10:03] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:10:17] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:10:17] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:33:08] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:33:08] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:33:17] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:33:17] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:33:36] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:33:36] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:34:47] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:34:47] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:39:37] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2023 22:39:37] "POST /vehicle-query HTTP/1.1" 200 -

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 
 
 
-export default function SearchForm(){
+export default function SearchForm({onDataSubmit}){
 
     // if form submitted and awaiting server response - disable 'submit' button
     const [submitting,setSubmitting] = useState(false)
@@ -26,6 +26,7 @@ export default function SearchForm(){
                 },
                 body:JSON.stringify(formData)
             })
+           
             if (!response.ok){
                 throw new Error ('Problem with response from server')
             } else {
@@ -35,6 +36,9 @@ export default function SearchForm(){
                 
                 const responseData = await response.json()
                 console.log('Form submitted successfully',responseData)
+
+                //send data back to parent component using parent function
+                onDataSubmit(responseData)
             }
             
         } catch (error) {
