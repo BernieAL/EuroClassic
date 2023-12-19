@@ -209,6 +209,8 @@ def vehicleQuery():
             print(chalk.green("veh scrape not needed"))
             data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'],veh['year'])
             print(data_from_db)
+            t = jsonify(data_from_db)
+            print(t)
             return jsonify(data_from_db)
             
         
@@ -219,6 +221,7 @@ def vehicleQuery():
             """
             #perform new scrape and update the db
             print(chalk.red("veh scrape needed"))
+            
             return jsonify("scrape needed")
             
         
@@ -343,6 +346,7 @@ def DB_execute_queries_and_store_results(cur, make, model, year):
     cur.execute(all_sales_records_query, (make, model, year))
     all_sales_records_result = cur.fetchall()
     # print(all_sales_records_result)
+
     cur.execute(all_current_records_query, (make, model, year))
     current_records_result = cur.fetchall()
 
@@ -351,7 +355,7 @@ def DB_execute_queries_and_store_results(cur, make, model, year):
 
     cur.execute(current_stats_query, (make, model, year))
     current_stats_result = cur.fetchall()
-    print(type(all_sales_records_result))
+ 
     
     # Return the results as a dictionary
     return {
