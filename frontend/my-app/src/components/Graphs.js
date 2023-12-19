@@ -11,8 +11,7 @@ export default function Graphs({recievedData}){
         console.log(recievedData)
     },[recievedData])
 
-    /* 
-        Destructure Rec'd Data obj into indiv variables
+    /* Destructure Rec'd Data obj into indiv variables
 
         returned obj looks like this:
         
@@ -20,14 +19,12 @@ export default function Graphs({recievedData}){
 
         
     */
-   
-
     /*when destructuring like this, the var names MUST match exactly the keys in the object */
     const {all_sales_records,current_records,current_stats,sold_stats} = recievedData
     
     
     //get year,make,model,sale_price,sale_date from each sold record in all_sales_records array
-    const sales_data_for_graph = all_sales_records.map((record)=>{
+    const GRAPH_sales_data = all_sales_records.map((record)=>{
         return{
             year:record[1],
             make:record[2],
@@ -36,9 +33,9 @@ export default function Graphs({recievedData}){
             sale_date:record[5]
         }
     })
-    console.log(sales_data_for_graph)
+    // console.log(GRAPH_sales_data)
 
-    const current_listing_data_for_graph = current_records.map((record)=>{
+    const GRAPH_current_listing_data = current_records.map((record)=>{
         return {
             year:record[1],
             make:record[2],
@@ -46,10 +43,24 @@ export default function Graphs({recievedData}){
             list_price:record[4]
         }
     })
-    console.log(current_listing_data_for_graph)
+    // console.log(GRAPH_current_listing_data)
 
-    // need to get indiv values off each record returned in each array
-    // This means, get the 
+    // const GRAPH_sold_stats = current_records.map((record)=>{
+    //     return {
+    //         avg_sale_price:
+    //         max_sale_price:
+    //         min_sale_price:
+
+    //     }
+    
+    // const GRAPH_current_stats = current_records.map((record)=>{
+    //     return {
+    //         avg_list_price:
+    //         max_list_price:
+    //         min_list_price:
+            
+    //     }
+    // })
 
 
 
