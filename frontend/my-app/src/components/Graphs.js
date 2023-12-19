@@ -112,7 +112,29 @@ export default function Graphs({recievedData}){
     return (
         <div>
             <p>test from graph component</p>
-            
+
+                {/* SOLD LISTINGS */}
+                <LineChart
+                    width={600}
+                    height={500}
+                    data={GRAPH_sales_data}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="sale_price" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="year" stroke="#82ca9d" />
+                </LineChart>
+
+                {/* CURRENT LISTINGS */}
                 <LineChart
                     width={600}
                     height={500}
@@ -129,9 +151,11 @@ export default function Graphs({recievedData}){
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="list_price" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="listing_price" stroke="#8884d8" activeDot={{ r: 8 }} />
                     <Line type="monotone" dataKey="year" stroke="#82ca9d" />
                 </LineChart>
+
+                
                 
         </div>
         
