@@ -3,12 +3,14 @@
 
 from datetime import date
 from flask import Flask, redirect, url_for, request,flash,jsonify,session
+import requests
 from flask_cors import CORS
 from flask import render_template
 import json
 from forms import SearchForm
 from simple_chalk import chalk
 import pandas as pd
+import os
 
 from Web_Scrape_Logic.scrape import run_scrape
 from Data_Clean_Logic.clean_data import clean_all_data
@@ -30,13 +32,73 @@ cur = conn.cursor()
 
 #import queries
 from Postgres.queries import (
-    all_sales_records_query,
-    all_current_records_query,
-    sold_stats_query,
-    current_stats_query
+    all_sales_records_NO_YEAR_query,
+    all_current_records_NO_YEAR_query,
+    sold_stats_query_NO_YEAR,
+    current_stats_query_NO_YEAR
 )
 
 
+cache_file_path = os.path.join(os.getcwd(),'Cache/makes_cache.json')
+# print(os.path.isfile(cache_file_path))
+
+
+""" Veh manufacturer cache initialization
+on flask app startup - request is made to api to retrieve all car makes
+this is then written to a cache file for later use
+
+On Client side - when form submitted
+    user input is tokenized
+        -year token is identified using regex
+        -make token is identified by making request to flask app 
+            and checking if the entered make exists in cache
+            if exists: return True, we now know that this token is the make
+            if didnt exist: check remaining token in user input
+                if exists: this token is the make
+    Once year is identified, the remaining tokens can be make or model
+        so we check if a token appears in the makes cache
+"""
+
+def initialize_cache():
+    try:
+        
+        """check date of last api requests
+        New car manufacturers dont appear too often, we dont need to run this often - maybe once a month
+        """
+        with open(cache_file_path,'r') as cache_file:
+            existing_data = json.load(cache_file)
+            lastRetrievedDate = existing_data[0]
+            
+            if abs(lastRetrievedDate - date.today()) > 7:
+                
+                response = requests.get('https://vpic.nhtsa.dot.gov/api//vehicles/GetMakesForVehicleType/car?format=json')
+
+                data = response.json()['Results']
+
+                """return record['MakeName'] from each record where
+                record['VehicleTypeName'] == 'Passenger Car'], put results into a list
+                """
+                passenger_car_makes= [record['MakeName'] for record in data if record['VehicleTypeName'] == 'Passenger Car']
+                
+                passenger_car_makes.insert(0,f"{date.today()}")
+
+        
+        
+        # with open(cache_file_path,'w') as cache_file:
+            
+        #     json.dump(passenger_car_makes,cache_file)
+
+        print(chalk.blue(':::::VEH MAKES SUCCESSFULLY WRITTEN TO CACHE:::::'))
+    except requests.RequestException as e:
+        print(f"Error making API requst: {e}")
+    
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON:{e}")
+
+    except IOError as e:
+        print(f" Error writing to file: {e}")
+
+initialize_cache()
 
 # pd_result = process_cleaned_data()
 # print(pd_result)
@@ -78,7 +140,7 @@ def home():
         last_scrape_date_query = """
             SELECT *
             FROM vehicles
-            WHERE MODEL = %s AND YEAR = %s and MAKE = %s
+            WHERE MODEL = %s AND MAKE = %s
         """
         cur.execute(last_scrape_date_query,(model,year,make))
         records = cur.fetchall()
@@ -337,25 +399,27 @@ def DB_check_new_scrape_needed(veh:object):
 
 
 
-def DB_execute_queries_and_store_results(cur, make, model, year):
+def DB_execute_queries_and_store_results(cur, make, model):
     """
     Query results are type list
     
     """
+    #if year provided in search query
+    
+    
     # Execute the queries
-    cur.execute(all_sales_records_query, (make, model, year))
+    cur.execute(all_sales_records_NO_YEAR_query, (make, model))
     all_sales_records_result = cur.fetchall()
     # print(all_sales_records_result)
 
-    cur.execute(all_current_records_query, (make, model, year))
+    cur.execute(all_current_records_NO_YEAR_query, (make, model))
     current_records_result = cur.fetchall()
 
-    cur.execute(sold_stats_query, (make, model, year))
+    cur.execute(sold_stats_query_NO_YEAR, (make, model))
     sold_stats_result = cur.fetchall()
 
-    cur.execute(current_stats_query, (make, model, year))
+    cur.execute(current_stats_query_NO_YEAR, (make, model))
     current_stats_result = cur.fetchall()
- 
     
     # Return the results as a dictionary
     return {

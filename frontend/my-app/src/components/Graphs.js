@@ -54,7 +54,7 @@ export default function Graphs({recievedData}){
 
     useEffect(()=>{
         setDataForViz(recievedData)
-        // console.log(recievedData)
+        console.log(recievedData)
     },[recievedData])
 
     /* Destructure Rec'd Data obj into indiv variables
@@ -76,10 +76,15 @@ export default function Graphs({recievedData}){
             make:record[2],
             model:record[3],
             sale_price:record[4],
-            sale_date:record[5]
+            sale_date: new Date(record[5]).toLocaleDateString('en-US',{
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+            }),
         }
     })
-    console.log(GRAPH_sales_data)
+    
+
 
     const GRAPH_current_listing_data = current_records.map((record)=>{
         return {
@@ -111,8 +116,8 @@ export default function Graphs({recievedData}){
 
     return (
         <div>
-            <p>test from graph component</p>
-
+            
+            <br></br>
                 {/* SOLD LISTINGS */}
                 <LineChart
                     width={600}
@@ -126,14 +131,15 @@ export default function Graphs({recievedData}){
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="sale_date" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" dataKey="sale_price" stroke="#8884d8" activeDot={{ r: 8 }} />
                     <Line type="monotone" dataKey="year" stroke="#82ca9d" />
                 </LineChart>
-
+                    
+                <br></br>
                 {/* CURRENT LISTINGS */}
                 <LineChart
                     width={600}
@@ -147,12 +153,13 @@ export default function Graphs({recievedData}){
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="year" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="listing_price" stroke="#8884d8" activeDot={{ r: 8 }} />
                     <Line type="monotone" dataKey="year" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="listing_price" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    
                 </LineChart>
 
                 
