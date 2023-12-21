@@ -1,48 +1,39 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 
 
 
 
 
-// Function to make fetch reqeusts and return data
-// All json results from API have same format, the target data is under "Results"[....]
-async function make_request(url) {
+// // Function to make fetch reqeusts and return data
+// // All json results from API have same format, the target data is under "Results"[....]
+// async function make_request(url) {
   
-    const response = await fetch(url)
-    const data = await response.json();
-    // return data
-    const result = data['Results']
-    return result
-  }
+//     const response = await fetch(url)
+//     const data = await response.json();
+//     // return data
+//     const result = data['Results']
+//     return result
+//   }
 
-/* Fetches makes from api and stores in array, returns array*/
-async function fetchAllCarMakers(){
-    // this gets all car manufacturers, extracting names only and populating all_makes_names_only
-    const all_makes_url = "https://vpic.nhtsa.dot.gov/api//vehicles/GetMakesForVehicleType/car?format=json"
-    const all_makes_names_only =[];
+// /* Fetches makes from api and stores in array, returns array*/
+// async function fetchAllCarMakers(){
+//     // this gets all car manufacturers, extracting names only and populating all_makes_names_only
+//     const all_makes_url = "https://vpic.nhtsa.dot.gov/api//vehicles/GetMakesForVehicleType/car?format=json"
+//     const all_makes_names_only =[];
 
-    await make_request(all_makes_url)
-        .then(all_makes_raw =>{
-        for(let maker of all_makes_raw){
-            all_makes_names_only.push(maker['MakeName']);
-        }
-        console.log(all_makes_names_only)
-        })
-        .catch(error=>{
-        console.error('Error',error)
-        })
-    // console.log(all_makes_names_only)
-    return all_makes_names_only
-}
-
-
-/* writes data to cache file for quick lookup */
-function write_to_cache_file(all_makes_names_only,filename){
-
-}
-
-file
-
+//     await make_request(all_makes_url)
+//         .then(all_makes_raw =>{
+//         for(let maker of all_makes_raw){
+//             all_makes_names_only.push(maker['MakeName']);
+//         }
+//         console.log(all_makes_names_only)
+//         })
+//         .catch(error=>{
+//         console.error('Error',error)
+//         })
+//     // console.log(all_makes_names_only)
+//     return all_makes_names_only
+// }
 
 export default function SearchForm({onDataSubmit}){
 
@@ -58,6 +49,22 @@ export default function SearchForm({onDataSubmit}){
         make:'',
         model:'',
     })
+
+    const [vehMakeCacheData,setVehMakeCacheData] = useState([])
+
+    useEffect(()=>{
+        const load_manufacturer_cache = async ()=>{
+            try {
+                const response = await fetch('http://127.0.0.1:5000/retrieve_cache')
+                const data = await response.json()
+                setVehMakeCacheData(data)
+                console.log(data)
+            } catch(error){
+                console.log("Error Retrieving cache data from server")
+            }
+        }
+        load_manufacturer_cache()
+    },[])// Empty dependency array ensures that this effect runs only once when the component mounts
 
     const handleFormSubmit = async (e) =>{
         e.preventDefault()
@@ -80,6 +87,12 @@ export default function SearchForm({onDataSubmit}){
         //Find and return the token matches the yearRegex pattern
         const year = tokens.find((token)=> yearRegex.test(token))
         
+        const remaining_tokens = 
+        //of remaining tokens after year discovered, determine which is token is the make
+        //check if token exists is cache_data
+        for(const token of tokens){
+            console.log(token)
+        }
 
 
         // // make call to backend api

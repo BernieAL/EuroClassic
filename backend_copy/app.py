@@ -105,7 +105,6 @@ def initialize_cache():
 
     except IOError as e:
         print(f" Error writing to file: {e}")
-
 initialize_cache()
 
 # pd_result = process_cleaned_data()
@@ -220,8 +219,6 @@ def return_data():
    return pd_result
    
 
-
-
 @app.route('/get_db_data',methods=['GET'])
 def return_db_data():
     """
@@ -300,7 +297,14 @@ def vehicleQuery():
         print('Error',str(e))
         return jsonify({'error':str(e)})
         
-  
+@app.route('/retrieve_cache',methods=['GET'])
+def retrieve_cache():
+
+    with open(cache_file_path,'r') as cache_file:
+        print(chalk.blue(':::::CHECKING FRESHNESS OF CACHE DATA:::::'))
+        cache_data = json.load(cache_file)
+
+    return cache_data
 
 # ==============================================================
 # HELPER FUNCTIONS
