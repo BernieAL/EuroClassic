@@ -1,7 +1,7 @@
 # https://www.freecodecamp.org/news/how-to-dockerize-a-flask-app/
 
 
-from datetime import date
+from datetime import date,datetime
 from flask import Flask, redirect, url_for, request,flash,jsonify,session
 import requests
 from flask_cors import CORS
@@ -64,31 +64,39 @@ def initialize_cache():
         
         """check date of last api requests
         New car manufacturers dont appear too often, we dont need to run this often - maybe once a month
+        Opens cache file with read context, gets lastRetrievedDate which is first value in file
+        closes file
         """
         with open(cache_file_path,'r') as cache_file:
+            print(chalk.blue(':::::CHECKING FRESHNESS OF CACHE DATA:::::'))
             existing_data = json.load(cache_file)
-            lastRetrievedDate = existing_data[0]
             
-            if abs(lastRetrievedDate - date.today()) > 7:
-                
-                response = requests.get('https://vpic.nhtsa.dot.gov/api//vehicles/GetMakesForVehicleType/car?format=json')
+            # convert retrieved string date value to specified format and then to a date obj
+            lastRetrievedDate = datetime.strptime(existing_data[0], "%Y-%m-%d").date()
 
-                data = response.json()['Results']
+        """compare lastRetrievedDate with current date
+           This tells us if we need to make a request to the api for new makes
+        """
+        date_difference_days = abs(lastRetrievedDate - date.today()).days
+        if date_difference_days > 30:
+            print(chalk.red(':::::CACHE DATA OLD - REQUESTING NEW DATA:::::'))
+            response = requests.get('https://vpic.nhtsa.dot.gov/api//vehicles/GetMakesForVehicleType/car?format=json')
 
-                """return record['MakeName'] from each record where
-                record['VehicleTypeName'] == 'Passenger Car'], put results into a list
-                """
-                passenger_car_makes= [record['MakeName'] for record in data if record['VehicleTypeName'] == 'Passenger Car']
-                
-                passenger_car_makes.insert(0,f"{date.today()}")
+            new_data = response.json()['Results']
 
-        
-        
-        # with open(cache_file_path,'w') as cache_file:
+            """return record['MakeName'] from each record where
+            record['VehicleTypeName'] == 'Passenger Car'], put results into a list
+            """
+            passenger_car_makes= [record['MakeName'] for record in new_data if record['VehicleTypeName'] == 'Passenger Car']
             
-        #     json.dump(passenger_car_makes,cache_file)
+            # prepend current date
+            passenger_car_makes.insert(0,f"{date.today()}")
 
-        print(chalk.blue(':::::VEH MAKES SUCCESSFULLY WRITTEN TO CACHE:::::'))
+            with open(cache_file_path,'w') as cache_file:
+                json.dump(passenger_car_makes,cache_file)
+            print(chalk.blue(':::::NEW DATA SUCCESSFULLY WRITTEN TO CACHE:::::'))
+
+        print(chalk.blue(':::::CACHE DATA NOT OLD:::::'))
     except requests.RequestException as e:
         print(f"Error making API requst: {e}")
     
