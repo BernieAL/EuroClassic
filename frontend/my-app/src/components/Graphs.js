@@ -1,51 +1,25 @@
 import React, {useState,useEffect  } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const data = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
 
+/* READ ME - RECIEVED DATA STRUCTURE
+
+Values Recieved from server encapsulated in an object 
+  {all_sales_records:[()],current_records[()],current_stats,sold_stats}
+
+Then each value is itself an array of objects
+
+
+all_sales_records ex. 
+
+    'all_sales_records': [('645cc521-1bb4-46e6-bef4-f46ac68a1d99', 2012, 'AUDI', 'R8', 116115.34, datetime.date(2022, 8, 15)), ('80cdc5d7-76b8-48f0-bd4b-b5f5dcda6b65', 2018, 'AUDI', 'R8', 97146.08, datetime.date(2023, 5, 9)), ('c179d769-0894-4734-b8b8-016313fe61c9', 2014, 'AUDI', 'R8', 86057.47, datetime.date(2022, 2, 3)), ('b654b01d-f43e-4a80-a652-a3154bfda639', 2018, 'AUDI', 'R8', 86289.72, datetime.date(2022, 12, 5)), ('f1bca6b9-29ed-4c9c-bf1c-4ffb93d80dab', 2011, 'AUDI', 'R8', 82695.55, datetime.date(2022, 7, 27)), ('e8624243-ce92-48dd-b388-6df32eefee75', 2012, 'AUDI', 'R8', 110575.06, datetime.date(2022, 12, 17))
+
+
+current_records ex. 
+
+    'current_records': [('3f491d30-f178-4623-b93a-f04e73be33d7', 2014, 'AUDI', 'R8', 86339.0), ('a655730e-c6d8-496b-8cbd-887f21c1fb52', 2015, 'AUDI', 'R8', 104611.0), ('f47b266b-c77c-4745-8e00-ca71e3819ff6', 2019, 'AUDI', 'R8', 100867.0), ('ff59e8b7-1b1d-4ab5-bdc4-fabc09656dbc', 2013, 'AUDI', 'R8', 99298.0), ('a3db917a-c0ce-4ae5-96b3-570c84789a1b', 2019, 'AUDI', 'R8', 112348.0), 
+
+*/
 
 export default function Graphs({recievedData}){
     
@@ -68,7 +42,20 @@ export default function Graphs({recievedData}){
     /*when destructuring like this, the var names MUST match exactly the keys in the object */
     const {all_sales_records,current_records,current_stats,sold_stats} = recievedData
     
-    
+    /* SORT all_sales_records by sale date ascending
+       sale_date is last index in each record -> idx 5
+       sort() takes a custom compare function
+       compare function compares elements based on sale_date
+       for 2 records a,b, determine which sale_date comes first by subtracting
+       if negative result, then a comes before b
+       if positive result, a comes after b
+       if result is 0, no change in order needed
+       
+    */
+
+
+
+
     //get year,make,model,sale_price,sale_date from each sold record in all_sales_records array
     const GRAPH_sales_data = all_sales_records.map((record)=>{
         return{
@@ -83,7 +70,7 @@ export default function Graphs({recievedData}){
             }),
         }
     })
-    
+
 
 
     const GRAPH_current_listing_data = current_records.map((record)=>{
@@ -94,7 +81,7 @@ export default function Graphs({recievedData}){
             list_price:record[4]
         }
     })
-    // console.log(GRAPH_current_listing_data)
+    console.log(GRAPH_current_listing_data)
 
     // const GRAPH_sold_stats = current_records.map((record)=>{
     //     return {
@@ -127,7 +114,7 @@ export default function Graphs({recievedData}){
                         top: 5,
                         right: 30,
                         left: 20,
-                        bottom: 5,
+                        bottom: 15,
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
@@ -136,7 +123,7 @@ export default function Graphs({recievedData}){
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" dataKey="sale_price" stroke="#8884d8" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="year" stroke="#82ca9d" />
+                    
                 </LineChart>
                     
                 <br></br>
@@ -157,8 +144,7 @@ export default function Graphs({recievedData}){
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="year" stroke="#82ca9d" />
-                    <Line type="monotone" dataKey="listing_price" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="list_price" stroke="#8884d8" activeDot={{ r: 8 }} />
                     
                 </LineChart>
 
