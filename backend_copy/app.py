@@ -274,7 +274,7 @@ def vehicleQuery():
             """     
             #get veh records from all tables and return
             print(chalk.green("veh scrape not needed"))
-            data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'],veh['year'])
+            data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
             print(data_from_db)
             t = jsonify(data_from_db)
             print(t)
@@ -407,9 +407,6 @@ def DB_check_new_scrape_needed(veh:object):
         # Handle exceptions (print or log the error, or take appropriate action)
         print(f"Error: {str(e)}")
     
-
-
-
 
 def DB_execute_queries_and_store_results(cur, make, model):
     """

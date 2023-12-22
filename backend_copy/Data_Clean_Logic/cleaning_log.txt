@@ -2953,3 +2953,50 @@ INFO:werkzeug:127.0.0.1 - - [21/Dec/2023 17:19:22] "GET /retrieve_cache HTTP/1.1
 INFO:werkzeug:127.0.0.1 - - [21/Dec/2023 17:19:22] "GET /retrieve_cache HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [21/Dec/2023 17:19:40] "GET /retrieve_cache HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [21/Dec/2023 17:20:06] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 11:17:56] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 11:17:56] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:34:18] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:34:24] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:34:32] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:34:54] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:36:04] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:36:31] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:37:32] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:42:00] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:42:59] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:43:54] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:44:16] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:44:35] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:44:42] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:44:56] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:44:59] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:45:19] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:45:21] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:45:55] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:46:45] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:47:23] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:48:32] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:48:32] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:49:01] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:49:21] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:59:51] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:59:59] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 12:59:59] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 13:00:33] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 13:00:36] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 13:00:59] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 13:01:13] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 13:01:14] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Dec/2023 13:01:14] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
+INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\app.py', reloading
+INFO:werkzeug: * Restarting with stat
