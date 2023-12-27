@@ -10,17 +10,14 @@ export default function SearchForm({onDataSubmit}){
 
     // if form submitted and awaiting server response - disable 'submit' button
     const [submitting,setSubmitting] = useState(false)
-
     const [userInput,setUserInput] = useState({
         search_query:null,
     })
-    
     const [formData,setFormData] = useState({
-        year:null,
-        make:null,
-        model:null,
+        state_year:null,
+        state_make:null,
+        state_model:null,
     })
-
     const [vehMakeCacheData,setVehMakeCacheData] = useState([])
 
     // request vehMakeCacheData from server, store in state
@@ -39,24 +36,25 @@ export default function SearchForm({onDataSubmit}){
     },[])// Empty dependency array ensures that this effect runs only once when the component mounts
 
 
-
-
-    // This effect will run whenever formData is updated
-    useEffect(() => {
-        console.log('formData updated:', formData);
+    // // This effect will run whenever formData is updated
+    // useEffect(() => {
+    //     console.log('formData updated:', formData);
     
-        // You can perform additional actions here if needed
-        }, [formData]);
+    //     // You can perform additional actions here if needed
+    //     }, [formData]);
 
 
-    const callServer = async() => {
+    const callServer = async(entered_data) => {
         try{
+
+           
             const response = await fetch('http://127.0.0.1:5000/vehicle-query',{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',
                 },
-                body:JSON.stringify(formData)
+                // body:JSON.stringify(formData)
+                body:JSON.stringify(entered_data)
             })
             if(!response.ok){
                 throw new Error('Problem with response from server')
@@ -89,14 +87,16 @@ export default function SearchForm({onDataSubmit}){
         const yearRegex = /\b\d{4}\b/;
 
         // tokenize entered search query
-        const tokens = userInput.search_query.split(/\s+/)
+        let temp = e.target.search_query.value.toUpperCase()
+        console.log(typeof(temp))
+        const tokens = temp.split(/\s+/)
         
         //Find and return the token matches the yearRegex pattern
         year = tokens.find((token)=> yearRegex.test(token))
         console.log(year)
         setFormData((prevFormData)=>({
             ...prevFormData,
-            year: year
+            state_year: year
         }))
         const year_token_index = tokens.indexOf(year)
 
@@ -109,7 +109,7 @@ export default function SearchForm({onDataSubmit}){
                 make = token
                 setFormData((prevFormData) => ({
                     ...prevFormData,
-                    make: make
+                    state_make: make
                 }))
                 break;
             }
@@ -117,23 +117,41 @@ export default function SearchForm({onDataSubmit}){
 
         // with year and make token extracted, we should be left with model token only
         const tokens_without_year_and_make = tokens_without_year.filter(token => token !== make)
+        model = tokens_without_year_and_make[0]
         setFormData((prevFormData) =>({
             ...prevFormData,
-            model:tokens_without_year_and_make[0]
+            state_model:tokens_without_year_and_make[0]
         }))  
-          
-        callServer()
+        
+
+        /*workaround to avoid having to wait for async state update.
+        in this way: 
+            there is no null form submission
+            the variables are populated seperatley from state
+            and state is also updated
+        */
+    
+        const entered_data = {'year':year,'make':make,'model':model}
+        callServer(entered_data)
     }
+
+
+    /* 
+    
+     // check if state is updated properly before making call
+            if (formData.year === null || formData.make === null || formData.model === null) {
+                console.error('Form data is not complete. Aborting server call.');
+                return;
+            }
+
+    need some kind of function to wait until all values in state are not null,
+    then perform call to the server
 
 
     
-    const handleFormChange = (e)=>{
-        setUserInput((prevUserInput)=>({
-            ...prevUserInput,
-            [e.target.name]:e.target.value.toUpperCase()
-        }))
-        console.log(userInput)
-    }
+    */
+
+
 
     return(
         
@@ -144,8 +162,8 @@ export default function SearchForm({onDataSubmit}){
                     type='text'
                     name='search_query'
                     placeholder='Search For A vehicle (ex. Toyota Supra or 2003 M5'
-                    value={userInput.search_query} //controlled component
-                    onChange={handleFormChange} 
+                    // value={userInput.search_query} //controlled component
+                    // onChange={handleFormChange} 
                 />       
                 </label>
               
