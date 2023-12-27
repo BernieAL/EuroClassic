@@ -53,9 +53,6 @@ export default function Graphs({recievedData}){
        
     */
 
-
-
-
     //get year,make,model,sale_price,sale_date from each sold record in all_sales_records array
     const GRAPH_sales_data = all_sales_records.map((record)=>{
         return{
@@ -71,7 +68,14 @@ export default function Graphs({recievedData}){
         }
     })
 
+    /*SORT into ascending sale dates
 
+     */
+
+    const GRAPH_sales_data_DATE_SORTED = GRAPH_sales_data.sort((a, b) => new Date(a.sale_date) - new Date(b.sale_date));
+    console.log(GRAPH_sales_data_DATE_SORTED)
+
+    
 
     const GRAPH_current_listing_data = current_records.map((record)=>{
         return {
@@ -81,6 +85,7 @@ export default function Graphs({recievedData}){
             list_price:record[4]
         }
     })
+    const GRAPH_current_listing_data_YEAR_SORTED = GRAPH_current_listing_data.sort((a,b)=>(a.year - b.year))
     console.log(GRAPH_current_listing_data)
 
     // const GRAPH_sold_stats = current_records.map((record)=>{
