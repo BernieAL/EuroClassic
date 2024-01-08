@@ -3172,3 +3172,31 @@ INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 14:55:24] "GET /retrieve_cache HTTP/1.1
 INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 14:55:32] "OPTIONS /vehicle-query HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 14:55:32] "POST /vehicle-query HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 14:59:42] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:20:52] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:20:52] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:20:57] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:20:57] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:29:52] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:29:52] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:29:57] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:29:57] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:30:33] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:30:33] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:33:25] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:33:25] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:33:32] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:33:32] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:35:32] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:35:32] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:35:35] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:35:36] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:38:01] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:38:01] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:38:14] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:38:14] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:38:22] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Dec/2023 15:38:22] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\Analysis_Logic\\analysis_functions.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 879-334-070
