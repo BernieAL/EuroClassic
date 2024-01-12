@@ -103,21 +103,35 @@ def ebay_current(car,driver):
     
     
     try:
-        driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
+        # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
         
-        #enter model 
-        ebay_search_box = driver.find_element(By.CSS_SELECTOR,'#gh-ac')
-        
-        # WebDriverWait(driver,10)
-        time.sleep(1)
-        
-        ebay_search_box.send_keys(target_car + Keys.RETURN)
-        time.sleep(1.5)
+        # #enter model 
+        # ebay_search_box = driver.find_element(By.CSS_SELECTOR,'#gh-ac')
+        # time.sleep(1)
+        # ebay_search_box.send_keys(target_car + Keys.RETURN)
+        # time.sleep(1.5)
 
+        """This url reduces # of pages to visit by requesting 240 items per page
+        """
+        # driver.get(f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc")
                
+        driver.get("https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_odkw=nissan+sentra&_osacat=0")
+        
 
         #holds concatenated descrip,price
         ebay_items = []
+
+        """ PAGE NUM DISCOVERY
+            -to find out how many pages there are look at element <ol class="pagination__items">
+                -nested in the ol, there will be an li element for each page
+                -from this li element, theres a nested href with the url for that page	
+                -for each li, get the href, these are the available pages to visit
+                -we can iterate and visit these page links
+        """
+        pages_links = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a')
+        for links in pages_links:
+            print(links.get_attribute('href'))
+        
         
         #get references to all listing info elements on page, store as list
         ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
@@ -126,8 +140,6 @@ def ebay_current(car,driver):
         #get references all price elements on page, store as list
         all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
-        
-        
         for (descrip,price) in zip(all_descriptions,all_prices):
             item_description= descrip.get_attribute('innerText')
             item_description = item_description.replace('NEW LISTING','')
@@ -136,6 +148,7 @@ def ebay_current(car,driver):
             ebay_items.append(temp)
 
         
+
         #write date of scrape to file right before data
         today = date.today()
         # dd/mm/YY
@@ -417,16 +430,19 @@ def run_scrape(car):
             },
         }
         
-        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=options)
-        # driver.get("https://bot.sannysoft.com/")
-        # print(driver.current_url)
+        # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=options)
+        # # driver.get("https://bot.sannysoft.com/")
+        # # print(driver.current_url)
         
+        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
+
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
             ebay_current(car,driver),
-            ebay_sold(driver)
+            # ebay_sold(driver)
             # CL(car,driver),
             # bat_scrape(car,driver)
+            time.sleep(9)
         )
     
         driver.close
@@ -442,8 +458,8 @@ if __name__ == '__main__':
 
     car  = {
     'year':2017,
-    'make':'Audi',
-    'model':'A5'
+    'make':'BMW',
+    'model':'3 Series'
     }
 
     run_scrape(car)

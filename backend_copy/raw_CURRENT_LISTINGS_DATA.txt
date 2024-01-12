@@ -1,53 +1,62 @@
  :::EBAY - DATA SCRAPED ON: 01/12/2024 
 Shop on eBay $20.00 
-2018 Audi A5 Premium Plus $18,000.00 
-2012 Audi A5 PREMIUM PLUS $11,995.00 
-2010 Audi A5 2.0T Premium $12,800.00 
-2018 Audi A5 $23,500.00 
-2016 Audi A5 $10,500.00 
-2018 Audi A5 Premium $500.00 
-2018 Audi A5 2.0T Premium Plus $22,700.00 
-2015 Audi A5 $17,496.50 
-2019 Audi A5 Premium $15,000.00 
-2010 Audi A5 2.0T Quattro Premium Coupe 2D $26,398.00 
-2019 Audi A5 Premium Plus Cabriolet 2D $8,000.00 
-2023 Audi A5 45 S line Premium Plus $24,450.00 
-2009 Audi A5 quattro $43,998.00 
-2011 Audi A5 PREMIUM PLUS $13,450.00 
-2016 Audi A5 2dr Cabriolet Automatic quattro 2.0T Premium Plus $7,000.00 
-2011 Audi A5 Premium Plus $21,800.00 
-2013 Audi A5 PREMIUM PLUS $500.00 
-2012 Audi A5 2.0T QUATTRO AWD PREMIUM PLUS CONVERTIBLE - 61K MILES $13,240.00 
-2013 Audi A5 PREMIUM PLUS $16,000.00 
-2019 Audi A5 2.0T quattro Premium AWD 4dr Sportback $15,900.00 
-2019 Audi A5 45 Premium $16,000.00 
-2013 Audi A5 $17,499.50 
-2016 Audi A5 2.0T Premium $34,998.00 
-2018 Audi A5 2.0T Premium Plus $28,883.00 
-2008 Audi A5 quattro AWD 2dr Coupe 6M $4,499.99 
-2015 Audi A5 Premium Plus $22,148.00 
-2020 Audi A5 Premium Cabriolet 2D $20,499.00 
-2013 Audi A5 Cabriolet 2.0T quattro Tiptronic $13,995.00 
-2010 Audi A5 2.0T Quattro Premium Coupe 2D $14,650.00 
-2012 Audi A5 2.0T quattro Premium Plus $28,900.00 
-2015 Audi A5 Premium Plus Coupe 2D $6,950.00 
-2021 Audi A5 40 Premium Plus $6,995.00 
-2018 Audi A5 2.0T Prestige $6,325.00 
-2018 Audi A5 Premium Plus Coupe 2D $15,995.00 
-2013 Audi A5 2.0T Premium Plus Coupe 2D $31,300.00 
-2022 Audi A5 40 Premium $28,995.00 
-2012 Audi A5 2.0T Premium $17,995.00 
-2016 Audi A5 Premium Cabriolet 2D $11,995.00 
-2022 Audi A5 SPORTBACK QUATTRO S LINE PREMIUM PLUS 45 TFSI $32,388.00 
-2018 Audi A5 2.0T Prestige $9,998.00 
-2010 Audi A5 2.0T Premium $18,999.00 
-2018 Audi A5 Premium Plus $38,150.00 
-2017 Audi A5 Cabriolet 2.0 TFSI Sport $28,500.00 
-2019 Audi A5 Premium Plus Cabriolet 2D $8,500.00 
-2018 Audi A5 2.0T quattro Premium Plus AWD 4dr Sportback $19,995.00 
-2019 Audi A5 Premium Plus $24,997.00 
-2018 Audi A5 Cabrio Premium $26,426.00 
-2021 Audi A5 Premium 45 TFSI quattro W/Convenience Package $19,895.00 
-2018 Audi A5 Premium Plus Coupe 2D $29,991.00 
-2019 Audi A5 2.0 TFSI Premium Plus W/Navigation $28,950.00 
-2022 Audi A5 45 Premium $46,990.00 
+1990 Audi V8 Quattro 4dr Sedan $5,000.00 
+2015 Audi A4 2.0T Premium $21,500.00 
+2005 Audi S4 AVANT QUATTRO $1,025.00 
+2020 Audi R8 $10,942.00 
+2009 Audi R8 Quattro Coupe 2D $7,602.00 
+2020 Audi A4 Premium 45 Quattro S-Line $55,655.00 
+2012 Audi R8 Convertible Quattro AWD 4.2L V8 6-SPEED MANUAL $129,900.00 
+2019 Audi Q8 3.0T Prestige $59,995.00 
+2022 Audi Q3 Quattro AWD S line Premium Plus $29,900.00 
+2016 Audi S7 Sedan 4D $98,980.00 
+2019 Audi S5 Sportback Quattro AWD Premium Plus $16,678.80 
+2007 Audi RS4 QUATTRO $33,980.00 
+2021 Audi RS 6 Avant 4.0T quattro $3,000.00 
+2012 Audi S4 PREMIUM PLUS $39,998.00 
+1999 Audi A4 $37,980.00 
+2021 Audi RS7 $13,000.00 
+2014 Audi S5 PREMIUM PLUS $20,000.00 
+2012 Audi R8 4.2 Quattro $103,800.00 
+2011 Audi A4 AVANT 2.0 TURBO PRM+ AWD STATION WAGON RUNS NEW NO RESERVE $8,500.00 
+2021 Audi Q8 PREMIUM PLUS S-LINE $2,100.00 
+2010 Audi R8 5.2 $149,900.00 
+2010 Audi A4 PRESTIGE $1,000.00 
+2001 Audi S4 $15,000.00 
+2001 Audi TT 26K MILES - IMMACULATE CONDITION - FLORIDA CAR! $72,995.00 
+2011 Audi R8 5.2 QUATTRO $1,706.00 
+2001 Audi S4 $43,987.00 
+2015 Audi A6 $99,599.00 
+2006 AUDI A3 2.0 PREMIUM $2,500.00 
+2021 Audi R8 Coupe Neon Green Paint Wrap! Aftermarket Wing and Rims! $25,000.00 
+2003 Audi RS6 Quattro $17,900.00 
+2018 Audi A5 2.0T Premium Plus $55,000.00 
+2015 Audi RS5 $78,000.00 
+2017 Audi Q7 TECHNIK S-LINE $18,975.00 
+2018 Audi RS 3 $13,000.00 
+2004 Audi TT 225HP QUATTRO - 14K MILES - PRISTINE! $3,999.00 
+2012 Audi A7 PREMIUM $170,000.00 
+2014 Audi S7 4dr HB Prestige $21,000.00 
+2014 Audi R8 5.2 QUATTRO $20,499.00 
+2006 Audi S4 QUATTRO $32,000.00 
+2014 Audi A6 3.0L TDI Prestige $14,999.00 
+2010 Audi A6 PRESTIGE $49,980.00 
+2010 Audi A4 PREMIUM $24,900.00 
+2016 Audi S3 Premium Plus, Great Mods! $500.00 
+2021 Audi e-tron Quattro PRESTIGE $18,700.00 
+2018 Audi S5 PREMIUM PLUS $14,200.00 
+2023 Audi Q8 Premium Plus S-Line Plus $5,949.99 
+2017 Audi Q3 Premium Sport Utility 4D $13,000.00 
+2016 Audi RS7 $15,000.00 
+2022 Audi SQ7 PRESTIGE $1,500.00 
+2005 Audi A4 2.0T QUATTRO $5,000.00 
+2018 Audi R8 V10 plus $2,025.00 
+2012 Audi A5 PREMIUM PLUS $1,500.00 
+1990 Audi 90 $32,995.00 
+2023 Audi S3 PRESTIGE $46,999.00 
+2001 Audi A4 $20,000.00 
+2013 Audi A8 $36,000.00 
+2014 Audi Q7 quattro 4dr 3.0L TDI Premium Plus $5,000.00 
+2010 Audi A4 $8,700.00 
+2022 Audi RS e-tron GT quattro $49,500.00 
+2013 Audi S6 $72,000.00 
