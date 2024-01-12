@@ -36,6 +36,7 @@ from selenium.common.exceptions import ElementNotVisibleException, StaleElementR
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.proxy import Proxy, ProxyType
+from datetime import datetime
 
 from seleniumwire import webdriver
 
@@ -56,8 +57,11 @@ import os
 extracted_data_dir_path = os.path.join(os.path.dirname(__file__), '..', 'Extracted_data')
 
 raw_SOLD_output_file_path = os.path.join(extracted_data_dir_path, '..','raw_SOLD_DATA.txt')
+
 raw_CURRENT_LISTING_output_file_path = os.path.join(extracted_data_dir_path, '..','raw_CURRENT_LISTINGS_DATA.txt')
-# print(raw_SOLD_output_file_path)
+
+EBAY_raw_SOLD_output_file_path = os.path.join(extracted_data_dir_path, '..','EBAY_raw_SOLD_DATA.txt')
+
 
 error_log_file = os.path.join(extracted_data_dir_path, '..','error_log.txt')
 
@@ -65,6 +69,7 @@ error_log_file = os.path.join(extracted_data_dir_path, '..','error_log.txt')
 raw_current_listing_output = open(raw_CURRENT_LISTING_output_file_path,"a",encoding="utf-8")
 raw_sold_output = open(raw_SOLD_output_file_path,"a",encoding="utf-8")
 error_log_output = open(error_log_file,"a",encoding="utf-8")
+EBAY_raw_SOLD_output = open(EBAY_raw_SOLD_output_file_path ,"a",encoding="utf-8")
 
 
 
@@ -80,6 +85,16 @@ error_log_output = open(error_log_file,"a",encoding="utf-8")
 # ===========================================================================
 # # :::::: BEGIN EBAY SECTION 
 
+"""
+EBAY section has 2 functions
+1 function collects current listings and writes to current_listings file
+1 function collects sold listings and writes to EBAY_raw_SOLD_output file
+
+ebay_current
+    -navigates to ebay
+    -targets search bar and enters target vehicle, and enter is clicked to begin search
+    -
+"""
 
 #this ebay section gets current listings
 def ebay_current(car,driver):
@@ -101,13 +116,17 @@ def ebay_current(car,driver):
         ebay_search_box.send_keys(target_car + Keys.RETURN)
         time.sleep(1.5)
 
-        #this gets prices of all cars on page
+        #holds concatenated descrip,price
         ebay_items = []
+        
+        #get references to all listing info elements on page, store as list
         ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
+        #get references to all description elements on page, store as list
         all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
+        #get references all price elements on page, store as list
         all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
-        #
+        
         for (descrip,price) in zip(all_descriptions,all_prices):
             item_description= descrip.get_attribute('innerText')
             item_description = item_description.replace('NEW LISTING','')
@@ -151,7 +170,7 @@ def ebay_sold(driver):
     
     try:
         # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
-        driver.get("https://www.ebay.com/sch/i.html?_from=R40&_nkw=honda+civic&_sacat=6001&_sop=13&_stpos=07029&_fspt=1&LH_PrefLoc=98&rt=nc&LH_Sold=1&LH_Complete=1")
+        driver.get("https://www.ebay.com/sch/i.html?_from=R40&_nkw=honda+accord&_sacat=6001&_sop=13&_stpos=07029&_fspt=1&LH_PrefLoc=98&rt=nc&LH_Sold=1&LH_Complete=1")
         
         
         
@@ -173,7 +192,7 @@ def ebay_sold(driver):
 
         #targets "Sold Month Date, Year" on each listing
         all_sale_dates = driver.find_elements(By.CSS_SELECTOR,'.s-item__title--tag span.POSITIVE')
-        
+
         
         # <div class="s-item__title--tag"><span class="POSITIVE">Sold  Jan 11, 2024</span><span class="clipped">Sold Item</span></div>
 
@@ -181,7 +200,13 @@ def ebay_sold(driver):
             item_description= descrip.get_attribute('innerText')
             item_description = item_description.replace('NEW LISTING','')
             item_price = price.get_attribute('innerText')
+            
             sale_date_text = sale_date.get_attribute('innerText')
+            #convert sale_date_text from January 11th,2024 to 2024-01-11 (yyyy,mm,dd)
+            sale_date_text = sale_date_text.replace("Sold ","")
+            sale_date_obj = datetime.strptime(sale_date_text,"%b %d, %Y").date()
+            print(sale_date_obj)
+            
             temp = f'{item_description} {item_price} {sale_date_text}'
             ebay_items.append(temp)
 
@@ -194,7 +219,7 @@ def ebay_sold(driver):
         # raw_current_listing_output.write(date_string)   
 
         # #write items to file
-        fileWrite(ebay_items,raw_current_listing_output)
+        fileWrite(ebay_items,EBAY_raw_SOLD_output)
         success_obj = {
                     'success': True,
                     'function':'ebay_scrape_sold',
@@ -397,17 +422,6 @@ def run_scrape(car):
         
         driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=options)
 
-        # driver.get("https://bot.sannysoft.com/")
-        # time.sleep(50)
-        # driver.get('https://ipinfo.io/json')
-        # time.sleep(20)
-        
-        #for using selenium on docker 
-        # driver = webdriver.Remote(
-        #     command_executor="http://127.0.0.1:4444/wd/hub",
-        #     desired_capabilities={
-        #             "browserName": "chrome",
-        #     })
         
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
