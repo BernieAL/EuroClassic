@@ -34,6 +34,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotVisibleException, StaleElementReferenceException
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.proxy import Proxy, ProxyType
+
+from seleniumwire import webdriver
+
+
 import time
 # from clean_data import clean_the_data
 
@@ -76,7 +82,7 @@ error_log_output = open(error_log_file,"a",encoding="utf-8")
 
 
 #this ebay section gets current listings
-def ebay(car,driver):
+def ebay_current(car,driver):
     
     target_car = f"{car['make']} {car['model']}"
     
@@ -137,6 +143,74 @@ def ebay(car,driver):
         
 
     # print(ebay_items)
+
+#this ebay section gets sold listings
+def ebay_sold(driver):
+    # target_car = f"{car['make']} {car['model']}"
+    
+    
+    try:
+        # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
+        driver.get("https://www.ebay.com/sch/i.html?_from=R40&_nkw=honda+civic&_sacat=6001&_sop=13&_stpos=07029&_fspt=1&LH_PrefLoc=98&rt=nc&LH_Sold=1&LH_Complete=1")
+        
+        
+        
+        # #enter model 
+        # ebay_search_box = driver.find_element(By.CSS_SELECTOR,'#gh-ac')
+        
+        # # WebDriverWait(driver,10)
+        # time.sleep(1)
+        
+        # ebay_search_box.send_keys(target_car + Keys.RETURN)
+        # time.sleep(1.5)
+
+        #this gets prices of all cars on page
+        ebay_items = []
+        ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
+        all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
+
+        all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
+
+        #targets "Sold Month Date, Year" on each listing
+        all_sale_dates = driver.find_elements(By.CSS_SELECTOR,'.s-item__title--tag span.POSITIVE')
+        
+        
+        # <div class="s-item__title--tag"><span class="POSITIVE">Sold  Jan 11, 2024</span><span class="clipped">Sold Item</span></div>
+
+        for (descrip,price,sale_date) in zip(all_descriptions,all_prices,all_sale_dates):
+            item_description= descrip.get_attribute('innerText')
+            item_description = item_description.replace('NEW LISTING','')
+            item_price = price.get_attribute('innerText')
+            sale_date_text = sale_date.get_attribute('innerText')
+            temp = f'{item_description} {item_price} {sale_date_text}'
+            ebay_items.append(temp)
+
+        
+        #write date of scrape to file right before data
+        today = date.today()
+        # dd/mm/YY
+        current_date = today.strftime("%m/%d/%Y")
+        # date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
+        # raw_current_listing_output.write(date_string)   
+
+        # #write items to file
+        fileWrite(ebay_items,raw_current_listing_output)
+        success_obj = {
+                    'success': True,
+                    'function':'ebay_scrape_sold',
+                    'date': current_date,
+        }
+        return success_obj
+    
+    except NoSuchElementException as e:
+        error_obj = {
+               'error':e,
+               'function':'ebay_sold_listings',
+               'date': current_date
+        }
+        error_log(error_obj)
+        return error_obj
+        
 
 # # :::::: END EBAY SECTION 
 # ===========================================================================
@@ -312,7 +386,21 @@ def run_scrape(car):
         raw_current_listing_output.truncate(0)
         raw_sold_output.truncate(0)
 
-        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
+
+        options = {
+            'proxy': {
+                'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
+                'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
+            },
+            
+        }
+        
+        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=options)
+
+        # driver.get("https://bot.sannysoft.com/")
+        # time.sleep(50)
+        # driver.get('https://ipinfo.io/json')
+        # time.sleep(20)
         
         #for using selenium on docker 
         # driver = webdriver.Remote(
@@ -323,9 +411,10 @@ def run_scrape(car):
         
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
-            ebay(car,driver),
-            CL(car,driver),
-            bat_scrape(car,driver)
+            # ebay_current(car,driver),
+            ebay_sold(driver)
+            # CL(car,driver),
+            # bat_scrape(car,driver)
         )
     
         driver.close
@@ -337,21 +426,20 @@ def run_scrape(car):
         return scrape_results
 
 # If going to run this file individually uncomment the below
-# if __name__ == '__main__':
+if __name__ == '__main__':
 
-#     car  = {
-#     'year':2017,
-#     'make':'Audi',
-#     'model':'Rs6'
-#     }
+    car  = {
+    'year':2017,
+    'make':'Audi',
+    'model':'Rs6'
+    }
 
-#     run_scrape(car)
-
-
+    run_scrape(car)
 
 
-"""
-RETURNED RAW DATA EXAMPLES::
+
+
+"""RETURNED RAW DATA EXAMPLES::
 
 
 EVAY RAW RESULT:
