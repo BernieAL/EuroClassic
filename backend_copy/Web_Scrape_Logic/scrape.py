@@ -105,8 +105,6 @@ def ebay_current(car,driver):
     try:
         driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
         
-        
-        
         #enter model 
         ebay_search_box = driver.find_element(By.CSS_SELECTOR,'#gh-ac')
         
@@ -115,6 +113,8 @@ def ebay_current(car,driver):
         
         ebay_search_box.send_keys(target_car + Keys.RETURN)
         time.sleep(1.5)
+
+               
 
         #holds concatenated descrip,price
         ebay_items = []
@@ -126,6 +126,7 @@ def ebay_current(car,driver):
         #get references all price elements on page, store as list
         all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
+        
         
         for (descrip,price) in zip(all_descriptions,all_prices):
             item_description= descrip.get_attribute('innerText')
@@ -163,25 +164,22 @@ def ebay_current(car,driver):
 
     # print(ebay_items)
 
-#this ebay section gets sold listings
+#this ebay section gets sold listings, it picks up from the page of curr listings
+
 def ebay_sold(driver):
     # target_car = f"{car['make']} {car['model']}"
     
+    #get curr_url from last page visited - which is current listings
+    curr_url = driver.current_url
+    #concat curr_url with necessary ebay url params for sold and complete
+    sold_complete_url = curr_url + '&LH_Sold=1&LH_Complete=1'
     
     try:
         # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
-        driver.get("https://www.ebay.com/sch/i.html?_from=R40&_nkw=honda+accord&_sacat=6001&_sop=13&_stpos=07029&_fspt=1&LH_PrefLoc=98&rt=nc&LH_Sold=1&LH_Complete=1")
+        # driver.get("https://www.ebay.com/sch/i.html?_from=R40&_nkw=honda+accord&_sacat=6001&_sop=13&_stpos=07029&_fspt=1&LH_PrefLoc=98&rt=nc&LH_Sold=1&LH_Complete=1")
+        time.sleep(4)
+        driver.get(sold_complete_url)
         
-        
-        
-        # #enter model 
-        # ebay_search_box = driver.find_element(By.CSS_SELECTOR,'#gh-ac')
-        
-        # # WebDriverWait(driver,10)
-        # time.sleep(1)
-        
-        # ebay_search_box.send_keys(target_car + Keys.RETURN)
-        # time.sleep(1.5)
 
         #this gets prices of all cars on page
         ebay_items = []
@@ -417,15 +415,15 @@ def run_scrape(car):
                 'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
                 'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
             },
-            
         }
         
         driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=options)
-
+        # driver.get("https://bot.sannysoft.com/")
+        # print(driver.current_url)
         
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
-            # ebay_current(car,driver),
+            ebay_current(car,driver),
             ebay_sold(driver)
             # CL(car,driver),
             # bat_scrape(car,driver)
@@ -445,7 +443,7 @@ if __name__ == '__main__':
     car  = {
     'year':2017,
     'make':'Audi',
-    'model':'Rs6'
+    'model':'A5'
     }
 
     run_scrape(car)
