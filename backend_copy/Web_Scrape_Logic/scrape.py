@@ -36,12 +36,11 @@ from selenium.common.exceptions import ElementNotVisibleException, StaleElementR
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.proxy import Proxy, ProxyType
-from datetime import datetime
-
 from seleniumwire import webdriver
 
-
+from datetime import datetime
 import time
+import random
 # from clean_data import clean_the_data
 
 
@@ -114,7 +113,8 @@ def ebay_current(car,driver):
         """This url reduces # of pages to visit by requesting 240 items per page
         """
         # driver.get(f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc")
-               
+
+        #url for testing   
         driver.get("https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_odkw=nissan+sentra&_osacat=0")
         
 
@@ -128,24 +128,53 @@ def ebay_current(car,driver):
                 -for each li, get the href, these are the available pages to visit
                 -we can iterate and visit these page links
         """
-        pages_links = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a')
-        for links in pages_links:
-            print(links.get_attribute('href'))
-        
-        
-        #get references to all listing info elements on page, store as list
-        ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
-        #get references to all description elements on page, store as list
-        all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
-        #get references all price elements on page, store as list
-        all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
+        pages_links=[]
+        pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a')
+        for links in pages:
+            pages_links.append(links.get_attribute('href'))
 
-        for (descrip,price) in zip(all_descriptions,all_prices):
-            item_description= descrip.get_attribute('innerText')
-            item_description = item_description.replace('NEW LISTING','')
-            item_price = price.get_attribute('innerText')
-            temp = f'{item_description} {item_price}'
-            ebay_items.append(temp)
+        """
+        for page in page range (1->n) start from second page since we are already on first page
+        """
+        # i = 1
+        # while i < len(pages_links):
+        for pg_link in pages_links[1:]:
+            
+            # all_descriptions = [element.get_attribute('innerText') for element in driver.find_elements(By.CLASS_NAME,'s-item__title')]
+            # #REMOVING 'NEW LISTING from each listing description
+            # all_descriptions = [element.replace('NEW LISTING','') for element in all_descriptions]
+            # all_prices = [element.get_attribute('innerText') for element in driver.find_elements(By.CLASS_NAME,'s-item__price')]
+
+          
+
+            #get references to all listing info elements on page, store as list
+            ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
+            #get references to all description elements on page, store as list
+            all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
+            #get references all price elements on page, store as list
+            all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
+
+            
+
+            for (descrip,price) in zip(all_descriptions,all_prices):
+                item_description= descrip.get_attribute('innerText')
+                #REMOVES'NEW LISTING from listing description if present
+                item_description = item_description.replace('NEW LISTING','')
+                item_price = price.get_attribute('innerText')
+                temp = f'{item_description} {item_price}'
+                ebay_items.append(temp)
+                
+                
+            #write ebay_items to file before going to next page - in case script fails or mem issue with array
+            fileWrite(ebay_items,raw_current_listing_output)
+            #clear array ahead of next page - to avoid writing duplicate data to file
+            ebay_items.clear
+            # i+=1
+            # driver.get(pages_links[i])
+            time.sleep(random.uniform(3,11))
+            driver.get(pg_link)
+
+        
 
         
 
@@ -156,8 +185,8 @@ def ebay_current(car,driver):
         date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
         raw_current_listing_output.write(date_string)   
 
-        #write items to file
-        fileWrite(ebay_items,raw_current_listing_output)
+        # #write items to file
+        # fileWrite(ebay_items,raw_current_listing_output)
         success_obj = {
                     'success': True,
                     'function':'ebay_scrape',
@@ -430,11 +459,18 @@ def run_scrape(car):
             },
         }
         
-        # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=options)
+        #driver with proxy
+        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=options)
+
+        #driver with no proxy
+        # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
+
+
+        #for testing
         # # driver.get("https://bot.sannysoft.com/")
         # # print(driver.current_url)
         
-        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
+       
 
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
