@@ -84,8 +84,7 @@ EBAY_raw_SOLD_output = open(EBAY_raw_SOLD_output_file_path ,"a",encoding="utf-8"
 # ===========================================================================
 # # :::::: BEGIN EBAY SECTION 
 
-"""
-EBAY section has 2 functions
+"""EBAY section has 2 functions
 1 function collects current listings and writes to current_listings file
 1 function collects sold listings and writes to EBAY_raw_SOLD_output file
 
@@ -115,7 +114,9 @@ def ebay_current(car,driver):
         # driver.get(f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc")
 
         #url for testing   
-        driver.get("https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_odkw=nissan+sentra&_osacat=0")
+        intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0"
+        driver.get(intial_url)
+        
         
 
         #holds concatenated descrip,price
@@ -133,20 +134,19 @@ def ebay_current(car,driver):
         for links in pages:
             pages_links.append(links.get_attribute('href'))
 
+       
+        #write date of scrape to file right before data
+        today = date.today()
+        current_date = today.strftime("%m/%d/%Y")
+        date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
+        raw_current_listing_output.write(date_string)   
+
         """
         for page in page range (1->n) start from second page since we are already on first page
         """
-        # i = 1
-        # while i < len(pages_links):
         for pg_link in pages_links[1:]:
             
-            # all_descriptions = [element.get_attribute('innerText') for element in driver.find_elements(By.CLASS_NAME,'s-item__title')]
-            # #REMOVING 'NEW LISTING from each listing description
-            # all_descriptions = [element.replace('NEW LISTING','') for element in all_descriptions]
-            # all_prices = [element.get_attribute('innerText') for element in driver.find_elements(By.CLASS_NAME,'s-item__price')]
-
-          
-
+         
             #get references to all listing info elements on page, store as list
             ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
             #get references to all description elements on page, store as list
@@ -169,29 +169,20 @@ def ebay_current(car,driver):
             fileWrite(ebay_items,raw_current_listing_output)
             #clear array ahead of next page - to avoid writing duplicate data to file
             ebay_items.clear
-            # i+=1
-            # driver.get(pages_links[i])
-            time.sleep(random.uniform(3,11))
+       
+
+            #slow down page navigation
+            time.sleep(random.uniform(3,9))
             driver.get(pg_link)
 
         
-
-        
-
-        #write date of scrape to file right before data
-        today = date.today()
-        # dd/mm/YY
-        current_date = today.strftime("%m/%d/%Y")
-        date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
-        raw_current_listing_output.write(date_string)   
-
-        # #write items to file
-        # fileWrite(ebay_items,raw_current_listing_output)
         success_obj = {
                     'success': True,
                     'function':'ebay_scrape',
                     'date': current_date,
         }
+
+        #before exiting this 
         return success_obj
     
     except NoSuchElementException as e:
@@ -219,47 +210,72 @@ def ebay_sold(driver):
     try:
         # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
         # driver.get("https://www.ebay.com/sch/i.html?_from=R40&_nkw=honda+accord&_sacat=6001&_sop=13&_stpos=07029&_fspt=1&LH_PrefLoc=98&rt=nc&LH_Sold=1&LH_Complete=1")
+        
         time.sleep(4)
         driver.get(sold_complete_url)
         
 
-        #this gets prices of all cars on page
-        ebay_items = []
-        ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
-        all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
+        """ PAGE NUM DISCOVERY
+            -to find out how many pages there are look at element <ol class="pagination__items">
+                -nested in the ol, there will be an li element for each page
+                -from this li element, theres a nested href with the url for that page	
+                -for each li, get the href, these are the available pages to visit
+                -we can iterate and visit these page links
+        """
+        pages_links=[]
+        pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a')
+        for links in pages:
+            pages_links.append(links.get_attribute('href'))
 
-        all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
-        #targets "Sold Month Date, Year" on each listing
-        all_sale_dates = driver.find_elements(By.CSS_SELECTOR,'.s-item__title--tag span.POSITIVE')
 
-        
-        # <div class="s-item__title--tag"><span class="POSITIVE">Sold  Jan 11, 2024</span><span class="clipped">Sold Item</span></div>
-
-        for (descrip,price,sale_date) in zip(all_descriptions,all_prices,all_sale_dates):
-            item_description= descrip.get_attribute('innerText')
-            item_description = item_description.replace('NEW LISTING','')
-            item_price = price.get_attribute('innerText')
-            
-            sale_date_text = sale_date.get_attribute('innerText')
-            #convert sale_date_text from January 11th,2024 to 2024-01-11 (yyyy,mm,dd)
-            sale_date_text = sale_date_text.replace("Sold ","")
-            sale_date_obj = datetime.strptime(sale_date_text,"%b %d, %Y").date()
-            print(sale_date_obj)
-            
-            temp = f'{item_description} {item_price} {sale_date_text}'
-            ebay_items.append(temp)
-
-        
-        #write date of scrape to file right before data
+       #write date of scrape to file right before data
         today = date.today()
-        # dd/mm/YY
         current_date = today.strftime("%m/%d/%Y")
-        # date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
-        # raw_current_listing_output.write(date_string)   
+        date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
+        EBAY_raw_SOLD_output.write(date_string)                    
 
-        # #write items to file
+
+        """for page in page range (1->n) start from second page since we are already on first page
+        """
+        for pg_link in pages_links[1:]:
+            #this gets prices of all cars on page
+            ebay_items = []
+            ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
+            all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
+
+            all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
+
+            #targets "Sold Month Date, Year" on each listing
+            all_sale_dates = driver.find_elements(By.CSS_SELECTOR,'.s-item__title--tag span.POSITIVE')
+
+            
+
+
+            for (descrip,price,sale_date) in zip(all_descriptions,all_prices,all_sale_dates):
+                item_description= descrip.get_attribute('innerText')
+                item_description = item_description.replace('NEW LISTING','')
+                item_price = price.get_attribute('innerText')
+                
+                sale_date_text = sale_date.get_attribute('innerText')
+                #convert sale_date_text from January 11th,2024 to 2024-01-11 (yyyy,mm,dd)
+                sale_date_text = sale_date_text.replace("Sold ","")
+                sale_date_text_date_obj = datetime.strptime(sale_date_text,"%b %d, %Y").date()
+                
+                
+                temp = f'{item_description} {item_price} {sale_date_text_date_obj}'
+                ebay_items.append(temp)
+
+        #write items to file
         fileWrite(ebay_items,EBAY_raw_SOLD_output)
+         #clear array ahead of next page - to avoid writing duplicate data to file
+        ebay_items.clear
+        
+        #slow down page navigation
+        time.sleep(random.uniform(3,9))
+        driver.get(pg_link)
+        
+            
         success_obj = {
                     'success': True,
                     'function':'ebay_scrape_sold',
@@ -435,12 +451,13 @@ def fileWrite(data,fileIn):
         temp = f"{line} \n"
         fileIn.write(temp)
 
-"""
-this function is called from indiv scraping functions when an exception is encountered 
-Recieves error_obj constructed in indiv scraper function with exceptions caught
-"""
 
 def error_log(error_obj):
+
+    """this function is called from indiv scraping functions when an exception is encountered 
+    Recieves error_obj constructed in indiv scraper function with exceptions caught
+    """
+    
     temp = f"{error_obj} \n -----------"
     error_log_output.write(temp)
 
@@ -475,16 +492,18 @@ def run_scrape(car):
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
             ebay_current(car,driver),
-            # ebay_sold(driver)
+            ebay_sold(driver)
             # CL(car,driver),
             # bat_scrape(car,driver)
-            time.sleep(9)
+            
         )
     
         driver.close
         
         raw_current_listing_output.close()
         raw_sold_output.close()
+        error_log_output.close()
+        EBAY_raw_SOLD_output.close()
 
         #return scrape_results to calling location
         return scrape_results
