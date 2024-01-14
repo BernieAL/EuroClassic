@@ -111,11 +111,12 @@ def ebay_current(car,driver):
 
         """This url reduces # of pages to visit by requesting 240 items per page
         """
-        # driver.get(f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc")
-
-        #url for testing   
-        intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0"
+        intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc"
         driver.get(intial_url)
+
+        # #url for testing   
+        # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
+        # driver.get(intial_url)
         
         
 
@@ -197,15 +198,13 @@ def ebay_current(car,driver):
 
     # print(ebay_items)
 
-#this ebay section gets sold listings, it picks up from the page of curr listings
-
-def ebay_sold(driver):
+#this ebay section gets sold listings, beginnning from intial url again, and appends 'sold' and 'complete' params to the url
+def ebay_sold(car,driver):
     # target_car = f"{car['make']} {car['model']}"
-    
-    #get curr_url from last page visited - which is current listings
-    curr_url = driver.current_url
-    #concat curr_url with necessary ebay url params for sold and complete
-    sold_complete_url = curr_url + '&LH_Sold=1&LH_Complete=1'
+
+    intial_url = f"https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw={car['make']}&{car['model']}_sacat=0&_ipg=240&rt=nc"
+    # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
+    sold_complete_url = intial_url + '&LH_Sold=1&LH_Complete=1'
     
     try:
         # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
@@ -492,7 +491,7 @@ def run_scrape(car):
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
             ebay_current(car,driver),
-            ebay_sold(driver)
+            ebay_sold(car,driver)
             # CL(car,driver),
             # bat_scrape(car,driver)
             
