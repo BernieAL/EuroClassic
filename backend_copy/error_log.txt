@@ -1,3 +1,9 @@
 {'error': NoSuchElementException(), 'function': 'bat_scrape', 'date': '09/28/2023'} 
 {'error': NoSuchElementException(), 'function': 'bat_scrape', 'date': '09/28/2023'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
  -----------

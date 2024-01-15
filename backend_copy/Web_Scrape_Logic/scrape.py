@@ -1,4 +1,4 @@
-"""
+""" REFERENCES
 https://stackoverflow.com/questions/49788257/what-is-default-location-of-chromedriver-and-for-installing-chrome-on-windows
 from selenium import webdriver
 
@@ -28,24 +28,26 @@ https://stackoverflow.com/questions/27092833/unicodeencodeerror-charmap-codec-ca
 from threading import Thread
 from typing import ClassVar
 from selenium import webdriver
-from datetime import date
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotVisibleException, StaleElementReferenceException
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException,TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.proxy import Proxy, ProxyType
 from seleniumwire import webdriver
+from selenium.webdriver.support import expected_conditions as EC
 
-from datetime import datetime
+import os
+from datetime import date,datetime
 import time
 import random
 # from clean_data import clean_the_data
 
 
 
-import os
+
 # make = "audi"
 # chassis =""
 # model ="rs5"
@@ -366,7 +368,7 @@ def bat_scrape(car,driver):
             driver.get(f'https://bringatrailer.com/{make}/{model}')
             # URL EXAMPLE:  https://bringatrailer.com/bmw/e39-m5/?q=e39%20m5
             
-            time.sleep(2)
+            time.sleep(5)
         
 
             # this is to get passed "show notifications prompt" - SHOULDNT BE NEEDED, SCRAPE STILL WORKS WITHOUT DISMISSING PROMPT
@@ -438,9 +440,131 @@ def bat_scrape(car,driver):
         }
         error_log(error_obj)
         return error_obj
+  
+def bat_scrape_all(car,driver):
+
+    try:
+        # driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
+        # time.sleep(5)
+
+        #or by search bar 
+        driver.get('https://bringatrailer.com')
+        search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
+        time.sleep(2)
+        search_bar.send_keys('Porsche 911' + Keys.RETURN)
         
-# :::::: END BAT SECTION
-# ==============================================================================
+        auction_results_section = driver.find_element(By.CSS_SELECTOR,'.auctions-completed')
+
+        show_more_listing_button = auction_results_section.find_element(By.CSS_SELECTOR,'button.button-show-more')
+        time.sleep(2)
+        show_more_listing_button.click()
+
+        #get number of results and divide by 24 to get number of clicks we need to do - because each click loads 24 more results
+        
+        # for i in range(2):
+        #     show_more_listing_button.click()
+        #     time.sleep(2)
+
+        listing_cards = auction_results_section.find_elements(By.CSS_SELECTOR,'.auctions-completed  a.listing-card')
+        
+        # time.sleep(3)
+        for card in listing_cards:
+            print(card.get_attribute('innerText'))
+            
+
+    except NoSuchElementException as e:
+        error_obj = {
+               'error':e,
+               'function':'bat_scrape_all',
+            #    'date': current_date
+        }
+        error_log(error_obj)
+        return error_obj
+    except TimeoutException as e:
+        # Handle the case where the element is not clickable within the specified time
+        print("Element not clickable within the specified time.")
+  
+
+def interceptor(request):
+    
+    headers = {
+        "authority":"bringatrailer.com",
+        "method":"POST",
+        "accept": "application/json, text/javascript, */*; q=0.01",
+        "accept-language": "en-US,en;q=0.9,lb;q=0.8",
+        "cache-control": "no-cache",
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "pragma": "no-cache",
+        "sec-ch-ua": "\"Not_A Brand\";v=\"8\", \"Chromium\";v=\"120\", \"Google Chrome\";v=\"120\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "x-requested-with": "XMLHttpRequest",
+        "x-wp-nonce": "acdf31d30f",
+        "cookie": "__stripe_mid=ee6c30b5-bb05-492a-8463-868c8e7f36c89d4093; bat_tracking_data_alt={\"conversion\":0,\"datetime\":1690470024,\"redirect\":\"https://bringatrailer.com/bmw/e90-e92-m3/\",\"referrer\":\"https://www.google.com/\"}; usprivacy=1YYN; __stripe_sid=1746bcf6-6388-4fbf-8d33-04676a8e9201e68f94; OptanonConsent=isGpcEnabled=0&datestamp=Sun+Jan+14+2024+00%3A30%3A05+GMT-0500+(Eastern+Standard+Time)&version=202310.2.0&isIABGlobal=false&hosts=&landingPath=NotLandingPage&groups=C0001%3A1%2CC0013%3A1&AwaitingReconsent=false&browserGpcFlag=0&consentId=8e872a31-20de-4502-b706-ec80ab4964eb&interactionCount=0",
+        "Referer": "https://bringatrailer.com/bmw/?q=bmw",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
+    }
+
+    request.headers = headers
+    
+
+def bat_scrape_2(car):
+
+    
+   
+    # options = {
+    #     "user-agent":{f"{headers['sec-ch-ua']}"}
+    # }
+    
+
+    
+    driver2 = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
+    driver2.request_interceptor = interceptor
+
+    url = "https://bringatrailer.com/wp-json/bringatrailer/1.0/data/listings-filter"
+    
+    driver2.get(url)
+   
+
+
+
+    # driver2.get("https://bringatrailer.com/bmw/?q=bmw")
+    # driver2.get("https://bringatrailer.com/wp-json/bringatrailer/1.0/data/listings-filter"
+    # )
+    
+    # driver2.get(url)
+    # driver2.execute_script(
+    #     f"""
+    #     var xhr = new XMLHttpRequest();
+    #     xhr.open("POST", "{url}", true);
+    #     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+    #     xhr.setRequestHeader("accept", "{headers['accept']}");
+    #     xhr.setRequestHeader("accept-language", "{headers['accept-language']}");
+    #     xhr.setRequestHeader("cache-control", "{headers['cache-control']}");
+    #     xhr.setRequestHeader("content-type", "{headers['content-type']}");
+    #     xhr.setRequestHeader("pragma", "{headers['pragma']}");
+    #     xhr.setRequestHeader("sec-ch-ua", "{headers['sec-ch-ua']}");
+    #     xhr.setRequestHeader("sec-ch-ua-mobile", "{headers['sec-ch-ua-mobile']}");
+    #     xhr.setRequestHeader("sec-ch-ua-platform", "{headers['sec-ch-ua-platform']}");
+    #     xhr.setRequestHeader("sec-fetch-dest", "{headers['sec-fetch-dest']}");
+    #     xhr.setRequestHeader("sec-fetch-mode", "{headers['sec-fetch-mode']}");
+    #     xhr.setRequestHeader("sec-fetch-site", "{headers['sec-fetch-site']}");
+    #     xhr.setRequestHeader("x-requested-with", "{headers['x-requested-with']}");
+    #     xhr.setRequestHeader("x-wp-nonce", "{headers['x-wp-nonce']}");
+    #     xhr.setRequestHeader("Referer", "{headers['Referer']}");
+    #     xhr.setRequestHeader("Referrer-Policy", "{headers['Referrer-Policy']}");
+    #     xhr.send("{body}");
+    #     """
+    # )
+
+    # You can now parse the response or perform any other actions you need
+    response = driver2.page_source
+    print(response)
+
 
 
 
@@ -468,36 +592,43 @@ def run_scrape(car):
         raw_sold_output.truncate(0)
 
 
-        options = {
+        seleniumwire_options = {
             'proxy': {
                 'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
                 'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
             },
+            'detach':True
         }
-        
-        #driver with proxy
-        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=options)
+        chrome_options = Options()
+        #stop browser from closing - requires manual closing
+        chrome_options.add_experimental_option("detach", True)
+        #stop images from loading - improve page speed and reduce proxy data usage
+        chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+    
+        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=chrome_options)
+       
 
         #driver with no proxy
         # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
 
 
-        #for testing
-        # # driver.get("https://bot.sannysoft.com/")
-        # # print(driver.current_url)
+        # #for testing
+        # driver.get("https://bot.sannysoft.com/")
+        # print(driver.current_url)
         
        
 
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
-            ebay_current(car,driver),
-            ebay_sold(car,driver)
+            # ebay_current(car,driver),
+            # ebay_sold(car,driver),
+            # bat_scrape(car,driver),
+            # bat_scrape_2(car),
+            bat_scrape_all(car,driver)
             # CL(car,driver),
-            # bat_scrape(car,driver)
-            
         )
     
-        driver.close
+        # driver.close
         
         raw_current_listing_output.close()
         raw_sold_output.close()
@@ -512,7 +643,7 @@ if __name__ == '__main__':
 
     car  = {
     'year':2017,
-    'make':'BMW',
+    'make':'Porsche 911',
     'model':'3 Series'
     }
 
