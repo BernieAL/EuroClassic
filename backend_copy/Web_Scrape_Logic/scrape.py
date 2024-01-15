@@ -63,6 +63,9 @@ raw_CURRENT_LISTING_output_file_path = os.path.join(extracted_data_dir_path, '..
 
 EBAY_raw_SOLD_output_file_path = os.path.join(extracted_data_dir_path, '..','EBAY_raw_SOLD_DATA.txt')
 
+BAT_raw_SOLD_output_file_path = os.path.join(extracted_data_dir_path, '..','BAT_raw_SOLD_DATA.txt')
+
+
 
 error_log_file = os.path.join(extracted_data_dir_path, '..','error_log.txt')
 
@@ -72,6 +75,7 @@ raw_sold_output = open(raw_SOLD_output_file_path,"a",encoding="utf-8")
 error_log_output = open(error_log_file,"a",encoding="utf-8")
 EBAY_raw_SOLD_output = open(EBAY_raw_SOLD_output_file_path ,"a",encoding="utf-8")
 
+BAT_raw_SOLD_output = open(BAT_raw_SOLD_output_file_path ,"a",encoding="utf-8")
 
 
 #CLEAR EXISTING FILE CONTENTS BEFORE EACH NEW SCRAPE FOR VEHICLE
@@ -444,32 +448,37 @@ def bat_scrape(car,driver):
 def bat_scrape_all(car,driver):
 
     try:
-        # driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
-        # time.sleep(5)
+        driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
+        time.sleep(random.uniform(1,3))
 
-        #or by search bar 
-        driver.get('https://bringatrailer.com')
-        search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
-        time.sleep(2)
-        search_bar.send_keys('Porsche Turbo' + Keys.RETURN)
+        # #or by search bar 
+        # driver.get('https://bringatrailer.com')
+        # search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
+        # time.sleep(random.uniform(1,3))
+        # search_bar.send_keys('Porsche Turbo' + Keys.RETURN)
         
         auction_results_section = driver.find_element(By.CSS_SELECTOR,'.auctions-completed')
 
         show_more_listing_button = auction_results_section.find_element(By.CSS_SELECTOR,'button.button-show-more')
-        time.sleep(2)
+        time.sleep(random.uniform(1,5))
         show_more_listing_button.click()
 
         #get number of results and divide by 24 to get number of clicks we need to do - because each click loads 24 more results
         
-        # for i in range(2):
-        #     show_more_listing_button.click()
-        #     time.sleep(2)
+        
+        for i in range(10):
+            show_more_listing_button.click()
+            time.sleep(random.uniform(3,9))
 
+        #locate all listings card in completed auction section
         listing_cards = auction_results_section.find_elements(By.CSS_SELECTOR,'.auctions-completed  a.listing-card')
         
-        # time.sleep(3)
+
+        #temp output storage before writing to file
+        
         for card in listing_cards:
-            print(card.get_attribute('innerText'))
+            card_details = card.get_attribute('innerText')  
+            BAT_raw_SOLD_output.write(card_details+ '\n')
             
 
     except NoSuchElementException as e:
@@ -643,7 +652,7 @@ if __name__ == '__main__':
 
     car  = {
     'year':2017,
-    'make':'Porsche 911',
+    'make':'Porsche',
     'model':'3 Series'
     }
 
