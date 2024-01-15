@@ -451,7 +451,7 @@ def bat_scrape_all(car,driver):
         driver.get('https://bringatrailer.com')
         search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
         time.sleep(2)
-        search_bar.send_keys('Porsche 911' + Keys.RETURN)
+        search_bar.send_keys('Porsche Turbo' + Keys.RETURN)
         
         auction_results_section = driver.find_element(By.CSS_SELECTOR,'.auctions-completed')
 
