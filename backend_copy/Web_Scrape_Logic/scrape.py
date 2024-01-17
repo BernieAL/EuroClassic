@@ -355,7 +355,7 @@ def CL(car,driver):
 
 # :::::: BEGIN BAT SECTION
 # ON BAT, only getting sold listings 
-def bat_scrape(car,driver):
+def bat_scrape_single_veh(car,driver):
         
     try:
             # this is to get passed "show notifications prompt"
@@ -488,12 +488,17 @@ def bat_scrape_all_for_make(car,driver):
                     remove these from card_details in processing later on
             """
 
-            
+            #card innerText has the listing title, sale price, sale date
             card_details = card.get_attribute('innerText') 
             #concat all retrieved text elements into single string 
             card_details = card_details.replace('\n', ' ')
+
+            """
+                Also get href for each listing, this will be for processing later to get more vehicle details
+            """
+            card_link = f"link: {card.get_attribute('href')}"
             # print(card_details + '\n')
-            BAT_raw_SOLD_output.write(card_details + '\n')
+            BAT_raw_SOLD_output.write(card_details + '\n' + card_link + '\n')
             
 
     except NoSuchElementException as e:
@@ -509,85 +514,6 @@ def bat_scrape_all_for_make(car,driver):
         print("Element not clickable within the specified time.")
   
 
-def interceptor(request):
-    
-    headers = {
-        "authority":"bringatrailer.com",
-        "method":"POST",
-        "accept": "application/json, text/javascript, */*; q=0.01",
-        "accept-language": "en-US,en;q=0.9,lb;q=0.8",
-        "cache-control": "no-cache",
-        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-        "pragma": "no-cache",
-        "sec-ch-ua": "\"Not_A Brand\";v=\"8\", \"Chromium\";v=\"120\", \"Google Chrome\";v=\"120\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"Windows\"",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-origin",
-        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "x-requested-with": "XMLHttpRequest",
-        "x-wp-nonce": "acdf31d30f",
-        "cookie": "__stripe_mid=ee6c30b5-bb05-492a-8463-868c8e7f36c89d4093; bat_tracking_data_alt={\"conversion\":0,\"datetime\":1690470024,\"redirect\":\"https://bringatrailer.com/bmw/e90-e92-m3/\",\"referrer\":\"https://www.google.com/\"}; usprivacy=1YYN; __stripe_sid=1746bcf6-6388-4fbf-8d33-04676a8e9201e68f94; OptanonConsent=isGpcEnabled=0&datestamp=Sun+Jan+14+2024+00%3A30%3A05+GMT-0500+(Eastern+Standard+Time)&version=202310.2.0&isIABGlobal=false&hosts=&landingPath=NotLandingPage&groups=C0001%3A1%2CC0013%3A1&AwaitingReconsent=false&browserGpcFlag=0&consentId=8e872a31-20de-4502-b706-ec80ab4964eb&interactionCount=0",
-        "Referer": "https://bringatrailer.com/bmw/?q=bmw",
-        "Referrer-Policy": "strict-origin-when-cross-origin"
-    }
-
-    request.headers = headers
-    
-
-def bat_scrape_2(car):
-
-    
-   
-    # options = {
-    #     "user-agent":{f"{headers['sec-ch-ua']}"}
-    # }
-    
-
-    
-    driver2 = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
-    driver2.request_interceptor = interceptor
-
-    url = "https://bringatrailer.com/wp-json/bringatrailer/1.0/data/listings-filter"
-    
-    driver2.get(url)
-   
-
-
-
-    # driver2.get("https://bringatrailer.com/bmw/?q=bmw")
-    # driver2.get("https://bringatrailer.com/wp-json/bringatrailer/1.0/data/listings-filter"
-    # )
-    
-    # driver2.get(url)
-    # driver2.execute_script(
-    #     f"""
-    #     var xhr = new XMLHttpRequest();
-    #     xhr.open("POST", "{url}", true);
-    #     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
-    #     xhr.setRequestHeader("accept", "{headers['accept']}");
-    #     xhr.setRequestHeader("accept-language", "{headers['accept-language']}");
-    #     xhr.setRequestHeader("cache-control", "{headers['cache-control']}");
-    #     xhr.setRequestHeader("content-type", "{headers['content-type']}");
-    #     xhr.setRequestHeader("pragma", "{headers['pragma']}");
-    #     xhr.setRequestHeader("sec-ch-ua", "{headers['sec-ch-ua']}");
-    #     xhr.setRequestHeader("sec-ch-ua-mobile", "{headers['sec-ch-ua-mobile']}");
-    #     xhr.setRequestHeader("sec-ch-ua-platform", "{headers['sec-ch-ua-platform']}");
-    #     xhr.setRequestHeader("sec-fetch-dest", "{headers['sec-fetch-dest']}");
-    #     xhr.setRequestHeader("sec-fetch-mode", "{headers['sec-fetch-mode']}");
-    #     xhr.setRequestHeader("sec-fetch-site", "{headers['sec-fetch-site']}");
-    #     xhr.setRequestHeader("x-requested-with", "{headers['x-requested-with']}");
-    #     xhr.setRequestHeader("x-wp-nonce", "{headers['x-wp-nonce']}");
-    #     xhr.setRequestHeader("Referer", "{headers['Referer']}");
-    #     xhr.setRequestHeader("Referrer-Policy", "{headers['Referrer-Policy']}");
-    #     xhr.send("{body}");
-    #     """
-    # )
-
-    # You can now parse the response or perform any other actions you need
-    response = driver2.page_source
-    print(response)
 
 
 
@@ -651,7 +577,7 @@ def run_scrape(car):
             bat_scrape_all_for_make(car,driver)
             # CL(car,driver),
         )
-    
+        time.sleep(10)
         # driver.close
         
         raw_current_listing_output.close()
@@ -667,7 +593,7 @@ if __name__ == '__main__':
 
     car  = {
     'year':2017,
-    'make':'Porsche',
+    'make':'Ferrari',
     'model':'3 Series'
     }
 
