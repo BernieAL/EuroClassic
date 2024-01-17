@@ -445,7 +445,7 @@ def bat_scrape(car,driver):
         error_log(error_obj)
         return error_obj
   
-def bat_scrape_all(car,driver):
+def bat_scrape_all_for_make(car,driver):
 
     try:
         driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
@@ -461,24 +461,39 @@ def bat_scrape_all(car,driver):
 
         show_more_listing_button = auction_results_section.find_element(By.CSS_SELECTOR,'button.button-show-more')
         time.sleep(random.uniform(1,5))
-        show_more_listing_button.click()
-
-        #get number of results and divide by 24 to get number of clicks we need to do - because each click loads 24 more results
         
         
-        for i in range(10):
-            show_more_listing_button.click()
-            time.sleep(random.uniform(3,9))
-
+        """
+            -how many times to click show more button?
+            -get number of Auction Results on page and divide by 24 to get number of clicks we need to do - because each click loads 24 more results
+            -also as backup, check for existence of show more button, if not visible, stop the loop
+        """
+        for i in range(5):
+            if show_more_listing_button.is_displayed():
+                show_more_listing_button.click()
+                time.sleep(random.uniform(3,9))
+            else:
+                break;
+            
         #locate all listings card in completed auction section
         listing_cards = auction_results_section.find_elements(By.CSS_SELECTOR,'.auctions-completed  a.listing-card')
         
 
-        #temp output storage before writing to file
-        
+
         for card in listing_cards:
-            card_details = card.get_attribute('innerText')  
-            BAT_raw_SOLD_output.write(card_details+ '\n')
+
+            """ Standardizing listing card text
+                BAT listing cards can have 3 labels:
+                    "No Reserve", "Alumni","Premium"
+                    remove these from card_details in processing later on
+            """
+
+            
+            card_details = card.get_attribute('innerText') 
+            #concat all retrieved text elements into single string 
+            card_details = card_details.replace('\n', ' ')
+            # print(card_details + '\n')
+            BAT_raw_SOLD_output.write(card_details + '\n')
             
 
     except NoSuchElementException as e:
@@ -580,7 +595,7 @@ def bat_scrape_2(car):
 #function for writing raw scraped data to respective files
 def fileWrite(data,fileIn):
     for line in data:
-        temp = f"{line} \n"
+        temp = f"{line}"
         fileIn.write(temp)
 
 
@@ -633,7 +648,7 @@ def run_scrape(car):
             # ebay_sold(car,driver),
             # bat_scrape(car,driver),
             # bat_scrape_2(car),
-            bat_scrape_all(car,driver)
+            bat_scrape_all_for_make(car,driver)
             # CL(car,driver),
         )
     
