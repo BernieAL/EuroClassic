@@ -74,7 +74,6 @@ raw_current_listing_output = open(raw_CURRENT_LISTING_output_file_path,"a",encod
 raw_sold_output = open(raw_SOLD_output_file_path,"a",encoding="utf-8")
 error_log_output = open(error_log_file,"a",encoding="utf-8")
 EBAY_raw_SOLD_output = open(EBAY_raw_SOLD_output_file_path ,"a",encoding="utf-8")
-
 BAT_raw_SOLD_output = open(BAT_raw_SOLD_output_file_path ,"a",encoding="utf-8")
 
 
@@ -448,32 +447,33 @@ def bat_scrape_single_veh(car,driver):
 def bat_scrape_all_for_make(car,driver):
 
     try:
-        driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
-        time.sleep(random.uniform(1,3))
-
-        # #or by search bar 
-        # driver.get('https://bringatrailer.com')
-        # search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
+        # driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
         # time.sleep(random.uniform(1,3))
-        # search_bar.send_keys('Porsche Turbo' + Keys.RETURN)
+
+        #or by search bar 
+        driver.get('https://bringatrailer.com')
+        search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
+        time.sleep(random.uniform(1,5))
+        search_bar.send_keys('Porsche 911' + Keys.RETURN)
         
         auction_results_section = driver.find_element(By.CSS_SELECTOR,'.auctions-completed')
 
         show_more_listing_button = auction_results_section.find_element(By.CSS_SELECTOR,'button.button-show-more')
         time.sleep(random.uniform(1,5))
-        
+        show_more_listing_button.click()
+        time.sleep(10)
         
         """
             -how many times to click show more button?
             -get number of Auction Results on page and divide by 24 to get number of clicks we need to do - because each click loads 24 more results
             -also as backup, check for existence of show more button, if not visible, stop the loop
         """
-        for i in range(5):
-            if show_more_listing_button.is_displayed():
-                show_more_listing_button.click()
-                time.sleep(random.uniform(3,9))
-            else:
-                break;
+        # for i in range(5):
+        #     if show_more_listing_button.is_displayed():
+        #         show_more_listing_button.click()
+        #         time.sleep(random.uniform(3,9))
+        #     else:
+        #         break;
             
         #locate all listings card in completed auction section
         listing_cards = auction_results_section.find_elements(By.CSS_SELECTOR,'.auctions-completed  a.listing-card')
@@ -490,15 +490,56 @@ def bat_scrape_all_for_make(car,driver):
 
             #card innerText has the listing title, sale price, sale date
             card_details = card.get_attribute('innerText') 
-            #concat all retrieved text elements into single string 
-            card_details = card_details.replace('\n', ' ')
+            # print(card_details)
+            
+            title_element = card.find_element(By.CSS_SELECTOR, '.content-main h3').text
 
-            """
-                Also get href for each listing, this will be for processing later to get more vehicle details
-            """
-            card_link = f"link: {card.get_attribute('href')}"
-            # print(card_details + '\n')
-            BAT_raw_SOLD_output.write(card_details + '\n' + card_link + '\n')
+            title_element_innerText = card.find_element(By.CSS_SELECTOR, '.content-main h3').get_attribute('innerText') 
+
+            item_results = card.find_element(By.CSS_SELECTOR,'item-results').text
+            
+            item_results_innerText = card.find_element(By.CSS_SELECTOR,'item-results').get_attribute('innerText') 
+
+            price,date = item_results.split(' on ')
+
+            #remove "Sold for" or "Bid To"
+            price = price.replace('Sold for','').replace('Bid To').strip()
+            
+
+            print( title_element)
+            print( title_element_innerText)
+            # print('item_results ' + item_results)
+            # print('item_results_innerText ' + item_results_innerText)
+            # print("Price:", price)
+            # print("Date:", date)
+            
+
+            # <div class="item-results" data-bind="html: soldText, visible: soldText">Bid to $25,000 <span> on 1/11/24 </span></div>
+
+            # <div class="item-tag item-tag-premium" data-bind="visible: premium" style="display: none;">
+            #         <abbr>P</abbr>
+            #         <span>Premium</span>
+            #     </div>
+            
+            # <div class="item-tag item-tag-noreserve" data-bind="visible: noreserve">
+            #         <abbr>NR</abbr>
+            #         <span>No Reserve</span>
+            #     </div>
+            
+            # <div class="item-tag item-tag-repeat" data-bind="visible: repeat">
+            #         <abbr>A</abbr>
+            #         <span>Alumni</span>
+            #     </div>
+
+            # #concat all retrieved text elements into single string 
+            # card_details = card_details.replace('\n', ' ')
+
+            # """
+            #     Also get href for each listing, this will be for processing later to get more vehicle details
+            # """
+            # card_link = f"link: {card.get_attribute('href')}"
+            # # print(card_details + '\n')
+            # BAT_raw_SOLD_output.write(card_details + '\n' + card_link + '\n')
             
 
     except NoSuchElementException as e:
@@ -593,7 +634,7 @@ if __name__ == '__main__':
 
     car  = {
     'year':2017,
-    'make':'Ferrari',
+    'make':'Porsche 911',
     'model':'3 Series'
     }
 
