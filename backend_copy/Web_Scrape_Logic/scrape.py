@@ -20,7 +20,11 @@ UnicodeEncodeError: 'charmap' codec can't encode characters
 https://stackoverflow.com/questions/27092833/unicodeencodeerror-charmap-codec-cant-encode-characters
 
 
+Undetected Chromedriver Error of time.sleep(0.1)
+    https://github.com/ultrafunkamsterdam/undetected-chromedriver/issues/955#issuecomment-1659499803
 
+    OR (simpler fix)
+    https://github.com/ultrafunkamsterdam/undetected-chromedriver/issues/955#issuecomment-1756043501
 
 """
 
@@ -38,6 +42,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.proxy import Proxy, ProxyType
 from seleniumwire import webdriver
 from selenium.webdriver.support import expected_conditions as EC
+import undetected_chromedriver as uc
+
 
 import os
 from datetime import date,datetime
@@ -47,6 +53,19 @@ import random
 
 
 
+# def suppress_exception_in_del(uc):
+#     old_del = uc.Chrome.__del__
+
+#     def new_del(self) -> None:
+#         try:
+#             old_del(self)
+#         except:
+#             pass
+    
+#     setattr(uc.Chrome, '__del__', new_del)
+
+# suppress_exception_in_del(uc)
+
 
 # make = "audi"
 # chassis =""
@@ -55,19 +74,26 @@ import random
 # # 98-03 for m5
 
 #dir of raw extracted data
-extracted_data_dir_path = os.path.join(os.path.dirname(__file__), '..', 'Extracted_data')
-
-raw_SOLD_output_file_path = os.path.join(extracted_data_dir_path, '..','raw_SOLD_DATA.txt')
-
-raw_CURRENT_LISTING_output_file_path = os.path.join(extracted_data_dir_path, '..','raw_CURRENT_LISTINGS_DATA.txt')
-
-EBAY_raw_SOLD_output_file_path = os.path.join(extracted_data_dir_path, '..','EBAY_raw_SOLD_DATA.txt')
-
-BAT_raw_SOLD_output_file_path = os.path.join(extracted_data_dir_path, '..','BAT_raw_SOLD_DATA.txt')
 
 
 
-error_log_file = os.path.join(extracted_data_dir_path, '..','error_log.txt')
+
+
+SCRAPED_DATA_OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
+
+BAT_raw_SOLD_html_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'BAT_raw_SOLD_HTML.html')
+print(os.path.isfile(BAT_raw_SOLD_html_file_path))
+
+raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'raw_SOLD_DATA.txt')
+
+
+raw_CURRENT_LISTING_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR, 'raw_CURRENT_LISTINGS_DATA.txt')
+
+EBAY_raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'EBAY_raw_SOLD_DATA.txt')
+
+BAT_raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'BAT_raw_SOLD_DATA.txt')
+
+error_log_file = os.path.join(SCRAPED_DATA_OUTPUT_DIR, '..','error_log.txt')
 
 #files for current listing data and sold data
 raw_current_listing_output = open(raw_CURRENT_LISTING_output_file_path,"a",encoding="utf-8")
@@ -75,6 +101,9 @@ raw_sold_output = open(raw_SOLD_output_file_path,"a",encoding="utf-8")
 error_log_output = open(error_log_file,"a",encoding="utf-8")
 EBAY_raw_SOLD_output = open(EBAY_raw_SOLD_output_file_path ,"a",encoding="utf-8")
 BAT_raw_SOLD_output = open(BAT_raw_SOLD_output_file_path ,"a",encoding="utf-8")
+
+BAT_raw_SOLD_html_output = open(BAT_raw_SOLD_html_file_path,"a",encoding="utf-8")
+
 
 
 #CLEAR EXISTING FILE CONTENTS BEFORE EACH NEW SCRAPE FOR VEHICLE
@@ -447,14 +476,14 @@ def bat_scrape_single_veh(car,driver):
 def bat_scrape_all_for_make(car,driver):
 
     try:
-        # driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
-        # time.sleep(random.uniform(1,3))
+        driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
+        time.sleep(random.uniform(1,3))
 
-        #or by search bar 
-        driver.get('https://bringatrailer.com')
-        search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
-        time.sleep(random.uniform(1,5))
-        search_bar.send_keys('Porsche 911' + Keys.RETURN)
+        # #or by search bar 
+        # driver.get('https://bringatrailer.com')
+        # search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
+        # time.sleep(random.uniform(1,5))
+        # search_bar.send_keys('Porsche 911' + Keys.RETURN)
         
         auction_results_section = driver.find_element(By.CSS_SELECTOR,'.auctions-completed')
 
@@ -475,72 +504,63 @@ def bat_scrape_all_for_make(car,driver):
         #     else:
         #         break;
             
-        #locate all listings card in completed auction section
-        listing_cards = auction_results_section.find_elements(By.CSS_SELECTOR,'.auctions-completed  a.listing-card')
+        # #locate all listings card in completed auction section
+        # listing_cards = auction_results_section.find_elements(By.CSS_SELECTOR,'.auctions-completed  a.listing-card')
         
 
+        # #this is for extracting text from each listing_card element
+        # for card in listing_cards[1:4]:
 
-        for card in listing_cards:
+        #     """ Standardizing listing card text
+        #         BAT listing cards can have 3 labels:
+        #             "No Reserve", "Alumni","Premium"
+        #             remove these from card_details in processing later on
+        #     """
 
-            """ Standardizing listing card text
-                BAT listing cards can have 3 labels:
-                    "No Reserve", "Alumni","Premium"
-                    remove these from card_details in processing later on
-            """
+        #     #card innerText has the listing title, listing label, sale price, sale date
+        #     card_details = card.get_attribute('innerText').upper()
+        #     print(card_details)
 
-            #card innerText has the listing title, sale price, sale date
-            card_details = card.get_attribute('innerText') 
-            # print(card_details)
+        #     #put all text in one line by removing newline characters
+        #     card_details = card_details.replace('\n','')   
+        #     print(card_details)
             
-            title_element = card.find_element(By.CSS_SELECTOR, '.content-main h3').text
+        #     #remove listing labels "Premium", "Alumni", "No Reserve"
+        #     card_details = card_details.replace('PREMIUM','').replace('ALUMNI','').replace('NO RESERVE','')
+         
+        #     print(card_details)
 
-            title_element_innerText = card.find_element(By.CSS_SELECTOR, '.content-main h3').get_attribute('innerText') 
-
-            item_results = card.find_element(By.CSS_SELECTOR,'item-results').text
-            
-            item_results_innerText = card.find_element(By.CSS_SELECTOR,'item-results').get_attribute('innerText') 
-
-            price,date = item_results.split(' on ')
-
-            #remove "Sold for" or "Bid To"
-            price = price.replace('Sold for','').replace('Bid To').strip()
             
 
-            print( title_element)
-            print( title_element_innerText)
-            # print('item_results ' + item_results)
-            # print('item_results_innerText ' + item_results_innerText)
-            # print("Price:", price)
-            # print("Date:", date)
+        #     # price,date = item_results.split(' on ')
+
+        #     # #remove "Sold for" or "Bid To"
+        #     # price = price.replace('Sold for','').replace('Bid To').strip()
             
 
-            # <div class="item-results" data-bind="html: soldText, visible: soldText">Bid to $25,000 <span> on 1/11/24 </span></div>
-
-            # <div class="item-tag item-tag-premium" data-bind="visible: premium" style="display: none;">
-            #         <abbr>P</abbr>
-            #         <span>Premium</span>
-            #     </div>
             
-            # <div class="item-tag item-tag-noreserve" data-bind="visible: noreserve">
-            #         <abbr>NR</abbr>
-            #         <span>No Reserve</span>
-            #     </div>
+        #     # print( title_element_innerText)
             
-            # <div class="item-tag item-tag-repeat" data-bind="visible: repeat">
-            #         <abbr>A</abbr>
-            #         <span>Alumni</span>
-            #     </div>
-
-            # #concat all retrieved text elements into single string 
-            # card_details = card_details.replace('\n', ' ')
-
-            # """
-            #     Also get href for each listing, this will be for processing later to get more vehicle details
-            # """
-            # card_link = f"link: {card.get_attribute('href')}"
-            # # print(card_details + '\n')
-            # BAT_raw_SOLD_output.write(card_details + '\n' + card_link + '\n')
             
+
+          
+        #     #     Also get href for each listing, this will be for processing later to get more vehicle details
+        #     # """
+        #     # card_link = f"link: {card.get_attribute('href')}"
+        #     # # print(card_details + '\n')
+        #     # BAT_raw_SOLD_output.write(card_details + '\n' + card_link + '\n')
+            
+        """
+        Alternate route is to use selenium to load the page
+        then use beautiful soup to capture the html
+        then parse the html after i get all the html content
+        
+        """
+
+        html_content = driver.page_source
+        BAT_raw_SOLD_html_output.write(html_content)
+        print("HTML content successfully saved to file.")
+
 
     except NoSuchElementException as e:
         error_obj = {
@@ -553,6 +573,8 @@ def bat_scrape_all_for_make(car,driver):
     except TimeoutException as e:
         # Handle the case where the element is not clickable within the specified time
         print("Element not clickable within the specified time.")
+    except Exception as e:
+        print(f"Error: {e}")
   
 
 
@@ -582,6 +604,8 @@ def run_scrape(car):
         raw_current_listing_output.truncate(0)
         raw_sold_output.truncate(0)
 
+        #custom user agent for testing
+        my_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36"
 
         seleniumwire_options = {
             'proxy': {
@@ -590,25 +614,37 @@ def run_scrape(car):
             },
             'detach':True
         }
-        chrome_options = Options()
+
+        uc_chrome_options =uc.ChromeOptions()
+        # chrome_options = Options()
+        uc_chrome_options.add_argument(f"user-agent={my_user_agent}")
+
         #stop browser from closing - requires manual closing
-        chrome_options.add_experimental_option("detach", True)
+        # uc_chrome_options.add_experimental_option("detach", True)
+        
         #stop images from loading - improve page speed and reduce proxy data usage
-        chrome_options.add_argument('--blink-settings=imagesEnabled=false')
-    
-        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=chrome_options)
-       
+        # chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+
+        uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+
+
+        #working with undetected chromedriver
+        driver = uc.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
+
+        # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=chrome_options)
+
+
 
         #driver with no proxy
         # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
 
 
-        # #for testing
+        # for testing
         # driver.get("https://bot.sannysoft.com/")
         # print(driver.current_url)
+        # print(driver.page_source)
+        # time.sleep(5)
         
-       
-
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
             # ebay_current(car,driver),
@@ -618,8 +654,9 @@ def run_scrape(car):
             bat_scrape_all_for_make(car,driver)
             # CL(car,driver),
         )
-        time.sleep(10)
-        # driver.close
+        
+        driver.close()
+        time.sleep(1)
         
         raw_current_listing_output.close()
         raw_sold_output.close()
@@ -634,7 +671,7 @@ if __name__ == '__main__':
 
     car  = {
     'year':2017,
-    'make':'Porsche 911',
+    'make':'Mclaren',
     'model':'3 Series'
     }
 
@@ -645,8 +682,7 @@ if __name__ == '__main__':
 
 """RETURNED RAW DATA EXAMPLES::
 
-
-EVAY RAW RESULT:
+EBAY RAW RESULT:
     '$91,000.00  ', '$40,100.00 NEW LISTING1966 Jaguar E-Type ', '$60,099.00 1969 Jaguar E-Type Roadster ', '$35,100.00 1969 Jaguar E-Type ', '$89,500.00 1969 Jaguar E-Type Convertible ', '$79,900.00 1968 Jaguar E-Type ', '$45,100.00 1970 Jaguar E-Type Convertible ', '$102,000.00 1963 Jaguar E-Type ', '$187,500.00 1964 Jaguar E-Type ', '$84,987.00 1974 Jaguar E-Type ', '$109,500.00 1963 Jaguar E-Type ', '$158,995.00 1966 Jaguar E-Type Series 1 4.2 Liter Fixed-head coupe ', '$89,900.00 1971 Jaguar E-Type Fixed Head Coupe ', '$56,995.00 1969 Jaguar E-Type XK-E 2+2 Series 2 ', '$74,625.00 1968 Jaguar E-Type XKE Series II 4.2L 6 cyl 4 spd Convertible ', '$99,500.00 1973 Jaguar 
 E-Type Roadster v12 ', '$69,750.00 1970 Jaguar E-Type 1970 JAGUAR XKE 2+2 E-TYPE ',
 
@@ -675,5 +711,29 @@ BAT RAW RESULT:
     Modified 1998 BMW M3 Coupe 5-Speed Sold for $34,000 on 7/29/21
     2004 BMW M3 Convertible Sold for $20,000 on 7/28/21
 
+
+"""
+
+""" SELECTOR REFERENCE
+
+            # <div class="item-results" data-bind="html: soldText, visible: soldText">Bid to $25,000 <span> on 1/11/24 </span></div>
+
+            # <div class="item-tag item-tag-premium" data-bind="visible: premium" style="display: none;">
+            #         <abbr>P</abbr>
+            #         <span>Premium</span>
+            #     </div>
+            
+            # <div class="item-tag item-tag-noreserve" data-bind="visible: noreserve">
+            #         <abbr>NR</abbr>
+            #         <span>No Reserve</span>
+            #     </div>
+            
+            # <div class="item-tag item-tag-repeat" data-bind="visible: repeat">
+            #         <abbr>A</abbr>
+            #         <span>Alumni</span>
+            #     </div>
+
+            # #concat all retrieved text elements into single string 
+            # card_details = card_details.replace('\n', ' ')
 
 """

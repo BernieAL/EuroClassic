@@ -9,4 +9,10 @@
  -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
  -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
  -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
+ -----------{'error': NoSuchElementException(), 'function': 'bat_scrape_all'} 
  -----------
