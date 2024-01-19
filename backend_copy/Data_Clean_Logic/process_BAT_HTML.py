@@ -16,7 +16,7 @@ NHS_all_veh_makes_data = json.load(NHS_all_veh_makes_file)
 
 #CSV OUTPUT FILE
 BAT_cleaned_SOLD_Data_file_path = os.path.join(os.path.dirname(__file__),'..','Cleaned_data_output/BAT_cleaned_SOLD_data.csv')
-NHS_all_veh_makes_file = open(NHS_all_veh_makes_data_file_path,"a",encoding="utf-8")
+BAT_cleaned_SOLD_Data = open(BAT_cleaned_SOLD_Data_file_path,"w",encoding="utf-8")
 
 
 
@@ -83,13 +83,19 @@ def extract_sale_price_and_date(content_main):
 
     #remove $ and , from sale_price, then convert to float
     sale_price = float(sale_price.replace('$','').replace(',',''))
+    
 
-    return sale_price,sale_date
+
+
+    return sale_price,sale_date,listing_type
 
 
 def driver():
+    
+    csv_headers = 'YEAR,MAKE,MODEL,SALE_PRICE,SALE_DATE,LISTING_TYPE'
+    BAT_cleaned_SOLD_Data.write(csv_headers + '\n')
     soup = BeautifulSoup(BAT_raw_SOLD_HTML,'html.parser')
-
+    
     #find all listing_card in auctions-completed-container element
     auction_results_section = soup.find("div","auctions-completed-container")
     listing_card_tags = auction_results_section.find_all("a","listing-card")
@@ -97,14 +103,15 @@ def driver():
     #for each listing_card, extract year,make,model,sale_price,sale_date and write to output file
     for listing in listing_card_tags:
         #find content main from each listing_card
-        content_main = listing_card_tags.find("div","content-main")
+        content_main = listing.find("div","content-main")
         year,make,model =  extract_year_make_model(content_main)
-        sale_price,sale_date = extract_sale_price_and_date(content_main)
+        sale_price,sale_date,listing_type = extract_sale_price_and_date(content_main)
 
-        #file.write(f"{year},{make},{model},{sale_price},{sale_date}")
+        BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
 
 
-    csv_headers = ['YEAR','MAKE','MODEL','SALE_PRICE','SALE_DATE']
+if __name__ == '__main__':
+    driver()
     
 
-#convert sale date to date object before writing in csv - date object makes working with dates easier
+
