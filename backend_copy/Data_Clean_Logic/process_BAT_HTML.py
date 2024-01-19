@@ -21,39 +21,64 @@ soup = BeautifulSoup(BAT_raw_SOLD_HTML,'html.parser')
 listing_card_tag = soup.find("a","listing-card")
 
 content_main = listing_card_tag.find("div","content-main")
-listing_card_title_text = content_main.select_one("h3[data-bind='html: title']").getText()
-
-item_results_text = listing_card_tag.find("div","item-results").getText()
-# print(item_results_text)
+# listing_card_title_text = content_main.select_one("h3[data-bind='html: title']").getText()
 
 
-"""CLEANING LISTING_CARD TITLE
-   -From title text find vehicle year using regex
-   -wherever the year starts up, add 4 to this index, this is the indexes of year in the string
-   -After year, the remainder of string will be the vehicle make and model
-   -To extract the make, we will need to run the 
+# """CLEANING LISTING_CARD TITLE
+#    -From title text find vehicle year using regex
+#    -wherever the year starts up, add 4 to this index, this is the indexes of year in the string
+#    -After year, the remainder of string will be the vehicle make and model
+#    -To extract the make, we will need to run the 
+# """
+
+# veh_year_match = re.search(r'\b\d{4}\b', listing_card_title_text)
+# veh_year = veh_year_match.group()
+# last_digit_of_year_index = listing_card_title_text.find(veh_year[-1])
+
+# # +2 handles last skipping over last digit and space before getting to vehicle make
+# #using position of last_digit in veh_year, get rest of string - this will be make and model
+# listing_title_year_removed = listing_card_title_text[last_digit_of_year_index+2:]
+# # print(listing_title_year_removed)
+
+# #tokenize
+# listing_title_tokens = listing_title_year_removed.split(' ')
+# # print(listing_title_tokens)
+
+# #take first token, which should be the make, search for this token in list of manufacturers
+# #if we find a match, this token is the manufacturer and the remaining of the string is the model
+# target_make = listing_title_tokens[0].upper()
+# for result in NHS_all_veh_makes_data.get("Results",[]):
+#     if result.get("Make_Name") == target_make:
+#         print(True)
+
+# #once we confirm the first token is the make,
+# #combine rest of tokens from listing_title_tokens and combine into a single string - this is the model
+# # we will now have parsed out year,make,model successfully
+# veh_model = ' '.join(listing_title_tokens[1:])
+
+
+
+""" SECTION FOR SALE PRICE AND SALE DATE from item-results element
+    -Contents of this section looks will either be:
+        - Bid to $277,277  on 1/16/24
+        OR
+        - Sold for $234,234 on  1/16/24
+    - Need to parse out price and sale date
 """
 
-veh_year_match = re.search(r'\b\d{4}\b', listing_card_title_text)
-veh_year = veh_year_match.group()
-last_digit_of_year_index = listing_card_title_text.find(veh_year[-1])
+item_result_text =  content_main.find("div","item-results").getText()
+sale_price,sale_date = item_result_text.split('  on ')
 
-# +2 handles last skipping over last digit and space before getting to vehicle make
-#using position of last_digit in veh_year, get rest of string - this will be make and model
-listing_title_year_removed = listing_card_title_text[last_digit_of_year_index+2:]
-# print(listing_title_year_removed)
+#regex delimiters to check for 'for' and 'to' - because the string can have either one
+delimiters = r'\bto\b|\bfor\b'
 
-#tokenize
-listing_title_tokens = listing_title_year_removed.split(' ')
-# print(listing_title_tokens)
+#splitting using regex delimiters  
+listing_type,sale_price = (re.split(delimiters,sale_price))
 
-#take first token, which should be the make, search for this token in list of manufacturers
-#if we find a match, this token is the manufacturer and the remaining of the string is the model
-target_make = listing_title_tokens[0].upper()
-for result in NHS_all_veh_makes_data.get("Results",[]):
-    if result.get("Make_Name") == target_make:
-        print(True)
+#remove $ and , from sale_price, then convert to float
+sale_price = float(sale_price.replace('$','').replace(',',''))
+print(sale_price)
 
-#once we confirm the first token is the make,
-#split the string from this end of the make, the remaining is the model
-# we will now have parsed out year,make,model successfully
+
+
+#convert sale date to date object before writing in csv - date object makes working with dates easier
