@@ -32,25 +32,44 @@ def extract_year_make_model(content_main):
        -Function is to be called on each listing_card element found
        -Recieves content_main from listing_card element
     """
+    #target h3 element to get title text
     listing_card_title_text = content_main.select_one("h3[data-bind='html: title']").getText()
+    
     #remove any extra white spaces that cause text to span 2 lines
     listing_card_title_text = re.sub(r'\s{2,}', ' ', listing_card_title_text).strip()
-    print(listing_card_title_text)
+    # print(listing_card_title_text)
+
+    #find year by matching 4 digits in a row
     veh_year_match = re.search(r'\b\d{4}\b', listing_card_title_text)
     
     #if theres no year in the listing, we just use 0000 in place of 4 digit year to not break script
     veh_year = veh_year_match.group() if veh_year_match else '0000' 
-    if not veh_year_match:
-        missing_year_listings.append(listing_card_title_text)
+    print(veh_year)
+    # print(veh_year)
+    # if not veh_year_match:
+    #     missing_year_listings.append(listing_card_title_text)
 
     
-    
-    last_digit_of_year_index = listing_card_title_text.find(veh_year[-1])
+    """
+    instead of finding index of last digit in the year - we use end() method on re.match obj (veh_year_match) to get ending index of the matched string
+    if no match - meaning veh_year_match is none, we default to 0
+    """
+    last_digit_of_year_index = veh_year_match.end() if veh_year_match else 0
 
-    # +2 handles last skipping over last digit and space before getting to vehicle make
-    #using position of last_digit in veh_year, get rest of string - this will be make and model
-    listing_title_year_removed = listing_card_title_text[last_digit_of_year_index+2:]
-    # print(listing_title_year_removed)
+    
+    """Removing year from the title
+        -use re.sub() to replace matched year string with an empty string
+        -'\b' in regex means word boundaries - ensuring repleacement occurs only for whole words
+        -re.escape(veh_year) is used to escape any special chars in the year string
+        -re.IGNORECASE flag makes the replacement case-sensitive
+
+        -rf'\b{re.escape(veh_year)}\b': This is an f-string that dynamically inserts the escaped year string into the regular expression pattern. The \b ensures that the replacement is only done for whole words.
+        -'': This is the replacement string, which is an empty string, effectively removing the matched year.
+        -listing_card_title_text: This is the original title text.
+        -flags=re.IGNORECASE: This flag makes the replacement case-insensitive.
+    """
+    listing_title_year_removed = re.sub(rf'\b{re.escape(veh_year)}\b', '', listing_card_title_text, flags=re.IGNORECASE).strip()
+    print(listing_title_year_removed)
 
     #tokenize
     listing_title_tokens = listing_title_year_removed.split(' ')
@@ -119,11 +138,13 @@ def driver():
         content_main = listing.find("div","content-main")
         year,make,model =  extract_year_make_model(content_main)
         
-        # sale_price,sale_date,listing_type = extract_sale_price_and_date(content_main)
+        sale_price,sale_date,listing_type = extract_sale_price_and_date(content_main)
+
+        # print(f"{year},{make},{model}")
 
         # BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
 
-# print(missing_year_listings)
+print(missing_year_listings)
 if __name__ == '__main__':
     driver()
     
