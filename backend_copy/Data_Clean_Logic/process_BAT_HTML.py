@@ -20,7 +20,7 @@ BAT_cleaned_SOLD_Data = open(BAT_cleaned_SOLD_Data_file_path,"w",encoding="utf-8
 
 
 
-
+missing_year_listings = []
 def extract_year_make_model(content_main):
     """CLEANING LISTING_CARD TITLE
        -From title text find vehicle year using regex
@@ -33,8 +33,18 @@ def extract_year_make_model(content_main):
        -Recieves content_main from listing_card element
     """
     listing_card_title_text = content_main.select_one("h3[data-bind='html: title']").getText()
+    #remove any extra white spaces that cause text to span 2 lines
+    listing_card_title_text = re.sub(r'\s{2,}', ' ', listing_card_title_text).strip()
+    print(listing_card_title_text)
     veh_year_match = re.search(r'\b\d{4}\b', listing_card_title_text)
-    veh_year = veh_year_match.group()
+    
+    #if theres no year in the listing, we just use 0000 in place of 4 digit year to not break script
+    veh_year = veh_year_match.group() if veh_year_match else '0000' 
+    if not veh_year_match:
+        missing_year_listings.append(listing_card_title_text)
+
+    
+    
     last_digit_of_year_index = listing_card_title_text.find(veh_year[-1])
 
     # +2 handles last skipping over last digit and space before getting to vehicle make
@@ -45,19 +55,22 @@ def extract_year_make_model(content_main):
     #tokenize
     listing_title_tokens = listing_title_year_removed.split(' ')
     # print(listing_title_tokens)
+    
 
     #take first token, which should be the make, search for this token in list of manufacturers
     #if we find a match, this token is the manufacturer and the remaining of the string is the model
     veh_make = listing_title_tokens[0].upper()
     for result in NHS_all_veh_makes_data.get('Results',[]):
         if result.get('Make_Name') == veh_make:
-            print(True)
+            pass
 
     #once we confirm the first token is the make,
     #combine rest of tokens from listing_title_tokens and combine into a single string - this is the model
     # we will now have parsed out year,make,model successfully
     veh_model = ' '.join(listing_title_tokens[1:])
     return veh_year,veh_make,veh_model
+
+    
 
 def extract_sale_price_and_date(content_main):
     """ SECTION FOR SALE PRICE AND SALE DATE from item-results element
@@ -105,11 +118,12 @@ def driver():
         #find content main from each listing_card
         content_main = listing.find("div","content-main")
         year,make,model =  extract_year_make_model(content_main)
-        sale_price,sale_date,listing_type = extract_sale_price_and_date(content_main)
+        
+        # sale_price,sale_date,listing_type = extract_sale_price_and_date(content_main)
 
-        BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
+        # BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
 
-
+# print(missing_year_listings)
 if __name__ == '__main__':
     driver()
     
