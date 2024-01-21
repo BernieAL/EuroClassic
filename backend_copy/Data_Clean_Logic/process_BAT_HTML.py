@@ -22,6 +22,7 @@ BAT_cleaned_SOLD_Data = open(BAT_cleaned_SOLD_Data_file_path,"w",encoding="utf-8
 
 missing_year_listings = []
 def extract_year_make_model(content_main):
+    
     """CLEANING LISTING_CARD TITLE
        -From title text find vehicle year using regex
        -wherever the year starts up, add 4 to this index, this is the indexes of year in the string
@@ -32,31 +33,26 @@ def extract_year_make_model(content_main):
        -Function is to be called on each listing_card element found
        -Recieves content_main from listing_card element
     """
+    
     #target h3 element to get title text
-    listing_card_title_text = content_main.select_one("h3[data-bind='html: title']").getText()
+    listing_card_title_text = content_main.select_one("h3[data-bind='html: title']").getText().upper()
     
     #remove any extra white spaces that cause text to span 2 lines
     listing_card_title_text = re.sub(r'\s{2,}', ' ', listing_card_title_text).strip()
-    # print(listing_card_title_text)
+    print(listing_card_title_text)
 
+    
+    """FINDING AND REMOVING YEAR"""
     #find year by matching 4 digits in a row
     veh_year_match = re.search(r'\b\d{4}\b', listing_card_title_text)
-    
     #if theres no year in the listing, we just use 0000 in place of 4 digit year to not break script
     veh_year = veh_year_match.group() if veh_year_match else '0000' 
-    print(veh_year)
     # print(veh_year)
-    # if not veh_year_match:
-    #     missing_year_listings.append(listing_card_title_text)
-
-    
-    """
-    instead of finding index of last digit in the year - we use end() method on re.match obj (veh_year_match) to get ending index of the matched string
-    if no match - meaning veh_year_match is none, we default to 0
+    """Get Location of Year in string
+        -instead of finding index of last digit in the year - we use end() method on re.match obj (veh_year_match) to get ending index of the matched string
+        -if no match - meaning veh_year_match is none, we default to 0
     """
     last_digit_of_year_index = veh_year_match.end() if veh_year_match else 0
-
-    
     """Removing year from the title
         -use re.sub() to replace matched year string with an empty string
         -'\b' in regex means word boundaries - ensuring repleacement occurs only for whole words
@@ -69,24 +65,43 @@ def extract_year_make_model(content_main):
         -flags=re.IGNORECASE: This flag makes the replacement case-insensitive.
     """
     listing_title_year_removed = re.sub(rf'\b{re.escape(veh_year)}\b', '', listing_card_title_text, flags=re.IGNORECASE).strip()
-    print(listing_title_year_removed)
+    # print(listing_title_year_removed)
 
-    #tokenize
-    listing_title_tokens = listing_title_year_removed.split(' ')
-    # print(listing_title_tokens)
     
+    """FINDING MILEAGE (if listed)
+        - some listings are in the format: 10K-MILE 2008 MERCEDES-BENZ SLR MCLAREN ROADSTER, 16K-MILE 2013 MCLAREN 12C SPIDER
+        - Use regex to find "MILE" and and extract - store this value as mileage for this vehicle entry
+        - If listing doesnt have "MILE" in title text, then use 000 for mileage as default value
+    """
+    
+    
+    """FINDING MAKE AND MODEL
+        -Tokenize string with year removed
+        -Go through tokens, check which token exists in NHS_all_veh_makes, this is our 'Make' value
+        -Once 'Make' is found, the remaining tokens after where 'Make' was found now pertain to the 'Model'
+        Ex.
+            tokens = ['MCLAREN', '720S', 'PERFORMANCE', 'COUPE']
+            if 'MCLAREN' exists in all_makes, we validate that this token is our MAKE
+            The remaining tokens will be joined assigned to MODEL
+            
 
-    #take first token, which should be the make, search for this token in list of manufacturers
-    #if we find a match, this token is the manufacturer and the remaining of the string is the model
-    veh_make = listing_title_tokens[0].upper()
-    for result in NHS_all_veh_makes_data.get('Results',[]):
-        if result.get('Make_Name') == veh_make:
-            pass
+    """
 
-    #once we confirm the first token is the make,
-    #combine rest of tokens from listing_title_tokens and combine into a single string - this is the model
-    # we will now have parsed out year,make,model successfully
-    veh_model = ' '.join(listing_title_tokens[1:])
+    #tokenize results after year removed
+    listing_title_tokens = listing_title_year_removed.split(' ')
+ 
+    
+    veh_make = ''
+    veh_model = ''
+    for token in listing_title_tokens[1:]:
+        potential_make = token
+        if potential_make in NHS_all_veh_makes_data.get('Results',{}):
+            veh_make = potential_make
+            veh_model = ' '.join(listing_title_tokens[listing_title_tokens.index(token) + 1:])
+            break
+    
+   
+
     return veh_year,veh_make,veh_model
 
     
@@ -144,7 +159,7 @@ def driver():
 
         # BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
 
-print(missing_year_listings)
+# print(missing_year_listings)
 if __name__ == '__main__':
     driver()
     
