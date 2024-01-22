@@ -2,7 +2,7 @@ import os
 from bs4 import BeautifulSoup
 import re
 import json
-
+from datetime import datetime
 
 #RAW HTML FROM BAT
 BAT_raw_SOLD_html_file_path = os.path.join(os.path.dirname(__file__),'..','Scraped_data_output/BAT_RAW_SOLD_HTML.html')
@@ -155,13 +155,26 @@ def extract_sale_price_and_date(content_main):
     #regex delimiters to check for 'for' and 'to' - because the string can have either one
     delimiters = r'\bTO\b|\bFOR\b'
 
+    #remove any extra white space over 1 white space
+    sale_price = re.sub(r'\s+', ' ', sale_price).strip()
+    # print(sale_price)
+    
     #splitting using regex delimiters  
     listing_type,sale_price = (re.split(delimiters,sale_price))
+    
+    #strip white space from sale_date
+    sale_date = re.sub(r'\s+', ' ', sale_date).strip()
+
+    #convert sale_date to date obj
+    sale_date = datetime.strptime(sale_date, "%m/%d/%y").date()
+    # print(listing_type,sale_price)
+
+   
 
     #remove $ and , from sale_price, then convert to float
     sale_price = float(sale_price.replace('$','').replace(',',''))
     
-
+    # print(f"{sale_price},{sale_date},{listing_type}")
 
 
     return sale_price,sale_date,listing_type
@@ -182,11 +195,12 @@ def driver():
         #find content main from each listing_card
         content_main = listing.find("div","content-main")
         year,make,model =  extract_year_make_model(content_main)
-        print(f"{year},{make},{model}")
+        # print(f"{year},{make},{model}")
 
-        # sale_price,sale_date,listing_type = extract_sale_price_and_date(content_main)
+        sale_price,sale_date,listing_type = extract_sale_price_and_date(content_main)
         # print(f"{sale_price},{sale_date},{listing_type}")
         
+        print(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
 
         # BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
 
