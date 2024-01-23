@@ -102,7 +102,7 @@ error_log_output = open(error_log_file,"a",encoding="utf-8")
 EBAY_raw_SOLD_output = open(EBAY_raw_SOLD_output_file_path ,"a",encoding="utf-8")
 BAT_raw_SOLD_output = open(BAT_raw_SOLD_output_file_path ,"a",encoding="utf-8")
 
-BAT_raw_SOLD_html_output = open(BAT_raw_SOLD_html_file_path,"a",encoding="utf-8")
+BAT_raw_SOLD_html_output = open(BAT_raw_SOLD_html_file_path,"w",encoding="utf-8")
 
 
 
@@ -452,17 +452,7 @@ def bat_scrape_single_veh(car,driver):
 
 
            
-            raw_sold_output.write(date_string)
-
-            #write items to output file
-            fileWrite(BAT_items,raw_sold_output)
-            # print(BAT_items)
-            success_obj = {
-                    'success': True,
-                    'function':'bat_scrape',
-                    'date': current_date,
-            }
-            return success_obj
+           
 
     except NoSuchElementException as e:
         error_obj = {
@@ -472,6 +462,11 @@ def bat_scrape_single_veh(car,driver):
         }
         error_log(error_obj)
         return error_obj
+    except TimeoutException as e:
+        # Handle the case where the element is not clickable within the specified time
+        print("Element not clickable within the specified time.")
+    except Exception as e:
+        print(f"Error: {e}")
   
 def bat_scrape_all_for_make(car,driver):
 
@@ -497,17 +492,16 @@ def bat_scrape_all_for_make(car,driver):
             -get number of Auction Results on page and divide by 24 to get number of clicks we need to do - because each click loads 24 more results
             -also as backup, check for existence of show more button, if not visible, stop the loop
         """
-        # for i in range(5):
-        #     if show_more_listing_button.is_displayed():
-        #         show_more_listing_button.click()
-        #         time.sleep(random.uniform(3,9))
-        #     else:
-        #         break;
+        for i in range(100):
+            if show_more_listing_button.is_displayed():
+                show_more_listing_button.click()
+                time.sleep(random.uniform(2,7))
+            else:
+                break;
             
         # #locate all listings card in completed auction section
         # listing_cards = auction_results_section.find_elements(By.CSS_SELECTOR,'.auctions-completed  a.listing-card')
-        
-
+   
         # #this is for extracting text from each listing_card element
         # for card in listing_cards[1:4]:
 
@@ -529,21 +523,13 @@ def bat_scrape_all_for_make(car,driver):
         #     card_details = card_details.replace('PREMIUM','').replace('ALUMNI','').replace('NO RESERVE','')
          
         #     print(card_details)
-
-            
-
         #     # price,date = item_results.split(' on ')
 
         #     # #remove "Sold for" or "Bid To"
         #     # price = price.replace('Sold for','').replace('Bid To').strip()
-            
-
-            
+    
         #     # print( title_element_innerText)
-            
-            
-
-          
+    
         #     #     Also get href for each listing, this will be for processing later to get more vehicle details
         #     # """
         #     # card_link = f"link: {card.get_attribute('href')}"
@@ -671,7 +657,7 @@ if __name__ == '__main__':
 
     car  = {
     'year':2017,
-    'make':'Mclaren',
+    'make':'Porsche',
     'model':'3 Series'
     }
 

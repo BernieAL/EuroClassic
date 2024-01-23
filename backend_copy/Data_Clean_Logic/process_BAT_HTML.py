@@ -148,36 +148,39 @@ def extract_sale_price_and_date(content_main):
         -Function is to be called on each listing_card element found
         -Recieves content_main from listing_card element
     """
+    try:
+        item_result_text =  content_main.find('div','item-results').getText().upper()
+        sale_price,sale_date = item_result_text.split('  ON ')
 
-    item_result_text =  content_main.find('div','item-results').getText().upper()
-    sale_price,sale_date = item_result_text.split('  ON ')
+        #regex delimiters to check for 'for' and 'to' - because the string can have either one
+        delimiters = r'\bTO\b|\bFOR\b'
 
-    #regex delimiters to check for 'for' and 'to' - because the string can have either one
-    delimiters = r'\bTO\b|\bFOR\b'
+        #remove any extra white space over 1 white space
+        sale_price = re.sub(r'\s+', ' ', sale_price).strip()
+        # print(sale_price)
+        
+        #splitting using regex delimiters  
+        listing_type,sale_price = (re.split(delimiters,sale_price))
+        
+        #strip white space from sale_date
+        sale_date = re.sub(r'\s+', ' ', sale_date).strip()
 
-    #remove any extra white space over 1 white space
-    sale_price = re.sub(r'\s+', ' ', sale_price).strip()
-    # print(sale_price)
+        #convert sale_date to date obj
+        sale_date = datetime.strptime(sale_date, "%m/%d/%y").date()
+        # print(listing_type,sale_price)
+
+    #remove $ and , from sale_price, then convert to float
+        sale_price = float(sale_price.replace('$','').replace(',',''))
+        
+        # print(f"{sale_price},{sale_date},{listing_type}")
+
+
+        return sale_price,sale_date,listing_type
+    except Exception as e:
+        # Log the error and return None for this case
+        print(f"Error extracting sale information: {e}")
+        return None, None, None
     
-    #splitting using regex delimiters  
-    listing_type,sale_price = (re.split(delimiters,sale_price))
-    
-    #strip white space from sale_date
-    sale_date = re.sub(r'\s+', ' ', sale_date).strip()
-
-    #convert sale_date to date obj
-    sale_date = datetime.strptime(sale_date, "%m/%d/%y").date()
-    # print(listing_type,sale_price)
-
-   #remove $ and , from sale_price, then convert to float
-    sale_price = float(sale_price.replace('$','').replace(',',''))
-    
-    # print(f"{sale_price},{sale_date},{listing_type}")
-
-
-    return sale_price,sale_date,listing_type
-
-
 def driver():
     
     csv_headers = 'YEAR,MAKE,MODEL,SALE_PRICE,SALE_DATE,LISTING_TYPE'
@@ -200,7 +203,7 @@ def driver():
         
         print(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
 
-        BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
+        BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}\n")
 
 # print(missing_year_listings)
 if __name__ == '__main__':
