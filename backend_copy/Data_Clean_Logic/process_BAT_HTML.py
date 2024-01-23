@@ -169,9 +169,7 @@ def extract_sale_price_and_date(content_main):
     sale_date = datetime.strptime(sale_date, "%m/%d/%y").date()
     # print(listing_type,sale_price)
 
-   
-
-    #remove $ and , from sale_price, then convert to float
+   #remove $ and , from sale_price, then convert to float
     sale_price = float(sale_price.replace('$','').replace(',',''))
     
     # print(f"{sale_price},{sale_date},{listing_type}")
@@ -202,7 +200,7 @@ def driver():
         
         print(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
 
-        # BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
+        BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
 
 # print(missing_year_listings)
 if __name__ == '__main__':
