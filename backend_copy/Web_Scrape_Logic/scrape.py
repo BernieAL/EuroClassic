@@ -81,17 +81,13 @@ import random
 
 SCRAPED_DATA_OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
 
-BAT_raw_SOLD_html_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'BAT_raw_SOLD_HTML.html')
-print(os.path.isfile(BAT_raw_SOLD_html_file_path))
 
 raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'raw_SOLD_DATA.txt')
-
-
 raw_CURRENT_LISTING_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR, 'raw_CURRENT_LISTINGS_DATA.txt')
 
 EBAY_raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'EBAY_raw_SOLD_DATA.txt')
 
-BAT_raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'BAT_raw_SOLD_DATA.txt')
+
 
 error_log_file = os.path.join(SCRAPED_DATA_OUTPUT_DIR, '..','error_log.txt')
 
@@ -100,9 +96,17 @@ raw_current_listing_output = open(raw_CURRENT_LISTING_output_file_path,"a",encod
 raw_sold_output = open(raw_SOLD_output_file_path,"a",encoding="utf-8")
 error_log_output = open(error_log_file,"a",encoding="utf-8")
 EBAY_raw_SOLD_output = open(EBAY_raw_SOLD_output_file_path ,"a",encoding="utf-8")
-BAT_raw_SOLD_output = open(BAT_raw_SOLD_output_file_path ,"a",encoding="utf-8")
 
-BAT_raw_SOLD_html_output = open(BAT_raw_SOLD_html_file_path,"w",encoding="utf-8")
+
+
+BAT_raw_ALL_MAKE_SOLD_DATA_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'BAT_raw_ALL_MAKE_SOLD_DATA.html')
+BAT_raw_ALL_MAKE_SOLD_output = open(BAT_raw_ALL_MAKE_SOLD_DATA_output_file_path ,"a",encoding="utf-8")
+
+
+BAT_raw_SINGLE_VEH_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'BAT_raw_SINGLE_VEH_SOLD_DATA.html')
+print(os.path.isfile(BAT_raw_SINGLE_VEH_SOLD_output_file_path))
+
+BAT_raw_SINGLE_VEH_SOLD_output = open(BAT_raw_SINGLE_VEH_SOLD_output_file_path,"w",encoding="utf-8")
 
 
 
@@ -385,38 +389,47 @@ def CL(car,driver):
 # ON BAT, only getting sold listings 
 def bat_scrape_single_veh(car,driver):
         
-    try:
-            # this is to get passed "show notifications prompt"
-                # driver.send_keys(Keys.TAB)
-                # driver.send_keys(Keys.TAB)
-                # driver.send_keys(Keys.RETURN)
-             #write date of scrape to file right before data
-            today = date.today()
-            # dd/mm/YY
-            current_date = today.strftime("%m/%d/%Y")
-
+    try:     
             make = car['make']
             model = car['model']
-            driver.get(f'https://bringatrailer.com/{make}/{model}')
-            # URL EXAMPLE:  https://bringatrailer.com/bmw/e39-m5/?q=e39%20m5
             
-            time.sleep(5)
+            #BY URL
+            # URL EXAMPLE:  https://bringatrailer.com/bmw/e39-m5/?q=e39%20m5
+            driver.get(f'https://bringatrailer.com/{make}/{model}/?q={make}+{model}')
+           
+            
+            #ALTERNATE OPTION - BY SEARCH BAR INTERACTION
+            # driver.get('https://bringatrailer.com')
+            # search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
+            # time.sleep(random.uniform(1,5))
+            # search_bar.send_keys('Porsche 911' + Keys.RETURN)
+            
+            time.sleep(random.uniform(4,9))
         
-
             # this is to get passed "show notifications prompt" - SHOULDNT BE NEEDED, SCRAPE STILL WORKS WITHOUT DISMISSING PROMPT
                 # driver.send_keys(Keys.TAB)
                 # driver.send_keys(Keys.TAB)
                 # driver.send_keys(Keys.RETURN)
 
-
             # this section clicks 'Show More' on page to load ALL sold listings for target vehicle
             try:
-                show_more = driver.find_element(By.LINK_TEXT,'Show More')
-                # # # LOGIC TO CLICK SHOW MORE REPEATEDLY UNTIL NO 
-                while show_more:
+                # show_more = driver.find_element(By.LINK_TEXT,'Show More')
+                # show_more.click()
+
+                #find 'Auction Results' Section
+                auction_results_section = driver.find_element(By.CSS_SELECTOR,'.auctions-completed')
+
+                #find 'show-more' button
+                show_more_listing_button = auction_results_section.find_element(By.CSS_SELECTOR,'button.button-show-more')
+                show_more_listing_button.click()
+                
+                desired_clicks = 10
+                i=0
+                while i < desired_clicks:
                     try:
-                        show_more.click()
-                        time.sleep(2)
+                        show_more_listing_button.click()
+                        time.sleep(random.uniform(4,9))
+                    
                     except ElementNotVisibleException:
                         print('NOTHING MORE TO LOAD')
                         break
@@ -426,32 +439,17 @@ def bat_scrape_single_veh(car,driver):
                     except StaleElementReferenceException:
                         print('NO MORE RESULTS TO LOAD')
                         break
+                    i+=1
             except NoSuchElementException as e:
                 pass
-            time.sleep(2)
-            # show_more.click()
-
-        
-
-            #target parent group that holds individual previous listing items
-            prev_listings = driver.find_element(By.CLASS_NAME,'filter-group')
-            time.sleep(1.5)
             
-            #extract all block elements from parents group, this gives each indiv listing
-            #item_list is all returned listing details found using 'block' class
-            item_list = prev_listings.find_elements(By.CLASS_NAME,'block')
+            time.sleep(random.uniform(5,11))
 
 
-            #EXTRACT MODEL,YEAR,PRICE from each item in item_list
-            BAT_items = []
-            for item in item_list:
-                description = item.find_element(By.CLASS_NAME,'title').get_attribute('innerText')
-                price = item.find_element(By.CLASS_NAME,'subtitle').get_attribute('innerText')
-                temp = f'{description} {price}'
-                BAT_items.append(temp)
-
-
-           
+            #get html content and write to output file
+            html_content = driver.page_source
+            BAT_raw_SINGLE_VEH_SOLD_output.write(html_content)
+            print(":::BAT_SCRAPE_SINGLE_VEH -  HTML content successfully saved to file.")          
            
 
     except NoSuchElementException as e:
@@ -468,24 +466,26 @@ def bat_scrape_single_veh(car,driver):
     except Exception as e:
         print(f"Error: {e}")
   
-def bat_scrape_all_for_make(car,driver):
+def bat_scrape_all_make(car,driver):
 
     try:
+        #BY URL
         driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
-        time.sleep(random.uniform(1,3))
 
-        # #or by search bar 
+        #ALTERNATE OPTION - BY SEARCH BAR INTERACTION
         # driver.get('https://bringatrailer.com')
         # search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
         # time.sleep(random.uniform(1,5))
         # search_bar.send_keys('Porsche 911' + Keys.RETURN)
         
+        #find 'Auction Results' Section
         auction_results_section = driver.find_element(By.CSS_SELECTOR,'.auctions-completed')
 
+        #find 'show-more' button
         show_more_listing_button = auction_results_section.find_element(By.CSS_SELECTOR,'button.button-show-more')
         time.sleep(random.uniform(1,5))
         show_more_listing_button.click()
-        time.sleep(10)
+        time.sleep(random.uniform(1,4))
         
         """
             -how many times to click show more button?
@@ -544,7 +544,7 @@ def bat_scrape_all_for_make(car,driver):
         """
 
         html_content = driver.page_source
-        BAT_raw_SOLD_html_output.write(html_content)
+        BAT_raw_ALL_MAKE_SOLD_output.write(html_content)
         print("HTML content successfully saved to file.")
 
 
@@ -635,13 +635,13 @@ def run_scrape(car):
         scrape_results = (
             # ebay_current(car,driver),
             # ebay_sold(car,driver),
-            # bat_scrape(car,driver),
-            # bat_scrape_2(car),
-            bat_scrape_all_for_make(car,driver)
+            bat_scrape_single_veh(car,driver)
+            # bat_scrape_all_make(car,driver)
             # CL(car,driver),
         )
         
         driver.close()
+        #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
         time.sleep(1)
         
         raw_current_listing_output.close()
@@ -658,7 +658,7 @@ if __name__ == '__main__':
     car  = {
     'year':2017,
     'make':'Porsche',
-    'model':'3 Series'
+    'model':'911'
     }
 
     run_scrape(car)

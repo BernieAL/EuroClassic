@@ -2,7 +2,7 @@ import os
 from bs4 import BeautifulSoup
 import re
 import json
-from datetime import datetime
+from datetime import date,datetime
 
 #RAW HTML FROM BAT
 BAT_raw_SOLD_html_file_path = os.path.join(os.path.dirname(__file__),'..','Scraped_data_output/BAT_RAW_SOLD_HTML.html')
@@ -183,8 +183,16 @@ def extract_sale_price_and_date(content_main):
     
 def driver():
     
+
+    #write current date to file as first row
+    today = date.today()
+    # dd/mm/YY
+    current_date = today.strftime("%m/%d/%Y")
+    BAT_cleaned_SOLD_Data.write(f"LAST_SCRAPE_DATE: {current_date}\n")
+
     csv_headers = 'YEAR,MAKE,MODEL,SALE_PRICE,SALE_DATE,LISTING_TYPE'
     BAT_cleaned_SOLD_Data.write(csv_headers + '\n')
+
     soup = BeautifulSoup(BAT_raw_SOLD_HTML,'html.parser')
     
     #find all listing_card in auctions-completed-container element
