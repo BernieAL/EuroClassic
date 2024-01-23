@@ -133,7 +133,7 @@ ebay_current
 """
 
 #this ebay section gets current listings
-def ebay_current(car,driver):
+def ebay_current_scrape_single_veh(car,driver):
     
     target_car = f"{car['make']} {car['model']}"
     
@@ -237,7 +237,7 @@ def ebay_current(car,driver):
     # print(ebay_items)
 
 #this ebay section gets sold listings, beginnning from intial url again, and appends 'sold' and 'complete' params to the url
-def ebay_sold(car,driver):
+def ebay_sold_scrape_single_veh(car,driver):
     # target_car = f"{car['make']} {car['model']}"
 
     intial_url = f"https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw={car['make']}&{car['model']}_sacat=0&_ipg=240&rt=nc"
@@ -264,7 +264,7 @@ def ebay_sold(car,driver):
         for links in pages:
             pages_links.append(links.get_attribute('href'))
 
-
+    
 
        #write date of scrape to file right before data
         today = date.today()
@@ -619,11 +619,8 @@ def run_scrape(car):
 
         # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=chrome_options)
 
-
-
         #driver with no proxy
         # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
-
 
         # for testing
         # driver.get("https://bot.sannysoft.com/")
@@ -633,7 +630,7 @@ def run_scrape(car):
         
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
-            # ebay_current(car,driver),
+            # ebay_current_scrape_single_veh(car,driver),
             # ebay_sold(car,driver),
             bat_scrape_single_veh(car,driver)
             # bat_scrape_all_make(car,driver)
