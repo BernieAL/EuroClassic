@@ -40,7 +40,6 @@ from selenium.common.exceptions import ElementNotVisibleException, StaleElementR
 from selenium.common.exceptions import NoSuchElementException,TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.proxy import Proxy, ProxyType
-from seleniumwire import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 import undetected_chromedriver as uc
 
@@ -601,9 +600,9 @@ def run_scrape(car):
             'detach':True
         }
 
-        uc_chrome_options =uc.ChromeOptions()
-        # chrome_options = Options()
-        uc_chrome_options.add_argument(f"user-agent={my_user_agent}")
+        #uc_chrome_options =uc.ChromeOptions()
+        chrome_options = Options()
+        #uc_chrome_options.add_argument(f"user-agent={my_user_agent}")
 
         #stop browser from closing - requires manual closing
         # uc_chrome_options.add_experimental_option("detach", True)
@@ -611,22 +610,22 @@ def run_scrape(car):
         #stop images from loading - improve page speed and reduce proxy data usage
         # chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
-        uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+        #uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
 
         #working with undetected chromedriver
-        driver = uc.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
+        #driver = uc.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
-        # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=chrome_options)
+        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=chrome_options)
 
         #driver with no proxy
         # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
 
-        # for testing
-        # driver.get("https://bot.sannysoft.com/")
-        # print(driver.current_url)
-        # print(driver.page_source)
-        # time.sleep(5)
+        #for testing
+        driver.get("https://bot.sannysoft.com/")
+        print(driver.current_url)
+        print(driver.page_source)
+        time.sleep(5)
         
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (

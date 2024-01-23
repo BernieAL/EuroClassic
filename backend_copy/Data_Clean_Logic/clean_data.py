@@ -115,7 +115,9 @@ def clean_data_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
 def clean_all_data(car):
     try:
         clean_data_CURRENT(EBAY_raw_CURRENT_LISTINGS_file, car['year'], car['make'], car['model'])
+        
         clean_data_SOLD(EBAY_raw_SOLD_DATA_file, car['year'], car['make'], car['model'])
+        
         logging.info("Data cleaning for all types successful")
         return True
     except Exception as e:
@@ -125,7 +127,7 @@ def clean_all_data(car):
 if __name__ == '__main__':
     car = {
         'year': 2021,
-        'make': 'Audi',
-        'model': 'RS6'
+        'make': 'BMW',
+        'model': '3-Series'
     }
     clean_all_data(car)
