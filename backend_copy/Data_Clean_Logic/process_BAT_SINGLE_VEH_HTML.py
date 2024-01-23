@@ -5,7 +5,7 @@ import json
 from datetime import date,datetime
 
 #RAW HTML FROM BAT
-BAT_raw_SOLD_html_file_path = os.path.join(os.path.dirname(__file__),'..','Scraped_data_output/BAT_raw_ALL_MAKE_SOLD_DATA.html')
+BAT_raw_SOLD_html_file_path = os.path.join(os.path.dirname(__file__),'..','Scraped_data_output/BAT_raw_SINGLE_VEH_SOLD_DATA.html')
 BAT_raw_SOLD_HTML = open(BAT_raw_SOLD_html_file_path,"r",encoding="utf-8")
 
 #ALL VEH MAKES JSON DATA FROM - https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json
@@ -15,7 +15,7 @@ NHS_all_veh_makes_data = json.load(NHS_all_veh_makes_file)
 
 
 #CSV OUTPUT FILE
-BAT_cleaned_SOLD_Data_file_path = os.path.join(os.path.dirname(__file__),'..','Cleaned_data_output/BAT_cleaned_ALL_MAKE_SOLD_DATA.csv')
+BAT_cleaned_SOLD_Data_file_path = os.path.join(os.path.dirname(__file__),'..','Cleaned_data_output/BAT_cleaned_SINGLE_VEH_SOLD_DATA.csv')
 BAT_cleaned_SOLD_Data = open(BAT_cleaned_SOLD_Data_file_path,"w",encoding="utf-8")
 
 
