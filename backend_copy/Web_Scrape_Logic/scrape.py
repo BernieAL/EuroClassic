@@ -600,7 +600,7 @@ def run_scrape(car):
             'detach':True
         }
 
-        #uc_chrome_options =uc.ChromeOptions()
+        uc_chrome_options =uc.ChromeOptions()
         chrome_options = Options()
         #uc_chrome_options.add_argument(f"user-agent={my_user_agent}")
 
@@ -608,17 +608,17 @@ def run_scrape(car):
         # uc_chrome_options.add_experimental_option("detach", True)
         
         #stop images from loading - improve page speed and reduce proxy data usage
-        # chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+        chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
-        #uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+        uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
 
         #working with undetected chromedriver
         #driver = uc.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
-        driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=chrome_options)
+        # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=chrome_options)
 
-        #driver with no proxy
+        # driver with no proxy
         # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
 
         #for testing
@@ -631,7 +631,7 @@ def run_scrape(car):
         scrape_results = (
             # ebay_current_scrape_single_veh(car,driver),
             # ebay_sold(car,driver),
-            bat_scrape_single_veh(car,driver)
+            # bat_scrape_single_veh(car,driver)
             # bat_scrape_all_make(car,driver)
             # CL(car,driver),
         )
