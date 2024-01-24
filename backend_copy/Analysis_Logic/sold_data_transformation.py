@@ -18,7 +18,7 @@ import os
 import json
 import pandas as pd
 from datetime import datetime
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 # scripts_dir = os.path.dirname(__file__)
 # clean_output_file_SOLD_DATA_file_path= os.path.join(scripts_dir, '..','cleaned_data_SOLD_DATA.csv')

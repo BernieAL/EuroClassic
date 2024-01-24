@@ -7,7 +7,7 @@ import requests
 from flask_cors import CORS
 from flask import render_template
 import json
-from forms import SearchForm
+
 from simple_chalk import chalk
 import pandas as pd
 import os
@@ -111,86 +111,7 @@ initialize_cache()
 # pd_result = process_cleaned_data()
 # print(pd_result)
 
-@app.route('/',methods=['POST','GET'])
-def home():
     
-    
-
-    form = SearchForm()
-    # pd_result = process_cleaned_data()
-    # print(pd_result['Avg Sale Price'])
-
-    if request.method == 'POST':
-
-        # check if form passes form validation rules
-        # if form.validate_on_submit():
-            
-        flash('Success')
-        #if post and form validation successful, get form data and pass into scrape function
-        #when scrape function completed - display data to user on another page
-        year = (form.vehicle_year.data).upper()
-        make = (form.vehicle_make.data).upper()
-        model = (form.vehicle_model.data).upper()
-        
-        vehicle = {
-            'year':year,
-            'make':make,
-            'model':model
-        }
-
-        #check db for this veh
-        #check last scrape date
-
-       
-        #check for last_scrape date of veh
-        #returns datetime object in tuple -> (datetime.date(2021, 10, 5),)
-        #to get date, use [0]
-        last_scrape_date_query = """
-            SELECT *
-            FROM vehicles
-            WHERE MODEL = %s AND MAKE = %s
-        """
-        cur.execute(last_scrape_date_query,(model,year,make))
-        records = cur.fetchall()
-        print(records)
-        return 'ok'
-
-        #check date not greater than 7 days
-        curr_date = date.today()
-        date_difference = abs(last_scrape_date - curr_date)
-        date_difference = 5
-
-        if date_difference < 7:
-            # Call the function to execute queries and store results
-            results = DB_execute_queries_and_store_results(cur, make, model, year)
-            formatted_res = json.dumps(results, indent=2, default=custom_encoder)
-            print(formatted_res)
-
-            
-
-        else:
-            #perform new scrape
-            #have new date persisted to db, can either be done here or by scraping functions
-            pass
-        # session['db_data'] = db_data
-        #return success or errors for each scrape function 
-        # scrape_function_results = run_scrape(vehicle)
-        # print(scrape_function_results)
-        #clean_scraped_data()
-        
-        data = {
-            'median': 246,
-            't2': 182,
-        }
-
-        return render_template('index.html',form=form,data=data)
-        
-    #if form fails validation
-    else:
-        return render_template('index.html',form=form)
-    
-    
-       
 
 
 
@@ -267,30 +188,33 @@ def vehicleQuery():
         # print(veh_scrape_status)
         
        #TESTING
-        veh_scrape_status['scrape_needed'] = False
+        # veh_scrape_status['scrape_needed'] = False
         
         if veh_scrape_status['scrape_needed'] == False:
             """ If scrape not needed - means data isnt old, go to db and retrieve all records from all tables for this veh
             Then return to front end
             """     
             #get veh records from all tables and return
-            print(chalk.green("veh scrape not needed"))
+            print(chalk.green("::::::VEH SCRAPE NOT NEEDED::::::"))
             data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
             print(data_from_db)
             t = jsonify(data_from_db)
             print(t)
             return jsonify(data_from_db)
-            
+             
         
         else:
             """perform new scrape
                store new data into db
                retrieve from db and return to front end
             """
-            #perform new scrape and update the db
-            print(chalk.red("veh scrape needed"))
             
-            return jsonify("scrape needed")
+            print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
+            data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
+            print(data_from_db)
+            t = jsonify(data_from_db)
+            print(t)
+            return jsonify(data_from_db)
             
         
 

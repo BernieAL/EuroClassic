@@ -13,6 +13,7 @@ export default function App(){
     // callback function passed to SearchForm
     const handleDataFromSearchForm = (data) => {
         console.log('Recieved Data in app:', data)
+        
         setRecievedData(data)
     }
 

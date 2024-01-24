@@ -56,6 +56,7 @@ export default function SearchForm({onDataSubmit}){
                 // body:JSON.stringify(formData)
                 body:JSON.stringify(entered_data)
             })
+            
             if(!response.ok){
                 throw new Error('Problem with response from server')
             } else {
