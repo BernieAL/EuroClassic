@@ -80,3 +80,13 @@ INFO:werkzeug:127.0.0.1 - - [24/Jan/2024 12:18:23] "OPTIONS /vehicle-query HTTP/
 INFO:werkzeug:127.0.0.1 - - [24/Jan/2024 12:18:23] "POST /vehicle-query HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [24/Jan/2024 12:18:35] "OPTIONS /vehicle-query HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [24/Jan/2024 12:18:35] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2024 15:45:52] "[31m[1mGET / HTTP/1.1[0m" 405 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2024 15:45:52] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat

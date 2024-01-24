@@ -1,4 +1,4 @@
-# https://www.freecodecamp.org/news/how-to-dockerize-a-flask-app/
+# https://www.freecodecamp.org/news/how-to-dockerize-a-flask-application/
 
 
 from datetime import date,datetime
@@ -22,10 +22,10 @@ from Postgres.connect import get_db_connection
 import psycopg2
 from Postgres.config import config
 
-app = Flask(__name__)
-CORS(app)
-app.config.from_object(Config)
-app.secret_key = 'secret_key'
+application = Flask(__name__)
+CORS(application)
+application.config.from_object(Config)
+application.secret_key = 'secret_key'
 
 #test db connection
 conn = get_db_connection()
@@ -45,26 +45,26 @@ cache_file_path = os.path.join(os.getcwd(),'Cache/makes_cache.json')
 
 
 """ Veh manufacturer cache initialization
-on flask app startup - request is made to api to retrieve all car makes
+on flask application startup - request is made to api to retrieve all car makes
 this is then written to a cache file for later use
 
 On Client side - when form submitted
     user input is tokenized
         -year token is identified using regex
-        -make token is identified by making request to flask app 
+        -make token is identified by making request to flask application 
             and checking if the entered make exists in cache
             if exists: return True, we now know that this token is the make
             if didnt exist: check remaining token in user input
                 if exists: this token is the make
     Once year is identified, the remaining tokens can be make or model
-        so we check if a token appears in the makes cache
+        so we check if a token applicationears in the makes cache
 """
 
 def initialize_cache():
     try:
         
         """check date of last api requests
-        New car manufacturers dont appear too often, we dont need to run this often - maybe once a month
+        New car manufacturers dont applicationear too often, we dont need to run this often - maybe once a month
         Opens cache file with read context, gets lastRetrievedDate which is first value in file
         closes file
         """
@@ -129,7 +129,7 @@ initialize_cache()
     
 
 
-@app.route('/get_data',methods=['GET'])
+@application.route('/get_data',methods=['GET'])
 def return_data():
    """TESTING
     endpoint for js script to request  non db data
@@ -141,7 +141,7 @@ def return_data():
    return pd_result
    
 
-@app.route('/get_db_data',methods=['GET'])
+@application.route('/get_db_data',methods=['GET'])
 def return_db_data():
     """
     endpoint for js script to request db data
@@ -158,8 +158,12 @@ def return_db_data():
     return jsonify(data)
 
 
+@application.route('/',methods=['GET'])
+def home():
 
-@app.route('/vehicle-query',methods=['POST'])
+    return "Hello"
+
+@application.route('/vehicle-query',methods=['POST'])
 def vehicleQuery():
     """end point called when form submitted on front end
        recieves user search query
@@ -222,7 +226,7 @@ def vehicleQuery():
         print('Error',str(e))
         return jsonify({'error':str(e)})
         
-@app.route('/retrieve_cache',methods=['GET'])
+@application.route('/retrieve_cache',methods=['GET'])
 def retrieve_cache():
 
     with open(cache_file_path,'r') as cache_file:
@@ -329,7 +333,7 @@ def DB_check_new_scrape_needed(veh:object):
             return veh_scrape_status
     
     except Exception as e:
-        # Handle exceptions (print or log the error, or take appropriate action)
+        # Handle exceptions (print or log the error, or take applicationropriate action)
         print(f"Error: {str(e)}")
     
 
@@ -382,5 +386,5 @@ def custom_encoder(obj):
 
 
 if __name__ == "__main__":
-    app.run(debug=True,host='127.0.0.1', port=5000)
+    application.run(debug=True,host='127.0.0.1', port=5000)
 
