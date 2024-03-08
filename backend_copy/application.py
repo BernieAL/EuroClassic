@@ -12,6 +12,9 @@ from simple_chalk import chalk
 import pandas as pd
 import os
 
+
+
+
 from Web_Scrape_Logic.scrape import run_scrape
 from Data_Clean_Logic.clean_data import clean_all_data
 from Analysis_Logic.sold_data_transformation import SOLD_max_and_avg_price_per_veh_year

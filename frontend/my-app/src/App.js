@@ -14,7 +14,15 @@ export default function App(){
     const handleDataFromSearchForm = (data) => {
         console.log('Recieved Data in app:', data)
         
+        // check if veh results are empty - meaning car is not in db
+        const all_sales_records = data['all_sales_records'][0]
+        console.log(all_sales_records)
+        if (all_sales_records.length == 0){
+            console.log('veh not in db ')
+        }
+
         setRecievedData(data)
+        
     }
 
 
@@ -22,6 +30,8 @@ export default function App(){
         <div>
             <SearchForm onDataSubmit={handleDataFromSearchForm}/>
             
+
+
             {/* if recievedData not null, render the graphs and pass them the data */}
             {recievedData !== null && (
                 <Graphs recievedData={recievedData}/> 

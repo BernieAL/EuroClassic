@@ -48,6 +48,14 @@ import os
 from datetime import date,datetime
 import time
 import random
+import sys
+
+
+current_dir =os.path.abspath(__file__)
+print(current_dir)
+sys.path.append(current_dir)
+
+
 # from clean_data import clean_the_data
 
 
@@ -622,10 +630,10 @@ def run_scrape(car):
         # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
 
         #for testing
-        driver.get("https://bot.sannysoft.com/")
-        print(driver.current_url)
-        print(driver.page_source)
-        time.sleep(5)
+        # driver.get("https://bot.sannysoft.com/")
+        # print(driver.current_url)
+        # print(driver.page_source)
+        # time.sleep(5)
         
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
@@ -636,9 +644,9 @@ def run_scrape(car):
             # CL(car,driver),
         )
         
-        driver.close()
-        #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
-        time.sleep(1)
+        # driver.close()
+        # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
+        # time.sleep(1)
         
         raw_current_listing_output.close()
         raw_sold_output.close()
