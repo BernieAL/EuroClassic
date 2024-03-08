@@ -117,3 +117,159 @@ INFO:werkzeug:[33mPress CTRL+C to quit[0m
 INFO:werkzeug: * Restarting with stat
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:17:09] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:17:09] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:17:13] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:17:13] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:35:20] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:35:20] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:47:56] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:47:56] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:48:05] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:48:05] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:48:14] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:48:14] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:48:51] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:48:51] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:49:01] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:49:01] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:49:07] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 16:49:07] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 17:03:45] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 17:03:45] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 17:04:04] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Mar/2024 17:04:04] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:03:34] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:03:34] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:06:13] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:06:13] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:06:17] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:06:17] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:11:05] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:11:05] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:11:24] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:11:24] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:11:29] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:11:29] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:21:37] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:21:37] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:23:06] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:23:06] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:23:11] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:23:11] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:37:42] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:37:42] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:37:59] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 11:37:59] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:34:40] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:34:40] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:36:12] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:36:12] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:36:43] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:36:43] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:37:36] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:37:36] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:38:04] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:38:04] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:38:08] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 13:38:08] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat

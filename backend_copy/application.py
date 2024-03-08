@@ -216,12 +216,29 @@ def vehicleQuery():
                retrieve from db and return to front end
             """
             
+            # PERFORM SCAPE HERE 
             print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
-            data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
-            print(data_from_db)
-            t = jsonify(data_from_db)
-            print(t)
-            return jsonify(data_from_db)
+            
+            #this retrieves records from various tables in db matching make and model
+            """ returns this 
+                {
+                "all_sales_records": all_sales_records_result,
+                "current_records": current_records_result,
+                "sold_stats": sold_stats_result,
+                "current_stats": current_stats_result
+                }
+            """
+            veh_data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
+            
+            VEH_EXISTS = veh_data_from_db['VEH_EXISTS']
+            if VEH_EXISTS == False:
+                print("veh doesnt exist in DB - will perform scrape and email when ready")
+                return jsonify(veh_data_from_db)
+            else:    
+                print(veh_data_from_db)
+                t = jsonify(data_from_db)
+                # print(t)
+                return jsonify(veh_data_from_db)
             
         
 
@@ -342,44 +359,55 @@ def DB_check_new_scrape_needed(veh:object):
 
 def DB_execute_queries_and_store_results(cur, make, model):
     """
-    Query results are type list
-    
-    """
-    #if year provided in search query
-    
+    This function passes params to imported queries and executes them
+    cur.fetchall() returns a list
+    """  
     
     # Execute the queries
     cur.execute(all_sales_records_NO_YEAR_query, (make, model))
-    all_sales_records_result = cur.fetchall()
+    all_sales_records_result = cur.fetchall() #returns list
     # print(all_sales_records_result)
 
     cur.execute(all_current_records_NO_YEAR_query, (make, model))
-    current_records_result = cur.fetchall()
+    current_records_result = cur.fetchall() #returns list
+
+    """EMPTY CHECK
+        if theres no sales records or current records for vehicle - return early with indication that vehicle doesnt exist in DB and do not execute rest of queries
+    """
+    if len(current_records_result) == 0 or len(all_sales_records_result) == 0:
+        return {"VEH_EXISTS": False,
+                "all_sales_records": [],
+                "current_records": [],
+                "sold_stats": [],
+                "current_stats": []}
+    
 
     cur.execute(sold_stats_query_NO_YEAR, (make, model))
-    sold_stats_result = cur.fetchall()
+    sold_stats_result = cur.fetchall() #returns list
 
     cur.execute(current_stats_query_NO_YEAR, (make, model))
-    current_stats_result = cur.fetchall()
+    current_stats_result = cur.fetchall() #returns list
     
     # Return the results as a dictionary
     return {
+        "VEH_EXISTS": True,
         "all_sales_records": all_sales_records_result,
         "current_records": current_records_result,
         "sold_stats": sold_stats_result,
         "current_stats": current_stats_result
     }
 
-"""
-custom encoder for handle serialization of date objects
-puts it in iso formatted string representation
-if obj isnt date, raise TypeError
 
-iso formatted? -> YYYY-MM-DD
-                  iso 8601 standardized date and time representation
-                  way to express dates and time in universal format
-"""
 def custom_encoder(obj):
+    """
+    custom encoder for handle serialization of date objects
+    puts it in iso formatted string representation
+    if obj isnt date, raise TypeError
+
+    what is iso formatted? -> YYYY-MM-DD
+                    iso 8601 standardized date and time representation
+                    way to express dates and time in universal format
+    """
     if isinstance(obj,date):
         return obj.isoformat()
     raise TypeError("Type not serializable")

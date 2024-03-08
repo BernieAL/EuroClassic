@@ -1,7 +1,7 @@
 import React,{useState} from "react"
 import SearchForm from "./components/SearchForm"
 import Graphs from "./components/Graphs"
-
+import VehNotFound from "./components/VehNotFound"
 
 
 
@@ -9,20 +9,27 @@ import Graphs from "./components/Graphs"
 export default function App(){
 
     const [recievedData,setRecievedData] = useState(null)
+    const [vehExists_db,setVehExists_DB] = useState(null)
 
     // callback function passed to SearchForm
     const handleDataFromSearchForm = (data) => {
-        console.log('Recieved Data in app:', data)
         
-        // check if veh results are empty - meaning car is not in db
-        const all_sales_records = data['all_sales_records'][0]
-        console.log(all_sales_records)
-        if (all_sales_records.length == 0){
-            console.log('veh not in db ')
-        }
-
+        /** recieved data from backend api looks like:
+         *      {
+                  "VEH_EXISTS": False,
+                    "all_sales_records": [],
+                    "current_records": [],
+                    "sold_stats": [],
+                    "current_stats": []
+                } 
+                ***Note*** lists wont be empty if veh exists in db   
+         */
+        
+        console.log('Recieved Data in app:', data)
         setRecievedData(data)
         
+        const VEH_EXISTS = data['VEH_EXISTS']
+        setVehExists_DB(VEH_EXISTS)
     }
 
 
@@ -30,9 +37,11 @@ export default function App(){
         <div>
             <SearchForm onDataSubmit={handleDataFromSearchForm}/>
             
-
-
-            {/* if recievedData not null, render the graphs and pass them the data */}
+            {/* if vehExists_db == False, render VehNotFound component */}
+            {vehExists_db == false && ( <VehNotFound vehExists_db ={vehExists_db}/>
+            )}
+            
+            {/* if recievedData not null, render Graphs component and pass recievedData as prop*/}
             {recievedData !== null && (
                 <Graphs recievedData={recievedData}/> 
             )}
