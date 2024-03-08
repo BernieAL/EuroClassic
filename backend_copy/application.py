@@ -49,7 +49,7 @@ cache_file_path = os.path.join(os.getcwd(),'Cache/makes_cache.json')
 
 """ Veh manufacturer cache initialization
 on flask application startup - request is made to api to retrieve all car makes
-this is then written to a cache file for later use
+this is then written to a cache file for later use on client side for input tokenization
 
 On Client side - when form submitted
     user input is tokenized

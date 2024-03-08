@@ -3,6 +3,8 @@ import SearchForm from "./components/SearchForm"
 import Graphs from "./components/Graphs"
 import VehNotFound from "./components/VehNotFound"
 
+import Navbar from "./components/UI/Navbar"
+
 
 
 
@@ -35,6 +37,7 @@ export default function App(){
 
     return(
         <div>
+            <Navbar/>
             <SearchForm onDataSubmit={handleDataFromSearchForm}/>
             
             {/* if vehExists_db == False, render VehNotFound component */}
