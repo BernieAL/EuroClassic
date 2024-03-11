@@ -31,7 +31,12 @@ Undetected Chromedriver Error of time.sleep(0.1)
 
 from threading import Thread
 from typing import ClassVar
+
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+import seleniumwire.undetected_chromedriver as uc
+
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -41,7 +46,6 @@ from selenium.common.exceptions import NoSuchElementException,TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.proxy import Proxy, ProxyType
 from selenium.webdriver.support import expected_conditions as EC
-import undetected_chromedriver as uc
 
 
 import os
@@ -190,7 +194,7 @@ def ebay_current_scrape_single_veh(car,driver):
         """
         for page in page range (1->n) start from second page since we are already on first page
         """
-        for pg_link in pages_links[1:]:
+        for pg_link in pages_links[1:3]:
             
          
             #get references to all listing info elements on page, store as list
@@ -593,7 +597,7 @@ def error_log(error_obj):
 #main driver function - CALLING ALL SCRAPE FUNCTIONS sequentially
 def run_scrape(car):
         
-        # truncate deletes all file contents
+        # truncate - deletes all existing file contents
         raw_current_listing_output.truncate(0)
         raw_sold_output.truncate(0)
 
@@ -609,44 +613,45 @@ def run_scrape(car):
         }
 
         uc_chrome_options =uc.ChromeOptions()
-        chrome_options = Options()
+        # chrome_options = Options()
         #uc_chrome_options.add_argument(f"user-agent={my_user_agent}")
 
         #stop browser from closing - requires manual closing
-        # uc_chrome_options.add_experimental_option("detach", True)
+        # uc.Chrome(use_subprocess=True)
+
         
         #stop images from loading - improve page speed and reduce proxy data usage
-        chrome_options.add_argument('--blink-settings=imagesEnabled=false')
-
         uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
+        #ignore ssl issues from https
+        uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
+        uc_chrome_options.add_argument('--ignore-certificate-errors')
+        uc_chrome_options.add_argument("--allow-running-insecure-content")
 
-        #working with undetected chromedriver
-        #driver = uc.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
+              
+        #undetected chromedriver with proxy with chromedriver manager no .exe path
+        driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
-        # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe',seleniumwire_options=seleniumwire_options,options=chrome_options)
-
-        # driver with no proxy
-        # driver = webdriver.Chrome(executable_path=r'C:\browserdrivers\chromedriver\chromedriver.exe')
-
+    
         #for testing
-        # driver.get("https://bot.sannysoft.com/")
+        driver.get("https://bot.sannysoft.com/")
         # print(driver.current_url)
         # print(driver.page_source)
         # time.sleep(5)
         
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
-            # ebay_current_scrape_single_veh(car,driver),
+            ebay_current_scrape_single_veh(car,driver),
             # ebay_sold(car,driver),
             # bat_scrape_single_veh(car,driver)
             # bat_scrape_all_make(car,driver)
             # CL(car,driver),
         )
         
-        # driver.close()
+        driver.close()
+        
         # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
-        # time.sleep(1)
+        time.sleep(1)
         
         raw_current_listing_output.close()
         raw_sold_output.close()

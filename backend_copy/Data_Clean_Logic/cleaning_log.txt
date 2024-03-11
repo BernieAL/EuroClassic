@@ -317,3 +317,37 @@ INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 14:48:06] "OPTIONS /vehicle-query HTTP/
 INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 14:48:06] "POST /vehicle-query HTTP/1.1" 200 -
 INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
 INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 14:58:08] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 14:58:08] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 14:58:26] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 14:58:26] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 14:58:40] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 14:58:40] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 15:00:34] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 15:00:34] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 15:12:21] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 15:12:21] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 15:14:21] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Mar/2024 15:14:21] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\Data Engineering\\EuroClassic\\backend_copy\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977

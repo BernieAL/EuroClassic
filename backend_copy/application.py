@@ -135,7 +135,7 @@ initialize_cache()
 @application.route('/get_data',methods=['GET'])
 def return_data():
    """TESTING
-    endpoint for js script to request  non db data
+    endpoint for js script to request non db data
     returned data will be used to populate the graphs/charts etc
    """
 #    print(session['db_data'])
@@ -183,7 +183,7 @@ def vehicleQuery():
         #TESTING
         # print(f"vehicleQuery {veh}")
         
-        """ veh_scrape_status is obj
+        """veh_scrape_status is obj
             
             veh_scrape_status = {
                 'veh_found':False,
@@ -205,8 +205,8 @@ def vehicleQuery():
             print(chalk.green("::::::VEH SCRAPE NOT NEEDED::::::"))
             data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
             print(data_from_db)
-            t = jsonify(data_from_db)
-            print(t)
+            # t = jsonify(data_from_db)
+            # print(t)
             return jsonify(data_from_db)
              
         
@@ -220,13 +220,15 @@ def vehicleQuery():
             print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
             
             #this retrieves records from various tables in db matching make and model
-            """ returns this 
-                {
-                "all_sales_records": all_sales_records_result,
-                "current_records": current_records_result,
-                "sold_stats": sold_stats_result,
-                "current_stats": current_stats_result
-                }
+            """ 
+                This retrieves records from various tables in db matching make and model
+                DB_execute_queries_and_store_results returns this 
+                    {
+                        "all_sales_records": all_sales_records_result,
+                        "current_records": current_records_result,
+                        "sold_stats": sold_stats_result,
+                        "current_stats": current_stats_result
+                    }
             """
             veh_data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
             
