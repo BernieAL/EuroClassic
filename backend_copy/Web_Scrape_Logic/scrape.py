@@ -622,8 +622,9 @@ def run_scrape(car):
         
         #stop images from loading - improve page speed and reduce proxy data usage
         uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
-
+        
         #ignore ssl issues from https
+        uc_chrome_options.set_capability('acceptSslCerts',True)
         uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
         uc_chrome_options.add_argument('--ignore-certificate-errors')
         uc_chrome_options.add_argument("--allow-running-insecure-content")
@@ -633,7 +634,7 @@ def run_scrape(car):
         driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-        #for testing
+        #FOR TESTING
         driver.get("https://bot.sannysoft.com/")
         # print(driver.current_url)
         # print(driver.page_source)
@@ -641,7 +642,7 @@ def run_scrape(car):
         
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
-            ebay_current_scrape_single_veh(car,driver),
+            # ebay_current_scrape_single_veh(car,driver),
             # ebay_sold(car,driver),
             # bat_scrape_single_veh(car,driver)
             # bat_scrape_all_make(car,driver)

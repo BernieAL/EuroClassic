@@ -1,9 +1,10 @@
 import React,{useState} from "react"
-import SearchForm from "./components/SearchForm"
-import Graphs from "./components/Graphs"
-import VehNotFound from "./components/VehNotFound"
+import "./styles.scss"
 
-import Navbar from "./components/UI/Navbar"
+import SearchForm from "./components/SearchForm"
+import Graphs from "./components/Graphs/Graphs"
+import VehNotFound from "./components/VehNotFound"
+import Navbar from "./components/UI/Navbar/Navbar"
 
 
 
@@ -36,9 +37,13 @@ export default function App(){
 
 
     return(
-        <div>
+        <div className="main-wrapper">
+            
             <Navbar/>
-            <SearchForm onDataSubmit={handleDataFromSearchForm}/>
+            <div className="jumbotron">test</div>
+            <div className="search_form_wrapper"><SearchForm onDataSubmit={handleDataFromSearchForm}/></div>
+            <div className="card_wrapper">test</div>
+
             
             {/* if vehExists_db == False, render VehNotFound component */}
             {vehExists_db == false && ( <VehNotFound vehExists_db ={vehExists_db}/>

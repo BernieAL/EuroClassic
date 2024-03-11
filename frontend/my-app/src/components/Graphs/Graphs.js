@@ -1,6 +1,6 @@
 import React, {useState,useEffect  } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
+import module_css from './Graphs.module.css'
 
 /* READ ME - RECIEVED DATA STRUCTURE
 
@@ -107,11 +107,11 @@ export default function Graphs({recievedData}){
     
 
     return (
-        <div>
-            
+        <div className={module_css}>
+            <h3 className={module_css.graph_header}>These are the graphs</h3>
             <br></br>
                 {/* SOLD LISTINGS */}
-                <LineChart
+                <LineChart className={module_css.graph_test}
                     width={600}
                     height={500}
                     data={GRAPH_sales_data}

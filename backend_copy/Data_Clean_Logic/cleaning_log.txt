@@ -351,3 +351,70 @@ INFO:werkzeug: * Detected change in 'c:\\Users\\balma\\Documents\\Programming\\D
 INFO:werkzeug: * Restarting with stat
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 945-699-977
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:07] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:07] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:12] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:12] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:13] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:20] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:20] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:50] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:50] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:52] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:52] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:30:53] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:32:51] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:32:51] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:32:52] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:32:52] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:32:55] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:32:55] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:32:57] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:32:57] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:33:02] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:33:02] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:33:10] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:33:10] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:49:40] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:49:40] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:49:44] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:49:44] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:49:52] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:49:52] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:50:33] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:50:33] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:50:34] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:50:34] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:50:38] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:50:38] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:51:23] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:51:23] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:22] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:22] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:25] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:25] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:29] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:29] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:34] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:34] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:35] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:35] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:36] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:38] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:52:38] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:56:30] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 15:56:30] "POST /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 16:18:31] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 16:18:31] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 16:19:28] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 16:19:28] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 16:28:46] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 16:28:46] "GET /retrieve_cache HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 17:05:57] "OPTIONS /vehicle-query HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [11/Mar/2024 17:05:57] "POST /vehicle-query HTTP/1.1" 200 -
