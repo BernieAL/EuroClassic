@@ -42,7 +42,20 @@ export default function App(){
             <Navbar/>
             <div className="jumbotron">test</div>
             <div className="search_form_wrapper"><SearchForm onDataSubmit={handleDataFromSearchForm}/></div>
-            <div className="card_wrapper">test</div>
+            <div className="card_wrapper">
+                <div className="listing_card">
+                    test
+                </div>
+                <div className="listing_card">
+                    test
+                </div>
+                <div className="listing_card">
+                    test
+                </div>
+                <div className="listing_card">
+                    test
+                </div>
+            </div>
 
             
             {/* if vehExists_db == False, render VehNotFound component */}

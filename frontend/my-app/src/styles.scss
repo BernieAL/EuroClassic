@@ -134,6 +134,9 @@
 }
 
 .search_form_wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-sizing:border-box;
   border: red 10px solid;
   width:100%;
@@ -141,11 +144,18 @@
 
 .card_wrapper{
   box-sizing:border-box;
+  display:grid;
+  grid-template-columns: repeat(4,1fr);
   border:green 10px solid;
   height:300px;
   width: 100%;
+  ;
 }
 
-
+.listing_card{
+  display:flex;
+  padding:10px;
+  border:solid 5px blue;
+}
 
 
