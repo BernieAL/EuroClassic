@@ -1,7 +1,8 @@
-.main_wrapper{
+.main_content_wrapper{
   box-sizing:border-box;
+  border: 7px orange solid;
   display:flex;
-  flex-direction: col;
+  flex-direction: column;
 }
 
 .jumbotron{
@@ -9,14 +10,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 99%;
+  width: 100%;
   height:250px;
   border:blue 10px solid;
 }
 
 
 .topnav {
-  background-color: #333;
+  background-color: black;
   overflow: hidden;
   width: 100%;
 
@@ -149,13 +150,39 @@
   border:green 10px solid;
   height:300px;
   width: 100%;
-  ;
+}
+
+// second card wrapper
+.recently_requested{
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns: repeat(4,1fr);
+  border:red 10px solid;
+  height:300px;
+  width: 100%;
 }
 
 .listing_card{
   display:flex;
   padding:10px;
   border:solid 5px blue;
+  
+  .listing_card_content{
+    border: solid 4px purple;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .view_result{
+
+  }
+
+  .listing_card_icon_stats{
+    display: flex;
+    
+  }
 }
+
+
 
 

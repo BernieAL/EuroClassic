@@ -37,12 +37,39 @@ export default function App(){
 
 
     return(
-        <div className="main-wrapper">
+        <div className="main_content_wrapper">
             
             <Navbar/>
             <div className="jumbotron">test</div>
             <div className="search_form_wrapper"><SearchForm onDataSubmit={handleDataFromSearchForm}/></div>
             <div className="card_wrapper">
+                <div className="listing_card">
+                    <div className="listing_card_content">
+                        <div className="listing_card_img">
+                            <img src="" alt="" />
+                        </div>
+                        <button className="view_result">View Result Set</button>
+                        <div className="listing_card_icon_stats">
+                            <i className="listings_change_30 days">indicator, green or red, showing change num of listings over current 30 days compared to last 30 days
+                                <icon className="icon"></icon>
+                                <value className="literal value change"></value>
+                            </i>
+                            <i className="sold_change_30_days">change is sold transactions over last 30 days compared to last 30 days</i>
+                            <i className="price_avg_30_days">numerical dollar value of change is avg listing price compared to last 30 days</i>
+                        </div>
+                    </div>
+                </div>
+                <div className="listing_card">
+                    test
+                </div>
+                <div className="listing_card">
+                    test
+                </div>
+                <div className="listing_card">
+                    test
+                </div>
+            </div>
+            <div className="recently_requested">
                 <div className="listing_card">
                     test
                 </div>

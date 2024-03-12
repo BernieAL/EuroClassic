@@ -13,8 +13,9 @@ export default function Navbar(){
       
       <div className="topnav" id="myTopnav">
       <a href="#home" className="active">Home</a>
-      <a href="#news">News</a>
-      <a href="#contact">Contact</a>
+      <a href="#Browse">Browse</a>
+      <a href="#Request">Request</a>
+      <a href="#about">About</a>
       <div className="dropdown">
         <button className="dropbtn">Dropdown
           <i className="fa fa-caret-down"></i>
@@ -25,7 +26,6 @@ export default function Navbar(){
           <a href="#">Link 3</a>
         </div>
       </div>
-      <a href="#about">About</a>
       <a href="javascript:void(0);" className="icon" ></a>
     </div>
     )    
