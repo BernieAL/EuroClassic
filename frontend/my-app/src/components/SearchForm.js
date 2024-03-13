@@ -133,7 +133,10 @@ export default function SearchForm({onDataSubmit}){
         */
     
         const entered_data = {'year':year,'make':make,'model':model}
+        // call to server with parsed data
         callServer(entered_data)
+
+        
     }
 
 

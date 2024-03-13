@@ -1,4 +1,5 @@
 import React,{useState} from "react"
+import { BrowserRouter as <Routes></Routes>,Switch,Route, useHistory,Link } from 'react-router-dom';
 import "./styles.scss"
 
 import SearchForm from "./components/SearchForm"
@@ -15,6 +16,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 
 
 import mclarenp1 from './images/mclarenp1.jpg';
+import VehResultPage from "./components/VehResultPage/VehResultPage"
 
 library.add(fab, fas, far)
 
@@ -47,46 +49,35 @@ export default function App(){
 
 
     return(
-        <div className="main_content_wrapper">
 
-           
-            <Navbar/>
+        <Routes>
+            <Route path="/" exact>
+                    <div className="main_content_wrapper">
+                        <Navbar/>
+                        <SearchForm />
+                        <div className="jumbotron">test</div>
+                        <div 
+                        className="search_form_wrapper"><SearchForm onDataSubmit={handleDataFromSearchForm}/></div>
+                        <div className="card_wrapper">
+                            <ListingCard />
+                        </div>
+                        <div className="recently_requested">
+                            <ListingCard />
+                        </div>
+                         {/* if vehExists_db == False, render VehNotFound component */}
+                        {vehExists_db == false && ( <VehNotFound vehExists_db ={vehExists_db}/>
+                )}
+                    </div>
+            </Route>
+            <Route path="/results">
+                     {/* if recievedData not null, render vehResultPage component which renders graphs,stats, and info for selected vehicle dnd pass recievedData as prop*/}
+                    {recievedData !== null && (
+                        <VehResultPage recievedData={recievedData}/> 
+                    )}
+                </Route>
             
-           
-            <div className="jumbotron">test</div>
-
+        </Routes>
         
-            <div 
-            className="search_form_wrapper"><SearchForm onDataSubmit={handleDataFromSearchForm}/></div>
-            <div className="card_wrapper">
-                <ListingCard />
-               
-            </div>
-            {/* this section is showing vehicles people recently requested results for */}
-            <div className="recently_requested">
-                <div className="listing_card">
-                    test
-                </div>
-                <div className="listing_card">
-                    test
-                </div>
-                <div className="listing_card">
-                    test
-                </div>
-                <div className="listing_card">
-                    test
-                </div>
-            </div>
 
-            
-            {/* if vehExists_db == False, render VehNotFound component */}
-            {vehExists_db == false && ( <VehNotFound vehExists_db ={vehExists_db}/>
-            )}
-            
-            {/* if recievedData not null, render Graphs component and pass recievedData as prop*/}
-            {recievedData !== null && (
-                <Graphs recievedData={recievedData}/> 
-            )}
-        </div>
     )
 }

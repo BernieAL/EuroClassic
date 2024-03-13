@@ -1,5 +1,5 @@
 import React,{useState} from "react"
-import "../../../styles.scss"
+// import "../../../styles.scss"
 // import module_css from './Navbar.module.css'
 
 

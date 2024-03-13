@@ -1,5 +1,5 @@
 import React,{useState} from "react"
-import "../../../styles.scss"
+// import "../../../styles.scss"
 // import module_css from './Navbar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import mclarenp1 from '../../../images/mclarenp1.jpg';
