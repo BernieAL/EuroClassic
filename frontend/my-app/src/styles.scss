@@ -148,7 +148,7 @@
   display:grid;
   grid-template-columns: repeat(4,1fr);
   border:green 10px solid;
-  height:300px;
+  height:auto;
   width: 100%;
 }
 
@@ -173,26 +173,37 @@
     flex-direction: column;
   }
 
+  .listing_card_img_container{
+    max-width: 100%;
+    border: 3px solid orange;
+    .listing_card_img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
   .view_result{
     border: 3px orange solid;
   }
 
   .listing_card_icon_stats{
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid black;
     
-    .listings_change_30 days {
-        background-color: purple;
-        
+    .listings_change_indicator {
+        border: 4px solid yellow;
     }
     .listing_bottom_icons{
       display: flex;
-
+      gap:10px;
+      
       .icon {
         background-color: green;
       }
       .literal_value_change{
-        color:red;
+        color:green;
       }
     }
     // .sold_change_30_days {

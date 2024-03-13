@@ -12,6 +12,9 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 
+
+import mclarenp1 from './images/mclarenp1.jpg';
+
 library.add(fab, fas, far)
 
 
@@ -58,22 +61,39 @@ export default function App(){
             
                 <div className="listing_card">
                     <div className="listing_card_content">
-                        <div className="listing_card_img">
-                            <img src="" alt="" />
+                        <div className="listing_card_img_container">
+                            <img className="listing_card_img" src={mclarenp1} alt="" />
                         </div>
-                        <button className="view_result">View Result Set</button>
+                        
                         <div className="listing_card_icon_stats">
-                            <p className="listings_change_30 days">indicator, green or red, showing change num of listings over current 30 days compared to last 30 days
-                               
-                            </p>
-                            <div className="bottom_icons"> 
-                                <h2 className="icon"><FontAwesomeIcon icon={["fas", "arrow-up"]} /></h2>
-                                <h2 className="literal_value _change">120</h2>
+                            <div className="listings_change_indicator" 
+                                 aria-label="indicator, green or red, showing change num of listings over current 30 days compared to last 30 days">
+                                <div className="listing_bottom_icons"> 
+                                    <h2 className="icon"><FontAwesomeIcon icon={["fas", "arrow-up"]} /></h2>
+                                    <h2 className="literal_value_change">120</h2>
+                                </div>
                             </div>
+                            <div className="listings_change_indicator" 
+                                 aria-label="indicator, green or red, showing change num of listings over current 30 days compared to last 30 days">
+                                <div className="listing_bottom_icons"> 
+                                    <h2 className="icon"><FontAwesomeIcon icon={["fas", "arrow-up"]} /></h2>
+                                    <h2 className="literal_value_change">120</h2>
+                                </div>
+                            </div>
+                            <div className="listings_change_indicator" 
+                                 aria-label="indicator, green or red, showing change num of listings over current 30 days compared to last 30 days">
+                                <div className="listing_bottom_icons"> 
+                                    <h2 className="icon"><FontAwesomeIcon icon={["fas", "arrow-up"]} /></h2>
+                                    <h2 className="literal_value_change">120</h2>
+                                </div>
+                            </div>
+                            
+                            
                            
                             {/* <p className="sold_change_30_days">change is sold transactions over last 30 days compared to last 30 days</p>
                             <p className="price_avg_30_days">numerical dollar value of change is avg listing price compared to last 30 days</p> */}
                         </div>
+                        <button className="view_result">View Result Set</button>
                     </div>
                 </div>
                 <div className="listing_card">
