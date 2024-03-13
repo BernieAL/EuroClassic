@@ -6,7 +6,13 @@ import Graphs from "./components/Graphs/Graphs"
 import VehNotFound from "./components/VehNotFound"
 import Navbar from "./components/UI/Navbar/Navbar"
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
 
+library.add(fab, fas, far)
 
 
 export default function App(){
@@ -38,11 +44,18 @@ export default function App(){
 
     return(
         <div className="main_content_wrapper">
-            
+
+           
             <Navbar/>
+            
+           
             <div className="jumbotron">test</div>
-            <div className="search_form_wrapper"><SearchForm onDataSubmit={handleDataFromSearchForm}/></div>
+
+
+            <div 
+            className="search_form_wrapper"><SearchForm onDataSubmit={handleDataFromSearchForm}/></div>
             <div className="card_wrapper">
+            
                 <div className="listing_card">
                     <div className="listing_card_content">
                         <div className="listing_card_img">
@@ -50,12 +63,16 @@ export default function App(){
                         </div>
                         <button className="view_result">View Result Set</button>
                         <div className="listing_card_icon_stats">
-                            <i className="listings_change_30 days">indicator, green or red, showing change num of listings over current 30 days compared to last 30 days
-                                <icon className="icon"></icon>
-                                <value className="literal value change"></value>
-                            </i>
-                            <i className="sold_change_30_days">change is sold transactions over last 30 days compared to last 30 days</i>
-                            <i className="price_avg_30_days">numerical dollar value of change is avg listing price compared to last 30 days</i>
+                            <p className="listings_change_30 days">indicator, green or red, showing change num of listings over current 30 days compared to last 30 days
+                               
+                            </p>
+                            <div className="bottom_icons"> 
+                                <h2 className="icon"><FontAwesomeIcon icon={["fas", "arrow-up"]} /></h2>
+                                <h2 className="literal_value _change">120</h2>
+                            </div>
+                           
+                            {/* <p className="sold_change_30_days">change is sold transactions over last 30 days compared to last 30 days</p>
+                            <p className="price_avg_30_days">numerical dollar value of change is avg listing price compared to last 30 days</p> */}
                         </div>
                     </div>
                 </div>

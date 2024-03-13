@@ -174,12 +174,33 @@
   }
 
   .view_result{
-
+    border: 3px orange solid;
   }
 
   .listing_card_icon_stats{
     display: flex;
+    flex-direction: column;
     
+    .listings_change_30 days {
+        background-color: purple;
+        
+    }
+    .listing_bottom_icons{
+      display: flex;
+
+      .icon {
+        background-color: green;
+      }
+      .literal_value_change{
+        color:red;
+      }
+    }
+    // .sold_change_30_days {
+
+    // }
+    // .price_avg_30_days{
+
+    // }
   }
 }
 
