@@ -20,6 +20,8 @@ import time
 import random
 import sys
 
+import LongTerm_prev_scrapes 
+
 
 current_dir =os.path.abspath(__file__)
 print(current_dir)
@@ -194,14 +196,14 @@ def ebay_sold_scrape_single_veh(car,driver):
 
        #write date of scrape to file right before data
         today = date.today()
-        current_date = today.strftime("%m/%d/%Y")
+        current_date = today.strftime("%m-%d-%Y")
         date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
         EBAY_raw_SOLD_output_file.write(date_string)                    
 
 
         """for page in page range (1->n) start from second page since we are already on first page
         """
-        for pg_link in pages_links[1:]:
+        for pg_link in pages_links[1:2]:  #second digit is page we go up to
             #this gets prices of all cars on page
             ebay_items = []
             ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
@@ -231,6 +233,10 @@ def ebay_sold_scrape_single_veh(car,driver):
 
         #write items to file
         fileWrite(ebay_items,EBAY_raw_SOLD_output_file )
+
+        #create copy of scraped data for longterm storage
+        LongTerm_prev_scrapes.copy_file(EBAY_raw_SOLD_output_file,'EBAY',current_date,car)
+
          #clear array ahead of next page - to avoid writing duplicate data to file
         ebay_items.clear
         

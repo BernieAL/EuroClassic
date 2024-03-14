@@ -28,13 +28,13 @@ sys.path.append(current_dir)
 """
 This function takes a file, and creates a copy of it, storing it in curr dir
 """
-def create_copy_of_file(source_file,data_source,scrape_date,car):
+def copy_file(source_file,data_source,scrape_date,car):
 
     output_file_name = f"{data_source.upper()}__{scrape_date}__{car.upper()}.txt"
     output_file_path = os.path.join(current_dir,output_file_name)
 
     shutil.copy(source_file,output_file_path)
-    print(f"SUCCESSFULLY COPIED FILE - STORED IN{current_dir}")
+    print(f"SUCCESSFULLY COPIED FILE CONTENTS FROM {source_file} TO {output_file_name}")
 
 
 
@@ -46,4 +46,4 @@ if __name__ == "__main__":
     car = "AUDI R8"
     scrape_date ="03-14-2024" 
 
-    create_copy_of_file(test_file_to_copy,data_source,scrape_date,car)
+    copy_file(test_file_to_copy,data_source,scrape_date,car)
