@@ -1,5 +1,5 @@
 import React,{useState} from "react"
-import { BrowserRouter as <Routes></Routes>,Switch,Route, useHistory,Link } from 'react-router-dom';
+import {BrowserRouter as Router,Routes,Route, useNavigate,Link} from 'react-router-dom';
 import "./styles.scss"
 
 import SearchForm from "./components/SearchForm"
@@ -26,6 +26,7 @@ export default function App(){
     const [recievedData,setRecievedData] = useState(null)
     const [vehExists_db,setVehExists_DB] = useState(null)
 
+
     // callback function passed to SearchForm
     const handleDataFromSearchForm = (data) => {
         
@@ -45,38 +46,43 @@ export default function App(){
         
         const VEH_EXISTS = data['VEH_EXISTS']
         setVehExists_DB(VEH_EXISTS)
+
+        
     }
 
 
     return(
 
-        <Routes>
-            <Route path="/" exact>
-                    <div className="main_content_wrapper">
-                        <Navbar/>
-                        <SearchForm />
-                        <div className="jumbotron">test</div>
-                        <div 
-                        className="search_form_wrapper"><SearchForm onDataSubmit={handleDataFromSearchForm}/></div>
-                        <div className="card_wrapper">
-                            <ListingCard />
+        <Router>
+            <Routes>
+                <Route path="/" element={
+                        <div className="main_content_wrapper">
+                            <Navbar />
+                            
+                            <div className="jumbotron">test</div>
+                            <div 
+                                className="search_form_wrapper"><SearchForm onDataSubmit={handleDataFromSearchForm}/>
+                            </div>
+                            <div className="card_wrapper">
+                                <ListingCard />
+                            </div>
+                            <div className="recently_requested">
+                                <ListingCard />
+                            </div>
+                            {/* if vehExists_db == False, render VehNotFound component */}
+                            {vehExists_db == false && <VehNotFound vehExists_db ={vehExists_db}/>}
+                            
                         </div>
-                        <div className="recently_requested">
-                            <ListingCard />
-                        </div>
-                         {/* if vehExists_db == False, render VehNotFound component */}
-                        {vehExists_db == false && ( <VehNotFound vehExists_db ={vehExists_db}/>
-                )}
-                    </div>
-            </Route>
-            <Route path="/results">
-                     {/* if recievedData not null, render vehResultPage component which renders graphs,stats, and info for selected vehicle dnd pass recievedData as prop*/}
-                    {recievedData !== null && (
-                        <VehResultPage recievedData={recievedData}/> 
-                    )}
-                </Route>
+                }exact />
+                <Route path="/results" element={
+                    /* if recievedData not null, render vehResultPage component which renders graphs,stats, and info for selected vehicle dnd pass recievedData as prop*/
+                    recievedData !== null && <VehResultPage recievedData={recievedData} />
+                } />
+                
+                
             
-        </Routes>
+            </Routes>
+        </Router>
         
 
     )

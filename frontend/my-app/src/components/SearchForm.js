@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-
+import {useNavigate} from 'react-router-dom';
 
 export default function SearchForm({onDataSubmit}){
 
@@ -13,6 +13,8 @@ export default function SearchForm({onDataSubmit}){
     const [userInput,setUserInput] = useState({
         search_query:null,
     })
+    const navigate = useNavigate();
+
     const [formData,setFormData] = useState({
         state_year:null,
         state_make:null,
@@ -65,8 +67,9 @@ export default function SearchForm({onDataSubmit}){
                 const responseData = await response.json()
                 console.log('Form submitted successfully',responseData)
 
-                //send data back to parent component using parent function
-                onDataSubmit(responseData)
+                
+                onDataSubmit(responseData) //send data back to parent component using parent function
+                navigate('/results')
             }
         } catch (error) {
             console.error('Error with form submission', error.message)
@@ -136,7 +139,7 @@ export default function SearchForm({onDataSubmit}){
         // call to server with parsed data
         callServer(entered_data)
 
-        
+
     }
 
 
