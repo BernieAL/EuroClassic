@@ -68,8 +68,8 @@ export default function SearchForm({onDataSubmit}){
                 console.log('Form submitted successfully',responseData)
 
                 
-                onDataSubmit(responseData) //send data back to parent component using parent function
-                navigate('/results')
+                onDataSubmit(responseData) //send data back up to parent component using parent callback function
+                navigate('/results') //redirect to results path which renders vehResultPage component
             }
         } catch (error) {
             console.error('Error with form submission', error.message)
