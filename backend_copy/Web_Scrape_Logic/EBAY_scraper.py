@@ -31,6 +31,9 @@ SCRAPED_DATA_OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped
 EBAY_raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'EBAY_raw_SOLD_DATA.txt')
 EBAY_raw_SOLD_output_file = open(EBAY_raw_SOLD_output_file_path ,"a",encoding="utf-8")
 
+EBAY_raw_CURRENT_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'EBAY_raw_CURRENT_LISTINGS_DATA.txt')
+EBAY_raw_CURRENT_output_file = open(EBAY_raw_CURRENT_output_file_path ,"a",encoding="utf-8")
+
 error_log_file = os.path.join(SCRAPED_DATA_OUTPUT_DIR, '..','error_log.txt')
 error_log_output = open(error_log_file,"a",encoding="utf-8")
 
@@ -71,7 +74,7 @@ def ebay_current_scrape_single_veh(car,driver):
         intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc"
         driver.get(intial_url)
 
-        # #url for testing   
+        # URL FOR TESTING PURPOSES ONLY  
         # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
         # driver.get(intial_url)
         
@@ -97,12 +100,12 @@ def ebay_current_scrape_single_veh(car,driver):
         today = date.today()
         current_date = today.strftime("%m/%d/%Y")
         date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
-        EBAY_raw_SOLD_output_file .write(date_string)   
+        EBAY_raw_CURRENT_output_file.write(date_string)   
 
         """
         for page in page range (1->n) start from second page since we are already on first page
         """
-        for pg_link in pages_links[1:3]:
+        for pg_link in pages_links[1:2]:
             
          
             #get references to all listing info elements on page, store as list
@@ -124,7 +127,7 @@ def ebay_current_scrape_single_veh(car,driver):
                 
                 
             #write ebay_items to file before going to next page - in case script fails or mem issue with array
-            fileWrite(ebay_items,EBAY_raw_SOLD_output_file )
+            fileWrite(ebay_items,EBAY_raw_CURRENT_output_file)
             #clear array ahead of next page - to avoid writing duplicate data to file
             ebay_items.clear
        
@@ -158,6 +161,10 @@ def ebay_current_scrape_single_veh(car,driver):
 #this ebay section gets sold listings, beginnning from intial url again, and appends 'sold' and 'complete' params to the url
 def ebay_sold_scrape_single_veh(car,driver):
     # target_car = f"{car['make']} {car['model']}"
+
+    #clear existing data from prev scrape
+    EBAY_raw_SOLD_output_file.truncate(0)
+    
 
     intial_url = f"https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw={car['make']}&{car['model']}_sacat=0&_ipg=240&rt=nc"
     # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
@@ -287,6 +294,6 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    ebay_current_scrape_single_veh()
-    ebay_sold_scrape_single_veh()
+    ebay_current_scrape_single_veh(car,driver)
+    ebay_sold_scrape_single_veh(car,driver)
 
