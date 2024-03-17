@@ -136,7 +136,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
 
             #create copy of scraped data for longterm storage
             carName = f"{car['make']} {car['model']}"
-            # copy_file(EBAY_raw_CURRENT_output_file,'EBAY',current_date,carName)
+            copy_file(EBAY_raw_CURRENT_output_file_path,'EBAY',current_date,carName)
 
             #clear array ahead of next page - to avoid writing duplicate data to file
             ebay_items.clear
@@ -247,7 +247,7 @@ def ebay_SOLD_scrape_single_veh(car,driver):
 
         #create copy of scraped data for longterm storage
         carName = f"{car['make']} {car['model']}"
-        # copy_file(EBAY_raw_SOLD_output_file,'EBAY',current_date,carName)
+        copy_file(EBAY_raw_SOLD_output_file_path,'EBAY',current_date,carName)
 
          #clear array ahead of next page - to avoid writing duplicate data to file
         ebay_items.clear
@@ -276,48 +276,48 @@ def ebay_SOLD_scrape_single_veh(car,driver):
 
 if __name__ == '__main__':
 
-    # car  = {
-    # 'year':2017,
-    # 'make':'Porsche',
-    # 'model':'Panamera'
-    # }
+    car  = {
+    'year':2017,
+    'make':'Porsche',
+    'model':'Panamera'
+    }
 
-    # seleniumwire_options = {
-    #         'proxy': {
-    #             'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
-    #             'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
-    #         },
-    #         'detach':True
-    #     }
+    seleniumwire_options = {
+            'proxy': {
+                'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
+                'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
+            },
+            'detach':True
+        }
 
-    # uc_chrome_options = uc.ChromeOptions()
+    uc_chrome_options = uc.ChromeOptions()
     
-    # #stop images from loading - improve page speed and reduce proxy data usage
-    # uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+    #stop images from loading - improve page speed and reduce proxy data usage
+    uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
     
-    # #ignore ssl issues from https
-    # # uc_chrome_options.set_capability('acceptSslCerts',True)
-    # uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
-    # uc_chrome_options.add_argument('--ignore-certificate-errors')
-    # uc_chrome_options.add_argument("--allow-running-insecure-content")
+    #ignore ssl issues from https
+    # uc_chrome_options.set_capability('acceptSslCerts',True)
+    uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
+    uc_chrome_options.add_argument('--ignore-certificate-errors')
+    uc_chrome_options.add_argument("--allow-running-insecure-content")
 
             
-    # #undetected chromedriver with proxy with chromedriver manager no .exe path
-    # driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
+    #undetected chromedriver with proxy with chromedriver manager no .exe path
+    driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    # ebay_CURRENT_scrape_single_veh(car,driver)
-    # ebay_SOLD_scrape_single_veh(car,driver)
+    ebay_CURRENT_scrape_single_veh(car,driver)
+    ebay_SOLD_scrape_single_veh(car,driver)
 
-    # driver.close()
-    # EBAY_raw_SOLD_output_file.close()
-    # EBAY_raw_CURRENT_output_file.close()
+    driver.close()
+    EBAY_raw_SOLD_output_file.close()
+    EBAY_raw_CURRENT_output_file.close()
     
-    # # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
-    # time.sleep(1)
+    # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
+    time.sleep(1)
 
 
-    copy_file(EBAY_raw_SOLD_output_file_path,'EBAY',"3-17-24","Porcshe Panamera")
+   
 
     
 
