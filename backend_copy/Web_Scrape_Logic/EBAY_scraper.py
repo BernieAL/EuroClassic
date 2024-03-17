@@ -136,7 +136,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
 
             #create copy of scraped data for longterm storage
             carName = f"{car['make']} {car['model']}"
-            copy_file(EBAY_raw_CURRENT_output_file_path,'EBAY',current_date,carName)
+            copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,'EBAY',current_date,carName)
 
             #clear array ahead of next page - to avoid writing duplicate data to file
             ebay_items.clear
@@ -247,7 +247,7 @@ def ebay_SOLD_scrape_single_veh(car,driver):
 
         #create copy of scraped data for longterm storage
         carName = f"{car['make']} {car['model']}"
-        copy_file(EBAY_raw_SOLD_output_file_path,'EBAY',current_date,carName)
+        copy_file("EBAY",EBAY_raw_SOLD_output_file_path,'EBAY',current_date,carName)
 
          #clear array ahead of next page - to avoid writing duplicate data to file
         ebay_items.clear

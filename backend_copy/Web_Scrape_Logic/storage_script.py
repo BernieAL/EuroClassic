@@ -73,7 +73,13 @@ def copy_file(dest_dir_specifier,source_file,data_source,scrape_date,car):
 if __name__ == "__main__":
 
     #using dummy file/data to copy
-    test_file_to_copy = os.path.join(current_dir,"EBAY__3-17-24__PORCSHE PANAMERA.txt")
+
+    PROJ_ROOT = os.path.join(current_dir,'..')
+    DEST_DIR_PATH = os.path.join(PROJ_ROOT,'LongTerm_prev_scrapes')
+
+    test_file_to_copy = os.path.join(DEST_DIR_PATH,"test_data_for_copy.txt")
+    
+    dest_dir_specifier = "EBAY"
     data_source = "EBAY"
     car = "AUDI R8"
     scrape_date ="03-14-2024" 
