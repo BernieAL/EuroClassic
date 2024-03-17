@@ -60,8 +60,12 @@ def error_log(error_obj):
 # :::::: BEGIN BAT SECTION
 # ON BAT, only getting sold listings 
 def BAT_scrape_single_veh(car,driver):
-        
+    
+    today = date.today()
+    current_date = today.strftime("%m-%d-%Y")
+    
     try:     
+            
             make = car['make']
             model = car['model']
             
@@ -123,12 +127,16 @@ def BAT_scrape_single_veh(car,driver):
             #get html content and write to output file
             html_content = driver.page_source
             BAT_raw_SINGLE_VEH_SOLD_output_file.write(html_content)
-            print(":::BAT_SCRAPE_SINGLE_VEH -  HTML content successfully saved to file.")          
+
+            print(":::BAT_SCRAPE_SINGLE_VEH -  HTML content successfully saved to file.")
+
+            carName = f"{car['make']} {car['model']}"    
+            copy_file("BAT",BAT_raw_SINGLE_VEH_SOLD_output_file,'BAT-SINGLE',current_date,carName)
+
+            print(":::BAT_SCRAPE_SINGLE_VEH -  HTML file SUCCESSFULLY COPIED to LTS/BAT")          
            
 
     except NoSuchElementException as e:
-        today = date.today()
-        current_date = today.strftime("%m-%d-%Y")
         error_obj = {
                'error':e,
                'function':'bat_scrape',
@@ -146,7 +154,9 @@ def BAT_scrape_single_veh(car,driver):
 
 
 def BAT_scrape_all_for_make(car,driver):
-
+    today = date.today()
+    current_date = today.strftime("%m-%d-%Y")
+    
     try:
         #BY URL
         driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
@@ -187,6 +197,11 @@ def BAT_scrape_all_for_make(car,driver):
         html_content = driver.page_source
         BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file.write(html_content)
         print("HTML content successfully saved to file.")
+
+        carName = f"{car['make']} {car['model']}"    
+        copy_file("BAT",BAT_raw_SINGLE_VEH_SOLD_output_file,'BAT-ALL-MAKE',current_date,carName)
+
+        print(":::BAT_SCRAPE_SINGLE_VEH -  HTML file SUCCESSFULLY COPIED to LTS/BAT")    
 
 
     except NoSuchElementException as e:
