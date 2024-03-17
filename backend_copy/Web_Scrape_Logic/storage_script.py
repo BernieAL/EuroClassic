@@ -20,9 +20,14 @@ import shutil
 from datetime import date,datetime
 import time
 
+current_dir = os.path.abspath(__file__)
+# print(current_dir)
+sys.path.append(current_dir)
+
+
 #get abs path of 'this' file, then get the dir path of this file - not including the file name itself
 current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(current_dir)
+# sys.path.append(current_dir)
 
 
 """

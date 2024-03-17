@@ -20,12 +20,13 @@ import time
 import random
 import sys
 
-import LongTerm_prev_scrapes 
+# Ensure the storage_script is accessible from the path where this script is located
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from storage_script import copy_file
 
-
-current_dir =os.path.abspath(__file__)
-print(current_dir)
-sys.path.append(current_dir)
+SCRAPED_DATA_OUTPUT_DIR = "Scraped_data_output"
+if not os.path.exists(SCRAPED_DATA_OUTPUT_DIR):
+    os.makedirs(SCRAPED_DATA_OUTPUT_DIR)
 
 
 SCRAPED_DATA_OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
@@ -43,7 +44,7 @@ error_log_output = open(error_log_file,"a",encoding="utf-8")
 #function for writing raw scraped data to respective files
 def fileWrite(data,fileIn):
     for line in data:
-        temp = f"{line}"
+        temp = f"{line}\n"
         fileIn.write(temp)
 
 def error_log(error_obj):
@@ -57,7 +58,7 @@ def error_log(error_obj):
 
 
 #this function gets current listings
-def ebay_current_scrape_single_veh(car,driver):
+def ebay_CURRENT_scrape_single_veh(car,driver):
     
     target_car = f"{car['make']} {car['model']}"
     
@@ -101,11 +102,13 @@ def ebay_current_scrape_single_veh(car,driver):
         #write date of scrape to file right before data
         today = date.today()
         current_date = today.strftime("%m/%d/%Y")
-        date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
+        date_string = f" :::EBAY - CURRENT DATA SCRAPED ON: {current_date} \n"
         EBAY_raw_CURRENT_output_file.write(date_string)   
 
         """
-        for page in page range (1->n) start from second page since we are already on first page
+        # Navigate through pagination links to visit subsequent pages of eBay listings.
+        # Start from the second page because the first page is already loaded.
+        # Iterate over pagination links to access all available pages for data extraction.
         """
         for pg_link in pages_links[1:2]:
             
@@ -130,6 +133,11 @@ def ebay_current_scrape_single_veh(car,driver):
                 
             #write ebay_items to file before going to next page - in case script fails or mem issue with array
             fileWrite(ebay_items,EBAY_raw_CURRENT_output_file)
+
+            #create copy of scraped data for longterm storage
+            carName = f"{car['make']} {car['model']}"
+            # copy_file(EBAY_raw_CURRENT_output_file,'EBAY',current_date,carName)
+
             #clear array ahead of next page - to avoid writing duplicate data to file
             ebay_items.clear
        
@@ -151,7 +159,7 @@ def ebay_current_scrape_single_veh(car,driver):
     except NoSuchElementException as e:
         error_obj = {
                'error':e,
-               'function':'bat_scrape',
+               'function':'EBAY CURRENT',
                'date': current_date
         }
         error_log(error_obj)
@@ -161,7 +169,7 @@ def ebay_current_scrape_single_veh(car,driver):
     # print(ebay_items)
 
 #this ebay section gets sold listings, beginnning from intial url again, and appends 'sold' and 'complete' params to the url
-def ebay_sold_scrape_single_veh(car,driver):
+def ebay_SOLD_scrape_single_veh(car,driver):
     # target_car = f"{car['make']} {car['model']}"
 
     #clear existing data from prev scrape
@@ -188,7 +196,7 @@ def ebay_sold_scrape_single_veh(car,driver):
                 -we can iterate and visit these page links
         """
         pages_links=[]
-        pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a')
+        pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a') 
         for links in pages:
             pages_links.append(links.get_attribute('href'))
 
@@ -197,11 +205,14 @@ def ebay_sold_scrape_single_veh(car,driver):
        #write date of scrape to file right before data
         today = date.today()
         current_date = today.strftime("%m-%d-%Y")
-        date_string = f" :::EBAY - DATA SCRAPED ON: {current_date} \n"
+        date_string = f" :::EBAY - SOLD DATA SCRAPED ON: {current_date} \n"
         EBAY_raw_SOLD_output_file.write(date_string)                    
 
 
-        """for page in page range (1->n) start from second page since we are already on first page
+        """
+        # Navigate through pagination links to visit subsequent pages of eBay listings.
+        # Start from the second page because the first page is already loaded.
+        # Iterate over pagination links to access all available pages for data extraction.
         """
         for pg_link in pages_links[1:2]:  #second digit is page we go up to
             #this gets prices of all cars on page
@@ -235,7 +246,8 @@ def ebay_sold_scrape_single_veh(car,driver):
         fileWrite(ebay_items,EBAY_raw_SOLD_output_file )
 
         #create copy of scraped data for longterm storage
-        LongTerm_prev_scrapes.copy_file(EBAY_raw_SOLD_output_file,'EBAY',current_date,car)
+        carName = f"{car['make']} {car['model']}"
+        # copy_file(EBAY_raw_SOLD_output_file,'EBAY',current_date,carName)
 
          #clear array ahead of next page - to avoid writing duplicate data to file
         ebay_items.clear
@@ -267,7 +279,7 @@ if __name__ == '__main__':
     car  = {
     'year':2017,
     'make':'Porsche',
-    'model':'911'
+    'model':'Panamera'
     }
 
     seleniumwire_options = {
@@ -290,7 +302,7 @@ if __name__ == '__main__':
     uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
     
     #ignore ssl issues from https
-    uc_chrome_options.set_capability('acceptSslCerts',True)
+    # uc_chrome_options.set_capability('acceptSslCerts',True)
     uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
     uc_chrome_options.add_argument('--ignore-certificate-errors')
     uc_chrome_options.add_argument("--allow-running-insecure-content")
@@ -300,6 +312,6 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    ebay_current_scrape_single_veh(car,driver)
-    ebay_sold_scrape_single_veh(car,driver)
+    ebay_CURRENT_scrape_single_veh(car,driver)
+    ebay_SOLD_scrape_single_veh(car,driver)
 

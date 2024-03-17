@@ -194,7 +194,7 @@ def ebay_current_scrape_single_veh(car,driver):
         """
         for page in page range (1->n) start from second page since we are already on first page
         """
-        for pg_link in pages_links[1:3]:
+        for pg_link in pages_links[1:2]:
             
          
             #get references to all listing info elements on page, store as list
@@ -624,7 +624,7 @@ def run_scrape(car):
         uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
         
         #ignore ssl issues from https
-        uc_chrome_options.set_capability('acceptSslCerts',True)
+        # uc_chrome_options.set_capability('acceptSslCerts',True)
         uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
         uc_chrome_options.add_argument('--ignore-certificate-errors')
         uc_chrome_options.add_argument("--allow-running-insecure-content")
@@ -642,7 +642,7 @@ def run_scrape(car):
         
         # scrape results tells you if each scraper function was successful or not
         scrape_results = (
-            # ebay_current_scrape_single_veh(car,driver),
+            ebay_current_scrape_single_veh(car,driver),
             # ebay_sold(car,driver),
             # bat_scrape_single_veh(car,driver)
             # bat_scrape_all_make(car,driver)
