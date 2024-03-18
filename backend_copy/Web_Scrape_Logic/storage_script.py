@@ -20,13 +20,14 @@ import shutil
 from datetime import date,datetime
 import time
 
-current_dir = os.path.abspath(__file__)
-# print(current_dir)
-sys.path.append(current_dir)
+#Gives - backend_copy\Web_Scrape_Logic\storage_script.py
+current_file_path = os.path.abspath(__file__)
+sys.path.append(current_file_path)
 
-
-#get abs path of 'this' file, then get the dir path of this file - not including the file name itself
-current_dir = os.path.dirname(os.path.abspath(__file__))
+#Get abs path of 'this' file, then get the dir path of this file - not including the file name itself
+#Gives - EuroClassic\backend_copy\Web_Scrape_Logic
+current_script_dir= os.path.dirname(os.path.abspath(__file__))
+# print(current_script_dir)
 # sys.path.append(current_dir)
 
 
@@ -39,22 +40,25 @@ def copy_file(dest_dir_specifier,source_file,data_source,scrape_date,car):
     
     Copies the source file to a specified destination directory, creating the directory if it doesn't exist.
     The destination file's name is constructed using the data source, scrape date, and car name.
-
-    -dest_dir_specifier: The subdirectory within 'LongTerm_prev_scrapes' where the file should be copied.
-    -source_file: Path to the source file that needs to be copied.
-        Ex. if dest_dir_specifier is set to EBAY from calling statement in scraper - then we get path to LTS/EBAY and copy source file to this location.
-    -data_source: The name of the data source (e.g., 'EBAY').
-    -scrape_date: The date of the scrape, used in the file name.
-    -car: The name of the car, used in the file name.
+    PARAMS:
+        -dest_dir_specifier: The subdirectory within 'LongTerm_prev_scrapes' where the file should be copied.
+        -source_file: Path to the source file that needs to be copied.
+            Ex. if dest_dir_specifier is set to EBAY from calling statement in scraper - then we get path to LTS/EBAY and copy source file to this location.
+        -data_source: The name of the data source (e.g., 'EBAY').
+        -scrape_date: The date of the scrape, used in the file name.
+        -car: The name of the car, used in the file name.
     
   
     """
    
-    #check that the destination directory exists
-    PROJ_ROOT = os.path.join(current_dir,'..')
-
+   # Gives - \EuroClassic\backend_copy
+    PROJ_ROOT = os.path.abspath(os.path.join(current_script_dir, '..'))
+    
+    #build destination path string
+    # Ex. '../Longterm_prev_scrapes/EBAY' --> where EBAY is dest_dir_specifier
     DEST_DIR_PATH = os.path.join(PROJ_ROOT,'LongTerm_prev_scrapes', dest_dir_specifier)
 
+    #create dest dir if doesnt exist 
     if not os.path.exists(DEST_DIR_PATH):
         os.makedirs(DEST_DIR_PATH)
         print(f"Created directory: {DEST_DIR_PATH}")
@@ -62,23 +66,31 @@ def copy_file(dest_dir_specifier,source_file,data_source,scrape_date,car):
    
 
     #create file name using params 
-    output_file_name = f"{data_source.upper()}__{scrape_date}__{car.upper()}.txt"
-    output_file_path = os.path.join(DEST_DIR_PATH,output_file_name)
+    #Ex. EBAY__03-18-24__AUDI-R8
+    custom_output_file_name = f"{data_source.upper()}__{scrape_date}__{car.upper()}.txt"
+    
+    #create file path for output file
+    #Ex. '../Longterm_prev_scrapes/EBAY/EBAY__03-18-24__AUDI-R8'
+    custom_output_file_path = os.path.join(DEST_DIR_PATH,custom_output_file_name)
 
-    shutil.copy(source_file,output_file_path)
-    print(f"SUCCESSFULLY COPIED FILE CONTENTS FROM {source_file} TO {output_file_name}")
+    #copy source and store as output filename
+    shutil.copy(source_file,custom_output_file_path)
+    print(f"SUCCESSFULLY COPIED FILE CONTENTS FROM {source_file} TO {custom_output_file_name}")
 
 
 
 if __name__ == "__main__":
 
     #using dummy file/data to copy
+    # Gives - \EuroClassic\backend_copy
+    PROJ_ROOT = os.path.abspath(os.path.join(current_script_dir, '..'))
 
-    PROJ_ROOT = os.path.join(current_dir,'..')
+    #Gives - \EuroClassic\backend_copy\LongTerm_prev_scrapes
     DEST_DIR_PATH = os.path.join(PROJ_ROOT,'LongTerm_prev_scrapes')
-
+    print(DEST_DIR_PATH)
     test_file_to_copy = os.path.join(DEST_DIR_PATH,"test_data_for_copy.txt")
-    
+    print(os.path.isfile(test_file_to_copy))
+
     dest_dir_specifier = "EBAY"
     data_source = "EBAY"
     car = "AUDI R8"

@@ -134,19 +134,19 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
             #write ebay_items to file before going to next page - in case script fails or mem issue with array
             fileWrite(ebay_items,EBAY_raw_CURRENT_output_file)
 
-            #create copy of scraped data for longterm storage
-            carName = f"{car['make']} {car['model']}"
-            copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,'EBAY',current_date,carName)
-
             #clear array ahead of next page - to avoid writing duplicate data to file
             ebay_items.clear
-       
 
             #slow down page navigation
             time.sleep(random.uniform(3,9))
+
+            #navigate to next page in list of pg_links
             driver.get(pg_link)
 
-        
+        #create copy of scraped data for longterm storage
+        carName = f"{car['make']}-{car['model']}"
+        copy_file("EBAY",EBAY_raw_CURRENT_output_file,'EBAY',current_date,carName)
+
         success_obj = {
                     'success': True,
                     'function':'ebay_scrape',
@@ -242,26 +242,29 @@ def ebay_SOLD_scrape_single_veh(car,driver):
                 temp = f'{item_description} {item_price} {sale_date_text_date_obj}'
                 ebay_items.append(temp)
 
-        #write items to file
-        fileWrite(ebay_items,EBAY_raw_SOLD_output_file )
+            #write items to file
+            fileWrite(ebay_items,EBAY_raw_SOLD_output_file )
 
-        #create copy of scraped data for longterm storage
-        carName = f"{car['make']} {car['model']}"
-        copy_file("EBAY",EBAY_raw_SOLD_output_file_path,'EBAY',current_date,carName)
-
-         #clear array ahead of next page - to avoid writing duplicate data to file
-        ebay_items.clear
-        
-        #slow down page navigation
-        time.sleep(random.uniform(3,9))
-        driver.get(pg_link)
-        
+            #clear array ahead of next page - to avoid writing duplicate data to file
+            ebay_items.clear
             
+            #slow down page navigation
+            time.sleep(random.uniform(3,9))
+            driver.get(pg_link)
+        
+        #create copy of file containing scraped file for longterm storage
+        carName = f"{car['make']}-{car['model']}"
+        copy_file("EBAY",EBAY_raw_SOLD_output_file,'EBAY',current_date,carName)
+          
+        
         success_obj = {
                     'success': True,
                     'function':'ebay_scrape_sold',
                     'date': current_date,
         }
+        #close file after writing to it
+        EBAY_raw_SOLD_output_file.close()
+        
         return success_obj
     
     except NoSuchElementException as e:
@@ -279,7 +282,7 @@ if __name__ == '__main__':
     car  = {
     'year':2017,
     'make':'Porsche',
-    'model':'Panamera'
+    'model':'Turbo s'
     }
 
     seleniumwire_options = {
@@ -306,7 +309,7 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    ebay_CURRENT_scrape_single_veh(car,driver)
+    # ebay_CURRENT_scrape_single_veh(car,driver)
     ebay_SOLD_scrape_single_veh(car,driver)
 
     driver.close()
