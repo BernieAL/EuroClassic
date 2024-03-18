@@ -37,7 +37,7 @@ This function takes a file, and creates a copy of it, storing it in curr dir
 def copy_file(dest_dir_specifier,source_file,data_source,scrape_date,car):
 
     """
-    
+    Accepts FILE PATH of source file - NOT THE OPENED FILE OBJECT REFERENCE
     Copies the source file to a specified destination directory, creating the directory if it doesn't exist.
     The destination file's name is constructed using the data source, scrape date, and car name.
     PARAMS:

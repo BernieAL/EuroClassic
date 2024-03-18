@@ -131,7 +131,7 @@ def BAT_scrape_single_veh(car,driver):
             print(":::BAT_SCRAPE_SINGLE_VEH -  HTML content successfully saved to file.")
 
             carName = f"{car['make']} {car['model']}"    
-            copy_file("BAT",BAT_raw_SINGLE_VEH_SOLD_output_file,'BAT-SINGLE',current_date,carName)
+            copy_file("BAT",BAT_raw_SINGLE_VEH_SOLD_output_file_path,'BAT-SINGLE',current_date,carName)
 
             print(":::BAT_SCRAPE_SINGLE_VEH -  HTML file SUCCESSFULLY COPIED to LTS/BAT")          
            
@@ -199,7 +199,7 @@ def BAT_scrape_all_for_make(car,driver):
         print("HTML content successfully saved to file.")
 
         carName = f"{car['make']} {car['model']}"    
-        copy_file("BAT",BAT_raw_SINGLE_VEH_SOLD_output_file,'BAT-ALL-MAKE',current_date,carName)
+        copy_file("BAT",BAT_raw_SINGLE_VEH_SOLD_output_file_path,'BAT-ALL-MAKE',current_date,carName)
 
         print(":::BAT_SCRAPE_SINGLE_VEH -  HTML file SUCCESSFULLY COPIED to LTS/BAT")    
 

@@ -143,9 +143,11 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
             #navigate to next page in list of pg_links
             driver.get(pg_link)
 
+        #close file before copying or it will result in empty copied file
+        EBAY_raw_CURRENT_output_file.close()
         #create copy of scraped data for longterm storage
         carName = f"{car['make']}-{car['model']}"
-        copy_file("EBAY",EBAY_raw_CURRENT_output_file,'EBAY',current_date,carName)
+        copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,'EBAY',current_date,carName)
 
         success_obj = {
                     'success': True,
@@ -254,7 +256,10 @@ def ebay_SOLD_scrape_single_veh(car,driver):
         
         #create copy of file containing scraped file for longterm storage
         carName = f"{car['make']}-{car['model']}"
-        copy_file("EBAY",EBAY_raw_SOLD_output_file,'EBAY',current_date,carName)
+        
+        #close file before copying or it will result in empty copied file
+        EBAY_raw_SOLD_output_file.close()
+        copy_file("EBAY",EBAY_raw_SOLD_output_file_path,'EBAY',current_date,carName)
           
         
         success_obj = {
@@ -262,12 +267,12 @@ def ebay_SOLD_scrape_single_veh(car,driver):
                     'function':'ebay_scrape_sold',
                     'date': current_date,
         }
-        #close file after writing to it
-        EBAY_raw_SOLD_output_file.close()
+       
         
         return success_obj
     
     except NoSuchElementException as e:
+        pass
         error_obj = {
                'error':e,
                'function':'ebay_sold_listings',
@@ -282,7 +287,7 @@ if __name__ == '__main__':
     car  = {
     'year':2017,
     'make':'Porsche',
-    'model':'Turbo s'
+    'model':'944'
     }
 
     seleniumwire_options = {
@@ -313,8 +318,7 @@ if __name__ == '__main__':
     ebay_SOLD_scrape_single_veh(car,driver)
 
     driver.close()
-    EBAY_raw_SOLD_output_file.close()
-    EBAY_raw_CURRENT_output_file.close()
+    
     
     # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
     time.sleep(1)
