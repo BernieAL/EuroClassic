@@ -12,6 +12,13 @@ create new dir called long-term-prev-scrapes
 			Ex. EBAY__7-12-2024__Audi-R8.txt
 	Benefit:
 		having historical scrapes in case cleaned data gets ruined or we lose dome data from db, we have original unprocessed backups
+
+
+    **NOTE ABOUT OVERWRITING:
+        The shutil.copy function will overwrite the destination file if it already exists. So, if there's a file with the same name in the destination directory, it will be replaced with the new file being copied.
+
+        Ex. if this file (BAT-ALL-MAKE__03-19-2024__PORSCHE 911.txt) exists already and has data, and the the copy_file function is coming from the same source, from the same vehicle, on the same_date, it will cause the existing one to be overwritten. 
+
 """
 
 import os

@@ -147,7 +147,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
         EBAY_raw_CURRENT_output_file.close()
         #create copy of scraped data for longterm storage
         carName = f"{car['make']}-{car['model']}"
-        copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,'EBAY',current_date,carName)
+        copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,"EBAY",current_date,carName)
 
         success_obj = {
                     'success': True,

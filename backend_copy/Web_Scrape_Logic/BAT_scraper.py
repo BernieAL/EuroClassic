@@ -36,13 +36,12 @@ error_log_file = os.path.join(SCRAPED_DATA_OUTPUT_DIR, '..','error_log.txt')
 
 #Getting path to and opening output file - all listing for given Vehicle maker
 BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'BAT_raw_ALL_MAKE_SOLD_DATA.html')
-BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file = open(BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file_path ,"w",encoding="utf-8")
+BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file = open(BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file_path ,"a",encoding="utf-8")
 
 ##Getting path to and opening output file - all listings for indiv vehicle
 BAT_raw_SINGLE_VEH_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'BAT_raw_SINGLE_VEH_SOLD_DATA.html')
 # print(os.path.isfile(BAT_raw_SINGLE_VEH_SOLD_output_file_path))
-
-BAT_raw_SINGLE_VEH_SOLD_output_file = open(BAT_raw_SINGLE_VEH_SOLD_output_file_path,"w",encoding="utf-8")
+BAT_raw_SINGLE_VEH_SOLD_output_file = open(BAT_raw_SINGLE_VEH_SOLD_output_file_path,"a",encoding="utf-8")
 
 
 
@@ -63,7 +62,11 @@ def BAT_scrape_single_veh(car,driver):
     
     today = date.today()
     current_date = today.strftime("%m-%d-%Y")
+
+    #clear existing data from prev scrape
+    # BAT_raw_SINGLE_VEH_SOLD_output_file.truncate(0)
     
+
     try:     
             
             make = car['make']
@@ -127,8 +130,12 @@ def BAT_scrape_single_veh(car,driver):
             #get html content and write to output file
             html_content = driver.page_source
             BAT_raw_SINGLE_VEH_SOLD_output_file.write(html_content)
-
+            #before closing file - explicitly flush file bugger to ensure all data is written to disk immediatley
+            BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file.flush()
             print(":::BAT_SCRAPE_SINGLE_VEH -  HTML content successfully saved to file.")
+
+            #close file before copying or it will result in empty copied file
+            BAT_raw_SINGLE_VEH_SOLD_output_file.close()
 
             carName = f"{car['make']} {car['model']}"    
             copy_file("BAT",BAT_raw_SINGLE_VEH_SOLD_output_file_path,'BAT-SINGLE',current_date,carName)
@@ -157,6 +164,9 @@ def BAT_scrape_all_for_make(car,driver):
     today = date.today()
     current_date = today.strftime("%m-%d-%Y")
     
+    #clear existing data from prev scrape
+    BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file.truncate(0)
+
     try:
         #BY URL
         driver.get(f"https://bringatrailer.com/{car['make']}/?q={car['make']}")
@@ -181,7 +191,8 @@ def BAT_scrape_all_for_make(car,driver):
             -get number of Auction Results on page and divide by 24 to get number of clicks we need to do - because each click loads 24 more results
             -also as backup, check for existence of show more button, if not visible, stop the loop
         """
-        for i in range(2):
+        desired_clicks = 2
+        for i in range(desired_clicks):
             if show_more_listing_button.is_displayed():
                 show_more_listing_button.click()
                 print(f"FOUND 'SHOW MORE' - CLICKING ")
@@ -198,9 +209,12 @@ def BAT_scrape_all_for_make(car,driver):
         BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file.write(html_content)
         print("HTML content successfully saved to file.")
 
-        carName = f"{car['make']} {car['model']}"    
-        copy_file("BAT",BAT_raw_SINGLE_VEH_SOLD_output_file_path,'BAT-ALL-MAKE',current_date,carName)
+        #close file before copying or it will result in empty copied file
+        BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file.close()
 
+        carName = f"{car['make']} {car['model']}"    
+        copy_file("BAT",BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file_path,'BAT-ALL-MAKE',current_date,carName)
+       
         print(":::BAT_SCRAPE_SINGLE_VEH -  HTML file SUCCESSFULLY COPIED to LTS/BAT")    
 
 
@@ -224,7 +238,7 @@ if __name__ == '__main__':
     car  = {
     'year':2017,
     'make':'Porsche',
-    'model':'Panamera'
+    'model':'911'
     }
 
     seleniumwire_options = {
@@ -251,12 +265,12 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    # BAT_scrape_single_veh(car,driver)
-    BAT_scrape_all_for_make(car,driver)
+    BAT_scrape_single_veh(car,driver)
+    # BAT_scrape_all_for_make(car,driver)
 
     driver.close()
-    BAT_raw_SINGLE_VEH_SOLD_output_file.close()
-    BAT_raw_ALL_MAKE_LISTINGS_SOLD_output_file.close()
+    
+    
     
     # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
     time.sleep(1)
