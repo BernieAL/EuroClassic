@@ -7,16 +7,23 @@ from simple_chalk import chalk
 log_file_path = os.path.join(os.path.dirname(__file__), 'cleaning_log.txt')
 logging.basicConfig(filename=log_file_path, level=logging.INFO)
 
+#directory of 'this' file
+current_script_dir = os.path.dirname(os.path.abspath(__file__))
+
+#get ref to project root
+PROJ_ROOT = os.path.abspath(os.path.join(current_script_dir,'..'))
+
 #dir of raw extracted data
-extracted_data_dir_path = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
+SCRAPED_DATA_OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
 
-EBAY_raw_CURRENT_LISTINGS_file = os.path.join(extracted_data_dir_path, 'EBAY_raw_CURRENT_LISTINGS_DATA.txt')
+#INPUT get ref to ebay raw current listings file
+EBAY_raw_CURRENT_LISTINGS_file = os.path.join(SCRAPED_DATA_OUTPUT_DIR, 'EBAY_raw_CURRENT_LISTINGS_DATA.txt')
+#INPUT get ref to ebay raw sold listings file
+EBAY_raw_SOLD_DATA_file = os.path.join(SCRAPED_DATA_OUTPUT_DIR, 'EBAY_raw_SOLD_DATA.txt')
 
-EBAY_raw_SOLD_DATA_file = os.path.join(extracted_data_dir_path, 'EBAY_raw_SOLD_DATA.txt')
-
-EBAY_clean_output_file_CURRENT_LISTINGS_file = os.path.join(extracted_data_dir_path, '..', 'EBAY_cleaned_CURRENT_LISTINGS.csv')
-
-EBAY_clean_output_file_SOLD_DATA_file = os.path.join(extracted_data_dir_path, '..', 'EBAY_cleaned_SOLD_DATA.csv')
+#OUTPUT get ref to output file
+EBAY_clean_output_file_CURRENT_LISTINGS_file = os.path.join(SCRAPED_DATA_OUTPUT_DIR, '..', 'EBAY_cleaned_CURRENT_LISTINGS.csv')
+EBAY_clean_output_file_SOLD_DATA_file = os.path.join(SCRAPED_DATA_OUTPUT_DIR, '..', 'EBAY_cleaned_SOLD_DATA.csv')
 
 clean_output_array = []
 
@@ -26,15 +33,15 @@ def fileWrite(data, fileIn):
         fileIn.write(temp)
     fileIn.write("---------------------- \n")
 
-def clean_data_SOLD(raw_SOLD_DATA_file, year, make, model):
+def clean_data_EBAY_SOLD(raw_SOLD_DATA_file, year, make, model):
     try:
         clean_output_file_SOLD_DATA = open(EBAY_clean_output_file_SOLD_DATA_file, "w", encoding="utf-8")
-        to_output_file = clean_output_file_SOLD_DATA
+        output_file = clean_output_file_SOLD_DATA
 
         raw_input_SOLD_DATA = open(raw_SOLD_DATA_file, "r", encoding="utf-8")
-        unclean_input = raw_input_SOLD_DATA
 
-        for line in unclean_input:
+
+        for line in raw_input_SOLD_DATA:
             if model in line:
                 line = line.replace(',', '')
                 if re.findall('^\d{4}', line):
@@ -62,17 +69,17 @@ def clean_data_SOLD(raw_SOLD_DATA_file, year, make, model):
         col_headers = f"Year,Make,Model,Price,DateSold\n"
         clean_output_file_SOLD_DATA.write(col_headers)
 
-        fileWrite(clean_output_array, to_output_file)
+        fileWrite(clean_output_array, output_file)
 
         clean_output_file_SOLD_DATA.close()
-        unclean_input.close()
+        raw_input_SOLD_DATA.close()
         logging.info("Data cleaning for SOLD_DATA successful")
         print(chalk.green("Data cleaning for SOLD_DATA successful"))
     except Exception as e:
         logging.error(f"Error during data cleaning for SOLD_DATA: {str(e)}")
         print(chalk.red(f"Error during data cleaning for SOLD_DATA: {str(e)}"))
 
-def clean_data_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
+def clean_data_EBAY_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
     try:
         clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_output_file_CURRENT_LISTINGS_file, "w", encoding="utf-8")
         to_output_file = clean_output_file_CURRENT_LISTINGS
@@ -112,12 +119,11 @@ def clean_data_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
         logging.error(f"Error during data cleaning for CURRENT_LISTINGS: {str(e)}")
         print(chalk.red(f"Error during data cleaning for CURRENT_LISTINGS: {str(e)}"))
 
-def clean_all_data(car):
+def clean_data_runner(car):
     try:
-        clean_data_CURRENT(EBAY_raw_CURRENT_LISTINGS_file, car['year'], car['make'], car['model'])
-        
-        clean_data_SOLD(EBAY_raw_SOLD_DATA_file, car['year'], car['make'], car['model'])
-        
+        clean_data_EBAY_SOLD(EBAY_raw_SOLD_DATA_file, car['year'], car['make'], car['model'])
+        # clean_data_EBAY_CURRENT(EBAY_raw_CURRENT_LISTINGS_file, car['year'], car['make'], car['model'])
+               
         logging.info("Data cleaning for all types successful")
         return True
     except Exception as e:
@@ -126,8 +132,8 @@ def clean_all_data(car):
 
 if __name__ == '__main__':
     car = {
-        'year': 2021,
-        'make': 'BMW',
-        'model': '3-Series'
+        'year': 0000,
+        'make': 'Porsche',
+        'model': '944'
     }
-    clean_all_data(car)
+    clean_data_runner(car)
