@@ -4,3 +4,11 @@ ERROR:root:Error during data cleaning for SOLD_DATA: cannot access local variabl
 INFO:root:Data cleaning for all types successful
 ERROR:root:Error during data cleaning for SOLD_DATA: 'int' object has no attribute 'split'
 INFO:root:Data cleaning for all types successful
+ERROR:root:Error during data cleaning for SOLD_DATA: cannot access local variable 'price' where it is not associated with a value
+INFO:root:Data cleaning for all types successful
+ERROR:root:Error during data cleaning for SOLD_DATA: cannot access local variable 'price' where it is not associated with a value
+INFO:root:Data cleaning for all types successful
+ERROR:root:Error during data cleaning for SOLD_DATA: cannot access local variable 'price' where it is not associated with a value
+INFO:root:Data cleaning for all types successful
+ERROR:root:Error during data cleaning for SOLD_DATA: cannot access local variable 'price' where it is not associated with a value
+INFO:root:Data cleaning for all types successful

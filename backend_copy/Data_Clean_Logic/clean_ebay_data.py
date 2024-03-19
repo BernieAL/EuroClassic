@@ -77,7 +77,7 @@ def clean_data_EBAY_SOLD(raw_SOLD_DATA_file, year, make, model):
         print(chalk.green("Data cleaning for SOLD_DATA successful"))
     except Exception as e:
         logging.error(f"Error during data cleaning for SOLD_DATA: {str(e)}")
-        print(chalk.red(f"Error during data cleaning for SOLD_DATA: {str(e)}"))
+        print(chalk.red(f"Error during data cleaning for SOLD_DATA: {str(e)} \n OFFENDING LINE--> {line}"))
 
 def clean_data_EBAY_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
     try:

@@ -75,6 +75,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
         """This url reduces # of pages to visit by requesting 240 items per page ---> &_ipg=240
         """
         intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc"
+       
         driver.get(intial_url)
 
         # URL FOR TESTING PURPOSES ONLY  
@@ -178,16 +179,22 @@ def ebay_SOLD_scrape_single_veh(car,driver):
     EBAY_raw_SOLD_output_file.truncate(0)
     
 
-    intial_url = f"https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw={car['make']}&{car['model']}_sacat=0&_ipg=240&rt=nc"
+    intial_url = f"https://www.ebay.com/sch/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&_sop=13&_fspt=1&LH_PrefLoc=98&rt=nc"
+   
+    
+    # old = f"https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw={car['make']}&{car['model']}_sacat=0&_ipg=240&rt=nc"
     # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
+
     sold_complete_url = intial_url + '&LH_Sold=1&LH_Complete=1'
+    
     
     try:
         # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
-        # driver.get("https://www.ebay.com/sch/i.html?_from=R40&_nkw=honda+accord&_sacat=6001&_sop=13&_stpos=07029&_fspt=1&LH_PrefLoc=98&rt=nc&LH_Sold=1&LH_Complete=1")
+        # driver.get("https://www.ebay.com/sch/i.html?_from=R40&_nkw=honda+accord&_sacat=6001&_sop=13&_fspt=1&LH_PrefLoc=98&rt=nc&LH_Sold=1&LH_Complete=1")
         
-        time.sleep(4)
+        
         driver.get(sold_complete_url)
+        time.sleep(7)
         
 
         """ PAGE NUM DISCOVERY
@@ -268,7 +275,7 @@ def ebay_SOLD_scrape_single_veh(car,driver):
                     'date': current_date,
         }
        
-        
+        time.sleep(20)
         return success_obj
     
     except NoSuchElementException as e:
@@ -287,7 +294,7 @@ if __name__ == '__main__':
     car  = {
     'year':2017,
     'make':'Porsche',
-    'model':'944'
+    'model':'911'
     }
 
     seleniumwire_options = {
@@ -314,8 +321,8 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    # ebay_CURRENT_scrape_single_veh(car,driver)
-    ebay_SOLD_scrape_single_veh(car,driver)
+    ebay_CURRENT_scrape_single_veh(car,driver)
+    # ebay_SOLD_scrape_single_veh(car,driver)
 
     driver.close()
     
