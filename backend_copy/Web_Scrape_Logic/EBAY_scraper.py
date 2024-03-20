@@ -19,10 +19,12 @@ from datetime import date,datetime
 import time
 import random
 import sys
+from simple_chalk import chalk
+
 
 # Ensure the storage_script is accessible from the path where this script is located
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from backend_copy.Web_Scrape_Logic.LTS_storage_script import copy_file
+from LTS_storage_script import copy_file
 
 SCRAPED_DATA_OUTPUT_DIR = "Scraped_data_output"
 if not os.path.exists(SCRAPED_DATA_OUTPUT_DIR):
@@ -56,16 +58,22 @@ def error_log(error_obj):
     temp = f"{error_obj} \n -----------"
     error_log_output.write(temp)        
 
+def pagination_present_wait():
+    pages = WebDriverWait(driver,12,1,EC.presence_of_all_elements_located((By.CSS_SELECTOR,'.pagination__items li a')))
+    return pages
 
 #this function gets current listings
 def ebay_CURRENT_scrape_single_veh(car,driver):
     
     target_car = f"{car['make']} {car['model']}"
-    
+
+    #clear data from prev run scrape to start with empty file
+    EBAY_raw_CURRENT_output_file.truncate(0)
     
     try:
-        # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
         
+        ###VIA SEARCH BOX INERACTION
+        # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
         # #enter model 
         # ebay_search_box = driver.find_element(By.CSS_SELECTOR,'#gh-ac')
         # time.sleep(1)
@@ -75,8 +83,12 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
         """This url reduces # of pages to visit by requesting 240 items per page ---> &_ipg=240
         """
         intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc"
-       
+        
         driver.get(intial_url)
+        #wait for page to load
+        time.sleep(10)
+        
+
 
         # URL FOR TESTING PURPOSES ONLY  
         # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
@@ -84,7 +96,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
         
         
 
-        #holds concatenated descrip,price
+        #Stores concatenated string of descrip,price
         ebay_items = []
 
         """ PAGE NUM DISCOVERY
@@ -94,26 +106,37 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
                 -for each li, get the href, these are the available pages to visit
                 -we can iterate and visit these page links
         """
+        #Stores extracted page links for use in navigation later
         pages_links=[]
-        pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a')
-        for links in pages:
-            pages_links.append(links.get_attribute('href'))
+        
+        #wait until pagination elements are visible at bottom of page ,extract each page link from pagination list, store in pages[]
+        pages = pagination_present_wait()
 
+    
+        #Find each page link in pagination list, store in pages[]
+        # pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a')
+        print(chalk.green(f"PAGES LOCATED - Pages: {pages}"))
+        time.sleep(5)
+        # for each page link in pages[], extract href and store in page links
+        
+        # for links in pages:
+        #     pages_links.append(links.get_attribute('href'))
+        # print(chalk.green(f"Pages Links: {pages_links}"))
        
-        #write date of scrape to file right before data
-        today = date.today()
-        current_date = today.strftime("%m-%d-%Y")
-        date_string = f" :::EBAY - CURRENT DATA SCRAPED ON: {current_date} \n"
-        EBAY_raw_CURRENT_output_file.write(date_string)   
+        # #write date of scrape to file right before data
+        # today = date.today()
+        # current_date = today.strftime("%m-%d-%Y")
+        # date_string = f" :::EBAY - CURRENT DATA SCRAPED ON: {current_date} \n"
+        # EBAY_raw_CURRENT_output_file.write(date_string)   
 
+        
+        """# Navigate through pagination links to visit subsequent pages of eBay listings.
+           # Start from the second page because the first page is already loaded.
+           # Iterate over pagination links to access all available pages for data extraction.
         """
-        # Navigate through pagination links to visit subsequent pages of eBay listings.
-        # Start from the second page because the first page is already loaded.
-        # Iterate over pagination links to access all available pages for data extraction.
-        """
-        for pg_link in pages_links[1:2]:
+        for pg_link in pages_links[1:len(pages_links)]: #what is theres only one page???
             
-         
+            
             #get references to all listing info elements on page, store as list
             ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
             #get references to all description elements on page, store as list
@@ -122,19 +145,26 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
             all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
             
-
+            #for each descrip in all_descriptions, for each price in all_prices
             for (descrip,price) in zip(all_descriptions,all_prices):
+                #extract descrip text
                 item_description= descrip.get_attribute('innerText')
-                #REMOVES'NEW LISTING from listing description if present
+                
+                #REMOVES'NEW LISTING' from listing description if present
                 item_description = item_description.replace('NEW LISTING','')
+                
+                #extract price text
                 item_price = price.get_attribute('innerText')
+                
+                #concat into single string
                 temp = f'{item_description} {item_price}'
+                #store in ebay_items[]
                 ebay_items.append(temp)
                 
                 
-            #write ebay_items to file before going to next page - in case script fails or mem issue with array
+            #write current ebay_items to file before going to next page - in case script fails or mem issue with array
             fileWrite(ebay_items,EBAY_raw_CURRENT_output_file)
-
+            print(ebay_items)
             #clear array ahead of next page - to avoid writing duplicate data to file
             ebay_items.clear
 
@@ -144,20 +174,20 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
             #navigate to next page in list of pg_links
             driver.get(pg_link)
 
-        #close file before copying or it will result in empty copied file
-        EBAY_raw_CURRENT_output_file.close()
-        #create copy of scraped data for longterm storage
-        carName = f"{car['make']}-{car['model']}"
-        copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,"EBAY",current_date,carName)
+        # #close file before copying or it will result in empty copied file
+        # EBAY_raw_CURRENT_output_file.close()
+        # #create copy of scraped data for longterm storage
+        # carName = f"{car['make']}-{car['model']}"
+        # # copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,"EBAY",current_date,carName,"CURR")
 
-        success_obj = {
-                    'success': True,
-                    'function':'ebay_scrape',
-                    'date': current_date,
-        }
+        # success_obj = {
+        #             'success': True,
+        #             'function':'ebay_scrape',
+        #             'date': current_date,
+        # }
 
-        #before exiting this 
-        return success_obj
+        # #before exiting this 
+        # return success_obj
     
     except NoSuchElementException as e:
         error_obj = {
@@ -266,7 +296,7 @@ def ebay_SOLD_scrape_single_veh(car,driver):
         
         #close file before copying or it will result in empty copied file
         EBAY_raw_SOLD_output_file.close()
-        copy_file("EBAY",EBAY_raw_SOLD_output_file_path,"EBAY",current_date,carName)
+        copy_file("EBAY",EBAY_raw_SOLD_output_file_path,"EBAY",current_date,carName,"SOLD")
           
         
         success_obj = {
@@ -294,7 +324,7 @@ if __name__ == '__main__':
     car  = {
     'year':2017,
     'make':'Porsche',
-    'model':'911'
+    'model':'Turbo S'
     }
 
     seleniumwire_options = {
@@ -317,7 +347,7 @@ if __name__ == '__main__':
     uc_chrome_options.add_argument("--allow-running-insecure-content")
 
             
-    #undetected chromedriver with proxy with chromedriver manager no .exe path
+    #undetected chromedriver with proxy and with chromedriver manager no .exe path
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     

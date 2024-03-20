@@ -41,7 +41,7 @@ current_script_dir= os.path.dirname(os.path.abspath(__file__))
 """
 This function takes a file, and creates a copy of it, storing it in curr dir
 """
-def copy_file(dest_dir_specifier,data_label,source_file,data_source,scrape_date,vehicle):
+def copy_file(dest_dir_specifier,source_file,data_source,scrape_date,vehicle,data_label="NA"):
 
     """Accepts FILE PATH of source file - NOT THE OPENED FILE OBJECT REFERENCE
     Copies the source file to a specified destination directory, creating the directory if it doesn't exist.
@@ -52,7 +52,7 @@ def copy_file(dest_dir_specifier,data_label,source_file,data_source,scrape_date,
             Ex. if dest_dir_specifier is set to EBAY from calling statement in scraper - then we get path to LTS/EBAY and copy source file to this location.
         -data_source: The name of the data source (e.g., 'EBAY').
         -scrape_date: The date of the scrape, used in the file name.
-        -car: The name of the car, used in the file name.
+        -vehicle: The name of the car, used in the file name.
     
   
     """
@@ -103,4 +103,4 @@ if __name__ == "__main__":
     vehicle = "AUDI R8"
     scrape_date ="03-14-2024" 
 
-    copy_file(dest_dir_specifier,data_label,test_file_to_copy,data_source,scrape_date,vehicle)
+    copy_file(dest_dir_specifier,test_file_to_copy,data_source,scrape_date,vehicle,data_label)

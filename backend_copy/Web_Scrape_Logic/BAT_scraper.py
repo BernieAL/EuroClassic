@@ -238,7 +238,7 @@ if __name__ == '__main__':
     car  = {
     'year':2017,
     'make':'Porsche',
-    'model':'911'
+    'model':'Boxster'
     }
 
     seleniumwire_options = {

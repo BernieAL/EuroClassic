@@ -134,6 +134,6 @@ if __name__ == '__main__':
     car = {
         'year': 0000,
         'make': 'Porsche',
-        'model': '944'
+        'model': 'Boxster'
     }
     clean_data_runner(car)
