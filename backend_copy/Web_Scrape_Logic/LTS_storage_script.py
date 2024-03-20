@@ -41,10 +41,9 @@ current_script_dir= os.path.dirname(os.path.abspath(__file__))
 """
 This function takes a file, and creates a copy of it, storing it in curr dir
 """
-def copy_file(dest_dir_specifier,source_file,data_source,scrape_date,car):
+def copy_file(dest_dir_specifier,data_label,source_file,data_source,scrape_date,vehicle):
 
-    """
-    Accepts FILE PATH of source file - NOT THE OPENED FILE OBJECT REFERENCE
+    """Accepts FILE PATH of source file - NOT THE OPENED FILE OBJECT REFERENCE
     Copies the source file to a specified destination directory, creating the directory if it doesn't exist.
     The destination file's name is constructed using the data source, scrape date, and car name.
     PARAMS:
@@ -74,7 +73,7 @@ def copy_file(dest_dir_specifier,source_file,data_source,scrape_date,car):
 
     #create file name using params 
     #Ex. EBAY__03-18-24__AUDI-R8
-    custom_output_file_name = f"{data_source.upper()}__{scrape_date}__{car.upper()}.txt"
+    custom_output_file_name = f"{data_source.upper()}__{data_label.upper()}__{scrape_date}__{vehicle.upper()}.txt"
     
     #create file path for output file
     #Ex. '../Longterm_prev_scrapes/EBAY/EBAY__03-18-24__AUDI-R8'
@@ -99,8 +98,9 @@ if __name__ == "__main__":
     print(os.path.isfile(test_file_to_copy))
 
     dest_dir_specifier = "EBAY"
+    data_label = "SOLD"
     data_source = "EBAY"
-    car = "AUDI R8"
+    vehicle = "AUDI R8"
     scrape_date ="03-14-2024" 
 
-    copy_file("EBAY",test_file_to_copy,data_source,scrape_date,car)
+    copy_file(dest_dir_specifier,data_label,test_file_to_copy,data_source,scrape_date,vehicle)

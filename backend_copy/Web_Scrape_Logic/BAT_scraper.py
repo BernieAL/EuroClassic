@@ -24,7 +24,7 @@ import sys
 
 # Ensure the storage_script is accessible from the path where this script is located
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from storage_script import copy_file
+from backend_copy.Web_Scrape_Logic.LTS_storage_script import copy_file
 
 SCRAPED_DATA_OUTPUT_DIR = "Scraped_data_output"
 if not os.path.exists(SCRAPED_DATA_OUTPUT_DIR):

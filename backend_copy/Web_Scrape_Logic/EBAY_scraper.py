@@ -22,7 +22,7 @@ import sys
 
 # Ensure the storage_script is accessible from the path where this script is located
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from storage_script import copy_file
+from backend_copy.Web_Scrape_Logic.LTS_storage_script import copy_file
 
 SCRAPED_DATA_OUTPUT_DIR = "Scraped_data_output"
 if not os.path.exists(SCRAPED_DATA_OUTPUT_DIR):
@@ -102,7 +102,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
        
         #write date of scrape to file right before data
         today = date.today()
-        current_date = today.strftime("%m/%d/%Y")
+        current_date = today.strftime("%m-%d-%Y")
         date_string = f" :::EBAY - CURRENT DATA SCRAPED ON: {current_date} \n"
         EBAY_raw_CURRENT_output_file.write(date_string)   
 
@@ -266,7 +266,7 @@ def ebay_SOLD_scrape_single_veh(car,driver):
         
         #close file before copying or it will result in empty copied file
         EBAY_raw_SOLD_output_file.close()
-        copy_file("EBAY",EBAY_raw_SOLD_output_file_path,'EBAY',current_date,carName)
+        copy_file("EBAY",EBAY_raw_SOLD_output_file_path,"EBAY",current_date,carName)
           
         
         success_obj = {
