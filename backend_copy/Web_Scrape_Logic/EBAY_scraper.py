@@ -58,9 +58,9 @@ def error_log(error_obj):
     temp = f"{error_obj} \n -----------"
     error_log_output.write(temp)        
 
-def pagination_present_wait():
-    pages = WebDriverWait(driver,12,1,EC.presence_of_all_elements_located((By.CSS_SELECTOR,'.pagination__items li a')))
-    return pages
+# def pagination_present_wait():
+#     pages = WebDriverWait(driver,12,1,EC.presence_of_all_elements_located((By.CSS_SELECTOR,'.pagination__items li a')))
+#     return pages
 
 #this function gets current listings
 def ebay_CURRENT_scrape_single_veh(car,driver):
@@ -86,7 +86,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
         
         driver.get(intial_url)
         #wait for page to load
-        time.sleep(10)
+        time.sleep(random.uniform(3,9))
         
 
 
@@ -94,8 +94,6 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
         # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
         # driver.get(intial_url)
         
-        
-
         #Stores concatenated string of descrip,price
         ebay_items = []
 
@@ -108,38 +106,70 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
         """
         #Stores extracted page links for use in navigation later
         pages_links=[]
-        
-        #wait until pagination elements are visible at bottom of page ,extract each page link from pagination list, store in pages[]
-        pages = pagination_present_wait()
-
-    
         #Find each page link in pagination list, store in pages[]
-        # pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a')
-        print(chalk.green(f"PAGES LOCATED - Pages: {pages}"))
-        time.sleep(5)
-        # for each page link in pages[], extract href and store in page links
+        pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a')
         
-        # for links in pages:
-        #     pages_links.append(links.get_attribute('href'))
-        # print(chalk.green(f"Pages Links: {pages_links}"))
+        
+        #write date of scrape to file right before data
+        today = date.today()
+        current_date = today.strftime("%m-%d-%Y")
+        date_string = f" :::EBAY - CURRENT DATA SCRAPED ON: {current_date} \n"
+        EBAY_raw_CURRENT_output_file.write(date_string)   
+        
+        #if len of pages > 0, theres more than one page
+        if len(pages) > 0:
+            
+            # for each page link in pages[], extract href and store in page links
+            for links in pages:
+                pages_links.append(links.get_attribute('href'))
+            # print(chalk.green(f"Pages Links: {pages_links}"))
        
-        # #write date of scrape to file right before data
-        # today = date.today()
-        # current_date = today.strftime("%m-%d-%Y")
-        # date_string = f" :::EBAY - CURRENT DATA SCRAPED ON: {current_date} \n"
-        # EBAY_raw_CURRENT_output_file.write(date_string)   
+            """# Navigate through pagination links to visit subsequent pages of eBay listings.
+            # Start from the second page because the first page is already loaded.
+            # Iterate over pagination links to access all available pages for data extraction.
+            """
+            for pg_link in pages_links[1:len(pages_links)]: #what is theres only one page???
+                
+                
+                #get references to all listing info elements on page, store as list
+                ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
+                #get references to all description elements on page, store as list
+                all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
+                #get references all price elements on page, store as list
+                all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
-        
-        """# Navigate through pagination links to visit subsequent pages of eBay listings.
-           # Start from the second page because the first page is already loaded.
-           # Iterate over pagination links to access all available pages for data extraction.
-        """
-        for pg_link in pages_links[1:len(pages_links)]: #what is theres only one page???
-            
-            
-            #get references to all listing info elements on page, store as list
-            ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
-            #get references to all description elements on page, store as list
+                
+                #for each descrip in all_descriptions, for each price in all_prices
+                for (descrip,price) in zip(all_descriptions,all_prices):
+                    #extract descrip text
+                    item_description= descrip.get_attribute('innerText')
+                    
+                    #REMOVES'NEW LISTING' from listing description if present
+                    item_description = item_description.replace('NEW LISTING','')
+                    
+                    #extract price text
+                    item_price = price.get_attribute('innerText')
+                    
+                    #concat into single string
+                    temp = f'{item_description} {item_price}'
+                    #store in ebay_items[]
+                    ebay_items.append(temp)
+                    
+                    
+                #write current ebay_items to file before going to next page - in case script fails or mem issue with array
+                fileWrite(ebay_items,EBAY_raw_CURRENT_output_file)
+                print(ebay_items)
+                #clear array ahead of next page - to avoid writing duplicate data to file
+                ebay_items.clear
+
+            #slow down page navigation
+            time.sleep(random.uniform(3,9))
+
+            #navigate to next page in list of pg_links
+            driver.get(pg_link)
+
+        #if len pages == 0, theres only one page (the current page), get all the data from this page
+        else:
             all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
             #get references all price elements on page, store as list
             all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
@@ -161,33 +191,25 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
                 #store in ebay_items[]
                 ebay_items.append(temp)
                 
-                
-            #write current ebay_items to file before going to next page - in case script fails or mem issue with array
+            #write current ebay_items to file 
             fileWrite(ebay_items,EBAY_raw_CURRENT_output_file)
-            print(ebay_items)
-            #clear array ahead of next page - to avoid writing duplicate data to file
-            ebay_items.clear
+            
+            
 
-            #slow down page navigation
-            time.sleep(random.uniform(3,9))
+        #close file before copying or it will result in empty copied file
+        EBAY_raw_CURRENT_output_file.close()
+        #create copy of scraped data for longterm storage
+        carName = f"{car['make']}-{car['model']}"
+        # copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,"EBAY",current_date,carName,"CURR")
 
-            #navigate to next page in list of pg_links
-            driver.get(pg_link)
+        success_obj = {
+                    'success': True,
+                    'function':'ebay_scrape',
+                    'date': current_date,
+        }
 
-        # #close file before copying or it will result in empty copied file
-        # EBAY_raw_CURRENT_output_file.close()
-        # #create copy of scraped data for longterm storage
-        # carName = f"{car['make']}-{car['model']}"
-        # # copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,"EBAY",current_date,carName,"CURR")
-
-        # success_obj = {
-        #             'success': True,
-        #             'function':'ebay_scrape',
-        #             'date': current_date,
-        # }
-
-        # #before exiting this 
-        # return success_obj
+        #before exiting this 
+        return success_obj
     
     except NoSuchElementException as e:
         error_obj = {
@@ -323,8 +345,8 @@ if __name__ == '__main__':
 
     car  = {
     'year':2017,
-    'make':'Porsche',
-    'model':'Turbo S'
+    'make':'Audi',
+    'model':'R8'
     }
 
     seleniumwire_options = {
