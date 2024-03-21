@@ -132,7 +132,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
                 
                 
                 #get references to all listing info elements on page, store as list
-                ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
+                #ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
                 #get references to all description elements on page, store as list
                 all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
                 #get references all price elements on page, store as list
@@ -196,11 +196,12 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
             
             
 
+        
+        
+        carName = f"{car['make']}-{car['model']}"
         #close file before copying or it will result in empty copied file
         EBAY_raw_CURRENT_output_file.close()
-        #create copy of scraped data for longterm storage
-        carName = f"{car['make']}-{car['model']}"
-        # copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,"EBAY",current_date,carName,"CURR")
+        copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,"EBAY",current_date,carName,"CURR")
 
         success_obj = {
                     'success': True,
@@ -231,10 +232,9 @@ def ebay_SOLD_scrape_single_veh(car,driver):
     EBAY_raw_SOLD_output_file.truncate(0)
     
 
-    intial_url = f"https://www.ebay.com/sch/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&_sop=13&_fspt=1&LH_PrefLoc=98&rt=nc"
+    intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc"
    
-    
-    # old = f"https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw={car['make']}&{car['model']}_sacat=0&_ipg=240&rt=nc"
+
     # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
 
     sold_complete_url = intial_url + '&LH_Sold=1&LH_Complete=1'
@@ -247,8 +247,10 @@ def ebay_SOLD_scrape_single_veh(car,driver):
         
         driver.get(sold_complete_url)
         time.sleep(7)
-        
 
+        #Stores concatenated string of descrip,price
+        ebay_items = []
+        
         """ PAGE NUM DISCOVERY
             -to find out how many pages there are look at element <ol class="pagination__items">
                 -nested in the ol, there will be an li element for each page
@@ -269,16 +271,56 @@ def ebay_SOLD_scrape_single_veh(car,driver):
         date_string = f" :::EBAY - SOLD DATA SCRAPED ON: {current_date} \n"
         EBAY_raw_SOLD_output_file.write(date_string)                    
 
-
-        """
+        #if len of pages > 0, theres more than one page
+        if len(pages) > 0:
+            """
         # Navigate through pagination links to visit subsequent pages of eBay listings.
         # Start from the second page because the first page is already loaded.
         # Iterate over pagination links to access all available pages for data extraction.
         """
-        for pg_link in pages_links[1:2]:  #second digit is page we go up to
-            #this gets prices of all cars on page
-            ebay_items = []
-            ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
+            for pg_link in pages_links[1:len(pages_links)]:  
+                
+                #ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
+                
+                #get references to all description elements on page, store as list
+                all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
+                #get references all price elements on page, store as list
+                all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
+
+                #targets "Sold Month Date, Year" on each listing
+                all_sale_dates = driver.find_elements(By.CSS_SELECTOR,'.s-item__title--tag span.POSITIVE')
+
+                
+
+                #for each descrip in all_descriptions, for each price in all_prices,for each sale date in all_sale_dates
+                for (descrip,price,sale_date) in zip(all_descriptions,all_prices,all_sale_dates):
+                    item_description= descrip.get_attribute('innerText')
+                    item_description = item_description.replace('NEW LISTING','')
+                    item_price = price.get_attribute('innerText')
+                    
+                    sale_date_text = sale_date.get_attribute('innerText')
+                    #convert sale_date_text from January 11th,2024 to 2024-01-11 (yyyy,mm,dd)
+                    sale_date_text = sale_date_text.replace("Sold ","")
+                    sale_date_text_date_obj = datetime.strptime(sale_date_text,"%b %d, %Y").date()
+                    
+                    #concat into single string
+                    temp = f'{item_description} {item_price} {sale_date_text_date_obj}'
+                    #store in ebay_items[]
+                    ebay_items.append(temp)
+
+                #write items to file
+                fileWrite(ebay_items,EBAY_raw_SOLD_output_file )
+
+                #clear array ahead of next page - to avoid writing duplicate data to file
+                ebay_items.clear
+                
+                #slow down page navigation
+                time.sleep(random.uniform(3,9))
+                driver.get(pg_link)
+            
+           
+           
+        else:
             all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
 
             all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
@@ -286,48 +328,34 @@ def ebay_SOLD_scrape_single_veh(car,driver):
             #targets "Sold Month Date, Year" on each listing
             all_sale_dates = driver.find_elements(By.CSS_SELECTOR,'.s-item__title--tag span.POSITIVE')
 
-            
-
-
             for (descrip,price,sale_date) in zip(all_descriptions,all_prices,all_sale_dates):
-                item_description= descrip.get_attribute('innerText')
-                item_description = item_description.replace('NEW LISTING','')
-                item_price = price.get_attribute('innerText')
-                
-                sale_date_text = sale_date.get_attribute('innerText')
-                #convert sale_date_text from January 11th,2024 to 2024-01-11 (yyyy,mm,dd)
-                sale_date_text = sale_date_text.replace("Sold ","")
-                sale_date_text_date_obj = datetime.strptime(sale_date_text,"%b %d, %Y").date()
-                
-                
-                temp = f'{item_description} {item_price} {sale_date_text_date_obj}'
-                ebay_items.append(temp)
+                    item_description= descrip.get_attribute('innerText')
+                    item_description = item_description.replace('NEW LISTING','')
+                    item_price = price.get_attribute('innerText')
+                    
+                    sale_date_text = sale_date.get_attribute('innerText')
+                    #convert sale_date_text from January 11th,2024 to 2024-01-11 (yyyy,mm,dd)
+                    sale_date_text = sale_date_text.replace("Sold ","")
+                    sale_date_text_date_obj = datetime.strptime(sale_date_text,"%b %d, %Y").date()
+                    
+                    
+                    temp = f'{item_description} {item_price} {sale_date_text_date_obj}'
+                    ebay_items.append(temp)
 
             #write items to file
             fileWrite(ebay_items,EBAY_raw_SOLD_output_file )
-
-            #clear array ahead of next page - to avoid writing duplicate data to file
-            ebay_items.clear
             
-            #slow down page navigation
-            time.sleep(random.uniform(3,9))
-            driver.get(pg_link)
-        
-        #create copy of file containing scraped file for longterm storage
         carName = f"{car['make']}-{car['model']}"
-        
         #close file before copying or it will result in empty copied file
         EBAY_raw_SOLD_output_file.close()
         copy_file("EBAY",EBAY_raw_SOLD_output_file_path,"EBAY",current_date,carName,"SOLD")
-          
-        
         success_obj = {
                     'success': True,
                     'function':'ebay_scrape_sold',
                     'date': current_date,
         }
        
-        time.sleep(20)
+        time.sleep(10)
         return success_obj
     
     except NoSuchElementException as e:
@@ -373,8 +401,8 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    ebay_CURRENT_scrape_single_veh(car,driver)
-    # ebay_SOLD_scrape_single_veh(car,driver)
+    # ebay_CURRENT_scrape_single_veh(car,driver)
+    ebay_SOLD_scrape_single_veh(car,driver)
 
     driver.close()
     
