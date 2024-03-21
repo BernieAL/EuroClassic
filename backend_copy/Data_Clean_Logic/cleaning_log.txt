@@ -12,3 +12,47 @@ ERROR:root:Error during data cleaning for SOLD_DATA: cannot access local variabl
 INFO:root:Data cleaning for all types successful
 ERROR:root:Error during data cleaning for SOLD_DATA: cannot access local variable 'price' where it is not associated with a value
 INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for all types successful
+ERROR:root:Error during data cleaning for SOLD_DATA: list index out of range
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
