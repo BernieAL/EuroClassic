@@ -24,7 +24,7 @@ import sys
 
 # Ensure the storage_script is accessible from the path where this script is located
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from backend_copy.Web_Scrape_Logic.LTS_storage_script import copy_file
+from LTS_storage_script import copy_file
 
 SCRAPED_DATA_OUTPUT_DIR = "Scraped_data_output"
 if not os.path.exists(SCRAPED_DATA_OUTPUT_DIR):
@@ -55,6 +55,21 @@ def error_log(error_obj):
     # error_log_output.write(temp)        
 
 
+def search_by_search_bar(driver):
+
+    #SEARCH OPTION 2 - BY SEARCH BAR INTERACTION
+    driver.get('https://bringatrailer.com')
+    search_bar = driver.find_element(By.CSS_SELECTOR,'.search-bar-input')
+    time.sleep(random.uniform(1,5))
+    search_bar.send_keys('Porsche 911' + Keys.RETURN)
+    time.sleep(random.uniform(7,15))
+    # driver.get("https://bringatrailer.com/")
+    # search_bar = driver.find_element(By.PARTIAL_LINK_TEXT("Search for make,,model"))
+
+    # search_bar.send_keys('BMW')
+    # driver.send_keys('RETURN')
+
+
 
 # :::::: BEGIN BAT SECTION
 # ON BAT, only getting sold listings 
@@ -76,6 +91,7 @@ def BAT_scrape_single_veh(car,driver):
             # URL EXAMPLE:  https://bringatrailer.com/bmw/e39-m5/?q=e39%20m5
             driver.get(f'https://bringatrailer.com/{make}/{model}/?q={make}+{model}')
            
+        #    https://bringatrailer.com/search/?s=porsche+turbo+s
             
             #SEARCH OPTION 2 - BY SEARCH BAR INTERACTION
             # driver.get('https://bringatrailer.com')
@@ -238,7 +254,7 @@ if __name__ == '__main__':
     car  = {
     'year':2017,
     'make':'Porsche',
-    'model':'Boxster'
+    'model':'911'
     }
 
     seleniumwire_options = {
@@ -265,9 +281,9 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    BAT_scrape_single_veh(car,driver)
+    # BAT_scrape_single_veh(car,driver)
     # BAT_scrape_all_for_make(car,driver)
-
+    search_by_search_bar(driver)
     driver.close()
     
     

@@ -1,12 +1,12 @@
-import process_BAT_ALL_MAKE_HTML
-import process_BAT_SINGLE_VEH_HTML
+# import process_BAT_ALL_MAKE_HTML
+from process_BAT_SINGLE_VEH_HTML import BAT_single_veh_driver
 
 
 def clean_bat_runner():
 
 
-    process_BAT_SINGLE_VEH_HTML.BAT_cleaned_SOLD_Data()
-    process_BAT_ALL_MAKE_HTML.BAT_cleaned_SOLD_Data()
+    BAT_single_veh_driver()
+    # process_BAT_ALL_MAKE_HTML.BAT_cleaned_SOLD_Data()
 
 
 if __name__ == '__main__':

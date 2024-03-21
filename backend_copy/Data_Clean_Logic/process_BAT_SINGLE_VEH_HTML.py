@@ -4,9 +4,20 @@ import re
 import json
 from datetime import date,datetime
 
+#directory of 'this' file
+current_script_dir = os.path.dirname(os.path.abspath(__file__))
+
+#\EuroClassic\backend_copy
+PROJ_ROOT = os.path.abspath(os.path.join(current_script_dir,'..'))
+print(PROJ_ROOT)
+
+SCRAPED_DATA_DIR = os.path.join(PROJ_ROOT,'Scraped_data_output')
+
 #RAW HTML FROM BAT
-BAT_raw_SOLD_html_file_path = os.path.join(os.path.dirname(__file__),'..','Scraped_data_output/BAT_raw_SINGLE_VEH_SOLD_DATA.html')
+BAT_raw_SOLD_html_file_path = os.path.join(PROJ_ROOT,SCRAPED_DATA_DIR,'BAT_raw_SINGLE_VEH_SOLD_DATA.html')
+print(BAT_raw_SOLD_html_file_path)
 BAT_raw_SOLD_HTML = open(BAT_raw_SOLD_html_file_path,"r",encoding="utf-8")
+# print(BAT_raw_SOLD_HTML)
 
 #ALL VEH MAKES JSON DATA FROM - https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json
 NHS_all_veh_makes_data_file_path = os.path.join(os.path.dirname(__file__),'..','Resources/NHS_all_veh_makes.json')
@@ -17,7 +28,6 @@ NHS_all_veh_makes_data = json.load(NHS_all_veh_makes_file)
 #CSV OUTPUT FILE
 BAT_cleaned_SOLD_Data_file_path = os.path.join(os.path.dirname(__file__),'..','Cleaned_data_output/BAT_cleaned_SINGLE_VEH_SOLD_DATA.csv')
 BAT_cleaned_SOLD_Data = open(BAT_cleaned_SOLD_Data_file_path,"w",encoding="utf-8")
-
 
 
 missing_year_listings = []
@@ -34,9 +44,6 @@ def extract_mileage_from_title(listing_card_title_text):
         return veh_mileage_str.replace(',', '')  # Remove commas if present
 
     return '0000'  # Return '0000' if "-MILE" or "K-MILE" pattern is not found
-
-    
-
 
 def extract_year_make_model(content_main):
     
@@ -135,7 +142,6 @@ def extract_year_make_model(content_main):
     veh_model = ' '.join([t for t in listing_title_tokens if t != veh_make])
     return veh_year,veh_make,veh_model
 
-
 def extract_sale_price_and_date(content_main):
     """ SECTION FOR SALE PRICE AND SALE DATE from item-results element
         -Contents of this section looks will either be:
@@ -181,7 +187,7 @@ def extract_sale_price_and_date(content_main):
         print(f"Error extracting sale information: {e}")
         return None, None, None
     
-def driver():
+def BAT_single_veh_driver():
     
 
     #write current date to file as first row
@@ -194,28 +200,54 @@ def driver():
     BAT_cleaned_SOLD_Data.write(csv_headers + '\n')
 
     soup = BeautifulSoup(BAT_raw_SOLD_HTML,'html.parser')
-    
+    # print(soup)
     #find all listing_card in auctions-completed-container element
-    auction_results_section = soup.find("div","auctions-completed-container")
-    listing_card_tags = auction_results_section.find_all("a","listing-card")
+    
+    auction_results_parent = soup.find("div",class_="auctions-completed page-section")
+    auction_results_section = auction_results_parent.find("div",class_="auctions-completed-container")
 
-    #for each listing_card, extract year,make,model,sale_price,sale_date and write to output file
-    for listing in listing_card_tags:
-        #find content main from each listing_card
-        content_main = listing.find("div","content-main")
-        year,make,model =  extract_year_make_model(content_main)
-        # print(f"{year},{make},{model}")
-
-        sale_price,sale_date,listing_type = extract_sale_price_and_date(content_main)
-        # print(f"{sale_price},{sale_date},{listing_type}")
+    if auction_results_section:
+        print("auction section found")
         
-        print(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
+        listing_card_tags = auction_results_section.find_all("a", class_="listing-card")
 
-        BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}\n")
+        print(listing_card_tags)
+    
+    # listing_card_tags = auction_results_section.find_all("a",class_="listing-card")
+    
+    # if auction_results_section:
+    #     # Find all listing-card elements within the auctions-completed-container element
+    #     listing_card_tags = auction_results_section.find_all("a", class_="listing-card")
+
+    # # Check if any listing-card elements are found
+    # if listing_card_tags:
+    #     print("Found listing cards:")
+    #     for listing_card in listing_card_tags:
+    #         print(listing_card)
+    # else:
+    #     print("No listing cards found in auctions-completed-container.")
+
+
+    # #for each listing_card, extract year,make,model,sale_price,sale_date and write to output file
+    # for listing in listing_card_tags:
+    #     #find content main from each listing_card
+    #     content_main = listing.find("div","content-main")
+    #     year,make,model =  extract_year_make_model(content_main)
+    #     # print(f"{year},{make},{model}")
+
+    #     sale_price,sale_date,listing_type = extract_sale_price_and_date(content_main)
+    #     # print(f"{sale_price},{sale_date},{listing_type}")
+        
+    #     print(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}")
+
+    #     BAT_cleaned_SOLD_Data.write(f"{year},{make},{model},{sale_price},{sale_date},{listing_type}\n")
 
 # print(missing_year_listings)
 if __name__ == '__main__':
-    driver()
+    BAT_single_veh_driver()
+    
+    
+    
     
 
 
