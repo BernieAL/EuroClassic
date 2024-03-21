@@ -82,7 +82,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
 
         """This url reduces # of pages to visit by requesting 240 items per page ---> &_ipg=240
         """
-        intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc"
+        intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc&LH_PrefLoc=2"
         
         driver.get(intial_url)
         #wait for page to load
@@ -232,7 +232,7 @@ def ebay_SOLD_scrape_single_veh(car,driver):
     EBAY_raw_SOLD_output_file.truncate(0)
     
 
-    intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc"
+    intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc&LH_PrefLoc=2"
    
 
     # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
@@ -373,8 +373,8 @@ if __name__ == '__main__':
 
     car  = {
     'year':2017,
-    'make':'Audi',
-    'model':'R8'
+    'make':'Acura',
+    'model':'Integra'
     }
 
     seleniumwire_options = {
@@ -401,7 +401,7 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    # ebay_CURRENT_scrape_single_veh(car,driver)
+    ebay_CURRENT_scrape_single_veh(car,driver)
     ebay_SOLD_scrape_single_veh(car,driver)
 
     driver.close()
