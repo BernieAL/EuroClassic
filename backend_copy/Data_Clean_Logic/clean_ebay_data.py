@@ -26,16 +26,16 @@ EBAY_raw_SOLD_DATA_file = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_SOLD_DATA.txt
 
 #OUTPUT get ref to output file
 EBAY_clean_OUTPUT_CURRENT_LISTINGS_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_CURRENT_LISTINGS.csv')
-
 EBAY_clean_OUTPUT_SOLD_DATA_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
-# 
+
+
 clean_output_array = []
 
 def fileWrite(data, fileIn):
     for line in data:
         temp = f"{line}\n"
         fileIn.write(temp)
-    fileIn.write("---------------------- \n")
+    # fileIn.write("---------------------- \n")
 
 def clean_data_EBAY_SOLD(raw_SOLD_DATA_file, year, make, model):
     try:
@@ -106,7 +106,7 @@ def clean_data_EBAY_SOLD(raw_SOLD_DATA_file, year, make, model):
 
 def clean_data_EBAY_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
     try:
-        clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_CURRENT_LISTINGS_file, "w", encoding="utf-8")
+        clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_OUTPUT_CURRENT_LISTINGS_file, "w", encoding="utf-8")
         
 
         raw_input_CURRENT_LISTINGS = open(raw_CURRENT_LISTINGS_file, "r", encoding="utf-8")

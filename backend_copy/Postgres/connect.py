@@ -8,8 +8,7 @@ import psycopg2
 load_dotenv(find_dotenv())        
 
 
-"""
-Connection Option1 - This is a test connection function using DB URI from .env
+"""Connection Option1 - This is a test connection function using DB URI from .env
 """
 def connect_1():
     
@@ -43,19 +42,17 @@ def connect_1():
 connect_1()
 
 
-"""
-Connection Option2 - This is a test connection function using indiv .env vars
+"""Connection Option2 - This is a test connection function using indiv .env vars
 """
 def connect_2():
-                                                                                                        
+                                                                                      
     connection = psycopg2.connect(                                                  
         user = os.getenv("DATABASE_USERNAME"),                                      
         password = os.getenv("DATABASE_PASSWORD"),                                  
         host = os.getenv("DATABASE_IP"),                                            
         port = os.getenv("DATABASE_PORT"),                                          
         database = os.getenv("DATABASE_NAME")                                       
-    )                                                                               
-                                                                                    
+    )                                                                           
     cursor = connection.cursor()                                                    
     cursor.execute("SELECT version();")                                             
     record = cursor.fetchone()                                                      
@@ -63,7 +60,12 @@ def connect_2():
 
 
 
-# callable function to create and return db connection
+"""This function returns an active PostgreSQL database connection instance 
+    that functions can use to create a cursor object and perform database operations.
+
+    Returns:
+    psycopg2.extensions.connection: An active connection to the PostgreSQL database.
+"""
 def get_db_connection():
     
     conn = None
