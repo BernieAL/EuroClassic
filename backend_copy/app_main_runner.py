@@ -16,11 +16,14 @@ from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
 from Web_Scrape_Logic.EBAY_scraper import ebay_CURRENT_scrape_single_veh,ebay_SOLD_scrape_single_veh
 # from Web_Scrape_Logic.BAT_scraper import BAT_scrape_single_veh,BAT_scrape_all_for_make
 
-from Postgres.insert_data import insert_current_listing_data,insert_sold_data
+from Postgres.insert_data import insert_current_listing_data,insert_sold_data, insertion_check
+from Postgres.connect import get_db_connection
 # from Web_Scrape_Logic.scrape_runner_main import run_scapers
 
 from dotenv import load_dotenv,find_dotenv
 load_dotenv(find_dotenv())     
+
+
 
 
 
@@ -55,6 +58,23 @@ load_dotenv(find_dotenv())
 
 """
 
+
+#directory paths
+current_script_dir = os.path.dirname(os.path.abspath(__file__))
+PROJ_ROOT = os.path.abspath(os.path.join(current_script_dir,'..'))
+POSTGRES_DIR = os.path.dirname(__file__)
+CLEANED_DATA_DIR = os.path.join(PROJ_ROOT,'Cleaned_data_output')
+SCRAPED_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
+
+#file paths for raw data
+EBAY_raw_CURRENT_LISTINGS_file = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_CURRENT_LISTINGS_DATA.txt')
+EBAY_raw_SOLD_DATA_file = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_SOLD_DATA.txt')
+ 
+#file paths for cleaned data
+EBAY_clean_OUTPUT_CURRENT_LISTINGS_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_CURRENT_LISTINGS.csv')
+EBAY_clean_OUTPUT_SOLD_DATA_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
+
+
 def initialize_driver():
     seleniumwire_options = {
             'proxy': {
@@ -83,28 +103,47 @@ def initialize_driver():
     
     return driver
 
+"""This gets db connection"""
+def initialize_db_connection_connection():
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    return conn,cur
+
+
 def main_runner():
 
+    db_conn,db_cursor = initialize_db_connection_connection()
     driver = initialize_driver()
     car = {
         'year':2017,
         'make':'Nissan',
-        'model':'370z'
+        'model':'350Z'
     }
     # run_scapers() #runs ebay and bat scrapers
     try:
-        ebay_CURRENT_scrape_single_veh(car,driver)
-        ebay_SOLD_scrape_single_veh(car,driver)
-        ebay_clean_data_runner()
-        insert_sold_data()
-        insert_current_listing_data()
+        # ebay_CURRENT_scrape_single_veh(car,driver)
+        # ebay_SOLD_scrape_single_veh(car,driver)
 
+        # #bat scrape
+        # #bat scrape
+        driver.close()
+        time.sleep(1)
+        # ebay_clean_data_runner(car)
+        insert_sold_data(db_cursor)
+        # insert_current_listing_data(db_cursor)
+        
+        
         
     except Exception as e:
         pass
-
+    finally:
+        db_cursor.close()
+        db_conn.close()
+        
     #analysis
     #insert data to db
 
 if __name__ == "__main__":
-    main_runner()
+    pass
+    # main_runner()

@@ -216,7 +216,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
                 item_price = price.get_attribute('innerText')
                 
                 #concat into single string
-                temp = f'{item_description} {item_price}'
+                temp = f'{item_description.upper()} {item_price}'
                 #store in ebay_items[]
                 ebay_items.append(temp)
                 
@@ -337,7 +337,7 @@ def ebay_SOLD_scrape_single_veh(car,driver):
                     sale_date_text_date_obj = datetime.strptime(sale_date_text,"%b %d, %Y").date()
                     
                     #concat into single string
-                    temp = f'{item_description} {item_price} {sale_date_text_date_obj}'
+                    temp = f'{item_description.upper()} {item_price} {sale_date_text_date_obj}'
                     #store in ebay_items[]
                     ebay_items.append(temp)
 

@@ -455,3 +455,90 @@ INFO:seleniumwire.handler:Capturing response: https://ct.pinterest.com/v3/ 200
 INFO:seleniumwire.handler:Capturing response: https://ct.pinterest.com/static/ct/token_create.js 200 
 INFO:seleniumwire.handler:Capturing request: https://cas.avalon.perfdrive.com/jsdata?
 INFO:seleniumwire.handler:Capturing response: https://cas.avalon.perfdrive.com/jsdata? 200 
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver [C:\Users\balma\.wdm\drivers\chromedriver\win64\123.0.6312.58\chromedriver-win32/chromedriver.exe] found in cache
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:64217
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable C:\Users\balma\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver [C:\Users\balma\.wdm\drivers\chromedriver\win64\123.0.6312.58\chromedriver-win32/chromedriver.exe] found in cache
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:60123
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable C:\Users\balma\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver [C:\Users\balma\.wdm\drivers\chromedriver\win64\123.0.6312.58\chromedriver-win32/chromedriver.exe] found in cache
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:56619
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable C:\Users\balma\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for all types successful
+INFO:root:Data cleaning for CURRENT_LISTINGS successful
+INFO:root:Data cleaning for all types successful
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver [C:\Users\balma\.wdm\drivers\chromedriver\win64\123.0.6312.58\chromedriver-win32/chromedriver.exe] found in cache
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:54516
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable C:\Users\balma\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+INFO:root:Data cleaning for SOLD_DATA successful
+INFO:root:Data cleaning for CURRENT_LISTINGS successful
+INFO:root:Data cleaning for all types successful
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver [C:\Users\balma\.wdm\drivers\chromedriver\win64\123.0.6312.58\chromedriver-win32/chromedriver.exe] found in cache
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:49689
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable C:\Users\balma\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 7
+WARNING:dotenv.main:Python-dotenv could not parse statement starting at line 8
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver [C:\Users\balma\.wdm\drivers\chromedriver\win64\123.0.6312.58\chromedriver-win32/chromedriver.exe] found in cache
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:61207
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable C:\Users\balma\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe

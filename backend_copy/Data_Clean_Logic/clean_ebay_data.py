@@ -48,7 +48,7 @@ def clean_data_EBAY_SOLD(raw_SOLD_DATA_file, year, make, model):
         #for each line in raw data
         #line looks like -> 2000 Acura Integra Type R $63966.00 2024-02-12
         for line in raw_input_SOLD_DATA:
-            
+           
             #if curr line contains our target veh model
             if model in line:
                 #remove all commas - if any
@@ -73,7 +73,7 @@ def clean_data_EBAY_SOLD(raw_SOLD_DATA_file, year, make, model):
                 
                 except IndexError as error:
                     pass
-                print(f"{line}")
+                # print(f"{line}")
                 try:
                     #extract date from line using pattern dddd-dd-dd , (where d is regex digit)
                     sale_date_match = (re.findall('\d{4}-\d{2}-\d{2}',line))[0]
@@ -106,11 +106,11 @@ def clean_data_EBAY_SOLD(raw_SOLD_DATA_file, year, make, model):
 
 def clean_data_EBAY_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
     try:
-        clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_OUTPUT_CURRENT_LISTINGS_file, "w", encoding="utf-8")
         
-
         raw_input_CURRENT_LISTINGS = open(raw_CURRENT_LISTINGS_file, "r", encoding="utf-8")
         unclean_input = raw_input_CURRENT_LISTINGS
+
+        clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_OUTPUT_CURRENT_LISTINGS_file, "w", encoding="utf-8")
 
         clean_output_array = []
 
@@ -147,7 +147,7 @@ def clean_data_EBAY_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
 def ebay_clean_data_runner(car):
     try:
         clean_data_EBAY_SOLD(EBAY_raw_SOLD_DATA_file, car['year'], car['make'], car['model'])
-        # clean_data_EBAY_CURRENT(EBAY_raw_CURRENT_LISTINGS_file, car['year'], car['make'], car['model'])
+        clean_data_EBAY_CURRENT(EBAY_raw_CURRENT_LISTINGS_file, car['year'], car['make'], car['model'])
                
         logging.info("Data cleaning for all types successful")
         return True
@@ -158,7 +158,7 @@ def ebay_clean_data_runner(car):
 if __name__ == '__main__':
     car = {
         'year': 0000,
-        'make': 'Acura',
-        'model': 'Integra'
+        'make': 'Nissan',
+        'model': '350Z'
     }
     ebay_clean_data_runner(car)

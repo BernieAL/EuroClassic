@@ -10,7 +10,7 @@ load_dotenv(find_dotenv())
 
 """Connection Option1 - This is a test connection function using DB URI from .env
 """
-def connect_1():
+def test_connect_1():
     
     conn = None
     try:
@@ -39,12 +39,12 @@ def connect_1():
         if conn is not None:
             conn.close()
             print('Database connection closed.')
-connect_1()
+test_connect_1()
 
 
 """Connection Option2 - This is a test connection function using indiv .env vars
 """
-def connect_2():
+def test_connect_2():
                                                                                       
     connection = psycopg2.connect(                                                  
         user = os.getenv("DATABASE_USERNAME"),                                      
