@@ -109,7 +109,8 @@ def insert_current_listing_data(cur,cleaned_CURRENT_LISTINGS_file_path):
 def insertion_check(cur):
     try:
         sql = """
-            SELECT * FROM sold_listings
+            SELECT * FROM sold_listings;
+            SELECT * FROM current_listings
             """
         cur.execute(sql)
         rows = cur.fetchall()
@@ -159,7 +160,7 @@ if __name__ == '__main__':
     
     conn = psycopg2.connect(os.getenv('DB_URI'))
     cur = conn.cursor()
-    populate_vehicles_dir_table(cur,INPUT_veh_dir_file_path)
-    insert_sold_data(cur,clean_SOLD_LISTINGS_file)
-    insert_current_listing_data(cur,clean_CURR_LISTINGS_file)
+    # populate_vehicles_dir_table(cur,INPUT_veh_dir_file_path)
+    # insert_sold_data(cur,clean_SOLD_LISTINGS_file)
+    # insert_current_listing_data(cur,clean_CURR_LISTINGS_file)
     insertion_check(cur)
