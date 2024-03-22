@@ -1,11 +1,14 @@
 import psycopg2
-from config import config
+import os
+import csv
+from dotenv import load_dotenv,find_dotenv
 from simple_chalk import chalk
 
+load_dotenv(find_dotenv())     
 
 
-""" 
-    this is the schema, it creates the tables in the db with a set of commands that we execute
+
+""" this is the schema, it creates the tables in the db with a set of commands that we execute
 
 
     PK of vehicles table is composite key made of 
@@ -15,7 +18,7 @@ from simple_chalk import chalk
     this links the other tables to the vehicles table
 """
 
-def create_tables():
+def create_tables(cur):
 
     
     commands = ( 
@@ -79,17 +82,11 @@ def create_tables():
 
     conn = None
     try:
-        #read the connectin params
-        params = config()
-
-        #connect to postgresql server
-        conn = psycopg2.connect(**params)
-        cur = conn.cursor()
-
+        
         for command in commands:
                 cur.execute(command)
                 conn.commit()
-        print(chalk.green("All statements completed successfully"))
+        print(chalk.green("ALL TABLES CREATED SUCCESSFULLY - All statements completed successfully"))
         cur.close()
         
     except(Exception, psycopg2.DatabaseError) as error:
@@ -99,4 +96,7 @@ def create_tables():
              conn.close()
 
 if __name__ == '__main__':
-     create_tables()
+     
+    conn = psycopg2.connect(os.getenv('DB_URI'))
+    cur = conn.cursor()
+    create_tables(cur)

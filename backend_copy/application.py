@@ -15,8 +15,11 @@ import os
 
 
 
-from Web_Scrape_Logic.scrape import run_scrape
-from backend_copy.Data_Clean_Logic.clean_ebay_data import clean_all_data
+from Web_Scrape_Logic.scrape_runner_main import run_scapers
+from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
+from Data_Clean_Logic.clean_bat_data import bat_clean_data_runner
+
+
 from Analysis_Logic.sold_data_transformation import SOLD_max_and_avg_price_per_veh_year
 
 from config import Config

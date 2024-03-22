@@ -144,7 +144,7 @@ def clean_data_EBAY_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
         logging.error(f"Error during data cleaning for CURRENT_LISTINGS: {str(e)}")
         print(chalk.red(f"Error during data cleaning for CURRENT_LISTINGS: {str(e)}"))
 
-def clean_data_runner(car):
+def ebay_clean_data_runner(car):
     try:
         clean_data_EBAY_SOLD(EBAY_raw_SOLD_DATA_file, car['year'], car['make'], car['model'])
         # clean_data_EBAY_CURRENT(EBAY_raw_CURRENT_LISTINGS_file, car['year'], car['make'], car['model'])
@@ -161,4 +161,4 @@ if __name__ == '__main__':
         'make': 'Acura',
         'model': 'Integra'
     }
-    clean_data_runner(car)
+    ebay_clean_data_runner(car)

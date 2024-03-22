@@ -60,7 +60,6 @@ def run_scapers(driver,car):
     
     driver = initialize_driver()
 
-    
     ebay_CURRENT_scrape_single_veh(car,driver)
     ebay_SOLD_scrape_single_veh(car,driver)
 
@@ -81,6 +80,9 @@ def run_scapers(driver,car):
 
 if __name__ == '__main__':
     
-    
-    ebay_CURRENT_scrape_single_veh()
-    ebay_SOLD_scrape_single_veh()
+    car  = {
+    'year':2017,
+    'make':'Acura',
+    'model':'Integra'
+    }
+    run_scapers(car)

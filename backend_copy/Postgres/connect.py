@@ -1,21 +1,24 @@
 import psycopg2
-from Postgres.config import config
+
 from simple_chalk import chalk
+import os
+from dotenv import load_dotenv, find_dotenv
+import psycopg2
 
-# this is a test connection file
+load_dotenv(find_dotenv())        
 
-def connect():
-    """Connect to postgresql DB server"""
 
+"""
+Connection Option1 - This is a test connection function using DB URI from .env
+"""
+def connect_1():
+    
     conn = None
     try:
-
-        #read in connection params from config.py, using config()
-        params = config()
-
         #connect to PostgreSQL server
         print('Connecting to PostgreSQL database..')
-        conn = psycopg2.connect(**params)
+        # conn = psycopg2.connect(os.environ['DB_URI'])
+        conn = psycopg2.connect(os.getenv("DB_URI"))    
 
         #create cursor
         cur = conn.cursor()
@@ -37,6 +40,27 @@ def connect():
         if conn is not None:
             conn.close()
             print('Database connection closed.')
+connect_1()
+
+
+"""
+Connection Option2 - This is a test connection function using indiv .env vars
+"""
+def connect_2():
+                                                                                                        
+    connection = psycopg2.connect(                                                  
+        user = os.getenv("DATABASE_USERNAME"),                                      
+        password = os.getenv("DATABASE_PASSWORD"),                                  
+        host = os.getenv("DATABASE_IP"),                                            
+        port = os.getenv("DATABASE_PORT"),                                          
+        database = os.getenv("DATABASE_NAME")                                       
+    )                                                                               
+                                                                                    
+    cursor = connection.cursor()                                                    
+    cursor.execute("SELECT version();")                                             
+    record = cursor.fetchone()                                                      
+    print(f"Database Version: {record}") 
+
 
 
 # callable function to create and return db connection
@@ -44,13 +68,9 @@ def get_db_connection():
     
     conn = None
     try:
-
-        #read in connection params from config.py, using config()
-        params = config()
-
         #connect to PostgreSQL server
         print(chalk.green('Connecting to PostgreSQL database..'))
-        conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(os.environ['DB_URI'])
 
         #create cursor
         cur = conn.cursor()
@@ -71,5 +91,6 @@ def get_db_connection():
         print(error)
     
 
-# if __name__=='__main__':
-#     connect()
+if __name__=='__main__':
+    pass
+    # connect()

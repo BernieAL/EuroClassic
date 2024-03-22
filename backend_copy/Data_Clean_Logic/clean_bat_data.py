@@ -2,7 +2,8 @@
 from process_BAT_SINGLE_VEH_HTML import BAT_single_veh_driver
 
 
-def clean_bat_runner():
+def bat_clean_data_runner():
+    
 
 
     BAT_single_veh_driver()
@@ -11,4 +12,4 @@ def clean_bat_runner():
 
 if __name__ == '__main__':
 
-    clean_bat_runner()
+    bat_clean_data_runner()
