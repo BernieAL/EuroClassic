@@ -352,8 +352,37 @@ def ebay_SOLD_scrape_single_veh(car,driver):
                 driver.get(pg_link)
             
            
-           
+        #if len pages == 0, theres only one page (the current page), get all the data from this page   
         else:
+            
+            """
+            If single page, and If not many results on page, ebay provides additional section on page
+            called "Results matching fewer words" - to avoid scraping irrelevant results,
+            we use the number of results indicated by ebay in the upper right corner of page to filter down the number of found listing card elements down to match the number given by ebay
+            
+            Ex. #Ex. -> "18 results for nissan 350z"
+
+            -using this, we now know theres only 18 exact match results, and all else are irrelevant
+            -Extract the '18' from the string
+            -Proceed as normal to find all listing card elements on the page using selenium, which stores them in array
+            -slice the array down to the number of exact matches count
+                    all_descriptions = all_descriptions[:18+1]
+                    +1 to make inclusive - because list slicing stops right before given index, we want to include the last exact match as well
+            
+            """
+            #Ex. -> "18 results for nissan 350z"
+            exact_results_count = driver.find_element(By.XPATH,"//h1[contains(., 'results for')]").get_attribute('innerText')
+            
+            # 18 results for nissan 350z -> ['18', 'results', 'for', 'nissan', '350z'] -> [18]"
+            exact_results_count_num = int(exact_results_count.split(" ")[0])
+            print(exact_results_count_num)
+            
+            #find all elements listing card element using s-item__title class
+            all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
+            
+            #from all found listing card elements, 
+            #use exact_results_count_num to filter list down only to exact matches
+            all_descriptions = all_descriptions[:exact_results_count_num+1]
             all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
 
             all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
