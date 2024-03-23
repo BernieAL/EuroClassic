@@ -17,7 +17,7 @@ from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
 from Web_Scrape_Logic.EBAY_scraper import ebay_CURRENT_scrape_single_veh,ebay_SOLD_scrape_single_veh
 # from Web_Scrape_Logic.BAT_scraper import BAT_scrape_single_veh,BAT_scrape_all_for_make
 
-from Postgres.insert_data import insert_current_listing_data,insert_sold_data, insertion_check
+from Postgres.insert_data import populate_vehicles_dir_table,insert_current_listing_data,insert_sold_data, insertion_check
 from Postgres.connect import get_db_connection
 # from Web_Scrape_Logic.scrape_runner_main import run_scapers
 
@@ -28,7 +28,7 @@ load_dotenv(find_dotenv())
 
 
 
-"""This is the file that will orchestrate all processes for:
+"""PROCESS OVERVIEW: This is the file that will orchestrate all processes for:
    -scraping
    -cleaning
    -write cleaned data to db
@@ -130,20 +130,37 @@ def main_runner():
     }
     # run_scapers() #runs ebay and bat scrapers
     try:
+
+        #Scraping of ebay data
         # ebay_CURRENT_scrape_single_veh(car,driver,EBAY_cleaned_CURRENT_LISTINGS_file_path)
         # ebay_SOLD_scrape_single_veh(car,driver,EBAY_cleaned_SOLD_DATA_file_path)
 
+        #Scraping of bat data
         # #bat scrape
         # #bat scrape
         
         driver.close()
         time.sleep(1)
         
-        ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
+        #cleaning of ebay data
+        # ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
+
+        #cleaning of bat data
+        #bat_clean_data_single(car,BAT_raw_single)
+        #bat_clean_data_all_make(car,BAT_raw_all_make)
         
-        # insert_sold_data(db_cursor)
-        # insert_current_listing_data(db_cursor)
+        #insertion of ebay data into db
+        insert_current_listing_data(db_cursor,db_conn,EBAY_cleaned_CURRENT_LISTINGS_file_path)
+        insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
+
+        #populate veh dir tables
+        populate_vehicles_dir_table()
         
+        #BAT insertion of cleaned data - IMPLEMENT LATER
+        #insert_sold_data(db_cursor,BAT_cleaned_single)
+        #insert_sold_data(db_cursor,BAT_cleaned_all_make)
+        
+        #analysis of ebay data
         
         
     except Exception as e:

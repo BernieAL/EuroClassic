@@ -80,7 +80,6 @@ def create_tables(cur):
         """
     )
 
-    conn = None
     try:
         
         for command in commands:

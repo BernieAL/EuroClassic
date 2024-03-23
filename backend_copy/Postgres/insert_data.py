@@ -13,6 +13,7 @@ import psycopg2
 import os
 import csv
 from dotenv import load_dotenv,find_dotenv
+from simple_chalk import chalk
 
 load_dotenv(find_dotenv())     
 
@@ -74,7 +75,7 @@ def populate_vehicles_dir_table(cur,veh_dir_file_path):
         except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
 
-    print("Successfully populated veh directory table ")
+    print(":::Successfully POPULATED VEH DIR TABLE")
     conn.commit()
 
 
@@ -83,8 +84,8 @@ def populate_vehicles_dir_table(cur,veh_dir_file_path):
    and inserts them into the db 
    -The source of the data doesnt matter so long as it matches the format specified for sold vehicles records -> YEAR,MAKE,MODEL,SALEPRICE,DATESOLD
 """
-def insert_sold_data(cur,cleaned_SOLD_DATA_file_path):
-    
+def insert_sold_data(cur,conn,cleaned_SOLD_DATA_file_path):
+    print(chalk.green(":::Starting insert_sold_data"))
     clean_output_file_SOLD_DATA = open(cleaned_SOLD_DATA_file_path,"r")
     csvreader = csv.reader(clean_output_file_SOLD_DATA,delimiter=',')
 
@@ -104,16 +105,20 @@ def insert_sold_data(cur,cleaned_SOLD_DATA_file_path):
         except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
 
-    print("Successfully inserted all SOLD_LISTINGS records into DB")
-    conn.commit()
+    try:
+        conn.commit()
+        print(chalk.green(":::Successfully inserted all SOLD_LISTINGS records into DB"))
+    except Exception as e:
+        print(f"Failed to insert sold data: {e}")
+        
 
 """ 
    -This function accepts a csv file path of current records
    and inserts them into the db 
    -The source of the data doesnt matter so long as it matches the format specified for current vehicle listings -> YEAR,MAKE,MODEL,LISTPRICE
 """
-def insert_current_listing_data(cur,cleaned_CURRENT_LISTINGS_file_path):
-    
+def insert_current_listing_data(cur,conn,cleaned_CURRENT_LISTINGS_file_path):
+    print(chalk.green(":::Starting insert_current_listing_data"))
     clean_output_file_CURRENT_LISTINGS = open(cleaned_CURRENT_LISTINGS_file_path,"r")
     csvreader = csv.reader(clean_output_file_CURRENT_LISTINGS,delimiter=',')
     # this skips the first line in file which is col names
@@ -129,8 +134,11 @@ def insert_current_listing_data(cur,cleaned_CURRENT_LISTINGS_file_path):
         except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
 
-    print("Successfully inserted all CURRENT_LISTING records into DB")
-    conn.commit()
+    try:
+        conn.commit()
+        print(chalk.green(":::Successfully inserted all CURRENT_LISTING records into DB"))
+    except Exception as e:
+            print(f"Failed to insert current data: {e}")
 
     
 """ 
@@ -164,6 +172,6 @@ if __name__ == '__main__':
     conn = psycopg2.connect(os.getenv('DB_URI'))
     cur = conn.cursor()
     populate_vehicles_dir_table(cur, INPUT_veh_dir_file_path)
-    insert_sold_data(cur, clean_SOLD_LISTINGS_file_path)
-    insert_current_listing_data(cur, clean_CURR_LISTINGS_file_path)
+    # insert_sold_data(cur, clean_SOLD_LISTINGS_file_path)
+    # insert_current_listing_data(cur, clean_CURR_LISTINGS_file_path)
     insertion_check(cur)
