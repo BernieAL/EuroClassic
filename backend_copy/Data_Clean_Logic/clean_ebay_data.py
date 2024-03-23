@@ -37,84 +37,25 @@ def fileWrite(data, fileIn):
         fileIn.write(temp)
     # fileIn.write("---------------------- \n")
 
-def clean_data_EBAY_SOLD(raw_SOLD_DATA_file, year, make, model):
-    try:
-        #open output file
-        clean_output_file_SOLD_DATA = open(EBAY_clean_OUTPUT_SOLD_DATA_file, "w", encoding="utf-8")
-        
-        #open raw input source file
-        raw_input_SOLD_DATA = open(raw_SOLD_DATA_file, "r", encoding="utf-8")
-        
-        #for each line in raw data
-        #line looks like -> 2000 Acura Integra Type R $63966.00 2024-02-12
-        for line in raw_input_SOLD_DATA:
-           
-            #if curr line contains our target veh model
-            if model in line:
-                #remove all commas - if any
-                line = line.replace(',', '')
-                
-                #locate 4 digits in a row, this would be the year of the vehicle
-                #if not found, use 0000 as year
-                if re.findall('^\d{4}', line):
-                    try:
-                        veh_year = (re.findall('^\d{4}', line))[0]
-                    except NameError:
-                        veh_year = 0000
-                
 
-                #locate price value by finding $ symbol, get all values after this up to decimal point 
-                #Ex input = $28000.00 -> output 28000
-                try:
-                    sale_price_match = (re.findall('\$(\d+)\.', line))[0]
-                    if not veh_year:
-                        veh_year = 0000
-                    print(sale_price_match)
-                
-                except IndexError as error:
-                    pass
-                # print(f"{line}")
-                try:
-                    #extract date from line using pattern dddd-dd-dd , (where d is regex digit)
-                    sale_date_match = (re.findall('\d{4}-\d{2}-\d{2}',line))[0]
-                    
-                    #concat into single line for to write to csv output file -> 1999,Acura,Integra,28000,2024-02-23
-                    item_line = f"{veh_year},{make},{model},{sale_price_match},{sale_date_match}"
-                    print(item_line)
-                    
-                    #remove any spacing
-                    item_line = item_line.replace(' ', '')
-                    print(item_line)
-                    clean_output_array.append(item_line)
 
-                except IndexError as error:
-                    print(error)
-
-        col_headers = f"Year,Make,Model,Price,DateSold\n"
-        clean_output_file_SOLD_DATA.write(col_headers)
-
-        fileWrite(clean_output_array, clean_output_file_SOLD_DATA)
-
-        clean_output_file_SOLD_DATA.close()
-        raw_input_SOLD_DATA.close()
-
-        logging.info("Data cleaning for SOLD_DATA successful")
-        print(chalk.green("Data cleaning for SOLD_DATA successful"))
-    except Exception as e:
-        logging.error(f"Error during data cleaning for SOLD_DATA: {str(e)}")
-        print(chalk.red(f"Error during data cleaning for SOLD_DATA: {str(e)} \n OFFENDING LINE--> {line}"))
-
-def clean_data_EBAY_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
+def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
     try:
         
+        #open raw data file
         raw_input_CURRENT_LISTINGS = open(raw_CURRENT_LISTINGS_file, "r", encoding="utf-8")
-        unclean_input = raw_input_CURRENT_LISTINGS
+        raw_data = raw_input_CURRENT_LISTINGS
 
+        #open raw data file
         clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_OUTPUT_CURRENT_LISTINGS_file, "w", encoding="utf-8")
+
+        year = car['year']
+        make = car['make']
+        model = car['model']
 
         clean_output_array = []
 
-        for line in unclean_input:
+        for line in raw_data:
             if model in line:
                 line = line.replace(',', '')
                 if re.findall('^\d{4}', line):
@@ -138,17 +79,94 @@ def clean_data_EBAY_CURRENT(raw_CURRENT_LISTINGS_file, year, make, model):
         clean_output_file_CURRENT_LISTINGS.write(col_headers)
 
         fileWrite(clean_output_array, clean_output_file_CURRENT_LISTINGS)
-        logging.info("Data cleaning for CURRENT_LISTINGS successful")
-        print(chalk.green(("Data cleaning for CURRENT_LISTINGS successful")))
-    except Exception as e:
-        logging.error(f"Error during data cleaning for CURRENT_LISTINGS: {str(e)}")
-        print(chalk.red(f"Error during data cleaning for CURRENT_LISTINGS: {str(e)}"))
 
-def ebay_clean_data_runner(car):
+        logging.info(":::DATA CLEANING FOR CURRENT_LISTINGS successful")
+        print(chalk.green((":::DATA CLEANING FOR CURRENT_LISTINGS successful")))
+    except Exception as e:
+        logging.error(f":::Error during data cleaning for CURRENT_LISTINGS: {str(e)}")
+        print(chalk.red(f":::Error during data cleaning for CURRENT_LISTINGS: {str(e)}"))
+
+
+def clean_data_EBAY_SOLD(car,raw_SOLD_DATA_file):
+
     try:
-        clean_data_EBAY_SOLD(EBAY_raw_SOLD_DATA_file, car['year'], car['make'], car['model'])
-        clean_data_EBAY_CURRENT(EBAY_raw_CURRENT_LISTINGS_file, car['year'], car['make'], car['model'])
-               
+        #open raw data file
+        clean_output_file_SOLD_DATA = open(EBAY_clean_OUTPUT_SOLD_DATA_file, "w", encoding="utf-8")
+        
+        #open raw data file
+        raw_input_SOLD_DATA = open(raw_SOLD_DATA_file, "r", encoding="utf-8")
+        raw_data = raw_input_SOLD_DATA
+
+        year = car['year']
+        make = car['make']
+        model = car['model']
+        
+        #for each line in raw data
+        #line looks like -> 2000 Acura Integra Type R $63966.00 2024-02-12
+        for line in raw_data:
+           
+            #if curr line contains our target veh model
+            if model in line:
+                #remove all commas - if any
+                line = line.replace(',', '')
+                
+                #locate 4 digits in a row, this would be the year of the vehicle
+                #if not found, use 0000 as year
+                if re.findall('^\d{4}', line):
+                    try:
+                        veh_year = (re.findall('^\d{4}', line))[0]
+                    except NameError:
+                        veh_year = 0000
+                
+
+                #locate price value by finding $ symbol, get all values after this up to decimal point 
+                #Ex input = $28000.00 -> output 28000
+                try:
+                    sale_price_match = (re.findall('\$(\d+)\.', line))[0]
+                    if not veh_year:
+                        veh_year = 0000
+                    # print(sale_price_match)
+                
+                except IndexError as error:
+                    pass
+                # print(f"{line}")
+                try:
+                    #extract date from line using pattern dddd-dd-dd , (where d is regex digit)
+                    sale_date_match = (re.findall('\d{4}-\d{2}-\d{2}',line))[0]
+                    
+                    #concat into single line for to write to csv output file -> 1999,Acura,Integra,28000,2024-02-23
+                    item_line = f"{veh_year},{make},{model},{sale_price_match},{sale_date_match}"
+                    # print(item_line)
+                    
+                    #remove any spacing
+                    item_line = item_line.replace(' ', '')
+                    # print(item_line)
+                    clean_output_array.append(item_line)
+
+                except IndexError as error:
+                    print(error)
+
+        col_headers = f"Year,Make,Model,Price,DateSold\n"
+        clean_output_file_SOLD_DATA.write(col_headers)
+
+        fileWrite(clean_output_array, clean_output_file_SOLD_DATA)
+
+        clean_output_file_SOLD_DATA.close()
+        raw_input_SOLD_DATA.close()
+
+        logging.info(":::DATA CLEANING FOR SOLD_DATA successful")
+        print(chalk.green(":::DATA CLEANING FOR SOLD_DATA successful"))
+    except Exception as e:
+        logging.error(f":::Error during data cleaning for SOLD_DATA: {str(e)}")
+        print(chalk.red(f":::Error during data cleaning for SOLD_DATA: {str(e)} \n OFFENDING LINE--> {line}"))
+
+
+
+def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path):
+    try:
+       
+        clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
+        clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
         logging.info("Data cleaning for all types successful")
         return True
     except Exception as e:

@@ -80,9 +80,9 @@ EBAY_raw_SOLD_DATA_file_path = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_SOLD_DAT
  
 ###FILE PATHS for writing/reading cleaned data
 #PATH-> backend/cleaned_data_dir/'EBAY_raw_CURRENT_LISTINGS_DATA.txt'
-EBAY_clean_OUTPUT_CURRENT_LISTINGS_file_path = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_CURRENT_LISTINGS.csv')
+EBAY_cleaned_CURRENT_LISTINGS_file_path = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_CURRENT_LISTINGS.csv')
 #PATH-> backend/cleaned_data_dir/'EBAY_raw_SOLD_DATA.txt'
-EBAY_clean_OUTPUT_SOLD_DATA_file_path = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
+EBAY_cleaned_SOLD_DATA_file_path = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
 
 
 
@@ -130,14 +130,17 @@ def main_runner():
     }
     # run_scapers() #runs ebay and bat scrapers
     try:
-        ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
-        ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
+        # ebay_CURRENT_scrape_single_veh(car,driver,EBAY_cleaned_CURRENT_LISTINGS_file_path)
+        # ebay_SOLD_scrape_single_veh(car,driver,EBAY_cleaned_SOLD_DATA_file_path)
 
         # #bat scrape
         # #bat scrape
+        
         driver.close()
         time.sleep(1)
-        # ebay_clean_data_runner(car)
+        
+        ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
+        
         # insert_sold_data(db_cursor)
         # insert_current_listing_data(db_cursor)
         
