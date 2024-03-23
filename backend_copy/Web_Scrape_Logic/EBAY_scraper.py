@@ -40,23 +40,18 @@ def check_output_dir_exists():
        Path for scraped data dir is backend/Scraped_data_output
     """
     #dir of current script
-    current_script_dir = os.path.dirname(os.path.abspath(__file__))
-    BACKEND_ROOT = os.path.abspath(os.path.join(current_script_dir, '..'))
-    print(chalk.green(current_script_dir))      
-    print(chalk.green(BACKEND_ROOT)) 
 
-    # #ROOT OF BACKEND 
-    # BACKEND_ROOT = os.path.join('..',current_script_dir)
-    
-    # SCRAPED_DATA_DIR = os.path.join(BACKEND_ROOT,'Scraped_data_output')
-    # print(chalk.green(BACKEND_ROOT))    
-    # if not os.path.exists(SCRAPED_DATA_DIR):
-    #     os.makedirs(SCRAPED_DATA_DIR)
-    #     print(chalk.green('SCRAPED OUTPUT DIR DNE - CREATING NOW'))
-    #     print(chalk.green('SCRAPED OUTPUT CREATED'))    
-    # else:
-    #     print(chalk.green('SCRAPED OUTPUT DIR EXISTS'))    
-    #     print(chalk.green(SCRAPED_DATA_DIR))  
+    current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/Web_Scrape_Logic
+    BACKEND_ROOT = os.path.abspath(os.path.join(current_script_dir, '..')) #backend/
+    SCRAPED_DATA_DIR = os.path.join(BACKEND_ROOT,'Scraped_data_output') #backend/Scraped_data_output
+   
+    if not os.path.exists(SCRAPED_DATA_DIR):
+        os.makedirs(SCRAPED_DATA_DIR)
+        print(chalk.green('SCRAPED OUTPUT DIR DNE - CREATING NOW'))
+        print(chalk.green('SCRAPED OUTPUT CREATED'))    
+    else:
+        print(chalk.green('SCRAPED OUTPUT DIR EXISTS'))    
+        print(chalk.green(SCRAPED_DATA_DIR))  
 
 check_output_dir_exists()
 
