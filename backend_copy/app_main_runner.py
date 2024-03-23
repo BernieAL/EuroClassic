@@ -9,6 +9,7 @@ from datetime import date,datetime
 import time
 import random
 import sys
+from simple_chalk import chalk
 
 
 from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
@@ -37,43 +38,53 @@ load_dotenv(find_dotenv())
    SCRAPING
    -driver should be instantiated and configured here, then passed to all scraper functions
         in this way, if changes need to be made to driver, we dont have to manually do it all scraper functions
-   -ideally have something that ensures each scraper processes completed successfully
+   -each scraper function recieves output file paths from main_runner, and will open files and write to them
 
 
    CLEANING
    -run cleaning functions, these are specific to the data source
    -have tests to ensure cleaning completed successfully
+   -each cleaning function recieves file paths from main_runner, for reading and writing
 
    WRITING CLEANED DATA TO DB
    -import functions that write to db, pass file references 
         in this way, we can specify files and their locations from a central location (here), and not depend on each cleaning function to have the right path in itself
+    -DB functions recieve file paths to read from 
     
    ANALYSIS
    -import analysis functions and pass them cleaned csv files
 
    -WRITING ANALYSIS DATA TO DB
-    -import functions that write to db, pass file references
+    -import functions that write to db, pass file paths
     
 
 
 """
 
 
-#directory paths
-current_script_dir = os.path.dirname(os.path.abspath(__file__))
-PROJ_ROOT = os.path.abspath(os.path.join(current_script_dir,'..'))
-POSTGRES_DIR = os.path.dirname(__file__)
-CLEANED_DATA_DIR = os.path.join(PROJ_ROOT,'Cleaned_data_output')
-SCRAPED_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
+#dir of current script
+current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
 
-#file paths for raw data
-EBAY_raw_CURRENT_LISTINGS_file = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_CURRENT_LISTINGS_DATA.txt')
-EBAY_raw_SOLD_DATA_file = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_SOLD_DATA.txt')
+###DIR PATHS
+#ROOT OF BACKEND 
+BACKEND_ROOT = current_script_dir   #backend
+SCRAPED_DATA_DIR = os.path.join(BACKEND_ROOT,'Scraped_data_output') #backend/scraped_data_dir
+CLEANED_DATA_DIR = os.path.join(BACKEND_ROOT,'Cleaned_data_output')  #backend/cleaned_data_dir
+POSTGRES_DIR = os.path.dirname(__file__) #backend/postgres
+
+###FILE PATHS for writing/reading raw data
+#PATH-> backend/scraped_data_dir/'EBAY_raw_CURRENT_LISTINGS_DATA.txt'
+EBAY_raw_CURRENT_LISTINGS_file_path = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_CURRENT_LISTINGS_DATA.txt')  
+#PATH -> backend/scraped_data_dir/'EBAY_raw_SOLD_DATA.txt'
+EBAY_raw_SOLD_DATA_file_path = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_SOLD_DATA.txt')
  
-#file paths for cleaned data
-EBAY_clean_OUTPUT_CURRENT_LISTINGS_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_CURRENT_LISTINGS.csv')
-EBAY_clean_OUTPUT_SOLD_DATA_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
+###FILE PATHS for writing/reading cleaned data
+#PATH-> backend/cleaned_data_dir/'EBAY_raw_CURRENT_LISTINGS_DATA.txt'
+EBAY_clean_OUTPUT_CURRENT_LISTINGS_file_path = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_CURRENT_LISTINGS.csv')
+#PATH-> backend/cleaned_data_dir/'EBAY_raw_SOLD_DATA.txt'
+EBAY_clean_OUTPUT_SOLD_DATA_file_path = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
 
+print(chalk.green(BACKEND_ROOT))
 
 def initialize_driver():
     seleniumwire_options = {
@@ -90,9 +101,6 @@ def initialize_driver():
     
     #stop images from loading - improve page speed and reduce proxy data usage
     uc_chrome_options.add_argument('--blink-settings=imagesEnabled=false')
-    
-    #ignore ssl issues from https
-    # uc_chrome_options.set_capability('acceptSslCerts',True)
     uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
     uc_chrome_options.add_argument('--ignore-certificate-errors')
     uc_chrome_options.add_argument("--allow-running-insecure-content")
@@ -122,15 +130,15 @@ def main_runner():
     }
     # run_scapers() #runs ebay and bat scrapers
     try:
-        # ebay_CURRENT_scrape_single_veh(car,driver)
-        # ebay_SOLD_scrape_single_veh(car,driver)
+        ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
+        ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
 
         # #bat scrape
         # #bat scrape
         driver.close()
         time.sleep(1)
         # ebay_clean_data_runner(car)
-        insert_sold_data(db_cursor)
+        # insert_sold_data(db_cursor)
         # insert_current_listing_data(db_cursor)
         
         

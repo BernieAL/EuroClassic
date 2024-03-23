@@ -26,21 +26,39 @@ from simple_chalk import chalk
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from LTS_storage_script import copy_file
 
-SCRAPED_DATA_OUTPUT_DIR = "Scraped_data_output"
-if not os.path.exists(SCRAPED_DATA_OUTPUT_DIR):
-    os.makedirs(SCRAPED_DATA_OUTPUT_DIR)
+
+SCRAPED_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
+# EBAY_raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'EBAY_raw_SOLD_DATA.txt')
 
 
-SCRAPED_DATA_OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
+#file paths for writing/reading raw data
+EBAY_raw_CURRENT_LISTINGS_file_path = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_CURRENT_LISTINGS_DATA.txt')
+EBAY_raw_SOLD_DATA_file_path = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_SOLD_DATA.txt')
+ 
+def check_output_dir_exists():
+    """checks if the output dir for scraped data exists, if not it creates it
+       Path for scraped data dir is backend/Scraped_data_output
+    """
+    #dir of current script
+    current_script_dir = os.path.dirname(os.path.abspath(__file__))
+    BACKEND_ROOT = os.path.abspath(os.path.join(current_script_dir, '..'))
+    print(chalk.green(current_script_dir))      
+    print(chalk.green(BACKEND_ROOT)) 
 
-EBAY_raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'EBAY_raw_SOLD_DATA.txt')
-EBAY_raw_SOLD_output_file = open(EBAY_raw_SOLD_output_file_path ,"a",encoding="utf-8")
+    # #ROOT OF BACKEND 
+    # BACKEND_ROOT = os.path.join('..',current_script_dir)
+    
+    # SCRAPED_DATA_DIR = os.path.join(BACKEND_ROOT,'Scraped_data_output')
+    # print(chalk.green(BACKEND_ROOT))    
+    # if not os.path.exists(SCRAPED_DATA_DIR):
+    #     os.makedirs(SCRAPED_DATA_DIR)
+    #     print(chalk.green('SCRAPED OUTPUT DIR DNE - CREATING NOW'))
+    #     print(chalk.green('SCRAPED OUTPUT CREATED'))    
+    # else:
+    #     print(chalk.green('SCRAPED OUTPUT DIR EXISTS'))    
+    #     print(chalk.green(SCRAPED_DATA_DIR))  
 
-EBAY_raw_CURRENT_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'EBAY_raw_CURRENT_LISTINGS_DATA.txt')
-EBAY_raw_CURRENT_output_file = open(EBAY_raw_CURRENT_output_file_path ,"a",encoding="utf-8")
-
-error_log_file = os.path.join(SCRAPED_DATA_OUTPUT_DIR, '..','error_log.txt')
-error_log_output = open(error_log_file,"a",encoding="utf-8")
+check_output_dir_exists()
 
 
 #function for writing raw scraped data to respective files
@@ -56,17 +74,20 @@ def error_log(error_obj):
     """
     
     temp = f"{error_obj} \n -----------"
-    error_log_output.write(temp)        
+    # error_log_output.write(temp)        
 
 # def pagination_present_wait():
 #     pages = WebDriverWait(driver,12,1,EC.presence_of_all_elements_located((By.CSS_SELECTOR,'.pagination__items li a')))
 #     return pages
 
 #this function gets current listings
-def ebay_CURRENT_scrape_single_veh(car,driver):
+"""Function accepts file it should write to
+"""
+def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path):
     
     target_car = f"{car['make']} {car['model']}"
 
+    EBAY_raw_CURRENT_output_file = open(EBAY_raw_CURRENT_output_file_path,"a",encoding="utf-8")
     #clear data from prev run scrape to start with empty file
     EBAY_raw_CURRENT_output_file.truncate(0)
     
@@ -257,9 +278,11 @@ def ebay_CURRENT_scrape_single_veh(car,driver):
 
     # print(ebay_items)
 
-#this ebay section gets sold listings, beginnning from intial url again, and appends 'sold' and 'complete' params to the url
-def ebay_SOLD_scrape_single_veh(car,driver):
+"""this ebay section gets sold listings, beginnning from intial url again, and appends 'sold' and 'complete' params to the url"""
+def ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_output_file_path):
+    
     # target_car = f"{car['make']} {car['model']}"
+    EBAY_raw_SOLD_output_file = open(EBAY_raw_SOLD_DATA_output_file_path,"a",encoding="utf-8")
 
     #clear existing data from prev scrape
     EBAY_raw_SOLD_output_file.truncate(0)
@@ -342,7 +365,7 @@ def ebay_SOLD_scrape_single_veh(car,driver):
                     ebay_items.append(temp)
 
                 #write items to file
-                fileWrite(ebay_items,EBAY_raw_SOLD_output_file )
+                fileWrite(ebay_items,EBAY_raw_SOLD_output_file)
 
                 #clear array ahead of next page - to avoid writing duplicate data to file
                 ebay_items.clear
@@ -405,12 +428,12 @@ def ebay_SOLD_scrape_single_veh(car,driver):
                     ebay_items.append(temp)
 
             #write items to file
-            fileWrite(ebay_items,EBAY_raw_SOLD_output_file )
+            fileWrite(ebay_items,EBAY_raw_SOLD_output_file)
             
         carName = f"{car['make']}-{car['model']}"
         #close file before copying or it will result in empty copied file
         EBAY_raw_SOLD_output_file.close()
-        copy_file("EBAY",EBAY_raw_SOLD_output_file_path,"EBAY",current_date,carName,"SOLD")
+        copy_file("EBAY",EBAY_raw_SOLD_DATA_output_file_path,"EBAY",current_date,carName,"SOLD")
         success_obj = {
                     'success': True,
                     'function':'ebay_scrape_sold',
@@ -435,6 +458,7 @@ def ebay_SOLD_scrape_single_veh(car,driver):
         
 
 if __name__ == '__main__':
+
 
     car  = {
     'year':2017,
@@ -466,14 +490,11 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    ebay_CURRENT_scrape_single_veh(car,driver)
-    # ebay_SOLD_scrape_single_veh(car,driver)
-
-    driver.close()
-    
-    
-    # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
-    time.sleep(1)
+    # ebay_CURRENT_scrape_single_veh(car,driver)
+    # # ebay_SOLD_scrape_single_veh(car,driver)
+    # driver.close()
+    # # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
+    # time.sleep(1)
 
 
    
