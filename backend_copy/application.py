@@ -22,15 +22,14 @@ from Data_Clean_Logic.clean_bat_data import bat_clean_data_runner
 
 from Analysis_Logic.sold_data_transformation import SOLD_max_and_avg_price_per_veh_year
 
-from config import Config
 
 from Postgres.connect import get_db_connection
 import psycopg2
-from Postgres.config import config
+
 
 application = Flask(__name__)
 CORS(application)
-application.config.from_object(Config)
+
 application.secret_key = 'secret_key'
 
 #test db connection
@@ -114,24 +113,7 @@ def initialize_cache():
         print(f" Error writing to file: {e}")
 initialize_cache()
 
-# pd_result = process_cleaned_data()
-# print(pd_result)
 
-    
-
-
-
-        # return redirect(url_for('home'))
-
-    # otherwise reqeust == get, return search_form to use to be populated
-    # return render_template('search_form.html', form=form)
-    
-    # car  = {
-    # 'year':2017,
-    # 'make':'Audi',
-    # 'model':'Rs6'
-    # }
-    # scrapeFunc(car)
     
 
 
@@ -177,54 +159,44 @@ def vehicleQuery():
     try:
         
         data = request.json
-        
+
+        #encapsulate query values into veh object
         veh = {
             'year' : (data.get('year')),
             'make': (data.get('make')).upper(),
             'model': (data.get('model')).upper()
         }
-        #TESTING
-        # print(f"vehicleQuery {veh}")
+       
         
-        """veh_scrape_status is obj
-            
-            veh_scrape_status = {
-                'veh_found':False,
-                'last_scrape_date': None,
-                'scrape_needed':False
+        #checks if veh scrape is needed - if veh isnt in db or data is old, new scrape needed
+        veh_scrape_status = DB_check_new_scrape_needed(veh)
+        """DB_check_new_scrape_needed returns obj:
+            {
+                'veh_found':True/False,
+                'last_scrape_date': date obj,
+                'scrape_needed':True/False
             }
         """
-        veh_scrape_status = DB_check_new_scrape_needed(veh)
-        # print(veh_scrape_status)
         
-       #TESTING
-        # veh_scrape_status['scrape_needed'] = False
-        
-        if veh_scrape_status['scrape_needed'] == False:
-            """ If scrape not needed - means data isnt old, go to db and retrieve all records from all tables for this veh
-            Then return to front end
-            """     
-            #get veh records from all tables and return
+        """if scrape_needed == False -> veh is in db, and veh data IS NOT old
+           retrieve all records  from DB for this veh
+           Then return to front 
+        """
+        if veh_scrape_status['scrape_needed'] == False:   
+            #get veh records from all tables and return as response
             print(chalk.green("::::::VEH SCRAPE NOT NEEDED::::::"))
             data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
             print(data_from_db)
-            # t = jsonify(data_from_db)
-            # print(t)
             return jsonify(data_from_db)
-             
-        
         else:
-            """perform new scrape
-               store new data into db
-               retrieve from db and return to front end
+            """new scrape needed - put veh in queue to perform scrape and email user the results
             """
             
-            # PERFORM SCAPE HERE 
             print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
             
             #this retrieves records from various tables in db matching make and model
             """ 
-                This retrieves records from various tables in db matching make and model
+                After scrape completed - This retrieves records from various tables in db matching make and model
                 DB_execute_queries_and_store_results returns this 
                     {
                         "all_sales_records": all_sales_records_result,
@@ -233,17 +205,8 @@ def vehicleQuery():
                         "current_stats": current_stats_result
                     }
             """
-            veh_data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
             
-            VEH_EXISTS = veh_data_from_db['VEH_EXISTS']
-            if VEH_EXISTS == False:
-                print("veh doesnt exist in DB - will perform scrape and email when ready")
-                return jsonify(veh_data_from_db)
-            else:    
-                print(veh_data_from_db)
-                t = jsonify(data_from_db)
-                # print(t)
-                return jsonify(veh_data_from_db)
+           
             
         
 
