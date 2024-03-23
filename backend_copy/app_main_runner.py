@@ -84,7 +84,7 @@ EBAY_clean_OUTPUT_CURRENT_LISTINGS_file_path = os.path.join(CLEANED_DATA_DIR,'EB
 #PATH-> backend/cleaned_data_dir/'EBAY_raw_SOLD_DATA.txt'
 EBAY_clean_OUTPUT_SOLD_DATA_file_path = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
 
-print(chalk.green(BACKEND_ROOT))
+
 
 def initialize_driver():
     seleniumwire_options = {
@@ -126,7 +126,7 @@ def main_runner():
     car = {
         'year':2017,
         'make':'Nissan',
-        'model':'350Z'
+        'model':'370Z'
     }
     # run_scapers() #runs ebay and bat scrapers
     try:
@@ -154,4 +154,4 @@ def main_runner():
 
 if __name__ == "__main__":
     pass
-    # main_runner()
+    main_runner()

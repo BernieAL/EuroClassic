@@ -47,13 +47,13 @@ def check_output_dir_exists():
    
     if not os.path.exists(SCRAPED_DATA_DIR):
         os.makedirs(SCRAPED_DATA_DIR)
-        print(chalk.green('SCRAPED OUTPUT DIR DNE - CREATING NOW'))
-        print(chalk.green('SCRAPED OUTPUT CREATED'))    
+        print(chalk.green(':::::SCRAPED OUTPUT DIR DNE - CREATING NOW'))
+        print(chalk.green(':::::SCRAPED OUTPUT CREATED'))    
     else:
-        print(chalk.green('SCRAPED OUTPUT DIR EXISTS'))    
-        print(chalk.green(SCRAPED_DATA_DIR))  
+        print(chalk.green(f":::::SCRAPED OUTPUT DIR EXISTS - {SCRAPED_DATA_DIR}"))    
+        # print(chalk.green(SCRAPED_DATA_DIR))  
 
-check_output_dir_exists()
+# check_output_dir_exists()
 
 
 #function for writing raw scraped data to respective files
@@ -81,7 +81,7 @@ def error_log(error_obj):
 def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path):
     
     target_car = f"{car['make']} {car['model']}"
-
+    check_output_dir_exists()
     EBAY_raw_CURRENT_output_file = open(EBAY_raw_CURRENT_output_file_path,"a",encoding="utf-8")
     #clear data from prev run scrape to start with empty file
     EBAY_raw_CURRENT_output_file.truncate(0)
@@ -255,8 +255,8 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
         }
 
         #before exiting this 
-        time.sleep(10)
-        driver.close()
+        time.sleep(random.uniform(4,11))
+        # driver.close()
         #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
         time.sleep(1)
         return success_obj
@@ -435,8 +435,8 @@ def ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_output_file_path):
                     'date': current_date,
         }
         
-        time.sleep(10)
-        driver.close()
+        time.sleep(random.uniform(4,11))
+        # driver.close()
         #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
         time.sleep(1)
         return success_obj
@@ -485,11 +485,11 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    # ebay_CURRENT_scrape_single_veh(car,driver)
-    # # ebay_SOLD_scrape_single_veh(car,driver)
-    # driver.close()
-    # # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
-    # time.sleep(1)
+    ebay_CURRENT_scrape_single_veh(car,driver)
+    # ebay_SOLD_scrape_single_veh(car,driver)
+    driver.close()
+    # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
+    time.sleep(1)
 
 
    
