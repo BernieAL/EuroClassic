@@ -12,19 +12,20 @@ from simple_chalk import chalk
 import pandas as pd
 import os
 
-
-
-
 from Web_Scrape_Logic.scrape_runner_main import run_scapers
 from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
 from Data_Clean_Logic.clean_bat_data import bat_clean_data_runner
 
-
 from Analysis_Logic.sold_data_transformation import SOLD_max_and_avg_price_per_veh_year
-
 
 from Postgres.connect import get_db_connection
 import psycopg2
+
+
+current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
+
+BACKEND_ROOT = current_script_dir   #backend
+VEH_REQ_QUEUE_DIR = os.path.join(BACKEND_ROOT,'Veh_Request_Queue') #backend/
 
 
 application = Flask(__name__)
@@ -167,7 +168,6 @@ def vehicleQuery():
             'model': (data.get('model')).upper()
         }
        
-        
         #checks if veh scrape is needed - if veh isnt in db or data is old, new scrape needed
         veh_scrape_status = DB_check_new_scrape_needed(veh)
         """DB_check_new_scrape_needed returns obj:
@@ -180,7 +180,7 @@ def vehicleQuery():
         
         """if scrape_needed == False -> veh is in db, and veh data IS NOT old
            retrieve all records  from DB for this veh
-           Then return to front 
+           Then return to front end
         """
         if veh_scrape_status['scrape_needed'] == False:   
             #get veh records from all tables and return as response
@@ -188,23 +188,27 @@ def vehicleQuery():
             data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
             print(data_from_db)
             return jsonify(data_from_db)
+        
         else:
             """new scrape needed - put veh in queue to perform scrape and email user the results
+
+            write vehicle to queue file
+            get email from user
+            initiate scrape,clean,analyze,push to db process
+
             """
-            
             print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
             
-            #this retrieves records from various tables in db matching make and model
-            """ 
-                After scrape completed - This retrieves records from various tables in db matching make and model
-                DB_execute_queries_and_store_results returns this 
-                    {
-                        "all_sales_records": all_sales_records_result,
-                        "current_records": current_records_result,
-                        "sold_stats": sold_stats_result,
-                        "current_stats": current_stats_result
-                    }
-            """
+            VEH_REQ_QUEUE_FILE = open(VEH_REQ_QUEUE_FILE,'w')
+            VEH_REQ_QUEUE_FILE.write(f"{veh['year']},{veh['make']},{veh['model']}")
+            
+            res = {
+                'status':'Not Found',
+                'msg': "Whoops, We Dont Have Any Stats For That Vehicle Right Now, We Just initiated a new analysis process just for you - and we'll email you with the results",
+            }
+
+            
+            return jsonify(res)
             
            
             
