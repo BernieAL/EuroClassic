@@ -195,10 +195,12 @@ def vehicleQuery():
             'make': (data.get('make')).upper(),
             'model': (data.get('model')).upper()
         }
-        print(veh)
-        return "data received"
+        # print(veh)
+        # return jsonify(veh)
+        
         #checks if veh scrape is needed - if veh isnt in db or data is old, new scrape needed
         veh_scrape_status = DB_check_new_scrape_needed(veh)
+        # return jsonify(veh_scrape_status)
         """DB_check_new_scrape_needed returns obj:
             {
                 'veh_found':True/False,
@@ -217,6 +219,7 @@ def vehicleQuery():
             data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
             print(data_from_db)
             return jsonify(data_from_db)
+        
         
         else:
             """new scrape needed - put veh in queue to perform scrape and email user the results
@@ -240,9 +243,6 @@ def vehicleQuery():
             return jsonify(res)
             
            
-            
-        
-
     except Exception as e:
         print('Error',str(e))
         return jsonify({'error':str(e)})
@@ -295,7 +295,7 @@ def DB_check_new_scrape_needed(veh:object):
     veh_scrape_status={
                 'veh_found':False,
                 'last_scrape_date': None,
-                'scrape_needed':False
+                'scrape_needed':True
             }
     
     year = veh['year']
@@ -317,15 +317,15 @@ def DB_check_new_scrape_needed(veh:object):
     try:
         cur.execute(last_scrape_date_query,(model,year,make))
         
-        retrieved_veh = cur.fetchone() #returns tuple
+        retrieved_veh_record = cur.fetchone() #returns tuple
         #TESTING
         # print(f"retrieved_veh - {retrieved_veh}")
 
         #if veh found
-        if retrieved_veh:
+        if retrieved_veh_record :
             
             #get last_scrape_date off returned tuple 
-            last_scrape_date = (retrieved_veh[3])
+            last_scrape_date = (retrieved_veh_record [3])
 
             #update veh_scrape_status indicating veh was found
             veh_scrape_status['veh_found']=True
@@ -339,8 +339,10 @@ def DB_check_new_scrape_needed(veh:object):
 
             #if last_scrape_date older than 7 days
             if date_difference_days > 7:
-              veh_scrape_status['scrape_needed']=True
-              return veh_scrape_status
+                veh_scrape_status['scrape_needed']=True
+                return veh_scrape_status
+            else:
+                veh_scrape_status['scrape_needed']=False
         
         #if veh not found, default obj values already set to False, return obj as is
         else:
