@@ -39,7 +39,7 @@ def test_connect_1():
         if conn is not None:
             conn.close()
             print('Database connection closed.')
-test_connect_1()
+# test_connect_1()
 
 
 """Connection Option2 - This is a test connection function using indiv .env vars

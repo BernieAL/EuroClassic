@@ -19,6 +19,7 @@ import os
 # from Analysis_Logic.sold_data_transformation import SOLD_max_and_avg_price_per_veh_year
 
 from Postgres.connect import get_db_connection
+from Postgres.insert_data import populate_vehicles_dir_table
 import psycopg2
 
 from forms import SearchForm
@@ -200,6 +201,7 @@ def vehicleQuery():
         
         #checks if veh scrape is needed - if veh isnt in db or data is old, new scrape needed
         veh_scrape_status = DB_check_new_scrape_needed(veh)
+        print(veh_scrape_status)
         # return jsonify(veh_scrape_status)
         """DB_check_new_scrape_needed returns obj:
             {
@@ -295,12 +297,14 @@ def DB_check_new_scrape_needed(veh:object):
     veh_scrape_status={
                 'veh_found':False,
                 'last_scrape_date': None,
-                'scrape_needed':True
+                'scrape_needed':False
             }
     
     year = veh['year']
     make = veh['make']
     model = veh['model']
+    print('make: '+make)
+    print('model: '+model)
 
     #TESTING
     print(f"DB_check_new_scrape_needed- {veh}")
@@ -311,21 +315,22 @@ def DB_check_new_scrape_needed(veh:object):
     last_scrape_date_query = """
             SELECT MAKE,MODEL,YEAR,LAST_SCRAPE_DATE
             FROM vehicles
-            WHERE MODEL = %s AND YEAR = %s and MAKE = %s
+            WHERE MODEL = %s AND MAKE = %s
     """
 
     try:
-        cur.execute(last_scrape_date_query,(model,year,make))
+        cur.execute(last_scrape_date_query,(model,make))
         
         retrieved_veh_record = cur.fetchone() #returns tuple
         #TESTING
-        # print(f"retrieved_veh - {retrieved_veh}")
+        print(chalk.green("(check_new_scrape_needed)retrieved_veh - {retrieved_veh_record}"))
 
         #if veh found
-        if retrieved_veh_record :
+        if retrieved_veh_record:
             
             #get last_scrape_date off returned tuple 
             last_scrape_date = (retrieved_veh_record [3])
+            print("LAST SCRAPED DATE: " +last_scrape_date)
 
             #update veh_scrape_status indicating veh was found
             veh_scrape_status['veh_found']=True
@@ -362,10 +367,11 @@ def DB_execute_queries_and_store_results(cur, make, model):
     # Execute the queries
     cur.execute(all_sales_records_NO_YEAR_query, (make, model))
     all_sales_records_result = cur.fetchall() #returns list
-    # print(all_sales_records_result)
+    print(all_sales_records_result)
 
     cur.execute(all_current_records_NO_YEAR_query, (make, model))
     current_records_result = cur.fetchall() #returns list
+    print(current_records_result)
 
     """EMPTY CHECK
         if theres no sales records or current records for vehicle - return early with indication that vehicle doesnt exist in DB and do not execute rest of queries

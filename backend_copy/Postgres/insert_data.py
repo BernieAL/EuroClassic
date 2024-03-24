@@ -174,4 +174,4 @@ if __name__ == '__main__':
     populate_vehicles_dir_table(cur, INPUT_veh_dir_file_path)
     # insert_sold_data(cur, clean_SOLD_LISTINGS_file_path)
     # insert_current_listing_data(cur, clean_CURR_LISTINGS_file_path)
-    insertion_check(cur)
+    # insertion_check(cur)
