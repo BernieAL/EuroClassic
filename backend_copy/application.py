@@ -27,7 +27,7 @@ current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
 
 BACKEND_ROOT = current_script_dir   #backend
 VEH_REQ_QUEUE_DIR = os.path.join(BACKEND_ROOT,'Veh_Request_Queue') #backend/
-
+VEH_REQ_QUEUE_FILE_PATH = os.path.join(VEH_REQ_QUEUE_DIR,'Veh_Request_Queue.csv')
 CACHE_FILE_PATH = os.path.join(BACKEND_ROOT,'Cache','makes_cache.json')
 # print(os.path.isfile(cache_file_path))
 
@@ -220,7 +220,7 @@ def vehicleQuery():
             print(data_from_db)
             return jsonify(data_from_db)
         
-        
+
         else:
             """new scrape needed - put veh in queue to perform scrape and email user the results
 
@@ -231,7 +231,7 @@ def vehicleQuery():
             """
             print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
             
-            VEH_REQ_QUEUE_FILE = open(VEH_REQ_QUEUE_FILE,'w')
+            VEH_REQ_QUEUE_FILE = open(VEH_REQ_QUEUE_FILE_PATH,'w')
             VEH_REQ_QUEUE_FILE.write(f"{veh['year']},{veh['make']},{veh['model']}")
             
             res = {
