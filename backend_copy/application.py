@@ -12,20 +12,24 @@ from simple_chalk import chalk
 import pandas as pd
 import os
 
-from Web_Scrape_Logic.scrape_runner_main import run_scapers
-from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
-from Data_Clean_Logic.clean_bat_data import bat_clean_data_runner
+#from Web_Scrape_Logic.scrape_runner_main import run_scapers
+# from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
+# from Data_Clean_Logic.clean_bat_data import bat_clean_data_runner
 
-from Analysis_Logic.sold_data_transformation import SOLD_max_and_avg_price_per_veh_year
+# from Analysis_Logic.sold_data_transformation import SOLD_max_and_avg_price_per_veh_year
 
 from Postgres.connect import get_db_connection
 import psycopg2
 
+from forms import SearchForm
 
 current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
 
 BACKEND_ROOT = current_script_dir   #backend
 VEH_REQ_QUEUE_DIR = os.path.join(BACKEND_ROOT,'Veh_Request_Queue') #backend/
+
+CACHE_FILE_PATH = os.path.join(BACKEND_ROOT,'Cache','makes_cache.json')
+# print(os.path.isfile(cache_file_path))
 
 
 application = Flask(__name__)
@@ -46,8 +50,6 @@ from Postgres.queries import (
 )
 
 
-cache_file_path = os.path.join(os.getcwd(),'Cache/makes_cache.json')
-# print(os.path.isfile(cache_file_path))
 
 
 """ Veh manufacturer cache initialization
@@ -74,7 +76,7 @@ def initialize_cache():
         Opens cache file with read context, gets lastRetrievedDate which is first value in file
         closes file
         """
-        with open(cache_file_path,'r') as cache_file:
+        with open(CACHE_FILE_PATH,'r') as cache_file:
             print(chalk.blue(':::::CHECKING FRESHNESS OF CACHE DATA:::::'))
             existing_data = json.load(cache_file)
             
@@ -99,7 +101,7 @@ def initialize_cache():
             # prepend current date
             passenger_car_makes.insert(0,f"{date.today()}")
 
-            with open(cache_file_path,'w') as cache_file:
+            with open(CACHE_FILE_PATH,'w') as cache_file:
                 json.dump(passenger_car_makes,cache_file)
             print(chalk.blue(':::::NEW DATA SUCCESSFULLY WRITTEN TO CACHE:::::'))
 
@@ -118,17 +120,25 @@ initialize_cache()
     
 
 
-@application.route('/get_data',methods=['GET'])
-def return_data():
-   """TESTING
-    endpoint for js script to request non db data
-    returned data will be used to populate the graphs/charts etc
-   """
-#    print(session['db_data'])
-   pd_result = SOLD_max_and_avg_price_per_veh_year()
-   print(pd_result)
-   return pd_result
+# @application.route('/get_data',methods=['GET'])
+# def return_data():
+#    """TESTING
+#     endpoint for js script to request non db data
+#     returned data will be used to populate the graphs/charts etc
+#    """
+# #    print(session['db_data'])
+#    pd_result = SOLD_max_and_avg_price_per_veh_year()
+#    print(pd_result)
+#    return pd_result
    
+# @application.route('/retrieve_cache',methods=['GET'])
+# # def retrieve_cache():
+
+# #     with open(cache_file_path,'r') as cache_file:
+# #         print(chalk.blue(':::::CHECKING FRESHNESS OF CACHE DATA:::::'))
+# #         cache_data = json.load(cache_file)
+
+# #     return cache_data
 
 @application.route('/get_db_data',methods=['GET'])
 def return_db_data():
@@ -147,10 +157,24 @@ def return_db_data():
     return jsonify(data)
 
 
-@application.route('/',methods=['GET'])
+@application.route('/', methods=['GET', 'POST'])
 def home():
+    form = SearchForm()
+    if form.validate_on_submit():
+        # If form is submitted and valid, make a POST request to the 'vehicleQuery' route with form data
+        data = {
+            'year': form.vehicle_year.data,
+            'make': form.vehicle_make.data,
+            'model': form.vehicle_model.data
+        }
+        response = requests.post(url_for('vehicleQuery', _external=True), data=data)
+        # Process the response
+        if response.status_code == 200:
+            return response.text  # Or any other appropriate response
+        # Process the response if needed
+        
+    return render_template('index.html', form=form)
 
-    return "Hello"
 
 @application.route('/vehicle-query',methods=['POST'])
 def vehicleQuery():
@@ -159,15 +183,20 @@ def vehicleQuery():
     """
     try:
         
-        data = request.json
-
-        #encapsulate query values into veh object
+        data = request.form
+        print(data)
+        # Process the form data
+    
+        # # Return the response if needed
+        # return 'Data received'
+        
         veh = {
             'year' : (data.get('year')),
             'make': (data.get('make')).upper(),
             'model': (data.get('model')).upper()
         }
-       
+        print(veh)
+        return "data received"
         #checks if veh scrape is needed - if veh isnt in db or data is old, new scrape needed
         veh_scrape_status = DB_check_new_scrape_needed(veh)
         """DB_check_new_scrape_needed returns obj:
@@ -218,14 +247,7 @@ def vehicleQuery():
         print('Error',str(e))
         return jsonify({'error':str(e)})
         
-@application.route('/retrieve_cache',methods=['GET'])
-def retrieve_cache():
 
-    with open(cache_file_path,'r') as cache_file:
-        print(chalk.blue(':::::CHECKING FRESHNESS OF CACHE DATA:::::'))
-        cache_data = json.load(cache_file)
-
-    return cache_data
 
 # ==============================================================
 # HELPER FUNCTIONS
