@@ -201,7 +201,7 @@ def vehicleQuery():
         
         #checks if veh scrape is needed - if veh isnt in db or data is old, new scrape needed
         veh_scrape_status = DB_check_new_scrape_needed(veh)
-        print(veh_scrape_status)
+        print(chalk.green(f"veh_scrape_status: {veh_scrape_status}"))
         # return jsonify(veh_scrape_status)
         """DB_check_new_scrape_needed returns obj:
             {
@@ -219,7 +219,7 @@ def vehicleQuery():
             #get veh records from all tables and return as response
             print(chalk.green("::::::VEH SCRAPE NOT NEEDED::::::"))
             data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
-            print(data_from_db)
+            print(chalk.green(f"data from db{data_from_db}"))
             return jsonify(data_from_db)
         
 
@@ -307,7 +307,7 @@ def DB_check_new_scrape_needed(veh:object):
     print('model: '+model)
 
     #TESTING
-    print(f"DB_check_new_scrape_needed- {veh}")
+    print(chalk.green(f"(check_new_scrape_needed)DB_check_new_scrape_needed- {veh}"))
     
     #check for last_scrape date of veh
     #returns datetime object in tuple -> (datetime.date(2021, 10, 5),)
@@ -323,31 +323,32 @@ def DB_check_new_scrape_needed(veh:object):
         
         retrieved_veh_record = cur.fetchone() #returns tuple
         #TESTING
-        print(chalk.green("(check_new_scrape_needed)retrieved_veh - {retrieved_veh_record}"))
+        print(chalk.green(f"(check_new_scrape_needed)retrieved_veh - {retrieved_veh_record}"))
 
         #if veh found
-        if retrieved_veh_record:
+        if retrieved_veh_record != None:
             
             #get last_scrape_date off returned tuple 
             last_scrape_date = (retrieved_veh_record [3])
-            print("LAST SCRAPED DATE: " +last_scrape_date)
+            print(chalk.green(f"(check_new_scrape_needed)LAST SCRAPED DATE: + {last_scrape_date}"))
 
             #update veh_scrape_status indicating veh was found
             veh_scrape_status['veh_found']=True
 
             #update veh_scrape_status with last_scrape_date
             veh_scrape_status['last_scrape_date']= last_scrape_date
-
+            print(chalk.green(f"veh_scrape_status: {veh_scrape_status}"))
 
             curr_date = date.today()
             date_difference_days = (abs(last_scrape_date - curr_date)).days
-
+            print(chalk.red(date_difference_days))
             #if last_scrape_date older than 7 days
             if date_difference_days > 7:
                 veh_scrape_status['scrape_needed']=True
                 return veh_scrape_status
             else:
                 veh_scrape_status['scrape_needed']=False
+                return veh_scrape_status
         
         #if veh not found, default obj values already set to False, return obj as is
         else:
@@ -367,11 +368,11 @@ def DB_execute_queries_and_store_results(cur, make, model):
     # Execute the queries
     cur.execute(all_sales_records_NO_YEAR_query, (make, model))
     all_sales_records_result = cur.fetchall() #returns list
-    print(all_sales_records_result)
+    print(f"sales records {all_sales_records_result}")
 
     cur.execute(all_current_records_NO_YEAR_query, (make, model))
     current_records_result = cur.fetchall() #returns list
-    print(current_records_result)
+    print(f"current records {current_records_result}")
 
     """EMPTY CHECK
         if theres no sales records or current records for vehicle - return early with indication that vehicle doesnt exist in DB and do not execute rest of queries
