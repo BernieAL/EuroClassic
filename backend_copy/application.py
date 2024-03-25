@@ -51,8 +51,6 @@ from Postgres.queries import (
 )
 
 
-
-
 """ Veh manufacturer cache initialization
 on flask application startup - request is made to api to retrieve all car makes
 this is then written to a cache file for later use on client side for input tokenization
@@ -68,7 +66,6 @@ On Client side - when form submitted
     Once year is identified, the remaining tokens can be make or model
         so we check if a token applicationears in the makes cache
 """
-
 def initialize_cache():
     try:
         
@@ -117,47 +114,6 @@ def initialize_cache():
         print(f" Error writing to file: {e}")
 initialize_cache()
 
-
-    
-
-
-# @application.route('/get_data',methods=['GET'])
-# def return_data():
-#    """TESTING
-#     endpoint for js script to request non db data
-#     returned data will be used to populate the graphs/charts etc
-#    """
-# #    print(session['db_data'])
-#    pd_result = SOLD_max_and_avg_price_per_veh_year()
-#    print(pd_result)
-#    return pd_result
-   
-# @application.route('/retrieve_cache',methods=['GET'])
-# # def retrieve_cache():
-
-# #     with open(cache_file_path,'r') as cache_file:
-# #         print(chalk.blue(':::::CHECKING FRESHNESS OF CACHE DATA:::::'))
-# #         cache_data = json.load(cache_file)
-
-# #     return cache_data
-
-@application.route('/get_db_data',methods=['GET'])
-def return_db_data():
-    """
-    endpoint for js script to request db data
-    returned data will be used to populate the graphs/charts etc
-    """
-
-    #get params off request
-    make = request.args.get('make')
-    model = request.args.get('model')
-    year = request.args.get('year')
-
-    data = DB_execute_queries_and_store_results(cur,make,model,year)
-
-    return jsonify(data)
-
-
 @application.route('/', methods=['GET', 'POST'])
 def home():
     form = SearchForm()
@@ -176,7 +132,6 @@ def home():
         
     return render_template('index.html', form=form)
 
-
 @application.route('/vehicle-query',methods=['POST'])
 def vehicleQuery():
     """end point called when form submitted on front end
@@ -185,24 +140,18 @@ def vehicleQuery():
     try:
         
         data = request.form
-        print(data)
-        # Process the form data
-    
-        # # Return the response if needed
-        # return 'Data received'
-        
+                   
         veh = {
             'year' : (data.get('year')),
             'make': (data.get('make')).upper(),
             'model': (data.get('model')).upper()
         }
-        # print(veh)
-        # return jsonify(veh)
+       
         
         #checks if veh scrape is needed - if veh isnt in db or data is old, new scrape needed
         veh_scrape_status = DB_check_new_scrape_needed(veh)
         print(chalk.green(f"veh_scrape_status: {veh_scrape_status}"))
-        # return jsonify(veh_scrape_status)
+        
         """DB_check_new_scrape_needed returns obj:
             {
                 'veh_found':True/False,
@@ -222,7 +171,6 @@ def vehicleQuery():
             print(chalk.green(f"data from db{data_from_db}"))
             return jsonify(data_from_db)
         
-
         else:
             """new scrape needed - put veh in queue to perform scrape and email user the results
 
@@ -241,7 +189,6 @@ def vehicleQuery():
                 'msg': "Whoops, We Dont Have Any Stats For That Vehicle Right Now, We Just initiated a new analysis process just for you - and we'll email you with the results",
             }
 
-            
             return jsonify(res)
             
            
@@ -249,7 +196,42 @@ def vehicleQuery():
         print('Error',str(e))
         return jsonify({'error':str(e)})
         
+@application.route('/retrieve_cache',methods=['GET'])
+def retrieve_cache():
 
+    with open(CACHE_FILE_PATH,'r') as cache_file:
+        print(chalk.blue(':::::CHECKING FRESHNESS OF CACHE DATA:::::'))
+        cache_data = json.load(cache_file)
+
+    return cache_data
+
+@application.route('/get_db_data',methods=['GET'])
+def return_db_data():
+    """
+    endpoint for js script to request db data
+    returned data will be used to populate the graphs/charts etc
+    """
+
+    #get params off request
+    make = request.args.get('make')
+    model = request.args.get('model')
+    year = request.args.get('year')
+
+    data = DB_execute_queries_and_store_results(cur,make,model,year)
+
+    return jsonify(data)
+
+@application.route('/get_data',methods=['GET'])
+def return_data():
+   """TESTING
+    endpoint for js script to request non db data
+    returned data will be used to populate the graphs/charts etc
+   """
+#    print(session['db_data'])
+   pass
+#    pd_result = SOLD_max_and_avg_price_per_veh_year()
+#    print(pd_result)
+#    return pd_result
 
 # ==============================================================
 # HELPER FUNCTIONS
@@ -350,8 +332,10 @@ def DB_check_new_scrape_needed(veh:object):
                 veh_scrape_status['scrape_needed']=False
                 return veh_scrape_status
         
-        #if veh not found, default obj values already set to False, return obj as is
+        #if veh not found, set scrape_needed to true
         else:
+
+            veh_scrape_status['scrape_needed']=True
             return veh_scrape_status
     
     except Exception as e:
@@ -415,8 +399,6 @@ def custom_encoder(obj):
         return obj.isoformat()
     raise TypeError("Type not serializable")
 
-
-    
 
 
 if __name__ == "__main__":
