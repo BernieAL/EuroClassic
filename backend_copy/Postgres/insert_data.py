@@ -32,7 +32,7 @@ print(CLEANED_DATA_DIR)
 INPUT_veh_dir_file_path = os.path.join(postgres_dir,'..','vehicle_directory.csv')
 
 
-clean_CURR_LISTINGS_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_data_CURRENT_LISTINGS.csv')
+clean_CURR_LISTINGS_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_CURRENT_LISTINGS.csv')
 clean_SOLD_LISTINGS_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
 
 
@@ -125,12 +125,13 @@ def insert_current_listing_data(cur,conn,cleaned_CURRENT_LISTINGS_file_path):
     next(csvreader)
     for line in csvreader:  
         # print(line)
+        line_uppercase = [value.upper() for value in line]
         try:
             sql = """
-                INSERT INTO CURRENT_LISTINGS(YEAR,MAKE,MODEL,LISTPRICE)
+                INSERT INTO current_listings(YEAR,MAKE,MODEL,LISTPRICE)
                 VALUES(%s,%s,%s,%s)
                 """
-            cur.execute(sql,line)
+            cur.execute(sql,line_uppercase)
         except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
 
@@ -171,7 +172,7 @@ if __name__ == '__main__':
     
     conn = psycopg2.connect(os.getenv('DB_URI'))
     cur = conn.cursor()
-    populate_vehicles_dir_table(cur, INPUT_veh_dir_file_path)
-    # insert_sold_data(cur, clean_SOLD_LISTINGS_file_path)
-    # insert_current_listing_data(cur, clean_CURR_LISTINGS_file_path)
+    # populate_vehicles_dir_table(cur, INPUT_veh_dir_file_path)
+    insert_sold_data(cur,conn, clean_SOLD_LISTINGS_file)
+    insert_current_listing_data(cur, conn,clean_CURR_LISTINGS_file)
     # insertion_check(cur)

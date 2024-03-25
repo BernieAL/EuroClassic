@@ -154,7 +154,7 @@ def main_runner():
         insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
 
         #populate veh dir tables
-        populate_vehicles_dir_table()
+        # populate_vehicles_dir_table()
         
         #BAT insertion of cleaned data - IMPLEMENT LATER
         #insert_sold_data(db_cursor,BAT_cleaned_single)
