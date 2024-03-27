@@ -1,5 +1,7 @@
 {
     "python.analysis.extraPaths": [
-        "./backend_copy/LongTerm_prev_scrapes"
+        "./backend_copy/LongTerm_prev_scrapes",
+        "./backend_copy/RabbitMQ_Scrape_test",
+        "./backend_copy/"
     ]
 }

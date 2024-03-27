@@ -11,6 +11,13 @@ import random
 import sys
 from simple_chalk import chalk
 
+# # Get the current directory of this __init__.py file
+# current_dir = os.path.dirname(os.path.abspath(__file__))
+# # Add the parent directory to sys.path
+# parent_dir = os.path.dirname(current_dir)
+# sys.path.append(parent_dir)
+
+
 
 from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
 # from Data_Clean_Logic.clean_bat_data import bat_clean_data_runner
@@ -119,18 +126,20 @@ def initialize_db_connection_connection():
     return conn,cur
 
 
-def main_runner():
+def main_runner(veh):
 
     db_conn,db_cursor = initialize_db_connection_connection()
     driver = initialize_driver()
-    car = {
-        'year':2017,
-        'make':'Nissan',
-        'model':'370Z'
-    }
+    # veh = {
+    #     'year':2017,
+    #     'make':'Nissan',
+    #     'model':'370Z'
+    # }
     # run_scapers() #runs ebay and bat scrapers
     try:
-
+        #this is coming from scrape_worker
+        print(f"VEH TO SCRAPE: {veh}")
+        
         #Scraping of ebay data
         # ebay_CURRENT_scrape_single_veh(car,driver,EBAY_cleaned_CURRENT_LISTINGS_file_path)
         # ebay_SOLD_scrape_single_veh(car,driver,EBAY_cleaned_SOLD_DATA_file_path)

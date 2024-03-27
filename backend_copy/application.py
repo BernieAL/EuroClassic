@@ -21,8 +21,8 @@ import os
 from Postgres.connect import get_db_connection
 from Postgres.insert_data import populate_vehicles_dir_table
 import psycopg2
-
 from forms import SearchForm
+from RabbitMQ_Scrape_test.producer import add_veh_to_queue
 
 current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
 
@@ -181,8 +181,12 @@ def vehicleQuery():
             """
             print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
             
-            VEH_REQ_QUEUE_FILE = open(VEH_REQ_QUEUE_FILE_PATH,'w')
-            VEH_REQ_QUEUE_FILE.write(f"{veh['year']},{veh['make']},{veh['model']}")
+            #publish veh as message to VEH_QUEUE (RMQ PRODUCER)
+            add_veh_to_queue(veh)
+
+            #OLD - USING FILE AS QUEUE 
+            # VEH_REQ_QUEUE_FILE = open(VEH_REQ_QUEUE_FILE_PATH,'w')
+            # VEH_REQ_QUEUE_FILE.write(f"{veh['year']},{veh['make']},{veh['model']}")
             
             res = {
                 'status':'Not Found',
