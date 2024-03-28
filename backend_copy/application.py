@@ -12,6 +12,11 @@ from simple_chalk import chalk
 import pandas as pd
 import os
 
+
+
+
+
+
 #from Web_Scrape_Logic.scrape_runner_main import run_scapers
 # from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
 # from Data_Clean_Logic.clean_bat_data import bat_clean_data_runner
@@ -22,7 +27,7 @@ from Postgres.connect import get_db_connection
 from Postgres.insert_data import populate_vehicles_dir_table
 import psycopg2
 from forms import SearchForm
-from RabbitMQ_Scrape_test.producer import add_veh_to_queue
+from RabbitMQ_scrape_test.producer import add_veh_to_queue
 
 current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
 
