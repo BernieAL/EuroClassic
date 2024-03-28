@@ -46,7 +46,7 @@ def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
         raw_input_CURRENT_LISTINGS = open(raw_CURRENT_LISTINGS_file, "r", encoding="utf-8")
         raw_data = raw_input_CURRENT_LISTINGS
 
-        #open raw data file
+        #open output file
         clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_OUTPUT_CURRENT_LISTINGS_file, "w", encoding="utf-8")
 
         year = car['year']
@@ -56,10 +56,13 @@ def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
         clean_output_array = []
 
         for line in raw_data:
+            #if we find model in curr line
             if model in line:
                 line = line.replace(',', '')
+                #find all groups of 4 digits in curr line
                 if re.findall('^\d{4}', line):
                     try:
+                        #the first in returned group should be the year
                         year = (re.findall('^\d{4}', line))[0]
                     except NameError:
                         year = 0000
@@ -93,7 +96,7 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_DATA_file):
         #open raw data file
         clean_output_file_SOLD_DATA = open(EBAY_clean_OUTPUT_SOLD_DATA_file, "w", encoding="utf-8")
         
-        #open raw data file
+        #open  output file
         raw_input_SOLD_DATA = open(raw_SOLD_DATA_file, "r", encoding="utf-8")
         raw_data = raw_input_SOLD_DATA
 
@@ -167,6 +170,7 @@ def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD
        
         clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
         clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
+        
         logging.info("Data cleaning for all types successful")
         return True
     except Exception as e:
@@ -179,4 +183,5 @@ if __name__ == '__main__':
         'make': 'Nissan',
         'model': '350Z'
     }
-    ebay_clean_data_runner(car)
+    ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file,EBAY_raw_SOLD_DATA_file)
+

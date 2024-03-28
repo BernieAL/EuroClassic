@@ -138,29 +138,31 @@ def main_runner(veh):
     # run_scapers() #runs ebay and bat scrapers
     try:
         #this is coming from scrape_worker
-        print(f"VEH TO SCRAPE: {veh}")
+        print(chalk.red(f"(app_main_runner) VEH TO SCRAPE: {veh}"))
         
         #Scraping of ebay data
-        # ebay_CURRENT_scrape_single_veh(car,driver,EBAY_cleaned_CURRENT_LISTINGS_file_path)
-        # ebay_SOLD_scrape_single_veh(car,driver,EBAY_cleaned_SOLD_DATA_file_path)
+        ebay_CURRENT_scrape_single_veh(veh,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
+        ebay_SOLD_scrape_single_veh(veh,driver,EBAY_raw_SOLD_DATA_file_path)
 
         #Scraping of bat data
         # #bat scrape
         # #bat scrape
         
+        #****DO NOT REMOVE
         driver.close()
         time.sleep(1)
         
+        
         #cleaning of ebay data
-        # ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
+        # ebay_clean_data_runner(veh,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
 
         #cleaning of bat data
         #bat_clean_data_single(car,BAT_raw_single)
         #bat_clean_data_all_make(car,BAT_raw_all_make)
         
         #insertion of ebay data into db
-        insert_current_listing_data(db_cursor,db_conn,EBAY_cleaned_CURRENT_LISTINGS_file_path)
-        insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
+        # insert_current_listing_data(db_cursor,db_conn,EBAY_cleaned_CURRENT_LISTINGS_file_path)
+        # insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
 
         #populate veh dir tables
         # populate_vehicles_dir_table()
@@ -182,5 +184,9 @@ def main_runner(veh):
     #insert data to db
 
 if __name__ == "__main__":
-    pass
-    main_runner()
+    veh = {
+        'year':2017,
+        'make':'Nissan',
+        'model':'370Z'
+    }
+    main_runner(veh)

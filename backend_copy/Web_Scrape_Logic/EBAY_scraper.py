@@ -30,11 +30,17 @@ from LTS_storage_script import copy_file
 SCRAPED_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
 # EBAY_raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'EBAY_raw_SOLD_DATA.txt')
 
-
 #file paths for writing/reading raw data
 EBAY_raw_CURRENT_LISTINGS_file_path = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_CURRENT_LISTINGS_DATA.txt')
 EBAY_raw_SOLD_DATA_file_path = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_SOLD_DATA.txt')
- 
+
+#3/28 test
+array_test_current = os.path.join(SCRAPED_DATA_DIR, 'result-array-test-current.txt')
+array_test_sold = os.path.join(SCRAPED_DATA_DIR, 'result-array-test-sold.txt')
+
+EBAY_SEARCH_URL = "https://www.ebay.com/sch/i.html?_nkw=porsche+911&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240"
+
+
 def check_output_dir_exists():
     """checks if the output dir for scraped data exists, if not it creates it
        Path for scraped data dir is backend/Scraped_data_output
@@ -98,8 +104,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
 
         """This url reduces # of pages to visit by requesting 240 items per page ---> &_ipg=240
         """
-        intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc&LH_PrefLoc=2"
-        
+        intial_url = f"https://www.ebay.com/sch/i.html?_nkw={car['make']}+{car['model']}&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240"
         driver.get(intial_url)
         #wait for page to load
         time.sleep(random.uniform(3,9))
@@ -214,14 +219,14 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
             
             #from all found listing card elements, 
             #use exact_results_count_num to filter list down only to exact matches
-            all_descriptions = all_descriptions[:exact_results_count_num+1]
-
+            all_descriptions_reduced = all_descriptions[:exact_results_count_num+1]
+         
             #get references all price elements on page, store as list
             all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
             
             #for each descrip in all_descriptions, for each price in all_prices
-            for (descrip,price) in zip(all_descriptions,all_prices):
+            for (descrip,price) in zip(all_descriptions_reduced,all_prices):
                 #extract descrip text
                 item_description= descrip.get_attribute('innerText')
                 
@@ -283,7 +288,7 @@ def ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_output_file_path):
     EBAY_raw_SOLD_output_file.truncate(0)
     
 
-    intial_url = f"https://www.ebay.com/sch/6001/i.html?_from=R40&_nkw={car['make']}+{car['model']}&_sacat=6001&_ipg=240&rt=nc&LH_PrefLoc=2"
+    intial_url = f"https://www.ebay.com/sch/i.html?_nkw={car['make']}+{car['model']}&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240"
    
 
     # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
@@ -403,12 +408,29 @@ def ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_output_file_path):
             all_descriptions = all_descriptions[:exact_results_count_num+1]
             all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
 
+            
+            
+            #3/28 test
+            # Loop through all found listing card elements and write their text to the file
+            array_test_sold_file = open(array_test_sold,"w",encoding="utf-8")
+            for description in all_descriptions:
+                array_test_sold_file.write(description.text + "\n")
+            array_test_sold_file.write('..............\n')
+
+            # Assuming exact_results_count_num is defined somewhere
+            # Reduce the list down only to exact matches
+            all_descriptions_reduced = all_descriptions[:exact_results_count_num+1]
+
+            # Loop through the reduced list and write their text to the file
+            for description in all_descriptions_reduced:
+                array_test_sold_file.write(description.text + "\n")
+
             all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
             #targets "Sold Month Date, Year" on each listing
             all_sale_dates = driver.find_elements(By.CSS_SELECTOR,'.s-item__title--tag span.POSITIVE')
 
-            for (descrip,price,sale_date) in zip(all_descriptions,all_prices,all_sale_dates):
+            for (descrip,price,sale_date) in zip(all_descriptions_reduced,all_prices,all_sale_dates):
                     item_description= descrip.get_attribute('innerText')
                     item_description = item_description.replace('NEW LISTING','')
                     item_price = price.get_attribute('innerText')
@@ -485,12 +507,12 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    ebay_CURRENT_scrape_single_veh(car,driver)
-    # ebay_SOLD_scrape_single_veh(car,driver)
-    driver.close()
+    # ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
+    ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
     # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
     time.sleep(1)
 
+    
 
    
 

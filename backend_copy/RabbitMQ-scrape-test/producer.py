@@ -27,14 +27,14 @@ def add_veh_to_queue(veh):
                         properties=pika.BasicProperties(delivery_mode=pika.DeliveryMode.Persistent)
                         )
     
-    print(chalk.green(f"VEH ADDED TO QUEUE: {veh}"))
+    print(chalk.green(f"VEH ADDED TO SCRAPE QUEUE: {veh}"))
 
 if __name__ == "__main__":
 
     veh = {
-        'year': 0000,
+        'year':0000,
         'make': 'Nissan',
-        'model': '350Z'
+        'model': 'Altima'
     }   
 
     add_veh_to_queue(veh)
