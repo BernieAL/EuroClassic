@@ -408,22 +408,9 @@ def ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_output_file_path):
             all_descriptions = all_descriptions[:exact_results_count_num+1]
             all_descriptions = driver.find_elements(By.CLASS_NAME,'s-item__title')
 
-            
-            
-            #3/28 test
-            # Loop through all found listing card elements and write their text to the file
-            array_test_sold_file = open(array_test_sold,"w",encoding="utf-8")
-            for description in all_descriptions:
-                array_test_sold_file.write(description.text + "\n")
-            array_test_sold_file.write('..............\n')
-
             # Assuming exact_results_count_num is defined somewhere
             # Reduce the list down only to exact matches
             all_descriptions_reduced = all_descriptions[:exact_results_count_num+1]
-
-            # Loop through the reduced list and write their text to the file
-            for description in all_descriptions_reduced:
-                array_test_sold_file.write(description.text + "\n")
 
             all_prices = driver.find_elements(By.CLASS_NAME,'s-item__price')
 
@@ -507,9 +494,9 @@ if __name__ == '__main__':
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
     
-    # ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
+    ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
     ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
-    # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
+    #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
     time.sleep(1)
 
     
