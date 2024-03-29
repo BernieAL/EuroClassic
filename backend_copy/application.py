@@ -198,6 +198,8 @@ def vehicleQuery():
                 'msg': "Whoops, We Dont Have Any Stats For That Vehicle Right Now, We Just initiated a new analysis process just for you - and we'll email you with the results",
             }
 
+            
+
             return jsonify(res)
             
            

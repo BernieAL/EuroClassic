@@ -13,7 +13,7 @@ app_main_runner_path = os.path.join(parent_dir)
 if app_main_runner_path not in sys.path:
     sys.path.append(app_main_runner_path)
 
-# Now we can import app_main_runner.py as if it was in the same directory
+# Can now import app_main_runner.py as if it was in the same directory
 import app_main_runner
 
 def main():
@@ -22,6 +22,7 @@ def main():
     channel = connection.channel()
 
     channel.queue_declare(queue='VEH_QUEUE',durable=True)
+    channel.queue_declare(queue='EMAIL_QUEUE',durable=True)
 
     def callback(ch,method,properties,body):
 
@@ -39,6 +40,13 @@ def main():
 
         #when complete
         print(chalk.green(f" SCRAPE COMPLETED - [x] Done"))  
+
+        channel.basic_publish(exchange='',
+                              routing_key='EMAIL_QUEUE',
+                              body=body,
+                              properties=pika.BasicProperties(delivery_mode=pika.DeliveryMode.Persistent))
+        
+
 
     channel.basic_qos(prefetch_count=1)
     channel.basic_consume(queue='VEH_QUEUE',on_message_callback=callback)
