@@ -3,15 +3,18 @@ import pika
 import os,sys,json
 from simple_chalk import chalk
 
-#get path to the directory containing email_.py relative to the current script
+
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-Email_test_path = os.path.join(parent_dir,'Email_test')
+print(parent_dir)
 
 # Add the directory to sys.path
-if Email_test_path not in sys.path:
-    sys.path.append(Email_test_path)
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+# print(sys.path)
 
-from test_send import send_email
+from email_sender import send_email
+
+
 
 """
 Recieves obj of email and veh
@@ -74,8 +77,7 @@ def main():
 
 
 if __name__ == '__main__':
-    # main()
-
+    
     try: 
         main()
     except KeyboardInterrupt:
