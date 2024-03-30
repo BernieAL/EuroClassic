@@ -5,13 +5,12 @@ import os,sys,json
 from simple_chalk import chalk
 
 
-#get path to the directory containing app_main_runner.py relative to the current script
+#get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-app_main_runner_path = parent_dir
 
 # Add the directory to sys.path
-if app_main_runner_path not in sys.path:
-    sys.path.append(app_main_runner_path)
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
 
 # Can now import app_main_runner.py as if it was in the same directory
 import app_main_runner
@@ -64,7 +63,7 @@ def main():
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
         #PERFORM ENTIRE SCRAPE PROCESS USING Main_Runner
-        # app_main_runner.main_runner(veh)
+        app_main_runner.main_runner(veh)
 
         #when complete
         print(chalk.green(f" SCRAPE COMPLETED - [x] Done"))  

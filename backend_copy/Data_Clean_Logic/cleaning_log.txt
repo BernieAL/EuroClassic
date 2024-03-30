@@ -5205,3 +5205,250 @@ INFO:pika.adapters.utils.connection_workflow:AMQPConnector - reporting success: 
 INFO:pika.adapters.utils.connection_workflow:AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x000001B0467D1850> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
 INFO:pika.adapters.blocking_connection:Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x000001B0467D1850> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
 INFO:pika.adapters.blocking_connection:Created channel=1
+INFO:pika.adapters.utils.connection_workflow:Pika version 1.3.2 connecting to ('::1', 5672, 0, 0)
+INFO:pika.adapters.utils.io_services_utils:Socket connected: <socket.socket fd=996, family=23, type=1, proto=6, laddr=('::1', 53046, 0, 0), raddr=('::1', 5672, 0, 0)>
+INFO:pika.adapters.utils.connection_workflow:Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x0000022B7C1545D0>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x0000022B7C1545D0> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>).
+INFO:pika.adapters.utils.connection_workflow:AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x0000022B7C1545D0> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+INFO:pika.adapters.utils.connection_workflow:AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x0000022B7C1545D0> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+INFO:pika.adapters.blocking_connection:Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x0000022B7C1545D0> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+INFO:pika.adapters.blocking_connection:Created channel=1
+INFO:pika.adapters.utils.connection_workflow:Pika version 1.3.2 connecting to ('::1', 5672, 0, 0)
+INFO:pika.adapters.utils.io_services_utils:Socket connected: <socket.socket fd=1000, family=23, type=1, proto=6, laddr=('::1', 53361, 0, 0), raddr=('::1', 5672, 0, 0)>
+INFO:pika.adapters.utils.connection_workflow:Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x000002647B7517D0>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x000002647B7517D0> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>).
+INFO:pika.adapters.utils.connection_workflow:AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x000002647B7517D0> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+INFO:pika.adapters.utils.connection_workflow:AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x000002647B7517D0> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+INFO:pika.adapters.blocking_connection:Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x000002647B7517D0> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+INFO:pika.adapters.blocking_connection:Created channel=1
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:WebDriver version 123.0.6312.86 selected
+INFO:WDM:Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.86/win32/chromedriver-win32.zip
+INFO:WDM:About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.86/win32/chromedriver-win32.zip
+INFO:WDM:Driver downloading response is 200
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver has been saved in cache [C:\Users\balma\.wdm\drivers\chromedriver\win64\123.0.6312.86]
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:50781
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable C:\Users\balma\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+ERROR:seleniumwire.server:127.0.0.1:50792: Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 94, in write
+    r = self.o.write(v)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\socket.py", line 724, in write
+    return self._sock.send(b)
+           ^^^^^^^^^^^^^^^^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\server.py", line 113, in handle
+    root_layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\modes\http_proxy.py", line 23, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\tls.py", line 285, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 100, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 206, in __call__
+    if not self._process_flow(flow):
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 288, in _process_flow
+    return self.handle_upstream_connect(f)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 251, in handle_upstream_connect
+    self.send_response(f.response)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 54, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 98, in write
+    raise exceptions.TcpDisconnect(str(e))
+seleniumwire.thirdparty.mitmproxy.exceptions.TcpDisconnect: [WinError 10053] An established connection was aborted by the software in your host machine
+
+ERROR:seleniumwire.server:127.0.0.1:50788: Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 94, in write
+    r = self.o.write(v)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\socket.py", line 724, in write
+    return self._sock.send(b)
+           ^^^^^^^^^^^^^^^^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\server.py", line 113, in handle
+    root_layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\modes\http_proxy.py", line 23, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\tls.py", line 285, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 100, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 206, in __call__
+    if not self._process_flow(flow):
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 288, in _process_flow
+    return self.handle_upstream_connect(f)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 251, in handle_upstream_connect
+    self.send_response(f.response)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 54, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 98, in write
+    raise exceptions.TcpDisconnect(str(e))
+seleniumwire.thirdparty.mitmproxy.exceptions.TcpDisconnect: [WinError 10053] An established connection was aborted by the software in your host machine
+
+ERROR:seleniumwire.server:127.0.0.1:50799: Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 94, in write
+    r = self.o.write(v)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\socket.py", line 724, in write
+    return self._sock.send(b)
+           ^^^^^^^^^^^^^^^^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\server.py", line 113, in handle
+    root_layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\modes\http_proxy.py", line 23, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\tls.py", line 285, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 100, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 206, in __call__
+    if not self._process_flow(flow):
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 288, in _process_flow
+    return self.handle_upstream_connect(f)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 251, in handle_upstream_connect
+    self.send_response(f.response)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 54, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 98, in write
+    raise exceptions.TcpDisconnect(str(e))
+seleniumwire.thirdparty.mitmproxy.exceptions.TcpDisconnect: [WinError 10053] An established connection was aborted by the software in your host machine
+
+ERROR:seleniumwire.server:127.0.0.1:50791: Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 94, in write
+    r = self.o.write(v)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\socket.py", line 724, in write
+    return self._sock.send(b)
+           ^^^^^^^^^^^^^^^^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\server.py", line 113, in handle
+    root_layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\modes\http_proxy.py", line 23, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\tls.py", line 285, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 100, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 206, in __call__
+    if not self._process_flow(flow):
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 288, in _process_flow
+    return self.handle_upstream_connect(f)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 251, in handle_upstream_connect
+    self.send_response(f.response)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 54, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 98, in write
+    raise exceptions.TcpDisconnect(str(e))
+seleniumwire.thirdparty.mitmproxy.exceptions.TcpDisconnect: [WinError 10053] An established connection was aborted by the software in your host machine
+
+ERROR:seleniumwire.server:127.0.0.1:50795: Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 94, in write
+    r = self.o.write(v)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\socket.py", line 724, in write
+    return self._sock.send(b)
+           ^^^^^^^^^^^^^^^^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\server.py", line 113, in handle
+    root_layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\modes\http_proxy.py", line 23, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\tls.py", line 285, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 100, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 206, in __call__
+    if not self._process_flow(flow):
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 288, in _process_flow
+    return self.handle_upstream_connect(f)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 251, in handle_upstream_connect
+    self.send_response(f.response)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 54, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 98, in write
+    raise exceptions.TcpDisconnect(str(e))
+seleniumwire.thirdparty.mitmproxy.exceptions.TcpDisconnect: [WinError 10053] An established connection was aborted by the software in your host machine
+
+ERROR:seleniumwire.server:127.0.0.1:50797: Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 94, in write
+    r = self.o.write(v)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\socket.py", line 724, in write
+    return self._sock.send(b)
+           ^^^^^^^^^^^^^^^^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\server.py", line 113, in handle
+    root_layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\modes\http_proxy.py", line 23, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\tls.py", line 285, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 100, in __call__
+    layer()
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 206, in __call__
+    if not self._process_flow(flow):
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 288, in _process_flow
+    return self.handle_upstream_connect(f)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 251, in handle_upstream_connect
+    self.send_response(f.response)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http.py", line 54, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\server\protocol\http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "C:\Users\balma\AppData\Local\Programs\Python\Python311\Lib\site-packages\seleniumwire\thirdparty\mitmproxy\net\tcp.py", line 98, in write
+    raise exceptions.TcpDisconnect(str(e))
+seleniumwire.thirdparty.mitmproxy.exceptions.TcpDisconnect: [WinError 10053] An established connection was aborted by the software in your host machine
+
+INFO:root::::DATA CLEANING FOR CURRENT_LISTINGS successful
+INFO:root::::DATA CLEANING FOR SOLD_DATA successful
+INFO:root:Data cleaning for all types successful

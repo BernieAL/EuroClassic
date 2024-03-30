@@ -4,9 +4,12 @@ import os,sys,json
 from simple_chalk import chalk
 
 
-#add parent dir 'backend_copy' to sys.path to be searched for modules we import
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-# print(sys.path)
+#get parent dir'backend_copy' from current script dir - append to sys.path to be searched for modules we import
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
 
 from Email_Logic.email_sender import send_email
 
