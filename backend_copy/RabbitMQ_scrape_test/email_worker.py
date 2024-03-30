@@ -3,23 +3,25 @@ import pika
 import os,sys,json
 from simple_chalk import chalk
 
-#get path to the directory containing app_main_runner.py relative to the current script
+#get path to the directory containing email_.py relative to the current script
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-Email_test_path = os.path.join(parent_dir)
+Email_test_path = os.path.join(parent_dir,'Email_test')
 
 # Add the directory to sys.path
 if Email_test_path not in sys.path:
     sys.path.append(Email_test_path)
 
-# Can now import app_main_runner.py as if it was in the same directory
-import test_send
-
+from test_send import send_email
 
 """
 Recieves obj of email and veh
-    {
-        'email': 'balmanzar883@gmail.com',
-        'veh:' 2018 Audi R8
+   email_and_veh = {
+                'email':'balmanzar883@gmail.com',
+                'veh': {
+                    'year':0000,
+                    'make': 'Nissan',
+                    'model': 'Altima'         
+                }
     }
 Calls send_mail function and passes email to it to be sent off to
 """
@@ -56,7 +58,7 @@ def main():
         print(chalk.blue(f"MSG REC'D {email_and_veh}"))
         print(chalk.green(f"SENDING EMAIL.."))
         
-        test_send(email,veh)
+        send_email(email,veh)
 
         ch.basic_ack(delivery_tag=method.delivery_tag)
 

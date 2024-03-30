@@ -9,7 +9,7 @@ load_dotenv(find_dotenv())
 RABBITMQ_HOST = os.getenv('RABBITMQ_HOST')
 
 #called from api - acts as producer - adds veh to queue as message
-def add_email_to_queue(veh):
+def add_email_and_veh_to_queue(email_and_veh):
 
     connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST))
     channel = connection.channel()
@@ -45,4 +45,4 @@ if __name__ == "__main__":
             'model': 'Altima'         
         }
     }
-    add_email_to_queue(email_and_veh)
+    add_email_and_veh_to_queue(email_and_veh)

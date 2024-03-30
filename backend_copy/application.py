@@ -13,10 +13,6 @@ import pandas as pd
 import os
 
 
-
-
-
-
 #from Web_Scrape_Logic.scrape_runner_main import run_scapers
 # from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
 # from Data_Clean_Logic.clean_bat_data import bat_clean_data_runner
@@ -27,7 +23,8 @@ from Postgres.connect import get_db_connection
 from Postgres.insert_data import populate_vehicles_dir_table
 import psycopg2
 from forms import SearchForm
-from RabbitMQ_scrape_test.producer import add_veh_to_queue
+from scrape_producer import add_veh_to_queue
+from email_producer import add_email_and_veh_to_queue
 
 current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
 
@@ -185,20 +182,37 @@ def vehicleQuery():
 
             """
             print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
-            
-            #publish veh as message to VEH_QUEUE (RMQ PRODUCER)
-            add_veh_to_queue(veh)
-
-            #OLD - USING FILE AS QUEUE 
-            # VEH_REQ_QUEUE_FILE = open(VEH_REQ_QUEUE_FILE_PATH,'w')
-            # VEH_REQ_QUEUE_FILE.write(f"{veh['year']},{veh['make']},{veh['model']}")
-            
             res = {
                 'status':'Not Found',
                 'msg': "Whoops, We Dont Have Any Stats For That Vehicle Right Now, We Just initiated a new analysis process just for you - and we'll email you with the results",
             }
 
+            #combination of user-entered email and user-requested veh
+            email_and_veh = {
+                'email':'balmanzar883@gmail.com',
+                'veh': {
+                    'year':0000,
+                    'make': 'Nissan',
+                    'model': 'Altima'         
+                }
+            }
+
+            #publish veh as message to VEH_QUEUE (RMQ PRODUCER)
+            add_veh_to_queue(email_and_veh)
+
+            #OLD - USING FILE AS QUEUE 
+            # VEH_REQ_QUEUE_FILE = open(VEH_REQ_QUEUE_FILE_PATH,'w')
+            # VEH_REQ_QUEUE_FILE.write(f"{veh['year']},{veh['make']},{veh['model']}")
             
+            
+
+            
+            
+
+
+
+
+
 
             return jsonify(res)
             

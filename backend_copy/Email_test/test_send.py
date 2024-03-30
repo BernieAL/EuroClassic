@@ -16,7 +16,7 @@ This message is sent from Python."""
 
 
 
-def send_email(reciever_email,veh):
+def send_email(receiver_email,veh):
 
     # Create a secure SSL context
     context = ssl.create_default_context()
