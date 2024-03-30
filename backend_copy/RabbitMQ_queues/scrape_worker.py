@@ -7,7 +7,7 @@ from simple_chalk import chalk
 
 #get path to the directory containing app_main_runner.py relative to the current script
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-app_main_runner_path = os.path.join(parent_dir)
+app_main_runner_path = parent_dir
 
 # Add the directory to sys.path
 if app_main_runner_path not in sys.path:

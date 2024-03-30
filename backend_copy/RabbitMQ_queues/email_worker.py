@@ -4,22 +4,17 @@ import os,sys,json
 from simple_chalk import chalk
 
 
-parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(parent_dir)
-
-# Add the directory to sys.path
-if parent_dir not in sys.path:
-    sys.path.append(parent_dir)
+#add parent dir 'backend_copy' to sys.path to be searched for modules we import
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 # print(sys.path)
 
-from email_sender import send_email
-
+from Email_Logic.email_sender import send_email
 
 
 """
 Recieves obj of email and veh
    email_and_veh = {
-                'email':'balmanzar883@gmail.com',
+                'email':'<some-email>@gmail.com',
                 'veh': {
                     'year':0000,
                     'make': 'Nissan',
