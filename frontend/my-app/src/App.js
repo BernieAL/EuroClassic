@@ -3,7 +3,7 @@ import {BrowserRouter as Router,Routes,Route, useNavigate,Link} from 'react-rout
 import "./styles.scss"
 
 import SearchForm from "./components/SearchForm"
-import Graphs from "./components/Graphs/Graphs"
+// import Graphs from "./components/Graphs/Graphs"
 import VehNotFound from "./components/VehNotFound"
 import Navbar from "./components/UI/Navbar/Navbar"
 import ListingCard from "./components/UI/ListingCard/ListingCard"
@@ -16,7 +16,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 
 
 import mclarenp1 from './images/mclarenp1.jpg';
-import VehResultPage from "./components/VehResultPage/VehResultPage"
+// import VehResultPage from "./components/VehResultPage/VehResultPage"
 
 library.add(fab, fas, far)
 
@@ -74,10 +74,7 @@ export default function App(){
                             
                         </div>
                 }exact />
-                <Route path="/results" element={
-                    /* if recievedData not null, render vehResultPage component which renders graphs,stats, and info for selected vehicle dnd pass recievedData as prop*/
-                    recievedData !== null && <VehResultPage recievedData={recievedData} />
-                } />
+                
                 
                 
             

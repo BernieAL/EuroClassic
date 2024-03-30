@@ -10,7 +10,7 @@ import json
 
 from simple_chalk import chalk
 import pandas as pd
-import os
+import os,sys
 
 
 #from Web_Scrape_Logic.scrape_runner_main import run_scapers
@@ -23,8 +23,17 @@ from Postgres.connect import get_db_connection
 from Postgres.insert_data import populate_vehicles_dir_table
 import psycopg2
 from forms import SearchForm
-from scrape_producer import add_veh_to_queue
-from email_producer import add_email_and_veh_to_queue
+
+
+#get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Add the directory to sys.path
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
+from RabbitMQ_queues.scrape_producer import add_veh_to_queue
+
 
 current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
 
@@ -140,10 +149,13 @@ def vehicleQuery():
        recieves user search query
     """
     try:
-        
-        data = request.form
-                   
-        veh = {
+        #FOR TESTING WITHOUT REACT - uses form class for data
+        #data = request.form 
+
+        #FOR TESTING WITH REACT - recieves  as json object from client
+        data = request.get_json()
+        print(data)
+        reqeusted_veh = {
             'year' : (data.get('year')),
             'make': (data.get('make')).upper(),
             'model': (data.get('model')).upper()
@@ -151,7 +163,7 @@ def vehicleQuery():
        
         
         #checks if veh scrape is needed - if veh isnt in db or data is old, new scrape needed
-        veh_scrape_status = DB_check_new_scrape_needed(veh)
+        veh_scrape_status = DB_check_new_scrape_needed(reqeusted_veh)
         print(chalk.green(f"veh_scrape_status: {veh_scrape_status}"))
         
         """DB_check_new_scrape_needed returns obj:
@@ -169,7 +181,7 @@ def vehicleQuery():
         if veh_scrape_status['scrape_needed'] == False:   
             #get veh records from all tables and return as response
             print(chalk.green("::::::VEH SCRAPE NOT NEEDED::::::"))
-            data_from_db = DB_execute_queries_and_store_results(cur,veh['make'],veh['model'])
+            data_from_db = DB_execute_queries_and_store_results(cur,reqeusted_veh['make'],reqeusted_veh['model'])
             print(chalk.green(f"data from db{data_from_db}"))
             return jsonify(data_from_db)
         
@@ -192,8 +204,8 @@ def vehicleQuery():
                 'email':'balmanzar883@gmail.com',
                 'veh': {
                     'year':0000,
-                    'make': 'Nissan',
-                    'model': 'Altima'         
+                    'make': reqeusted_veh['make'],
+                    'model': reqeusted_veh['model']         
                 }
             }
 
@@ -203,17 +215,7 @@ def vehicleQuery():
             #OLD - USING FILE AS QUEUE 
             # VEH_REQ_QUEUE_FILE = open(VEH_REQ_QUEUE_FILE_PATH,'w')
             # VEH_REQ_QUEUE_FILE.write(f"{veh['year']},{veh['make']},{veh['model']}")
-            
-            
-
-            
-            
-
-
-
-
-
-
+        
             return jsonify(res)
             
            

@@ -141,8 +141,8 @@ def main_runner(veh):
         print(chalk.red(f"(app_main_runner) VEH TO SCRAPE: {veh}"))
         
         #Scraping of ebay data
-        # ebay_CURRENT_scrape_single_veh(veh,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
-        # ebay_SOLD_scrape_single_veh(veh,driver,EBAY_raw_SOLD_DATA_file_path)
+        ebay_CURRENT_scrape_single_veh(veh,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
+        ebay_SOLD_scrape_single_veh(veh,driver,EBAY_raw_SOLD_DATA_file_path)
 
         #Scraping of bat data
         # #bat scrape
@@ -161,8 +161,8 @@ def main_runner(veh):
         #bat_clean_data_all_make(car,BAT_raw_all_make)
         
         #insertion of ebay data into db
-        # insert_current_listing_data(db_cursor,db_conn,EBAY_cleaned_CURRENT_LISTINGS_file_path)
-        # insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
+        insert_current_listing_data(db_cursor,db_conn,EBAY_cleaned_CURRENT_LISTINGS_file_path)
+        insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
 
         #populate veh dir tables
         # populate_vehicles_dir_table()
@@ -186,7 +186,7 @@ def main_runner(veh):
 if __name__ == "__main__":
     veh = {
         'year':2017,
-        'make':'Porsche',
-        'model':'911'
+        'make':'Nissan',
+        'model':'350Z'
     }
     main_runner(veh)

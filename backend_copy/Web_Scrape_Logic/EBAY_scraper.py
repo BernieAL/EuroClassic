@@ -495,7 +495,7 @@ if __name__ == '__main__':
 
     
     ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
-    ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
+    # ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
     #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
     time.sleep(1)
 

@@ -63,7 +63,7 @@ def main():
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
         #PERFORM ENTIRE SCRAPE PROCESS USING Main_Runner
-        app_main_runner.main_runner(veh)
+        # app_main_runner.main_runner(veh)
 
         #when complete
         print(chalk.green(f" SCRAPE COMPLETED - [x] Done"))  

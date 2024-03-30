@@ -49,7 +49,7 @@ export default function SearchForm({onDataSubmit}){
     const callServer = async(entered_data) => {
         try{
 
-           
+            
             const response = await fetch('http://127.0.0.1:5000/vehicle-query',{
                 method:'POST',
                 headers:{
@@ -93,9 +93,14 @@ export default function SearchForm({onDataSubmit}){
         // tokenize entered search query
         let temp = e.target.search_query.value.toUpperCase()
         console.log(typeof(temp))
+
+        // tokens: 1999,BMW,M3
         const tokens = temp.split(/\s+/)
-        
+        console.log(`tokens: ${tokens}`)
+
+
         //Find and return the token matches the yearRegex pattern
+        // 1999
         year = tokens.find((token)=> yearRegex.test(token))
         console.log(year)
         setFormData((prevFormData)=>({
@@ -105,12 +110,15 @@ export default function SearchForm({onDataSubmit}){
         const year_token_index = tokens.indexOf(year)
 
         // create new array of remaining tokens with year token removed
+        // ['BMW', 'M3']
         const tokens_without_year = tokens.filter(token => token !== year)
         
+        console.log(tokens_without_year)
         // out of remaining tokens, check which token is the 'make' by checking it appears in vehMakeCacheData
         for(let token of tokens_without_year){
             if(vehMakeCacheData.includes(token)){
                 make = token
+                console.log(make)
                 setFormData((prevFormData) => ({
                     ...prevFormData,
                     state_make: make
@@ -121,6 +129,7 @@ export default function SearchForm({onDataSubmit}){
 
         // with year and make token extracted, we should be left with model token only
         const tokens_without_year_and_make = tokens_without_year.filter(token => token !== make)
+        console.log(tokens_without_year_and_make)
         model = tokens_without_year_and_make[0]
         setFormData((prevFormData) =>({
             ...prevFormData,
@@ -136,6 +145,7 @@ export default function SearchForm({onDataSubmit}){
         */
     
         const entered_data = {'year':year,'make':make,'model':model}
+        console.log(typeof(entered_data))
         // call to server with parsed data
         callServer(entered_data)
 
