@@ -101,7 +101,8 @@ export default function SearchForm({onDataSubmit}){
 
         //Find and return the token matches the yearRegex pattern
         // 1999
-        year = tokens.find((token)=> yearRegex.test(token))
+        year = tokens.find((token)=> yearRegex.test(token)) || '0000'
+
         console.log(year)
         setFormData((prevFormData)=>({
             ...prevFormData,

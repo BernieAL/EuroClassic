@@ -108,7 +108,50 @@ export default function Graphs({recievedData}){
 
     return (
         <div className={module_css}>
-          
+            <h3 className={module_css.graph_header}>These are the graphs</h3>
+            <br></br>
+                {/* SOLD LISTINGS */}
+                <LineChart className={module_css.graph_test}
+                    width={600}
+                    height={500}
+                    data={GRAPH_sales_data}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 15,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="sale_date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="sale_price" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    
+                </LineChart>
+                    
+                <br></br>
+                {/* CURRENT LISTINGS */}
+                <LineChart
+                    width={600}
+                    height={500}
+                    data={GRAPH_current_listing_data}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="year" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="list_price" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    
+                </LineChart>
 
                 
                 

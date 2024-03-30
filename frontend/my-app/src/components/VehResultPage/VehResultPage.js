@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react"
 
-// import Graphs from "../Graphs/Graphs"
+import Graphs from "../Graphs/Graphs"
 import Navbar from "../UI/Navbar/Navbar"
 import ListingCard from "../UI/ListingCard/ListingCard"
 // import module_css from './Navbar.module.css'
@@ -24,9 +24,7 @@ export default function VehResultPage({recievedData}){
             <Navbar />
             
             <div className="jumbotron">test</div>
-            
-            
-
+            <Graphs recievedData={recievedData}/>
             
         </div>
     )    
