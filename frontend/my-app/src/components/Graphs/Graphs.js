@@ -31,6 +31,7 @@ export default function Graphs({recievedData}){
         console.log(recievedData)
     },[recievedData])
 
+
     /* Destructure Rec'd Data obj into indiv variables
 
         returned obj looks like this:
@@ -41,19 +42,21 @@ export default function Graphs({recievedData}){
     */
     /*when destructuring like this, the var names MUST match exactly the keys in the object */
     const {all_sales_records,current_records,current_stats,sold_stats} = recievedData
+
+    console.log("Grapsh component - receievedata",recievedData)
     
-    /* SORT all_sales_records by sale date ascending
+    /* HANDLING SALES DATA - SORT all_sales_records by sale date ascending
        sale_date is last index in each record -> idx 5
        sort() takes a custom compare function
        compare function compares elements based on sale_date
-       for 2 records a,b, determine which sale_date comes first by subtracting
+       for 2 records a,b, determine which sale_date comes first by subtracting a and b
        if negative result, then a comes before b
        if positive result, a comes after b
        if result is 0, no change in order needed
        
     */
-
     //get year,make,model,sale_price,sale_date from each sold record in all_sales_records array
+
     const GRAPH_sales_data = all_sales_records.map((record)=>{
         return{
             year:record[1],
@@ -68,15 +71,16 @@ export default function Graphs({recievedData}){
         }
     })
 
+    
+
     /*SORT into ascending sale dates
 
      */
-
     const GRAPH_sales_data_DATE_SORTED = GRAPH_sales_data.sort((a, b) => new Date(a.sale_date) - new Date(b.sale_date));
     console.log(GRAPH_sales_data_DATE_SORTED)
 
     
-
+    // HANDLING CURRENT DATA
     const GRAPH_current_listing_data = current_records.map((record)=>{
         return {
             year:record[1],
@@ -86,7 +90,7 @@ export default function Graphs({recievedData}){
         }
     })
     const GRAPH_current_listing_data_YEAR_SORTED = GRAPH_current_listing_data.sort((a,b)=>(a.year - b.year))
-    console.log(GRAPH_current_listing_data)
+    console.log(GRAPH_current_listing_data_YEAR_SORTED)
 
     // const GRAPH_sold_stats = current_records.map((record)=>{
     //     return {

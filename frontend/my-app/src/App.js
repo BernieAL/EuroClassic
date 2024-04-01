@@ -32,7 +32,7 @@ export default function App(){
         
         /** recieved data from backend api looks like:
          *      {
-                  "VEH_EXISTS": False,
+                    "VEH_EXISTS": True/False,
                     "all_sales_records": [],
                     "current_records": [],
                     "sold_stats": [],
