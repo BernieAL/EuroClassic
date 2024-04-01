@@ -1,0 +1,10 @@
+#email_input_wrapper{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    max-width: 550px;
+    top: 500px;
+    left: 25%;
+    border: solid blue 3px;
+    background-color: purple;
+}

@@ -26,6 +26,8 @@ export default function Graphs({recievedData}){
     // to hold graph/chart data recieved from parent - 
     const [dataForViz,setDataForViz] = useState(null)
 
+
+
     useEffect(()=>{
         setDataForViz(recievedData)
         console.log(recievedData)
@@ -41,7 +43,12 @@ export default function Graphs({recievedData}){
         
     */
     /*when destructuring like this, the var names MUST match exactly the keys in the object */
-    const {all_sales_records,current_records,current_stats,sold_stats} = recievedData
+    const { 
+        all_sales_records = [0], 
+        current_records = [0], 
+        sold_stats = [0], 
+        current_stats = [0] 
+    } = recievedData || {};
 
     console.log("Grapsh component - receievedata",recievedData)
     
