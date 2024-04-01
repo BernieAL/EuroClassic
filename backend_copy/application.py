@@ -11,7 +11,7 @@ import json
 from simple_chalk import chalk
 import pandas as pd
 import os,sys
-
+import uuid
 
 #from Web_Scrape_Logic.scrape_runner_main import run_scapers
 # from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
@@ -190,12 +190,29 @@ def vehicleQuery():
 
             write vehicle to queue file
             get email from user
+                to get email, create uuid for this request,
+                 and store requested veh data using uuid,  
+                 then send uuid back to client in response
+
+                on client side, prompt user for email, put email and uuid in obj and send back over to api
+
+                in api, use uuid to find existing 
             initiate scrape,clean,analyze,push to db process
 
             """
+            #gen uuid
+            user_uuid = uuid.uuid4()
+            
+            #store uuid and request info in db
+            DB_insert_UUID_veh_request_NO_EMAIL(cur,user_uuid,reqeusted_veh)
+
+
             print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
+
+            #return user_uuid in res to be used on client side
             res = {
                 'status':'Not Found',
+                'uuid': user_uuid,
                 'msg': "Whoops, We Dont Have Any Stats For That Vehicle Right Now, We Just initiated a new analysis process just for you - and we'll email you with the results",
             }
 
@@ -411,6 +428,29 @@ def DB_execute_queries_and_store_results(cur, make, model):
         "current_stats": current_stats_result
     }
 
+def DB_insert_UUID_veh_request_NO_EMAIL(cur,user_uuid,veh):
+    """
+    This function inserts an entry into the EMAIL_VEH_TABLE table
+    It maps a UUID to the user reqeusted vehicle
+    Purpose being - to later add in the user entered email to map the requested vehicle to the users email - for use in emailing results to the user when scrape completed
+    """
+     
+    EMAIL = 'NONE'
+    MAKE = veh['make'].upper()
+    MODEL = veh['model'].upper()
+    YEAR = veh['year']
+    user_uuid = str(user_uuid)
+    try:
+
+        sql="""
+            INSERT INTO EMAIL_VEH_TABLE(UUID,EMAIL,MAKE,MODEL,YEAR)
+            values(%s,%s,%s,%s,%s)
+            """
+        cur.execute(sql,(user_uuid,EMAIL,MAKE,MODEL,YEAR))
+        print("SUCCESSFULLY CREATED ENTRY - MAPPING UUID AND VEH")
+
+    except (Exception, psycopg2.DatabaseError) as e:
+            print(f"error: {e}")
 
 def custom_encoder(obj):
     """
@@ -425,6 +465,7 @@ def custom_encoder(obj):
     if isinstance(obj,date):
         return obj.isoformat()
     raise TypeError("Type not serializable")
+    
 
 
 

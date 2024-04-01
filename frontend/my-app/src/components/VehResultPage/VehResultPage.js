@@ -18,7 +18,7 @@ export default function VehResultPage({recievedData}){
         console.log(recievedData);
 
         // Check if the data status is 'Not Found'
-        if (recievedData.status === 'Not Found') {
+        if (recievedData['status'] === 'Not Found') {
             // Set graph data to an empty object
             setDataForGraphs({
                 all_sales_records: [0], 
@@ -26,7 +26,7 @@ export default function VehResultPage({recievedData}){
                 sold_stats: [0], 
                 current_stats: [0]
             });
-
+        console.log("UUID:" + recievedData['uuid'])
             // Set userEmailReqd to true
             setUserEmailReqd(true);
         }
