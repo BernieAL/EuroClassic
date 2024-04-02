@@ -205,8 +205,6 @@ def vehicleQuery():
             
             #store uuid and request info in db
             DB_insert_UUID_veh_request_NO_EMAIL(cur,user_uuid,reqeusted_veh)
-
-
             print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
 
             #return user_uuid in res to be used on client side
@@ -248,7 +246,7 @@ def update_email():
        uuid =  data['uuid']
        email = data['email']
         
-    #    DB_update_user_email_by_uuid(cur,uuid,email)
+       DB_update_user_email_by_uuid(cur,uuid,email)
        return jsonify("SUCCESS")
     
     except Exception as e:
@@ -454,6 +452,7 @@ def DB_insert_UUID_veh_request_NO_EMAIL(cur,user_uuid,veh):
     MODEL = veh['model'].upper()
     YEAR = veh['year']
     user_uuid = str(user_uuid)
+    print(f"{EMAIL}{MAKE}{MODEL}{YEAR}{user_uuid}")
     try:
 
         sql="""
@@ -462,11 +461,11 @@ def DB_insert_UUID_veh_request_NO_EMAIL(cur,user_uuid,veh):
             """
         cur.execute(sql,(user_uuid,EMAIL,MAKE,MODEL,YEAR))
         print("SUCCESSFULLY CREATED ENTRY - MAPPING UUID AND VEH")
-
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
 
-def DB_update_user_email_by_uuid(cur,uuid,email):
+def DB_update_user_email_by_uuid(cur,uuid,email,):
 
     """
     find existing record by uuid, then update the email value to be rec'd  user_email value
@@ -480,6 +479,7 @@ def DB_update_user_email_by_uuid(cur,uuid,email):
     try:
         cur.execute(sql,(email,uuid))
         print(f"SUCCESSFULLY UPDATED EMAIL FOR UUID {uuid}")
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
 

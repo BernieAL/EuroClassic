@@ -24,7 +24,7 @@ export default function EmailCollector({ user_uuid_prop }){
                 throw new Error('Problem with response from server')
             } else {
                 const responseData = await response.json()
-                console.log('EMAIL FORM submitted successfully', responseData)
+                console.log('EMAIL FORM submitted successfully, RESPONSE:  ', responseData)
             }
         } catch (error) {
             console.error('Error with form submission', error.message)
