@@ -45,7 +45,7 @@ CACHE_FILE_PATH = os.path.join(BACKEND_ROOT,'Cache','makes_cache.json')
 
 
 application = Flask(__name__)
-CORS(application)
+CORS(application, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 application.secret_key = 'secret_key'
 
@@ -240,6 +240,21 @@ def vehicleQuery():
         print('Error',str(e))
         return jsonify({'error':str(e)})
         
+@application.route('/update_email',methods=['POST'])
+def update_email():
+    try:
+       data = request.get_json()
+       print(chalk.green(f"(update_email) values rec'd: {data}"))
+       uuid =  data['uuid']
+       email = data['email']
+        
+    #    DB_update_user_email_by_uuid(cur,uuid,email)
+       return jsonify("SUCCESS")
+    
+    except Exception as e:
+        print('Error',str(e))
+        return jsonify({'error':str(e)})
+
 @application.route('/retrieve_cache',methods=['GET'])
 def retrieve_cache():
 
@@ -386,7 +401,6 @@ def DB_check_new_scrape_needed(veh:object):
         # Handle exceptions (print or log the error, or take applicationropriate action)
         print(f"Error: {str(e)}")
     
-
 def DB_execute_queries_and_store_results(cur, make, model):
     """
     This function passes params to imported queries and executes them
@@ -449,6 +463,23 @@ def DB_insert_UUID_veh_request_NO_EMAIL(cur,user_uuid,veh):
         cur.execute(sql,(user_uuid,EMAIL,MAKE,MODEL,YEAR))
         print("SUCCESSFULLY CREATED ENTRY - MAPPING UUID AND VEH")
 
+    except (Exception, psycopg2.DatabaseError) as e:
+            print(f"error: {e}")
+
+def DB_update_user_email_by_uuid(cur,uuid,email):
+
+    """
+    find existing record by uuid, then update the email value to be rec'd  user_email value
+    """
+
+    sql = """
+          UPDATE EMAIL_VEH_TABLE
+          SET EMAIL = %s
+          WHERE UUID = %s;
+          """   
+    try:
+        cur.execute(sql,(email,uuid))
+        print(f"SUCCESSFULLY UPDATED EMAIL FOR UUID {uuid}")
     except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
 

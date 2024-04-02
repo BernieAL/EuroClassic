@@ -30,7 +30,7 @@ export default function Graphs({recievedData}){
 
     useEffect(()=>{
         setDataForViz(recievedData)
-        console.log(recievedData)
+        console.log("(graphs) received Data:", recievedData)
     },[recievedData])
 
 
@@ -50,7 +50,7 @@ export default function Graphs({recievedData}){
         current_stats = [0] 
     } = recievedData || {};
 
-    console.log("Grapsh component - receievedata",recievedData)
+    // console.log("Graphs component - receievedata",recievedData)
     
     /* HANDLING SALES DATA - SORT all_sales_records by sale date ascending
        sale_date is last index in each record -> idx 5
@@ -84,7 +84,7 @@ export default function Graphs({recievedData}){
 
      */
     const GRAPH_sales_data_DATE_SORTED = GRAPH_sales_data.sort((a, b) => new Date(a.sale_date) - new Date(b.sale_date));
-    console.log(GRAPH_sales_data_DATE_SORTED)
+    // console.log(GRAPH_sales_data_DATE_SORTED)
 
     
     // HANDLING CURRENT DATA
@@ -97,7 +97,7 @@ export default function Graphs({recievedData}){
         }
     })
     const GRAPH_current_listing_data_YEAR_SORTED = GRAPH_current_listing_data.sort((a,b)=>(a.year - b.year))
-    console.log(GRAPH_current_listing_data_YEAR_SORTED)
+    // console.log(GRAPH_current_listing_data_YEAR_SORTED)
 
     // const GRAPH_sold_stats = current_records.map((record)=>{
     //     return {

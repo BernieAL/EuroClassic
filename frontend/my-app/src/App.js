@@ -24,6 +24,7 @@ library.add(fab, fas, far)
 export default function App(){
 
     const [recievedData,setRecievedData] = useState(null)
+    const [user_uuid, setUserUUID] = useState(null)
     const [vehExists_db,setVehExists_DB] = useState(null)
 
 
@@ -43,6 +44,8 @@ export default function App(){
         
         console.log('Recieved Data in app:', data)
         setRecievedData(data)
+
+        
         
         const VEH_EXISTS = data['VEH_EXISTS']
         setVehExists_DB(VEH_EXISTS)
@@ -61,7 +64,7 @@ export default function App(){
                             
                             <div className="jumbotron">test</div>
                             <div 
-                                className="search_form_wrapper"><SearchForm onDataSubmit={handleDataFromSearchForm}/>
+                                className="search_form_wrapper"><SearchForm handleDataFromSearchForm={handleDataFromSearchForm}/>
                             </div>
                             <div className="card_wrapper">
                                 <ListingCard />

@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import {useNavigate} from 'react-router-dom';
 
-export default function SearchForm({onDataSubmit}){
+export default function SearchForm({handleDataFromSearchForm}){
 
 
     let year = ''
@@ -10,9 +10,8 @@ export default function SearchForm({onDataSubmit}){
 
     // if form submitted and awaiting server response - disable 'submit' button
     const [submitting,setSubmitting] = useState(false)
-    const [userInput,setUserInput] = useState({
-        search_query:null,
-    })
+    const [userInput,setUserInput] = useState({search_query:null})
+
     const navigate = useNavigate();
 
     const [formData,setFormData] = useState({
@@ -48,8 +47,6 @@ export default function SearchForm({onDataSubmit}){
 
     const callServer = async(entered_data) => {
         try{
-
-            
             const response = await fetch('http://127.0.0.1:5000/vehicle-query',{
                 method:'POST',
                 headers:{
@@ -68,7 +65,7 @@ export default function SearchForm({onDataSubmit}){
                 console.log('Form submitted successfully',responseData)
 
                 
-                onDataSubmit(responseData) //send data back up to parent component using parent callback function
+                handleDataFromSearchForm(responseData) //send data back up to parent component using parent callback function
                 navigate('/results') //redirect to results path which renders vehResultPage component
             }
         } catch (error) {

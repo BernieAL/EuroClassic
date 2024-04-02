@@ -12,6 +12,7 @@ export default function VehResultPage({recievedData}){
     // store recieved props data in state
     const [dataForGraphs, setDataForGraphs] = useState(null);
     const [userEmailReqd, setUserEmailReqd] = useState(false);
+    const [user_uuid, setUserUUID] = useState(null)
 
     useEffect(()=>{
         setDataForGraphs(recievedData);
@@ -26,11 +27,20 @@ export default function VehResultPage({recievedData}){
                 sold_stats: [0], 
                 current_stats: [0]
             });
+        
+        // Set userEmailReqd to true
+        setUserEmailReqd(true);   
+        
+        
+        // get user uuid off API response, send as prop to EmailCollector component
+        setUserUUID(recievedData['uuid'])
         console.log("UUID:" + recievedData['uuid'])
-            // Set userEmailReqd to true
-            setUserEmailReqd(true);
+
         }
     }, [recievedData]);
+
+
+    
 
     return (
         <div className="main_content_wrapper">
@@ -38,8 +48,9 @@ export default function VehResultPage({recievedData}){
             
             <div className="jumbotron">test</div>
             <Graphs recievedData={dataForGraphs}/> {/* Use dataForGraphs state variable */}
+
             {/* Conditionally render EmailCollector component if userEmailReqd is set to True */}
-            {userEmailReqd && <EmailCollector/>}
+            {userEmailReqd && <EmailCollector user_uuid_prop={user_uuid}/>}
         </div>
     );
 }
