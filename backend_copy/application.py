@@ -24,6 +24,8 @@ from Postgres.insert_data import populate_vehicles_dir_table
 import psycopg2
 from forms import SearchForm
 
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())
 
 #get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,6 +35,14 @@ if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
 from RabbitMQ_queues.scrape_producer import add_veh_to_queue
+
+#import queries
+from Postgres.queries import (
+    all_sales_records_NO_YEAR_query,
+    all_current_records_NO_YEAR_query,
+    sold_stats_query_NO_YEAR,
+    current_stats_query_NO_YEAR
+)
 
 
 current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
@@ -47,19 +57,12 @@ CACHE_FILE_PATH = os.path.join(BACKEND_ROOT,'Cache','makes_cache.json')
 application = Flask(__name__)
 CORS(application, resources={r"/*": {"origins": "http://localhost:3000"}})
 
-application.secret_key = 'secret_key'
+application.secret_key =  os.getenv('APPLICATION_SECRET_KEY')
 
 #test db connection
 conn = get_db_connection()
 cur = conn.cursor()
 
-#import queries
-from Postgres.queries import (
-    all_sales_records_NO_YEAR_query,
-    all_current_records_NO_YEAR_query,
-    sold_stats_query_NO_YEAR,
-    current_stats_query_NO_YEAR
-)
 
 
 """ Veh manufacturer cache initialization
@@ -212,20 +215,10 @@ def vehicleQuery():
                 'status':'Not Found',
                 'uuid': user_uuid,
                 'msg': "Whoops, We Dont Have Any Stats For That Vehicle Right Now, We Just initiated a new analysis process just for you - and we'll email you with the results",
+                'veh':reqeusted_veh,
             }
 
-            #combination of user-entered email and user-requested veh
-            email_and_veh = {
-                'email':'balmanzar883@gmail.com',
-                'veh': {
-                    'year':0000,
-                    'make': reqeusted_veh['make'],
-                    'model': reqeusted_veh['model']         
-                }
-            }
-
-            #publish veh as message to VEH_QUEUE (RMQ PRODUCER)
-            add_veh_to_queue(email_and_veh)
+            
 
             #OLD - USING FILE AS QUEUE 
             # VEH_REQ_QUEUE_FILE = open(VEH_REQ_QUEUE_FILE_PATH,'w')
@@ -241,14 +234,39 @@ def vehicleQuery():
 @application.route('/update_email',methods=['POST'])
 def update_email():
     try:
-       data = request.get_json()
-       print(chalk.green(f"(update_email) values rec'd: {data}"))
-       uuid =  data['uuid']
-       email = data['email']
-        
-       DB_update_user_email_by_uuid(cur,uuid,email)
-       return jsonify("SUCCESS")
     
+        data = request.get_json()
+        print(chalk.green(f"(update_email) values rec'd: {data}"))
+        uuid =  data['uuid']
+        email = data['email']
+        
+        #combination of user-entered email and user-requested veh
+        # email_and_veh = {
+        #     'email':'balmanzar883@gmail.com',
+        #     'veh': {
+        #         'year':0000,
+        #         'make': reqeusted_veh['make'],
+        #         'model': reqeusted_veh['model']         
+        #         }
+        #     }
+
+        
+        data = request.get_json()
+        print(chalk.green(f"(update_email) values rec'd: {data}"))
+        uuid =  data['uuid']
+        email = data['email']
+        
+        #update user record with new captured email recd from client
+        DB_update_user_email_by_uuid(cur,uuid,email)
+        
+        #retrieve full record (email and veh) from db now that email has been updated
+        user_record_email_and_veh = retrieve_record_by_uuid(cur,uuid)
+        print(user_record_email_and_veh)
+        # #publish veh as message to VEH_QUEUE (RMQ PRODUCER)    
+        # add_veh_to_queue(user_record_email_and_veh)
+        
+        return jsonify("SUCCESS")
+        
     except Exception as e:
         print('Error',str(e))
         return jsonify({'error':str(e)})
@@ -465,7 +483,7 @@ def DB_insert_UUID_veh_request_NO_EMAIL(cur,user_uuid,veh):
     except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
 
-def DB_update_user_email_by_uuid(cur,uuid,email,):
+def DB_update_user_email_by_uuid(cur,uuid,email):
 
     """
     find existing record by uuid, then update the email value to be rec'd  user_email value
@@ -482,6 +500,24 @@ def DB_update_user_email_by_uuid(cur,uuid,email,):
         conn.commit()
     except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
+
+def retrieve_record_by_uuid(cur,user_uuid):
+    """this retrieves the entire record from EMAIL_VEH_TABLE
+       using uuid. Gets us email and veh to then be encapsulated as an object and returned
+    """
+    sql="""
+         SELECT EMAIL,YEAR,MAKE,MODEL
+         FROM EMAIL_VEH_TABLE
+         WHERE UUID = %s
+        """
+    try:
+        cur.execute(sql,(user_uuid))
+        record = cur.fetchone()
+        print(jsonify(record))
+        return record
+    except (Exception, psycopg2.DatabaseError) as e:
+            print(f"error: {e}")
+
 
 def custom_encoder(obj):
     """
