@@ -235,11 +235,7 @@ def vehicleQuery():
 def update_email():
     try:
     
-        data = request.get_json()
-        print(chalk.green(f"(update_email) values rec'd: {data}"))
-        uuid =  data['uuid']
-        email = data['email']
-        
+     
         #combination of user-entered email and user-requested veh
         # email_and_veh = {
         #     'email':'balmanzar883@gmail.com',
@@ -260,10 +256,10 @@ def update_email():
         DB_update_user_email_by_uuid(cur,uuid,email)
         
         #retrieve full record (email and veh) from db now that email has been updated
-        user_record_email_and_veh = retrieve_record_by_uuid(cur,uuid)
-        print(user_record_email_and_veh)
+        user_record_email_and_veh_obj = retrieve_record_by_uuid(uuid)
+        print(user_record_email_and_veh_obj)
         # #publish veh as message to VEH_QUEUE (RMQ PRODUCER)    
-        # add_veh_to_queue(user_record_email_and_veh)
+        # add_veh_to_queue(user_record_email_and_veh_obj)
         
         return jsonify("SUCCESS")
         
@@ -501,7 +497,7 @@ def DB_update_user_email_by_uuid(cur,uuid,email):
     except (Exception, psycopg2.DatabaseError) as e:
             print(f"error: {e}")
 
-def retrieve_record_by_uuid(cur,user_uuid):
+def retrieve_record_by_uuid(user_uuid):
     """this retrieves the entire record from EMAIL_VEH_TABLE
        using uuid. Gets us email and veh to then be encapsulated as an object and returned
     """
@@ -511,12 +507,28 @@ def retrieve_record_by_uuid(cur,user_uuid):
          WHERE UUID = %s
         """
     try:
-        cur.execute(sql,(user_uuid))
+        cur.execute(sql,(user_uuid,))
+
+        """fetchone returns tuple
+           Returned tuple from EMAIL_VEH_TABLE -> ('useremail@...com', 1995, 'BMW', 'M5') 
+           DATA TYPE of Tuple values (email<str>, year<int>,make<str>,model<str>)
+        """
+        #retrive record matching uuid
         record = cur.fetchone()
-        print(jsonify(record))
-        return record
+        
+        #get values off tuple and put into object 
+        retrieved_record_obj = {
+            'email':record[0],
+            'veh':{
+                'year':record[1],
+                'make':record[2],
+                'model':record[3]
+            }
+        }
+        
+        return retrieved_record_obj
     except (Exception, psycopg2.DatabaseError) as e:
-            print(f"error: {e}")
+            print(chalk.green(f"(retrieve_record_by_uuid) error: {e}"))
 
 
 def custom_encoder(obj):
