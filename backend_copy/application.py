@@ -206,7 +206,7 @@ def vehicleQuery():
             #gen uuid
             user_uuid = uuid.uuid4()
             
-            #store uuid and request info in db
+            #store uuid and requested veh info in db
             DB_insert_UUID_veh_request_NO_EMAIL(cur,user_uuid,reqeusted_veh)
             print(chalk.red("::::::VEH SCRAPE NEEDED::::::"))
 
@@ -257,9 +257,10 @@ def update_email():
         
         #retrieve full record (email and veh) from db now that email has been updated
         user_record_email_and_veh_obj = retrieve_record_by_uuid(uuid)
-        print(user_record_email_and_veh_obj)
+        print(chalk.green(f"(update_email) retrieved record - {user_record_email_and_veh_obj}"))
+        
         # #publish veh as message to VEH_QUEUE (RMQ PRODUCER)    
-        # add_veh_to_queue(user_record_email_and_veh_obj)
+        add_veh_to_queue(user_record_email_and_veh_obj)
         
         return jsonify("SUCCESS")
         
@@ -466,7 +467,7 @@ def DB_insert_UUID_veh_request_NO_EMAIL(cur,user_uuid,veh):
     MODEL = veh['model'].upper()
     YEAR = veh['year']
     user_uuid = str(user_uuid)
-    print(f"{EMAIL}{MAKE}{MODEL}{YEAR}{user_uuid}")
+    # print(f"{EMAIL}{MAKE}{MODEL}{YEAR}{user_uuid}")
     try:
 
         sql="""

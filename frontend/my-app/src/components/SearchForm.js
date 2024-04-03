@@ -78,45 +78,56 @@ export default function SearchForm({handleDataFromSearchForm}){
 
 
     const handleFormSubmit = async (e) =>{
+
+        /*This function is called when form is submitted 
+          -Extracts form data from submitted form and converts to uppercase -> <Str> Ex. 1994 bmw m5 -> 1994 BMW M5
+          -Tokenizes submitted value 
+          -Attempts to identify year value in form data using regex pattern /\b\d{4}\b/
+                -if no year found, default of 0000 is used
+                -set year state var
+          -
+          -
+        */
+
         e.preventDefault()
-        
         console.log("form submitted")
        
-        /* REGEX EXPLAINED /b is word boundary - ensure that pattern matches whole words
+        /* REGEX EXPLAINED -> /b is word boundary - ensure that pattern matches whole words
            /d{4} matches exactly 4 digits (year)
         */
-        const yearRegex = /\b\d{4}\b/;
+        const yearRegex = /\b\d{4}\b/; //regex pattern for identifying 4 digit year value
 
-        // tokenize entered search query
+        // standardize form data to upppercase
         let temp = e.target.search_query.value.toUpperCase()
-        console.log(typeof(temp))
+        // console.log(typeof(temp))
 
-        // tokens: 1999,BMW,M3
+        //Tokenize form data, splitting at whitespace -> 1999 BMW M3 -> 1999,BMW,M3 
         const tokens = temp.split(/\s+/)
-        console.log(`tokens: ${tokens}`)
+        // console.log(`tokens: ${tokens}`)
 
 
-        //Find and return the token matches the yearRegex pattern
-        // 1999
+        //check wchich token is year value using yearRegex pattern. if no match set year as 0000
         year = tokens.find((token)=> yearRegex.test(token)) || '0000'
-
-        console.log(year)
+        // console.log(year)
+        // update state with year value
         setFormData((prevFormData)=>({
             ...prevFormData,
             state_year: year
         }))
-        const year_token_index = tokens.indexOf(year)
-
-        // create new array of remaining tokens with year token removed
-        // ['BMW', 'M3']
-        const tokens_without_year = tokens.filter(token => token !== year)
         
-        console.log(tokens_without_year)
-        // out of remaining tokens, check which token is the 'make' by checking it appears in vehMakeCacheData
+        // const year_token_index = tokens.indexOf(year)
+
+        // create new array of remaining tokens with year token removed using -> ['BMW', 'M3']
+        //filter logic -> only return tokens that dont match year
+        const tokens_without_year = tokens.filter(token => token !== year)
+        // console.log(tokens_without_year)
+
+        //out of remaining tokens, check which token is the 'make' value by checking if it appears in vehMakeCacheData (file of all make names)
+        //The first token that appears in the vehMakeCacheData is the make
         for(let token of tokens_without_year){
             if(vehMakeCacheData.includes(token)){
                 make = token
-                console.log(make)
+                console.log("MAKE IDENTIFIED: ",make)
                 setFormData((prevFormData) => ({
                     ...prevFormData,
                     state_make: make
@@ -126,6 +137,7 @@ export default function SearchForm({handleDataFromSearchForm}){
         }
 
         // with year and make token extracted, we should be left with model token only
+        //if more than one token remaining, take the first token of remaining list
         const tokens_without_year_and_make = tokens_without_year.filter(token => token !== make)
         console.log(tokens_without_year_and_make)
         model = tokens_without_year_and_make[0]
@@ -135,38 +147,19 @@ export default function SearchForm({handleDataFromSearchForm}){
         }))  
         
 
-        /*workaround to avoid having to wait for async state update.
-        in this way: 
-            there is no null form submission
-            the variables are populated seperatley from state
-            and state is also updated
+        /*WORKAROUND - to avoid having to wait for async state update.
+            in this way: 
+                there can never be a null form submission
+                the variables are populated seperatley from state
+                and then state is also updated
         */
     
         const entered_data = {'year':year,'make':make,'model':model}
-        console.log(typeof(entered_data))
-        // call to server with parsed data
+        // console.log(typeof(entered_data))
+        
+        // call api server with encapsulated form data 
         callServer(entered_data)
-
-
     }
-
-
-    /* 
-    
-     // check if state is updated properly before making call
-            if (formData.year === null || formData.make === null || formData.model === null) {
-                console.error('Form data is not complete. Aborting server call.');
-                return;
-            }
-
-    need some kind of function to wait until all values in state are not null,
-    then perform call to the server
-
-
-    
-    */
-
-
 
     return(
         

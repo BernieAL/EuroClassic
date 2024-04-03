@@ -109,7 +109,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
         #wait for page to load
         time.sleep(random.uniform(3,9))
         
-
+        
 
         # URL FOR TESTING PURPOSES ONLY  
         # intial_url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=audi&_sacat=0&_ipg=240&rt=nc"
