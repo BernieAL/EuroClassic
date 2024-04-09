@@ -65,20 +65,19 @@ cur = conn.cursor()
 
 
 
-""" Veh manufacturer cache initialization
-on flask application startup - request is made to api to retrieve all car makes
-this is then written to a cache file for later use on client side for input tokenization
+""" VEH MANUFACTURER CACHE INITIALIZATION
+    On flask application startup - request is made to api to retrieve all car makes
+    this is then written to a cache file for later use on client side for input tokenization
 
-On Client side - when form submitted
-    user input is tokenized
-        -year token is identified using regex
-        -make token is identified by making request to flask application 
-            and checking if the entered make exists in cache
-            if exists: return True, we now know that this token is the make
-            if didnt exist: check remaining token in user input
-                if exists: this token is the make
-    Once year is identified, the remaining tokens can be make or model
-        so we check if a token applicationears in the makes cache
+    On Client side - when form submitted
+        user input is tokenized
+            -'year' token is identified using regex
+            -'make' token is identified by checking if it occurs in cache file of makes
+                if match found: return True, we now know that this token is the make
+                if no match found: check remaining tokens in user input
+                    if exists: this token is the make
+        Once year is identified, the remaining tokens can be make or model
+            so we check if a token appears in the makes cache
 """
 def initialize_cache():
     try:
@@ -218,8 +217,6 @@ def vehicleQuery():
                 'veh':reqeusted_veh,
             }
 
-            
-
             #OLD - USING FILE AS QUEUE 
             # VEH_REQ_QUEUE_FILE = open(VEH_REQ_QUEUE_FILE_PATH,'w')
             # VEH_REQ_QUEUE_FILE.write(f"{veh['year']},{veh['make']},{veh['model']}")
@@ -234,19 +231,7 @@ def vehicleQuery():
 @application.route('/update_email',methods=['POST'])
 def update_email():
     try:
-    
-     
-        #combination of user-entered email and user-requested veh
-        # email_and_veh = {
-        #     'email':'balmanzar883@gmail.com',
-        #     'veh': {
-        #         'year':0000,
-        #         'make': reqeusted_veh['make'],
-        #         'model': reqeusted_veh['model']         
-        #         }
-        #     }
-
-        
+            
         data = request.get_json()
         print(chalk.green(f"(update_email) values rec'd: {data}"))
         uuid =  data['uuid']

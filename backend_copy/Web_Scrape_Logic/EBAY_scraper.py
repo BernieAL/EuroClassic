@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import seleniumwire.undetected_chromedriver as uc
-
+from simple_chalk import chalk
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -20,7 +20,7 @@ import time
 import random
 import sys
 from simple_chalk import chalk
-
+import gzip
 
 # Ensure the storage_script is accessible from the path where this script is located
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -40,6 +40,27 @@ array_test_sold = os.path.join(SCRAPED_DATA_DIR, 'result-array-test-sold.txt')
 
 EBAY_SEARCH_URL = "https://www.ebay.com/sch/i.html?_nkw=porsche+911&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240"
 
+
+def calculate_data_exchanged():
+    
+    total_data_exchanged = 0
+
+    for request in driver.requests:
+        # Get the length of the request body
+        request_body_length = len(request.body) if request.body else 0
+        
+        # Get the length of the response body
+        response_body_length = len(request.response.body) if request.response else 0
+        
+        # Calculate the total data exchanged for this request and response
+        data_exchanged = request_body_length + response_body_length
+        
+        # Add to the total amount of data exchanged
+        total_data_exchanged += data_exchanged
+
+    # Convert total_data_exchanged from bytes to megabytes
+    total_data_mb = total_data_exchanged / (1024 * 1024)
+    return f"{total_data_mb:.2f} MB"
 
 def check_output_dir_exists():
     """checks if the output dir for scraped data exists, if not it creates it
@@ -244,7 +265,24 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
             #write current ebay_items to file 
             fileWrite(ebay_items,EBAY_raw_CURRENT_output_file)
             
-            
+            #TEST logging reqeusts to file for each page
+            data_exchanged = calculate_data_exchanged() 
+            test_log_file.write(f" exact_results: { exact_results_count} data used:  {data_exchanged} \n")   
+
+            # for request in driver.requests:
+            #     try:
+            #         print(chalk.green((request.url, request.response.status_code)))
+            #         test_log_file.write(f"REQ: {request.url} --- \n"
+            #                             f"REQUEST BODY:{request.body}\n"
+            #                             f"RESPONSE BODY:{request.response.body}\n"
+            #                             f"REQUEST BODY:{request.ws_messages.content}\n"
+            #                             f"{request.response.status_code}\n"
+            #                             "++++++++ \n")
+            #     except Exception as e:
+            #         print(chalk.red(e))
+            #     test_log_file.write("--------- NEXT PAGE \n --------- \n")
+            del driver.requests
+            time.sleep(2)
 
         
         
@@ -466,15 +504,15 @@ if __name__ == '__main__':
 
     car  = {
     'year':2017,
-    'make':'Nissan',
-    'model':'350z'
+    'make':'BMW',
+    'model':'M5'
     }
 
     seleniumwire_options = {
-            'proxy': {
-                'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
-                'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
-            },
+            # 'proxy': {
+            #     'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
+            #     'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
+            # },
             'detach':True
         }
 
@@ -493,10 +531,55 @@ if __name__ == '__main__':
     #undetected chromedriver with proxy and with chromedriver manager no .exe path
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),seleniumwire_options=seleniumwire_options,options=uc_chrome_options)
 
-    
+
+    current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
+    test_log_file_path = os.path.join(current_script_dir,'TEST_request_log.txt')
+    test_log_file = open(test_log_file_path,'a')
+   
+    # driver.get("https://bot.sannysoft.com/")
+
+
     ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
-    # ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
-    #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
+
+#TEST logging reqeusts to file for each page
+    # for request in driver.requests:
+    #     try:
+    #         print(chalk.green((request.url, request.response.status_code)))
+    #         test_log_file.write(f"REQ: {request.url} --- \n"
+    #                             f"REQUEST BODY:{(gzip.decompress(request.body)).decode('utf-8')}\n"
+    #                             f"RESPONSE BODY:{(gzip.decompress(request.response.body)).decode('utf-8')}\n"
+    #                             f"{request.response.status_code}\n"
+    #                               "++++++++ \n")
+    #     except Exception as e:
+    #         print(chalk.red(e))
+
+
+    
+    # # Calculate the total amount of data exchanged
+    # total_data_exchanged = 0
+
+    # for request in driver.requests:
+    #     # Get the length of the request body
+    #     request_body_length = len(request.body) if request.body else 0
+        
+    #     # Get the length of the response body
+    #     response_body_length = len(request.response.body) if request.response else 0
+        
+    #     # Calculate the total data exchanged for this request and response
+    #     data_exchanged = request_body_length + response_body_length
+        
+    #     # Add to the total amount of data exchanged
+    #     total_data_exchanged += data_exchanged
+
+    # # Convert total_data_exchanged from bytes to megabytes
+    # total_data_mb = total_data_exchanged / (1024 * 1024)
+
+    # print(f"Total amount of data exchanged: {total_data_mb:.2f} MB")
+        
+    # # ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
+    # #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
+    time.sleep(10)
+    driver.close()
     time.sleep(1)
 
     

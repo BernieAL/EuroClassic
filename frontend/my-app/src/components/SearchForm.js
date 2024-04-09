@@ -37,13 +37,6 @@ export default function SearchForm({handleDataFromSearchForm}){
     },[])// Empty dependency array ensures that this effect runs only once when the component mounts
 
 
-    // // This effect will run whenever formData is updated
-    // useEffect(() => {
-    //     console.log('formData updated:', formData);
-    
-    //     // You can perform additional actions here if needed
-    //     }, [formData]);
-
 
     const callServer = async(entered_data) => {
         try{
