@@ -22,9 +22,14 @@ import sys
 from simple_chalk import chalk
 import gzip
 
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())     
+
 # Ensure the storage_script is accessible from the path where this script is located
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from LTS_storage_script import copy_file
+
+
 
 
 SCRAPED_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
@@ -268,7 +273,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
             #TEST logging reqeusts to file for each page
             data_exchanged = calculate_data_exchanged() 
             test_log_file.write(f" exact_results: { exact_results_count} data used:  {data_exchanged} \n")   
-            har_log_file.write(driver.har)
+            har_log_file_current.write(driver.har)
             # for request in driver.requests:
             #     try:
             #         print(chalk.green((request.url, request.response.status_code)))
@@ -404,7 +409,7 @@ def ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_output_file_path):
 
                 #write items to file
                 fileWrite(ebay_items,EBAY_raw_SOLD_output_file)
-                har_log_file.write(driver.har)
+                har_log_file_sold.write(driver.har)
                 #clear array ahead of next page - to avoid writing duplicate data to file
                 ebay_items.clear
                 
@@ -510,10 +515,10 @@ if __name__ == '__main__':
     }
 
     seleniumwire_options = {
-            # 'proxy': {
-            #     'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
-            #     'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
-            # },
+            'proxy': {
+                # 'http':os.getenv('PROXY_HTTP'),
+                # 'https':os.getenv('PROXY_HTTPS')
+            },
             'detach':True,
             'enable_har': True 
         }
@@ -536,16 +541,21 @@ if __name__ == '__main__':
 
     current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
     test_log_file_path = os.path.join(current_script_dir,'TEST_request_log.txt')
-    har_log_file_path = os.path.join(current_script_dir,'HAR_request_log.json')
+    
+    
     test_log_file = open(test_log_file_path,'a')
-    har_log_file = open(har_log_file_path,'w')
+
+    har_log_file_path_sold = os.path.join(current_script_dir,'HAR_request_log_sold.json')
+    har_log_file_sold = open(har_log_file_path_sold,'w')
    
-    # driver.get("https://bot.sannysoft.com/")
-    # har_log_file.write(driver.har)
+    har_log_file_path_current = os.path.join(current_script_dir,'HAR_request_log_current.json')
+    har_log_file_current = open(har_log_file_path_current,'w')
+
+    driver.get("https://bot.sannysoft.com/")
+    har_log_file_current.write(driver.har)
 
     # ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
-
-    ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
+    # ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
 
 #TEST logging reqeusts to file for each page
     # for request in driver.requests:

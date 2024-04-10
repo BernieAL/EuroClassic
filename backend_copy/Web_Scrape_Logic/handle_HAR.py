@@ -8,7 +8,7 @@ import os
 import json
 
 current_script_dir = os.path.dirname(os.path.abspath(__file__)) #backend/
-har_log_file_path = os.path.join(current_script_dir,'HAR_request_log.json')
+har_log_file_path = os.path.join(current_script_dir,'HAR_request_log_sold.json')
 
 
 transaction_total = 0
