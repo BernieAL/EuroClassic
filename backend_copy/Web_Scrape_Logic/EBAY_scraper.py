@@ -531,6 +531,7 @@ if __name__ == '__main__':
     #ignore ssl issues from https
     # uc_chrome_options.set_capability('acceptSslCerts',True)
     uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
+    # uc_chrome_options.add_argument('--headless')
     uc_chrome_options.add_argument('--ignore-certificate-errors')
     uc_chrome_options.add_argument("--allow-running-insecure-content")
 
@@ -551,8 +552,8 @@ if __name__ == '__main__':
     har_log_file_path_current = os.path.join(current_script_dir,'HAR_request_log_current.json')
     har_log_file_current = open(har_log_file_path_current,'w')
 
-    driver.get("https://bot.sannysoft.com/")
-    har_log_file_current.write(driver.har)
+    # driver.get("https://bot.sannysoft.com/")
+    # har_log_file_current.write(driver.har)
 
     # ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
     # ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
