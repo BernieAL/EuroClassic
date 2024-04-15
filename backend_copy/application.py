@@ -285,7 +285,6 @@ def return_data():
     returned data will be used to populate the graphs/charts etc
    """
 #    print(session['db_data'])
-   pass
 #    pd_result = SOLD_max_and_avg_price_per_veh_year()
 #    print(pd_result)
 #    return pd_result
@@ -339,7 +338,7 @@ def DB_check_new_scrape_needed(veh:object):
                 'scrape_needed':False
             }
     
-    year = veh['year']
+    veh['year']
     make = veh['make']
     model = veh['model']
     print('make: '+make)
