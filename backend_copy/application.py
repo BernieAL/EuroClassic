@@ -9,7 +9,7 @@ from flask import render_template
 import json
 
 from simple_chalk import chalk
-import pandas as pd
+# import pandas as pd
 import os,sys
 import uuid
 
