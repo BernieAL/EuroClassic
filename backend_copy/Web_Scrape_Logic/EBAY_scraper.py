@@ -476,7 +476,7 @@ def ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_output_file_path):
 
             #write items to file
             fileWrite(ebay_items,EBAY_raw_SOLD_output_file)
-            har_log_file.write(driver.har)
+            har_log_file_sold.write(driver.har)
             
         carName = f"{car['make']}-{car['model']}"
         #close file before copying or it will result in empty copied file
@@ -552,8 +552,11 @@ if __name__ == '__main__':
     har_log_file_path_current = os.path.join(current_script_dir,'HAR_request_log_current.json')
     har_log_file_current = open(har_log_file_path_current,'w')
 
+    # har_log_file_path_bot_test = os.path.join(current_script_dir,'HAR_request_log_bot_test.json')
+    # har_log_file_bot_test = open(har_log_file_path_current,'w')
+
     # driver.get("https://bot.sannysoft.com/")
-    # har_log_file_current.write(driver.har)
+    # har_log_file_bot_test.write(driver.har)
 
     # ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
     # ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_file_path)
