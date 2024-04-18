@@ -1,0 +1,8 @@
+- added proxy directive to package.json, will route unknown reqeusts to localhost:5000 (api)
+- declared const ROOT_API_URL in App.js and passing to children components that need to access the API URL 
+    -child components recieve the base root API url as prop, then append the specific route they will be making a request to 
+        Ex. ROOT_API_URL = 'localhost:5000/api
+        SearchForm component makes a req to /api/vehicle-query on form submit
+        SearchForm component recieves ROOT_API_URL as prop, then appends 'vehicle-query' to it
+        making the complete route 'localhost:5000/api/vehicle-query
+        Purpose of this is to not have to hardcode the routes, and if the root api changes for any reason, the changes can be made in a single place - the parent component (App.js)

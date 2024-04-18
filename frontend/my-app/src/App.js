@@ -27,6 +27,9 @@ export default function App(){
     const [user_uuid, setUserUUID] = useState(null)
     const [vehExists_db,setVehExists_DB] = useState(null)
 
+    
+    // ROOT URL FOR API to be passed down to chidlren and modified for more specific routes
+    const ROOT_API_URL = "http://127.0.0.1:5000/api"
 
     // callback function passed to SearchForm
     const handleDataFromSearchForm = (data) => {
@@ -64,7 +67,7 @@ export default function App(){
                             
                             <div className="jumbotron">test</div>
                             <div 
-                                className="search_form_wrapper"><SearchForm handleDataFromSearchForm={handleDataFromSearchForm}/>
+                                className="search_form_wrapper"><SearchForm handleDataFromSearchForm={handleDataFromSearchForm} ROOT_API_URL = {ROOT_API_URL}/>
                             </div>
                             <div className="card_wrapper">
                                 <ListingCard />
@@ -79,7 +82,7 @@ export default function App(){
                 }exact />
                 <Route path="/results" element={
                     /* if recievedData not null, render vehResultPage component which renders graphs,stats, and info for selected vehicle dnd pass recievedData as prop*/
-                    recievedData !== null && <VehResultPage recievedData={recievedData} />
+                    recievedData !== null && <VehResultPage recievedData={recievedData} ROOT_API_URL = {ROOT_API_URL} />
                 } />
                 
                 

@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import module_css from './EmailCollector.module.css'
 
-export default function EmailCollector({ user_uuid_prop }){
+export default function EmailCollector({ user_uuid_prop, ROOT_API_URL}){
 
     const [formSubmitted,setFormSubmitted] = useState(false)
     const [user_email, setUserEmail] = useState(null)
@@ -12,7 +12,9 @@ export default function EmailCollector({ user_uuid_prop }){
     const callServer = async(data)=>{
         console.log("callServer rec'd data: ",data)
         try {
-            const response = await fetch('http://127.0.0.1:5000/update_email',{
+            const specificRoute = "update_email"
+            const fullURL = `${ROOT_API_URL}/${specificRoute}`
+            const response = await fetch(fullURL,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',

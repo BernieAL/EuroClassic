@@ -7,7 +7,7 @@ import ListingCard from "../UI/ListingCard/ListingCard"
 // import module_css from './Navbar.module.css'
 
 
-export default function VehResultPage({recievedData}){
+export default function VehResultPage({recievedData,ROOT_API_URL}){
 
     // store recieved props data in state
     const [dataForGraphs, setDataForGraphs] = useState(null);
@@ -50,7 +50,7 @@ export default function VehResultPage({recievedData}){
             <Graphs recievedData={dataForGraphs}/> {/* Use dataForGraphs state variable */}
 
             {/* Conditionally render EmailCollector component if userEmailReqd is set to True */}
-            {userEmailReqd && <EmailCollector user_uuid_prop={user_uuid}/>}
+            {userEmailReqd && <EmailCollector user_uuid_prop={user_uuid} ROOT_API_URL = {ROOT_API_URL}/>}
         </div>
     );
 }

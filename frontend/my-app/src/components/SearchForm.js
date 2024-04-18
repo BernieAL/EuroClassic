@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import {useNavigate} from 'react-router-dom';
 
-export default function SearchForm({handleDataFromSearchForm}){
+export default function SearchForm({handleDataFromSearchForm, ROOT_API_URL}){
 
 
     let year = ''
@@ -25,7 +25,10 @@ export default function SearchForm({handleDataFromSearchForm}){
     useEffect(()=>{
         const load_manufacturer_cache = async ()=>{
             try {
-                const response = await fetch('http://127.0.0.1:5000/retrieve_cache')
+                const specificRoute = "retrieve_cache"
+                const fullURL = `${ROOT_API_URL}/${specificRoute}`
+             
+                const response = await fetch(fullURL)
                 const data = await response.json()
                 setVehMakeCacheData(data)
                 console.log(data)
@@ -40,7 +43,10 @@ export default function SearchForm({handleDataFromSearchForm}){
 
     const callServer = async(entered_data) => {
         try{
-            const response = await fetch('http://127.0.0.1:5000/vehicle-query',{
+
+            
+            const fullURL = `${ROOT_API_URL}/vehicle-query`
+            const response = await fetch(fullURL,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',

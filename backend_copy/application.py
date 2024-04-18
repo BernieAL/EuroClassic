@@ -127,7 +127,7 @@ def initialize_cache():
         print(f" Error writing to file: {e}")
 initialize_cache()
 
-@application.route('/', methods=['GET', 'POST'])
+@application.route('/api', methods=['GET', 'POST'])
 def home():
     form = SearchForm()
     if form.validate_on_submit():
@@ -145,7 +145,7 @@ def home():
         
     return render_template('index.html', form=form)
 
-@application.route('/vehicle-query',methods=['POST'])
+@application.route('/api/vehicle-query',methods=['POST'])
 def vehicleQuery():
     """end point called when form submitted on front end
        recieves user search query
@@ -228,7 +228,7 @@ def vehicleQuery():
         print('Error',str(e))
         return jsonify({'error':str(e)})
         
-@application.route('/update_email',methods=['POST'])
+@application.route('/api/update_email',methods=['POST'])
 def update_email():
     try:
             
@@ -253,7 +253,7 @@ def update_email():
         print('Error',str(e))
         return jsonify({'error':str(e)})
 
-@application.route('/retrieve_cache',methods=['GET'])
+@application.route('/api/retrieve_cache',methods=['GET'])
 def retrieve_cache():
 
     with open(CACHE_FILE_PATH,'r') as cache_file:
@@ -262,7 +262,7 @@ def retrieve_cache():
 
     return cache_data
 
-@application.route('/get_db_data',methods=['GET'])
+@application.route('/api/get_db_data',methods=['GET'])
 def return_db_data():
     """
     endpoint for js script to request db data
@@ -278,7 +278,7 @@ def return_db_data():
 
     return jsonify(data)
 
-@application.route('/get_data',methods=['GET'])
+@application.route('/api/get_data',methods=['GET'])
 def return_data():
    """TESTING
     endpoint for js script to request non db data
