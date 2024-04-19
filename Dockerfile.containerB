@@ -1,0 +1,12 @@
+FROM python:3.9
+WORKDIR /app
+
+COPY backend_copy/requirements.txt backend_copy/application.py backend_copy/.flaskenv backend_copy/.env backend_copy/gunicorn_conf.py ./
+RUN pip install -r ./requirements.txt
+
+EXPOSE 7777
+
+#set entry point to custom script - starting gunicorn with config
+COPY cont_B_entrypoint.sh /cont_B_entrypoint.sh
+RUN chmod +x /cont_B_entrypoint.sh
+ENTRYPOINT ["/cont_B_entrypoint.sh"]
