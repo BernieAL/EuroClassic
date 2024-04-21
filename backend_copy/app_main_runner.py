@@ -24,8 +24,8 @@ from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
 from Web_Scrape_Logic.EBAY_scraper import ebay_CURRENT_scrape_single_veh,ebay_SOLD_scrape_single_veh
 # from Web_Scrape_Logic.BAT_scraper import BAT_scrape_single_veh,BAT_scrape_all_for_make
 
-from Postgres.insert_data import populate_vehicles_dir_table,insert_current_listing_data,insert_sold_data, insertion_check
-from Postgres.connect import get_db_connection
+from Postgres_logic.insert_data import populate_vehicles_dir_table,insert_current_listing_data,insert_sold_data, insertion_check
+from Postgres_logic.connect import get_db_connection
 # from Web_Scrape_Logic.scrape_runner_main import run_scapers
 
 from dotenv import load_dotenv,find_dotenv

@@ -19,8 +19,8 @@ import uuid
 
 # from Analysis_Logic.sold_data_transformation import SOLD_max_and_avg_price_per_veh_year
 
-from Postgres.connect import get_db_connection
-from Postgres.insert_data import populate_vehicles_dir_table
+from Postgres_logic.connect import get_db_connection
+from Postgres_logic.insert_data import populate_vehicles_dir_table
 import psycopg2
 from forms import SearchForm
 
@@ -37,7 +37,7 @@ if parent_dir not in sys.path:
 from RabbitMQ_queues.scrape_producer import add_veh_to_queue
 
 #import queries
-from Postgres.queries import (
+from Postgres_logic.queries import (
     all_sales_records_NO_YEAR_query,
     all_current_records_NO_YEAR_query,
     sold_stats_query_NO_YEAR,
