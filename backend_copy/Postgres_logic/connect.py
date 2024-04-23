@@ -4,6 +4,7 @@ from simple_chalk import chalk
 import os
 from dotenv import load_dotenv, find_dotenv
 import psycopg2
+import time
 
 load_dotenv(find_dotenv())        
 
@@ -70,6 +71,9 @@ def get_db_connection():
     
     conn = None
     try:
+        print(chalk.green('Waiting before connecting to PostgreSQL database..'))
+        time.sleep(10)  # Add a delay of 10 seconds (adjust as needed)
+
         #connect to PostgreSQL server
         print(chalk.green('Connecting to PostgreSQL database..'))
         conn = psycopg2.connect(os.environ['DB_URI'])
