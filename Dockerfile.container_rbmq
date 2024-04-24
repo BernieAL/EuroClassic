@@ -1,0 +1,8 @@
+FROM rabbitmq:3-management
+
+workdir /app
+
+EXPOSE 15672
+EXPOSE 5672
+
+
