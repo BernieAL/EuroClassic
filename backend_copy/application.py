@@ -235,15 +235,15 @@ def vehicleQuery():
             
             #TEMP SNIPPET - FOR TESTING W/O REACT - ADDED FOR TESTING 4-25-24
             #publish veh as message to VEH_QUEUE (RMQ PRODUCER) 
-            user_record_email_and_veh_obj = {
-                'email':'balmanzar883@gmail.com',
-                'veh': {
-                    'year': reqeusted_veh['year'],
-                    'make': reqeusted_veh['make'],
-                    'model': reqeusted_veh['model']         
-                }
-            }   
-            add_veh_to_queue(user_record_email_and_veh_obj)
+            # user_record_email_and_veh_obj = {
+            #     'email':'balmanzar883@gmail.com',
+            #     'veh': {
+            #         'year': reqeusted_veh['year'],
+            #         'make': reqeusted_veh['make'],
+            #         'model': reqeusted_veh['model']         
+            #     }
+            # }   
+            # add_veh_to_queue(user_record_email_and_veh_obj)
             # END TEST SNIPPET
 
             return jsonify(res)
