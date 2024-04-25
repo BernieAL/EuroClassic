@@ -13,7 +13,7 @@ RABBITMQ_HOST = os.getenv('RABBITMQ_HOST')
 #called from api - acts as producer - adds veh to queue as message
 def add_veh_to_queue(email_and_veh):
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_MQ_HOST))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST))
     channel = connection.channel()
 
     channel.queue_declare(queue='VEH_QUEUE',durable=True)
