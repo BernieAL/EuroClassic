@@ -19,9 +19,9 @@ import uuid
 
 # from Analysis_Logic.sold_data_transformation import SOLD_max_and_avg_price_per_veh_year
 
-from Postgres.connect import get_db_connection
-from Postgres.insert_data import populate_vehicles_dir_table
 import psycopg2
+from Postgres_logic.connect import get_db_connection
+from Postgres_logic.insert_data import populate_vehicles_dir_table
 from forms import SearchForm
 
 from dotenv import load_dotenv,find_dotenv
@@ -37,7 +37,7 @@ if parent_dir not in sys.path:
 from RabbitMQ_queues.scrape_producer import add_veh_to_queue
 
 #import queries
-from Postgres.queries import (
+from Postgres_logic.queries import (
     all_sales_records_NO_YEAR_query,
     all_current_records_NO_YEAR_query,
     sold_stats_query_NO_YEAR,
@@ -66,7 +66,7 @@ cur = conn.cursor()
 
 
 """ VEH MANUFACTURER CACHE INITIALIZATION
-    On flask application startup - request is made to api to retrieve all car makes
+    On flask application startup - request is made to NHTSA api to retrieve all car makes
     this is then written to a cache file for later use on client side for input tokenization
 
     On Client side - when form submitted
@@ -137,11 +137,23 @@ def home():
             'make': form.vehicle_make.data,
             'model': form.vehicle_model.data
         }
-        response = requests.post(url_for('vehicleQuery', _external=True), data=data)
+        response = requests.post(url_for('vehicleQuery', _external=True), json=data)
         # Process the response
+        # if response.status_code == 200:
+        #     return response.text  # Or any other appropriate response
+        # # Process the response if needed
+
         if response.status_code == 200:
-            return response.text  # Or any other appropriate response
-        # Process the response if needed
+            if 'application/json' in response.headers.get('content-type',''):
+                json_data = response.json()
+                print(json_data)
+                return json_data
+            else:
+                response_text = response.text
+                print(response_text)
+                return response_text
+        else:
+            print(f"error: {response.status_code}")
         
     return render_template('index.html', form=form)
 

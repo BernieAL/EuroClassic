@@ -8,6 +8,7 @@ load_dotenv(find_dotenv())
 
 
 RABBITMQ_HOST = os.getenv('RABBITMQ_HOST')
+# RABBIT_MQ_HOST = 'rbmq_service'
 
 #called from api - acts as producer - adds veh to queue as message
 def add_veh_to_queue(email_and_veh):
