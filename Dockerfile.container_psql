@@ -1,0 +1,12 @@
+FROM postgres
+
+WORKDIR /app
+ENV POSTGRES_DB cars
+ENV POSTGRES_USER admin
+ENV POSTGRES_PASSWORD admin!
+RUN mkdir -p /docker-entrypoint-initdb.d/
+COPY *.sql .docker/docker-entrypoint-initdb.d/
+
+EXPOSE 5432
+
+CMD ["postgres"]
