@@ -53,30 +53,28 @@ services:
     #   networks:
     #     - my-network
 
-    # nginx:
-    #   hostname: nginx
-    #   container_name: nginx
-    #   build: 
-    #       context: ./
-    #       dockerfile: Dockerfile.container_react_nginx
-    #   ports:
-    #     - "3000:80"
-    #   networks:
-    #     - my-network
+    nginx:
+      hostname: nginx
+      container_name: nginx
+      build: 
+          context: ./
+          dockerfile: Dockerfile.container_react_nginx
+      ports:
+        - "3000:80"
+      networks:
+        - my-network
 
-   
-
-    # container_b: 
-    #   container_name: container_b
-    #   build: 
-    #     context: ./
-    #     dockerfile: Dockerfile.containerB
-    #   networks:
-    #     - my-network
-    #   ports:
-    #     - "7777:7777"     
-    #   tty: true
-    #   stdin_open: true   
+    container_b: 
+      container_name: container_b
+      build: 
+        context: ./
+        dockerfile: Dockerfile.containerB
+      networks:
+        - my-network
+      ports:
+        - "7777:7777"     
+      tty: true
+      stdin_open: true   
 
 networks:
       my-network: {}
