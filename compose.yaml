@@ -40,8 +40,8 @@ services:
         - my-network     
       tty: true
       stdin_open: true
-      depends_on: 
-        - container_pgsql
+      # depends_on: 
+      #   - container_pgsql
 
     nginx:
       hostname: nginx
