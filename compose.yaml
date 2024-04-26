@@ -1,7 +1,6 @@
 version: '3.8'
 services:
 
-
     container_pgsql:
       hostname: pgsql
       container_name: pgsql
@@ -10,26 +9,11 @@ services:
         context: ./
         dockerfile: Dockerfile.container_psql
       ports:
-          - 5432:5432
+          - "5432:5432"
       networks:
         - my-network
       volumes:
-        - ./sql_init_scripts:/docker-entrypoint-initdb.d 
-
-    container_api:
-      hostname: container_api
-      container_name: container_api
-      build:
-        context: ./
-        dockerfile: Dockerfile.container_api
-      ports: 
-          - 5000:5000
-      networks:
-        - my-network
-      stdin_open: true
-      depends_on: 
-        - container_pgsql
-      tty: true
+        - ./sql_init_scripts:/docker-entrypoint-initdb.d
 
     container_rmbq:
       hostname: rbmq
@@ -38,20 +22,26 @@ services:
         context: ./
         dockerfile: Dockerfile.container_rbmq
       ports: 
-          - 15672:15672
+          - "15672:15672"
       networks:
         - my-network
       stdin_open: true
       tty: true
-    
-    # nginx:
-    #   hostname: nginx
-    #   container_name: nginx
-    #   build: 
-    #       context: ./
-    #       dockerfile: Dockerfile.container_nginx
-    #   networks:
-    #     - my-network
+
+    container_b: 
+      container_name: container_b
+      hostname: container_b
+      build: 
+        context: ./
+        dockerfile: Dockerfile.containerB
+      ports:
+        - "7777:7777"
+      networks:
+        - my-network     
+      tty: true
+      stdin_open: true
+      depends_on: 
+        - container_pgsql
 
     nginx:
       hostname: nginx
@@ -64,17 +54,33 @@ services:
       networks:
         - my-network
 
-    container_b: 
-      container_name: container_b
-      build: 
-        context: ./
-        dockerfile: Dockerfile.containerB
-      networks:
-        - my-network
-      ports:
-        - "7777:7777"     
-      tty: true
-      stdin_open: true   
+    # container_api:
+    #   hostname: container_api
+    #   container_name: container_api
+    #   build:
+    #     context: ./
+    #     dockerfile: Dockerfile.container_api
+    #   ports: 
+    #       - "5000:5000"
+    #   networks:
+    #     - my-network
+    #   stdin_open: true
+    #   depends_on: 
+    #     - container_pgsql
+    #   tty: true
+
+
+    
+    # nginx:
+    #   hostname: nginx
+    #   container_name: nginx
+    #   build: 
+    #       context: ./
+    #       dockerfile: Dockerfile.container_nginx
+    #   networks:
+    #     - my-network
+
+
 
 networks:
       my-network: {}
