@@ -21,6 +21,14 @@ import random
 import sys
 from simple_chalk import chalk
 import gzip
+import logging
+
+
+
+#get path to central logging file, and pass into config
+api_log_file_path = os.path.join(os.path.dirname(__file__),'..','api_log.txt')
+logging.basicConfig(filename=api_log_file_path,format='a',format='%(asctime)s - %(message)s',level=logging.DEBUG)
+
 
 from dotenv import load_dotenv,find_dotenv
 load_dotenv(find_dotenv())     
@@ -30,8 +38,6 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from LTS_storage_script import copy_file
 
 
-
-
 SCRAPED_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
 # EBAY_raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'EBAY_raw_SOLD_DATA.txt')
 
@@ -39,9 +45,9 @@ SCRAPED_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_o
 EBAY_raw_CURRENT_LISTINGS_file_path = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_CURRENT_LISTINGS_DATA.txt')
 EBAY_raw_SOLD_DATA_file_path = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_SOLD_DATA.txt')
 
-#3/28 test
-array_test_current = os.path.join(SCRAPED_DATA_DIR, 'result-array-test-current.txt')
-array_test_sold = os.path.join(SCRAPED_DATA_DIR, 'result-array-test-sold.txt')
+#3/28 testcl
+# array_test_current = os.path.join(SCRAPED_DATA_DIR, 'result-array-test-current.txt')
+# array_test_sold = os.path.join(SCRAPED_DATA_DIR, 'result-array-test-sold.txt')
 
 EBAY_SEARCH_URL = "https://www.ebay.com/sch/i.html?_nkw=porsche+911&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240"
 
@@ -87,7 +93,6 @@ def check_output_dir_exists():
 
 # check_output_dir_exists()
 
-
 #function for writing raw scraped data to respective files
 def fileWrite(data,fileIn):
     for line in data:
@@ -112,12 +117,19 @@ def error_log(error_obj):
 """
 def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path):
     
+    logging.DEBUG("ENTERED EBAY_CURRENT_SCRAPE()")
+    logging.DEBUG("PARAMS REC'D %s - %s - %s",car,EBAY_raw_CURRENT_output_file)
+
     target_car = f"{car['make']} {car['model']}"
+    
     check_output_dir_exists()
+    logging.DEBUG("OUTPUT DIR EXISTS")
+    
     EBAY_raw_CURRENT_output_file = open(EBAY_raw_CURRENT_output_file_path,"a",encoding="utf-8")
     #clear data from prev run scrape to start with empty file
     EBAY_raw_CURRENT_output_file.truncate(0)
-    
+    logging.DEBUG("CLEARED PREV FILE DATA")
+
     try:
         
         ###VIA SEARCH BOX INERACTION
@@ -132,6 +144,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
         """
         intial_url = f"https://www.ebay.com/sch/i.html?_nkw={car['make']}+{car['model']}&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240"
         driver.get(intial_url)
+        logging.DEBUG("NAVIGATED TO %s",intial_url)
         #wait for page to load
         time.sleep(random.uniform(3,9))
         
@@ -163,9 +176,11 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
         date_string = f" :::EBAY - CURRENT DATA SCRAPED ON: {current_date} \n"
         EBAY_raw_CURRENT_output_file.write(date_string)   
         
+
         #if len of pages > 0, theres more than one page
         if len(pages) > 0:
-            
+
+            logging.DEBUG("# OF PAGES > 0")            
             # for each page link in pages[], extract href and store in page links
             for links in pages:
                 pages_links.append(links.get_attribute('href'))
@@ -175,9 +190,10 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
             # Start from the second page because the first page is already loaded.
             # Iterate over pagination links to access all available pages for data extraction.
             """
-            for pg_link in pages_links[1:len(pages_links)]: #what is theres only one page???
+            logging.DEBUG("# OF PAGES %s",len(pages_links))
+            for pg_link in pages_links[1:len(pages_links)]: 
                 
-                
+                logging.DEBUG("FINDING ELEMENTS ON PAGE")
                 #get references to all listing info elements on page, store as list
                 #ebay_listings = driver.find_elements(By.CLASS_NAME,'s-item__info')
                 #get references to all description elements on page, store as list
@@ -201,23 +217,26 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
                     temp = f'{item_description} {item_price}'
                     #store in ebay_items[]
                     ebay_items.append(temp)
-                    
-                    
+                    logging.DEBUG("WROTE DECSCRIP ELEMENTS TO EBAY_ITEMS_ARRAY")    
+                
                 #write current ebay_items to file before going to next page - in case script fails or mem issue with array
                 fileWrite(ebay_items,EBAY_raw_CURRENT_output_file)
+                logging.DEBUG("WROTE EBAY_ITEMS ARRAY TO FILE")
                 print(ebay_items)
                 #clear array ahead of next page - to avoid writing duplicate data to file
                 ebay_items.clear
+                logging.DEBUG("CLEARING EBAY ITEMS ARRAY BEFORE NEXT PAGE VISIT")
 
             #slow down page navigation
             time.sleep(random.uniform(3,9))
 
             #navigate to next page in list of pg_links
             driver.get(pg_link)
+            logging.DEBUG("NAVIGATING TO NEXT PAGE OF RESULTS")
 
         #if len pages == 0, theres only one page (the current page), get all the data from this page
         else:
-            
+            logging.DEBUG("ONLY 1 PAGE RESULT")
             """
             If single page, and If not many results on page, ebay provides additional section on page
             called "Results matching fewer words" - to avoid scraping irrelevant results,
@@ -266,26 +285,18 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
                 temp = f'{item_description.upper()} {item_price}'
                 #store in ebay_items[]
                 ebay_items.append(temp)
+                logging.DEBUG("WROTE DECSCRIP ELEMENTS TO EBAY_ITEMS_ARRAY")   
                 
             #write current ebay_items to file 
             fileWrite(ebay_items,EBAY_raw_CURRENT_output_file)
+            logging.DEBUG("WROTE EBAY_ITEMS ARRAY TO FILE")
+            ebay_items.clear
+            logging.DEBUG("CLEARING EBAY ITEMS ARRAY")
             
             #TEST logging reqeusts to file for each page
             data_exchanged = calculate_data_exchanged() 
             test_log_file.write(f" exact_results: { exact_results_count} data used:  {data_exchanged} \n")   
             har_log_file_current.write(driver.har)
-            # for request in driver.requests:
-            #     try:
-            #         print(chalk.green((request.url, request.response.status_code)))
-            #         test_log_file.write(f"REQ: {request.url} --- \n"
-            #                             f"REQUEST BODY:{request.body}\n"
-            #                             f"RESPONSE BODY:{request.response.body}\n"
-            #                             f"REQUEST BODY:{request.ws_messages.content}\n"
-            #                             f"{request.response.status_code}\n"
-            #                             "++++++++ \n")
-            #     except Exception as e:
-            #         print(chalk.red(e))
-            #     test_log_file.write("--------- NEXT PAGE \n --------- \n")
             del driver.requests
             time.sleep(2)
 
@@ -294,7 +305,10 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
         carName = f"{car['make']}-{car['model']}"
         #close file before copying or it will result in empty copied file
         EBAY_raw_CURRENT_output_file.close()
+        logging.DEBUG("CLOSING OUTPUT FILE %s -", EBAY_raw_CURRENT_output_file)
+        
         copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,"EBAY",current_date,carName,"CURR")
+        logging.DEBUG("MADE COPY OF OUTPUT FILE, STORED IN LTS ")
 
         success_obj = {
                     'success': True,
@@ -307,6 +321,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
         # driver.close()
         #DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
         time.sleep(1)
+        logging.DEBUG("EXITING EBAY_CURRENT_SCRAPE")
         return success_obj
     
     except NoSuchElementException as e:
@@ -315,7 +330,8 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
                'function':'EBAY CURRENT',
                'date': current_date
         }
-        error_log(error_obj)
+        # error_log(error_obj)
+        logging.error("Exception occurred %s", error_obj, exc_info=True)
         return error_obj
         
 
@@ -544,13 +560,13 @@ if __name__ == '__main__':
     test_log_file_path = os.path.join(current_script_dir,'TEST_request_log.txt')
     
     
-    test_log_file = open(test_log_file_path,'a')
+    # test_log_file = open(test_log_file_path,'a')
 
-    har_log_file_path_sold = os.path.join(current_script_dir,'HAR_request_log_sold.json')
-    har_log_file_sold = open(har_log_file_path_sold,'w')
+    # har_log_file_path_sold = os.path.join(current_script_dir,'HAR_request_log_sold.json')
+    # har_log_file_sold = open(har_log_file_path_sold,'w')
    
-    har_log_file_path_current = os.path.join(current_script_dir,'HAR_request_log_current.json')
-    har_log_file_current = open(har_log_file_path_current,'w')
+    # har_log_file_path_current = os.path.join(current_script_dir,'HAR_request_log_current.json')
+    # har_log_file_current = open(har_log_file_path_current,'w')
 
     # har_log_file_path_bot_test = os.path.join(current_script_dir,'HAR_request_log_bot_test.json')
     # har_log_file_bot_test = open(har_log_file_path_current,'w')
