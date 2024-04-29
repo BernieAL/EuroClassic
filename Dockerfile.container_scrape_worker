@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y wget unzip && \
 
 
 COPY backend_copy/requirements.txt /backend_copy/requirements.txt
-
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 
@@ -36,6 +35,5 @@ COPY backend_copy/RabbitMQ_queues /backend_copy/RabbitMQ_queues
 
 
 ENV PYTHONPATH="${PYTHONPATH}:/backend_copy"
-
 
 CMD ["python", "RabbitMQ_queues/scrape_worker.py"]

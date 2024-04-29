@@ -15,7 +15,7 @@ services:
       volumes:
         - ./sql_init_scripts:/docker-entrypoint-initdb.d
 
-    container_rmbq:
+    container_rbmq:
       hostname: rbmq
       container_name: rbmq
       build:
@@ -53,6 +53,34 @@ services:
         - "3000:80"
       networks:
         - my-network
+
+    scrape_worker:
+      hostname: scrape_worker
+      container_name: scrape_worker
+      build:
+          context: ./
+          dockerfile: Dockerfile.container_scrape_worker
+      depends_on:
+        - container_rbmq
+      networks:
+        - my-network
+      restart: on-failure
+      tty: true
+      stdin_open: true
+
+    email_worker:
+      hostname: email_worker
+      container_name: email_worker
+      build:
+          context: ./
+          dockerfile: Dockerfile.container_email_worker
+      depends_on:
+        - container_rbmq
+      networks:
+        - my-network
+      restart: on-failure
+      tty: true
+      stdin_open: true
 
     # container_api:
     #   hostname: container_api

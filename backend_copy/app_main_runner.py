@@ -98,8 +98,9 @@ def initialize_driver():
             'proxy': {
                 # 'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
                 # 'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
-                'http':os.getenv('PROXY_HTTP'),
-                'https':os.getenv('PROXY_HTTPS')
+                # 'http':os.getenv('PROXY_HTTP'),
+                # 'https':os.getenv('PROXY_HTTPS')
+                'no_proxy':'localhost,127.0.0.1'
             },
             'detach':True
         }
@@ -111,6 +112,7 @@ def initialize_driver():
     uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
     uc_chrome_options.add_argument('--ignore-certificate-errors')
     uc_chrome_options.add_argument("--allow-running-insecure-content")
+    uc_chrome_options.add_argument("--headless")
 
     #create undetected chromedriver with proxy and matching chromedriver hanlded by ChromeDriverManager - no .exe path
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),
@@ -139,10 +141,11 @@ def main_runner(veh):
     try:
         #this is coming from scrape_worker
         print(chalk.red(f"(app_main_runner) VEH TO SCRAPE: {veh}"))
-        
+        print(chalk.red("LAUNCHING SELENIUM PROCESS"))
+        driver.get("https//google.com")
         #Scraping of ebay data
-        ebay_CURRENT_scrape_single_veh(veh,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
-        ebay_SOLD_scrape_single_veh(veh,driver,EBAY_raw_SOLD_DATA_file_path)
+        # ebay_CURRENT_scrape_single_veh(veh,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
+        # ebay_SOLD_scrape_single_veh(veh,driver,EBAY_raw_SOLD_DATA_file_path)
 
         #Scraping of bat data
         # #bat scrape
@@ -154,15 +157,15 @@ def main_runner(veh):
         
         
         #cleaning of ebay data
-        ebay_clean_data_runner(veh,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
+        # ebay_clean_data_runner(veh,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
 
-        #cleaning of bat data
-        #bat_clean_data_single(car,BAT_raw_single)
-        #bat_clean_data_all_make(car,BAT_raw_all_make)
+        # #cleaning of bat data
+        # #bat_clean_data_single(car,BAT_raw_single)
+        # #bat_clean_data_all_make(car,BAT_raw_all_make)
         
-        #insertion of ebay data into db
-        insert_current_listing_data(db_cursor,db_conn,EBAY_cleaned_CURRENT_LISTINGS_file_path)
-        insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
+        # #insertion of ebay data into db
+        # insert_current_listing_data(db_cursor,db_conn,EBAY_cleaned_CURRENT_LISTINGS_file_path)
+        # insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
 
         #populate veh dir tables
         # populate_vehicles_dir_table()

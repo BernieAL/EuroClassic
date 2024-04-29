@@ -4,8 +4,12 @@ import os,sys,json
 from simple_chalk import chalk
 
 
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())
+
+
 #get parent dir'backend_copy' from current script dir - append to sys.path to be searched for modules we import
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
@@ -29,7 +33,9 @@ Calls send_mail function and passes email to it to be sent off to
 
 def main():
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(os.getenv('RABBITMQ_HOST','rbmq')))
+    # connection = pika.BlockingConnection(pika.ConnectionParameters('172.29.0.4'))
+
     channel = connection.channel()
 
     channel.queue_declare(queue='EMAIL_QUEUE',durable=True)

@@ -26,7 +26,7 @@ import app_main_runner
 
 def main():
 
-    # connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    
     connection = pika.BlockingConnection(pika.ConnectionParameters(os.getenv('RABBITMQ_HOST')))
     channel = connection.channel()
 
@@ -74,9 +74,6 @@ def main():
 
 
         #encode email_and_veh into byte string for publishing
-
-
-    
 
         print(chalk.green(f"SENDING NOTICE OF SCRAPE COMPLETION TO EMAIL_QUEUE")) 
         #publish message to EMAIL_QUEUE
