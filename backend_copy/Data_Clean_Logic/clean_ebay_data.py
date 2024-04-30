@@ -41,7 +41,7 @@ def fileWrite(data, fileIn):
 
 def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
     try:
-        
+        print(chalk.red("(clean_ebay_data) - CLEAN CURR DATA"))
         #open raw data file
         raw_input_CURRENT_LISTINGS = open(raw_CURRENT_LISTINGS_file, "r", encoding="utf-8")
         raw_data = raw_input_CURRENT_LISTINGS
@@ -93,6 +93,7 @@ def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
 def clean_data_EBAY_SOLD(car,raw_SOLD_DATA_file):
 
     try:
+        print(chalk.red("(clean_ebay_data) - CLEAN SOLD DATA"))
         #open raw data file
         clean_output_file_SOLD_DATA = open(EBAY_clean_OUTPUT_SOLD_DATA_file, "w", encoding="utf-8")
         

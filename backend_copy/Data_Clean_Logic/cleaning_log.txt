@@ -719,3 +719,204 @@ DEBUG:EBAY_SCRAPER:EXITING EBAY_CURRENT_SCRAPE
 DEBUG:EBAY_SCRAPER:ENTERED EBAY_SOLD_SCRAPE
 DEBUG:EBAY_SCRAPER:PARAMS REC'D {"year": 2017, "make": "Nissan", "model": "350Z"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_SOLD_DATA.txt
 DEBUG:EBAY_SCRAPER:OUTPUT DIR EXISTS
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/124.0.6367.91/chromedriver-linux64/chromedriver] found in cache
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:43265
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable /home/ubuntu/.local/share/undetected_chromedriver/undetected_chromedriver
+DEBUG:EBAY_SCRAPER:ENTERED EBAY_CURRENT_SCRAPE
+DEBUG:EBAY_SCRAPER:PARAMS REC'D {"year": 2017, "make": "Nissan", "model": "350Z"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
+DEBUG:EBAY_SCRAPER:OUTPUT DIR EXISTS
+DEBUG:EBAY_SCRAPER:MADE COPY OF OUTPUT FILE, STORED IN LTS 
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/complete/search?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=&oit=0&oft=1&pgcl=20&gs_rn=42&sugkey=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/newtab_ogb?hl=en-US&async=fixed:0
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/ddljson?async=ntp:2
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/newtab_promos
+INFO:seleniumwire.handler:Capturing request: https://clientservices.googleapis.com/chrome-variations/seed?osname=linux&channel=stable&milestone=124
+INFO:seleniumwire.handler:Capturing request: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&json=standard
+INFO:seleniumwire.handler:Capturing request: https://redirector.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic
+INFO:seleniumwire.handler:Capturing request: https://clients2.google.com/service/update2/crx?os=linux&arch=x64&os_arch=x86_64&nacl_arch=x86-64&prod=chromecrx&prodchannel=&prodversion=124.0.6367.91&lang=en-US&acceptformat=crx3,puff&x=id%3Dghbmnnjooekpmoecnnnilnnbdlolhkhi%26v%3D0.0.0.0%26installedby%3Dinternal%26uc%26ping%3Dr%253D-1%2526e%253D1&x=id%3Dnmmhkkegccagdldgiimedpiccmgmieda%26v%3D0.0.0.0%26installedby%3Dother%26uc%26ping%3Dr%253D-1%2526e%253D1
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/complete/search?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=&oit=0&oft=1&pgcl=20&gs_rn=42&sugkey=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/ddljson?async=ntp:2 200 
+INFO:seleniumwire.handler:Capturing response: https://clientservices.googleapis.com/chrome-variations/seed?osname=linux&channel=stable&milestone=124 200 
+INFO:seleniumwire.handler:Capturing response: https://redirector.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic 302 
+INFO:seleniumwire.handler:Capturing response: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&json=standard 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/newtab_ogb?hl=en-US&async=fixed:0 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/newtab_promos 200 
+INFO:seleniumwire.handler:Capturing response: https://clients2.google.com/service/update2/crx?os=linux&arch=x64&os_arch=x86_64&nacl_arch=x86-64&prod=chromecrx&prodchannel=&prodversion=124.0.6367.91&lang=en-US&acceptformat=crx3,puff&x=id%3Dghbmnnjooekpmoecnnnilnnbdlolhkhi%26v%3D0.0.0.0%26installedby%3Dinternal%26uc%26ping%3Dr%253D-1%2526e%253D1&x=id%3Dnmmhkkegccagdldgiimedpiccmgmieda%26v%3D0.0.0.0%26installedby%3Dother%26uc%26ping%3Dr%253D-1%2526e%253D1 200 
+INFO:seleniumwire.handler:Capturing request: https://www.gstatic.com/og/_/ss/k=og.qtm.T5bVtXo12IQ.L.W.O/m=qmd,qcwid/excm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/ct=zgms/rs=AA2YrTssrVR1lBtzoy_MObv1DSp-vWG36A
+INFO:seleniumwire.handler:Capturing request: https://www.gstatic.com/og/_/js/k=og.qtm.en_US.oT1FwJRCVC4.2019.O/rt=j/m=q_dnp,qmd,qcwid,qapid,qald,q_dg/exm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/rs=AA2YrTvBynad-nWEy1xIb9j1w6LpLOF6IQ
+INFO:seleniumwire.handler:Capturing response: https://www.gstatic.com/og/_/ss/k=og.qtm.T5bVtXo12IQ.L.W.O/m=qmd,qcwid/excm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/ct=zgms/rs=AA2YrTssrVR1lBtzoy_MObv1DSp-vWG36A 200 
+INFO:seleniumwire.handler:Capturing response: https://www.gstatic.com/og/_/js/k=og.qtm.en_US.oT1FwJRCVC4.2019.O/rt=j/m=q_dnp,qmd,qcwid,qapid,qald,q_dg/exm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/rs=AA2YrTvBynad-nWEy1xIb9j1w6LpLOF6IQ 200 
+INFO:seleniumwire.handler:Capturing request: https://clients2.googleusercontent.com/crx/blobs/AfQPRnlBHVf9QbAmjPnmJQnDwEcerxafOq8p01cAfJ5QoFk2s6gAMnMY_23BNiizXK2e-3smriJGTe2WOZO9s5X2xejbvoKpPILOKN2-0t9ZbrurACaLAMZSmuXX9slHldVQ07B5bvw6KCm_x6CONA/GHBMNNJOOEKPMOECNNNILNNBDLOLHKHI_1_76_1_0.crx
+INFO:seleniumwire.handler:Capturing response: https://clients2.googleusercontent.com/crx/blobs/AfQPRnlBHVf9QbAmjPnmJQnDwEcerxafOq8p01cAfJ5QoFk2s6gAMnMY_23BNiizXK2e-3smriJGTe2WOZO9s5X2xejbvoKpPILOKN2-0t9ZbrurACaLAMZSmuXX9slHldVQ07B5bvw6KCm_x6CONA/GHBMNNJOOEKPMOECNNNILNNBDLOLHKHI_1_76_1_0.crx 200 
+INFO:seleniumwire.handler:Capturing request: http://edgedl.me.gvt1.com/edgedl/chromewebstore/L2Nocm9tZV9leHRlbnNpb24vYmxvYnMvNzI0QUFXNV9zT2RvdUwyMERESEZGVmJnQQ/1.0.0.6_nmmhkkegccagdldgiimedpiccmgmieda.crx
+DEBUG:EBAY_SCRAPER:EXITING EBAY_CURRENT_SCRAPE
+DEBUG:EBAY_SCRAPER:ENTERED EBAY_SOLD_SCRAPE
+DEBUG:EBAY_SCRAPER:PARAMS REC'D {"year": 2017, "make": "Nissan", "model": "350Z"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_SOLD_DATA.txt
+DEBUG:EBAY_SCRAPER:OUTPUT DIR EXISTS
+DEBUG:EBAY_SCRAPER:MADE COPY OF OUTPUT FILE, STORED IN LTS 
+INFO:seleniumwire.handler:Capturing request: https://r3---sn-ounjvhh-acce.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?cms_redirect=yes&mh=7g&mip=206.251.166.150&mm=28&mn=sn-ounjvhh-acce&ms=nvh&mt=1714501684&mv=u&mvi=3&pl=24&shardbypass=sd
+INFO:seleniumwire.handler:Capturing request: https://apis.google.com/_/scs/abc-static/_/js/k=gapi.gapi.en.SCWmpDDGjPk.O/m=gapi_iframes,googleapis_client/rt=j/sv=1/d=1/ed=1/am=AAAC/rs=AHpOoo_Pl64J0IIHlj2zBtEJ3ZwdaJC3HA/cb=gapi.loaded_0
+INFO:seleniumwire.handler:Capturing response: http://edgedl.me.gvt1.com/edgedl/chromewebstore/L2Nocm9tZV9leHRlbnNpb24vYmxvYnMvNzI0QUFXNV9zT2RvdUwyMERESEZGVmJnQQ/1.0.0.6_nmmhkkegccagdldgiimedpiccmgmieda.crx 200 OK
+INFO:seleniumwire.handler:Capturing response: https://r3---sn-ounjvhh-acce.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?cms_redirect=yes&mh=7g&mip=206.251.166.150&mm=28&mn=sn-ounjvhh-acce&ms=nvh&mt=1714501684&mv=u&mvi=3&pl=24&shardbypass=sd 302 Found
+INFO:seleniumwire.handler:Capturing response: https://apis.google.com/_/scs/abc-static/_/js/k=gapi.gapi.en.SCWmpDDGjPk.O/m=gapi_iframes,googleapis_client/rt=j/sv=1/d=1/ed=1/am=AAAC/rs=AHpOoo_Pl64J0IIHlj2zBtEJ3ZwdaJC3HA/cb=gapi.loaded_0 200 
+INFO:seleniumwire.handler:Capturing request: https://r5---sn-vgqsrnzs.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=24&shardbypass=sd&redirect_counter=1&rm=sn-ounjvhh-acce7s&req_id=50ea9627f2fb96b7&cms_redirect=yes&mip=206.251.166.150&mm=42&mn=sn-vgqsrnzs&ms=onc&mt=1714501959&mv=m&mvi=5&rmhost=r1---sn-vgqsrnzs.gvt1.com&smhost=r1---sn-vgqsrn6l.gvt1.com
+INFO:seleniumwire.handler:Capturing response: https://r5---sn-vgqsrnzs.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=24&shardbypass=sd&redirect_counter=1&rm=sn-ounjvhh-acce7s&req_id=50ea9627f2fb96b7&cms_redirect=yes&mip=206.251.166.150&mm=42&mn=sn-vgqsrnzs&ms=onc&mt=1714501959&mv=m&mvi=5&rmhost=r1---sn-vgqsrnzs.gvt1.com&smhost=r1---sn-vgqsrn6l.gvt1.com 302 Found
+INFO:seleniumwire.handler:Capturing request: https://r1---sn-ab5l6ndr.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=19&shardbypass=sd&rm=sn-ounjvhh-acce7s,sn-vgqezk76&req_id=50ea9627f2fb96b7&redirect_counter=2&cms_redirect=yes&cmsv=e&ipbypass=yes&mip=71.167.87.165&mm=42&mn=sn-ab5l6ndr&ms=onc&mt=1714502191&mv=m&mvi=1&rmhost=r3---sn-ab5l6ndr.gvt1.com&smhost=r1---sn-ab5l6nkd.gvt1.com
+DEBUG:EBAY_SCRAPER:EXITING EBAY_SOLD_SCRAPE
+INFO:seleniumwire.handler:Capturing response: https://r1---sn-ab5l6ndr.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=19&shardbypass=sd&rm=sn-ounjvhh-acce7s,sn-vgqezk76&req_id=50ea9627f2fb96b7&redirect_counter=2&cms_redirect=yes&cmsv=e&ipbypass=yes&mip=71.167.87.165&mm=42&mn=sn-ab5l6ndr&ms=onc&mt=1714502191&mv=m&mvi=1&rmhost=r3---sn-ab5l6ndr.gvt1.com&smhost=r1---sn-ab5l6nkd.gvt1.com 200 OK
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/124.0.6367.91/chromedriver-linux64/chromedriver] found in cache
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:40541
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable /home/ubuntu/.local/share/undetected_chromedriver/undetected_chromedriver
+DEBUG:EBAY_SCRAPER:ENTERED EBAY_CURRENT_SCRAPE
+DEBUG:EBAY_SCRAPER:PARAMS REC'D {"year": 2017, "make": "Nissan", "model": "350Z"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
+DEBUG:EBAY_SCRAPER:OUTPUT DIR EXISTS
+DEBUG:EBAY_SCRAPER:MADE COPY OF OUTPUT FILE, STORED IN LTS 
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/complete/search?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=&oit=0&oft=1&pgcl=20&gs_rn=42&sugkey=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/newtab_promos
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/newtab_ogb?hl=en-US&async=fixed:0
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/ddljson?async=ntp:2
+INFO:seleniumwire.handler:Capturing request: https://clientservices.googleapis.com/chrome-variations/seed?osname=linux&channel=stable&milestone=124
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/complete/search?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=&oit=0&oft=1&pgcl=20&gs_rn=42&sugkey=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/ddljson?async=ntp:2 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/newtab_promos 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/newtab_ogb?hl=en-US&async=fixed:0 200 
+INFO:seleniumwire.handler:Capturing request: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&json=standard
+INFO:seleniumwire.handler:Capturing request: https://clients2.google.com/service/update2/crx?os=linux&arch=x64&os_arch=x86_64&nacl_arch=x86-64&prod=chromecrx&prodchannel=&prodversion=124.0.6367.91&lang=en-US&acceptformat=crx3,puff&x=id%3Dghbmnnjooekpmoecnnnilnnbdlolhkhi%26v%3D0.0.0.0%26installedby%3Dinternal%26uc%26ping%3Dr%253D-1%2526e%253D1&x=id%3Dnmmhkkegccagdldgiimedpiccmgmieda%26v%3D0.0.0.0%26installedby%3Dother%26uc%26ping%3Dr%253D-1%2526e%253D1
+INFO:seleniumwire.handler:Capturing response: https://clientservices.googleapis.com/chrome-variations/seed?osname=linux&channel=stable&milestone=124 200 
+INFO:seleniumwire.handler:Capturing response: https://clients2.google.com/service/update2/crx?os=linux&arch=x64&os_arch=x86_64&nacl_arch=x86-64&prod=chromecrx&prodchannel=&prodversion=124.0.6367.91&lang=en-US&acceptformat=crx3,puff&x=id%3Dghbmnnjooekpmoecnnnilnnbdlolhkhi%26v%3D0.0.0.0%26installedby%3Dinternal%26uc%26ping%3Dr%253D-1%2526e%253D1&x=id%3Dnmmhkkegccagdldgiimedpiccmgmieda%26v%3D0.0.0.0%26installedby%3Dother%26uc%26ping%3Dr%253D-1%2526e%253D1 200 
+INFO:seleniumwire.handler:Capturing response: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&json=standard 200 
+INFO:seleniumwire.handler:Capturing request: https://redirector.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic
+INFO:seleniumwire.handler:Capturing response: https://redirector.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic 302 
+INFO:seleniumwire.handler:Capturing request: https://www.gstatic.com/og/_/ss/k=og.qtm.T5bVtXo12IQ.L.W.O/m=qmd,qcwid/excm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/ct=zgms/rs=AA2YrTssrVR1lBtzoy_MObv1DSp-vWG36A
+INFO:seleniumwire.handler:Capturing request: https://www.gstatic.com/og/_/js/k=og.qtm.en_US.oT1FwJRCVC4.2019.O/rt=j/m=q_dnp,qmd,qcwid,qapid,qald,q_dg/exm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/rs=AA2YrTvBynad-nWEy1xIb9j1w6LpLOF6IQ
+INFO:seleniumwire.handler:Capturing response: https://www.gstatic.com/og/_/ss/k=og.qtm.T5bVtXo12IQ.L.W.O/m=qmd,qcwid/excm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/ct=zgms/rs=AA2YrTssrVR1lBtzoy_MObv1DSp-vWG36A 200 
+INFO:seleniumwire.handler:Capturing response: https://www.gstatic.com/og/_/js/k=og.qtm.en_US.oT1FwJRCVC4.2019.O/rt=j/m=q_dnp,qmd,qcwid,qapid,qald,q_dg/exm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/rs=AA2YrTvBynad-nWEy1xIb9j1w6LpLOF6IQ 200 
+INFO:seleniumwire.handler:Capturing request: https://clients2.googleusercontent.com/crx/blobs/AfQPRnlBHVf9QbAmjPnmJQnDwEcerxafOq8p01cAfJ5QoFk2s6gAMnMY_23BNiizXK2e-3smriJGTe2WOZO9s5X2xejbvoKpPILOKN2-0t9ZbrurACaLAMZSmuXX9slHldVQ07B5bvw6KCm_x6CONA/GHBMNNJOOEKPMOECNNNILNNBDLOLHKHI_1_76_1_0.crx
+INFO:seleniumwire.handler:Capturing request: https://r1---sn-q4fzen7s.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?cms_redirect=yes&mh=7g&mip=76.187.249.186&mm=28&mn=sn-q4fzen7s&ms=nvh&mt=1714502172&mv=m&mvi=1&pl=17&rmhost=r2---sn-q4fzen7s.gvt1.com&shardbypass=sd&smhost=r3---sn-q4flrnek.gvt1.com
+INFO:seleniumwire.handler:Capturing response: https://r1---sn-q4fzen7s.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?cms_redirect=yes&mh=7g&mip=76.187.249.186&mm=28&mn=sn-q4fzen7s&ms=nvh&mt=1714502172&mv=m&mvi=1&pl=17&rmhost=r2---sn-q4fzen7s.gvt1.com&shardbypass=sd&smhost=r3---sn-q4flrnek.gvt1.com 302 Found
+INFO:seleniumwire.handler:Capturing request: https://apis.google.com/_/scs/abc-static/_/js/k=gapi.gapi.en.SCWmpDDGjPk.O/m=gapi_iframes,googleapis_client/rt=j/sv=1/d=1/ed=1/am=AAAC/rs=AHpOoo_Pl64J0IIHlj2zBtEJ3ZwdaJC3HA/cb=gapi.loaded_0
+DEBUG:EBAY_SCRAPER:EXITING EBAY_CURRENT_SCRAPE
+DEBUG:EBAY_SCRAPER:ENTERED EBAY_SOLD_SCRAPE
+DEBUG:EBAY_SCRAPER:PARAMS REC'D {"year": 2017, "make": "Nissan", "model": "350Z"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_SOLD_DATA.txt
+DEBUG:EBAY_SCRAPER:OUTPUT DIR EXISTS
+DEBUG:EBAY_SCRAPER:MADE COPY OF OUTPUT FILE, STORED IN LTS 
+INFO:seleniumwire.handler:Capturing response: https://apis.google.com/_/scs/abc-static/_/js/k=gapi.gapi.en.SCWmpDDGjPk.O/m=gapi_iframes,googleapis_client/rt=j/sv=1/d=1/ed=1/am=AAAC/rs=AHpOoo_Pl64J0IIHlj2zBtEJ3ZwdaJC3HA/cb=gapi.loaded_0 200 
+INFO:seleniumwire.handler:Capturing response: https://clients2.googleusercontent.com/crx/blobs/AfQPRnlBHVf9QbAmjPnmJQnDwEcerxafOq8p01cAfJ5QoFk2s6gAMnMY_23BNiizXK2e-3smriJGTe2WOZO9s5X2xejbvoKpPILOKN2-0t9ZbrurACaLAMZSmuXX9slHldVQ07B5bvw6KCm_x6CONA/GHBMNNJOOEKPMOECNNNILNNBDLOLHKHI_1_76_1_0.crx 200 
+INFO:seleniumwire.handler:Capturing request: http://edgedl.me.gvt1.com/edgedl/chromewebstore/L2Nocm9tZV9leHRlbnNpb24vYmxvYnMvNzI0QUFXNV9zT2RvdUwyMERESEZGVmJnQQ/1.0.0.6_nmmhkkegccagdldgiimedpiccmgmieda.crx
+INFO:seleniumwire.handler:Capturing request: https://r5---sn-a5mekndl.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=15&shardbypass=sd&redirect_counter=1&rm=sn-q4fezy7e&req_id=953b82ab67f0776a&cms_redirect=yes&cmsv=e&ipbypass=yes&mip=76.170.147.154&mm=28&mn=sn-a5mekndl&ms=nvh&mt=1714502172&mv=m&mvi=5&rmhost=r4---sn-a5mekndl.gvt1.com&smhost=r1---sn-a5mekn6l.gvt1.com
+INFO:seleniumwire.handler:Capturing response: https://r5---sn-a5mekndl.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=15&shardbypass=sd&redirect_counter=1&rm=sn-q4fezy7e&req_id=953b82ab67f0776a&cms_redirect=yes&cmsv=e&ipbypass=yes&mip=76.170.147.154&mm=28&mn=sn-a5mekndl&ms=nvh&mt=1714502172&mv=m&mvi=5&rmhost=r4---sn-a5mekndl.gvt1.com&smhost=r1---sn-a5mekn6l.gvt1.com 200 OK
+INFO:seleniumwire.handler:Capturing response: http://edgedl.me.gvt1.com/edgedl/chromewebstore/L2Nocm9tZV9leHRlbnNpb24vYmxvYnMvNzI0QUFXNV9zT2RvdUwyMERESEZGVmJnQQ/1.0.0.6_nmmhkkegccagdldgiimedpiccmgmieda.crx 200 OK
+DEBUG:EBAY_SCRAPER:EXITING EBAY_SOLD_SCRAPE
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/124.0.6367.91/chromedriver-linux64/chromedriver] found in cache
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:42469
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable /home/ubuntu/.local/share/undetected_chromedriver/undetected_chromedriver
+DEBUG:EBAY_SCRAPER:ENTERED EBAY_CURRENT_SCRAPE
+DEBUG:EBAY_SCRAPER:PARAMS REC'D {"year": 2017, "make": "Porsche", "model": "911"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
+DEBUG:EBAY_SCRAPER:OUTPUT DIR EXISTS
+DEBUG:EBAY_SCRAPER:MADE COPY OF OUTPUT FILE, STORED IN LTS 
+INFO:seleniumwire.handler:Capturing request: https://clients2.google.com/service/update2/crx?os=linux&arch=x64&os_arch=x86_64&nacl_arch=x86-64&prod=chromecrx&prodchannel=&prodversion=124.0.6367.91&lang=en-US&acceptformat=crx3,puff&x=id%3Dghbmnnjooekpmoecnnnilnnbdlolhkhi%26v%3D0.0.0.0%26installedby%3Dinternal%26uc%26ping%3Dr%253D-1%2526e%253D1&x=id%3Dnmmhkkegccagdldgiimedpiccmgmieda%26v%3D0.0.0.0%26installedby%3Dother%26uc%26ping%3Dr%253D-1%2526e%253D1
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/complete/search?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=&oit=0&oft=1&pgcl=20&gs_rn=42&sugkey=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/newtab_promos
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/newtab_ogb?hl=en-US&async=fixed:0
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/ddljson?async=ntp:2
+INFO:seleniumwire.handler:Capturing response: https://clients2.google.com/service/update2/crx?os=linux&arch=x64&os_arch=x86_64&nacl_arch=x86-64&prod=chromecrx&prodchannel=&prodversion=124.0.6367.91&lang=en-US&acceptformat=crx3,puff&x=id%3Dghbmnnjooekpmoecnnnilnnbdlolhkhi%26v%3D0.0.0.0%26installedby%3Dinternal%26uc%26ping%3Dr%253D-1%2526e%253D1&x=id%3Dnmmhkkegccagdldgiimedpiccmgmieda%26v%3D0.0.0.0%26installedby%3Dother%26uc%26ping%3Dr%253D-1%2526e%253D1 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/complete/search?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=&oit=0&oft=1&pgcl=20&gs_rn=42&sugkey=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/newtab_promos 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/ddljson?async=ntp:2 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/newtab_ogb?hl=en-US&async=fixed:0 200 
+INFO:seleniumwire.handler:Capturing request: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&json=standard
+INFO:seleniumwire.handler:Capturing response: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&json=standard 200 
+INFO:seleniumwire.handler:Capturing request: https://redirector.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic
+INFO:seleniumwire.handler:Capturing response: https://redirector.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic 302 
+INFO:seleniumwire.handler:Capturing request: https://clients2.googleusercontent.com/crx/blobs/AfQPRnlBHVf9QbAmjPnmJQnDwEcerxafOq8p01cAfJ5QoFk2s6gAMnMY_23BNiizXK2e-3smriJGTe2WOZO9s5X2xejbvoKpPILOKN2-0t9ZbrurACaLAMZSmuXX9slHldVQ07B5bvw6KCm_x6CONA/GHBMNNJOOEKPMOECNNNILNNBDLOLHKHI_1_76_1_0.crx
+INFO:seleniumwire.handler:Capturing response: https://clients2.googleusercontent.com/crx/blobs/AfQPRnlBHVf9QbAmjPnmJQnDwEcerxafOq8p01cAfJ5QoFk2s6gAMnMY_23BNiizXK2e-3smriJGTe2WOZO9s5X2xejbvoKpPILOKN2-0t9ZbrurACaLAMZSmuXX9slHldVQ07B5bvw6KCm_x6CONA/GHBMNNJOOEKPMOECNNNILNNBDLOLHKHI_1_76_1_0.crx 200 
+INFO:seleniumwire.handler:Capturing request: https://r4---sn-najern7k.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?cms_redirect=yes&mh=7g&mip=67.172.242.98&mm=28&mn=sn-najern7k&ms=nvh&mt=1714502534&mv=u&mvi=4&pl=23&shardbypass=sd
+INFO:seleniumwire.handler:Capturing request: http://edgedl.me.gvt1.com/edgedl/chromewebstore/L2Nocm9tZV9leHRlbnNpb24vYmxvYnMvNzI0QUFXNV9zT2RvdUwyMERESEZGVmJnQQ/1.0.0.6_nmmhkkegccagdldgiimedpiccmgmieda.crx
+INFO:seleniumwire.handler:Capturing request: https://www.gstatic.com/og/_/ss/k=og.qtm.T5bVtXo12IQ.L.W.O/m=qmd,qcwid/excm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/ct=zgms/rs=AA2YrTssrVR1lBtzoy_MObv1DSp-vWG36A
+INFO:seleniumwire.handler:Capturing request: https://www.gstatic.com/og/_/js/k=og.qtm.en_US.oT1FwJRCVC4.2019.O/rt=j/m=q_dnp,qmd,qcwid,qapid,qald,q_dg/exm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/rs=AA2YrTvBynad-nWEy1xIb9j1w6LpLOF6IQ
+INFO:seleniumwire.handler:Capturing request: https://clientservices.googleapis.com/chrome-variations/seed?osname=linux&channel=stable&milestone=124
+INFO:seleniumwire.handler:Capturing response: https://r4---sn-najern7k.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?cms_redirect=yes&mh=7g&mip=67.172.242.98&mm=28&mn=sn-najern7k&ms=nvh&mt=1714502534&mv=u&mvi=4&pl=23&shardbypass=sd 302 Found
+INFO:seleniumwire.handler:Capturing response: https://www.gstatic.com/og/_/ss/k=og.qtm.T5bVtXo12IQ.L.W.O/m=qmd,qcwid/excm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/ct=zgms/rs=AA2YrTssrVR1lBtzoy_MObv1DSp-vWG36A 200 
+INFO:seleniumwire.handler:Capturing response: https://www.gstatic.com/og/_/js/k=og.qtm.en_US.oT1FwJRCVC4.2019.O/rt=j/m=q_dnp,qmd,qcwid,qapid,qald,q_dg/exm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/rs=AA2YrTvBynad-nWEy1xIb9j1w6LpLOF6IQ 200 
+INFO:seleniumwire.handler:Capturing response: https://clientservices.googleapis.com/chrome-variations/seed?osname=linux&channel=stable&milestone=124 200 
+INFO:seleniumwire.handler:Capturing request: https://r3---sn-q4fzen7e.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=17&shardbypass=sd&redirect_counter=1&rm=sn-naj67z&req_id=c892d6aa108d0049&cms_redirect=yes&cmsv=e&ipbypass=yes&mip=71.221.68.57&mm=28&mn=sn-q4fzen7e&ms=nvh&mt=1714502534&mv=u&mvi=3&smhost=r3---sn-q4flrnek.gvt1.com
+DEBUG:EBAY_SCRAPER:EXITING EBAY_CURRENT_SCRAPE
+DEBUG:EBAY_SCRAPER:ENTERED EBAY_SOLD_SCRAPE
+DEBUG:EBAY_SCRAPER:PARAMS REC'D {"year": 2017, "make": "Porsche", "model": "911"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_SOLD_DATA.txt
+DEBUG:EBAY_SCRAPER:OUTPUT DIR EXISTS
+DEBUG:EBAY_SCRAPER:MADE COPY OF OUTPUT FILE, STORED IN LTS 
+INFO:seleniumwire.handler:Capturing request: https://apis.google.com/_/scs/abc-static/_/js/k=gapi.gapi.en.SCWmpDDGjPk.O/m=gapi_iframes,googleapis_client/rt=j/sv=1/d=1/ed=1/am=AAAC/rs=AHpOoo_Pl64J0IIHlj2zBtEJ3ZwdaJC3HA/cb=gapi.loaded_0
+INFO:seleniumwire.handler:Capturing response: https://r3---sn-q4fzen7e.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=17&shardbypass=sd&redirect_counter=1&rm=sn-naj67z&req_id=c892d6aa108d0049&cms_redirect=yes&cmsv=e&ipbypass=yes&mip=71.221.68.57&mm=28&mn=sn-q4fzen7e&ms=nvh&mt=1714502534&mv=u&mvi=3&smhost=r3---sn-q4flrnek.gvt1.com 200 OK
+INFO:seleniumwire.handler:Capturing request: https://play.google.com/log?format=json&hasfast=true
+INFO:seleniumwire.handler:Capturing response: https://apis.google.com/_/scs/abc-static/_/js/k=gapi.gapi.en.SCWmpDDGjPk.O/m=gapi_iframes,googleapis_client/rt=j/sv=1/d=1/ed=1/am=AAAC/rs=AHpOoo_Pl64J0IIHlj2zBtEJ3ZwdaJC3HA/cb=gapi.loaded_0 200 
+INFO:seleniumwire.handler:Capturing response: https://play.google.com/log?format=json&hasfast=true 200 
+DEBUG:EBAY_SCRAPER:EXITING EBAY_SOLD_SCRAPE
+INFO:seleniumwire.handler:Capturing response: http://edgedl.me.gvt1.com/edgedl/chromewebstore/L2Nocm9tZV9leHRlbnNpb24vYmxvYnMvNzI0QUFXNV9zT2RvdUwyMERESEZGVmJnQQ/1.0.0.6_nmmhkkegccagdldgiimedpiccmgmieda.crx 200 OK
+INFO:WDM:====== WebDriver manager ======
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Get LATEST chromedriver version for google-chrome
+INFO:WDM:Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/124.0.6367.91/chromedriver-linux64/chromedriver] found in cache
+INFO:seleniumwire.storage:Using default request storage
+INFO:seleniumwire.backend:Created proxy listening on 127.0.0.1:38983
+INFO:seleniumwire.undetected_chromedriver.webdriver:Using undetected_chromedriver
+INFO:undetected_chromedriver.patcher:patching driver executable /home/ubuntu/.local/share/undetected_chromedriver/undetected_chromedriver
+DEBUG:EBAY_SCRAPER:ENTERED EBAY_CURRENT_SCRAPE
+DEBUG:EBAY_SCRAPER:PARAMS REC'D {"year": 2017, "make": "Porsche", "model": "911"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
+DEBUG:EBAY_SCRAPER:OUTPUT DIR EXISTS
+DEBUG:EBAY_SCRAPER:MADE COPY OF OUTPUT FILE, STORED IN LTS 
+INFO:seleniumwire.handler:Capturing request: https://clientservices.googleapis.com/chrome-variations/seed?osname=linux&channel=stable&milestone=124
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/complete/search?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=&oit=0&oft=1&pgcl=20&gs_rn=42&sugkey=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/ddljson?async=ntp:2
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/newtab_ogb?hl=en-US&async=fixed:0
+INFO:seleniumwire.handler:Capturing request: https://www.google.com/async/newtab_promos
+INFO:seleniumwire.handler:Capturing request: https://redirector.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/complete/search?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=&oit=0&oft=1&pgcl=20&gs_rn=42&sugkey=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/newtab_promos 200 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/ddljson?async=ntp:2 200 
+INFO:seleniumwire.handler:Capturing response: https://redirector.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic 302 
+INFO:seleniumwire.handler:Capturing response: https://www.google.com/async/newtab_ogb?hl=en-US&async=fixed:0 200 
+INFO:seleniumwire.handler:Capturing request: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&json=standard
+INFO:seleniumwire.handler:Capturing response: https://clientservices.googleapis.com/chrome-variations/seed?osname=linux&channel=stable&milestone=124 200 
+INFO:seleniumwire.handler:Capturing response: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&json=standard 200 
+INFO:seleniumwire.handler:Capturing request: https://r3---sn-jvhj5nu-qufe.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?cms_redirect=yes&mh=7g&mip=76.112.244.177&mm=28&mn=sn-jvhj5nu-qufe&ms=nvh&mt=1714502534&mv=u&mvi=3&pl=21&shardbypass=sd
+INFO:seleniumwire.handler:Capturing request: https://www.gstatic.com/og/_/ss/k=og.qtm.T5bVtXo12IQ.L.W.O/m=qmd,qcwid/excm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/ct=zgms/rs=AA2YrTssrVR1lBtzoy_MObv1DSp-vWG36A
+INFO:seleniumwire.handler:Capturing request: https://www.gstatic.com/og/_/js/k=og.qtm.en_US.oT1FwJRCVC4.2019.O/rt=j/m=q_dnp,qmd,qcwid,qapid,qald,q_dg/exm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/rs=AA2YrTvBynad-nWEy1xIb9j1w6LpLOF6IQ
+INFO:seleniumwire.handler:Capturing response: https://r3---sn-jvhj5nu-qufe.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?cms_redirect=yes&mh=7g&mip=76.112.244.177&mm=28&mn=sn-jvhj5nu-qufe&ms=nvh&mt=1714502534&mv=u&mvi=3&pl=21&shardbypass=sd 302 Found
+INFO:seleniumwire.handler:Capturing response: https://www.gstatic.com/og/_/ss/k=og.qtm.T5bVtXo12IQ.L.W.O/m=qmd,qcwid/excm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/ct=zgms/rs=AA2YrTssrVR1lBtzoy_MObv1DSp-vWG36A 200 
+INFO:seleniumwire.handler:Capturing response: https://www.gstatic.com/og/_/js/k=og.qtm.en_US.oT1FwJRCVC4.2019.O/rt=j/m=q_dnp,qmd,qcwid,qapid,qald,q_dg/exm=qaaw,qabr,qadd,qaid,qalo,qebr,qein,qhaw,qhawgm3,qhba,qhbr,qhbrgm3,qhch,qhchgm3,qhga,qhid,qhidgm3,qhin,qhlo,qhlogm3,qhmn,qhpc,qhsf,qhsfgm3,qhtt/d=1/ed=1/rs=AA2YrTvBynad-nWEy1xIb9j1w6LpLOF6IQ 200 
+INFO:seleniumwire.handler:Capturing request: https://clients2.google.com/service/update2/crx?os=linux&arch=x64&os_arch=x86_64&nacl_arch=x86-64&prod=chromecrx&prodchannel=&prodversion=124.0.6367.91&lang=en-US&acceptformat=crx3,puff&x=id%3Dghbmnnjooekpmoecnnnilnnbdlolhkhi%26v%3D0.0.0.0%26installedby%3Dinternal%26uc%26ping%3Dr%253D-1%2526e%253D1&x=id%3Dnmmhkkegccagdldgiimedpiccmgmieda%26v%3D0.0.0.0%26installedby%3Dother%26uc%26ping%3Dr%253D-1%2526e%253D1
+INFO:seleniumwire.handler:Capturing request: https://r5---sn-vgqsrnz6.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=21&shardbypass=sd&redirect_counter=1&rm=sn-jvhj5nu-qufe7s&req_id=91e1330505284767&cms_redirect=yes&mip=76.112.244.177&mm=42&mn=sn-vgqsrnz6&ms=onc&mt=1714502671&mv=m&mvi=5&rmhost=r4---sn-vgqsrnz6.gvt1.com&smhost=r1---sn-vgqsrn6l.gvt1.com
+INFO:seleniumwire.handler:Capturing response: https://clients2.google.com/service/update2/crx?os=linux&arch=x64&os_arch=x86_64&nacl_arch=x86-64&prod=chromecrx&prodchannel=&prodversion=124.0.6367.91&lang=en-US&acceptformat=crx3,puff&x=id%3Dghbmnnjooekpmoecnnnilnnbdlolhkhi%26v%3D0.0.0.0%26installedby%3Dinternal%26uc%26ping%3Dr%253D-1%2526e%253D1&x=id%3Dnmmhkkegccagdldgiimedpiccmgmieda%26v%3D0.0.0.0%26installedby%3Dother%26uc%26ping%3Dr%253D-1%2526e%253D1 200 
+INFO:seleniumwire.handler:Capturing response: https://r5---sn-vgqsrnz6.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=21&shardbypass=sd&redirect_counter=1&rm=sn-jvhj5nu-qufe7s&req_id=91e1330505284767&cms_redirect=yes&mip=76.112.244.177&mm=42&mn=sn-vgqsrnz6&ms=onc&mt=1714502671&mv=m&mvi=5&rmhost=r4---sn-vgqsrnz6.gvt1.com&smhost=r1---sn-vgqsrn6l.gvt1.com 302 Found
+INFO:seleniumwire.handler:Capturing request: https://clients2.googleusercontent.com/crx/blobs/AfQPRnlBHVf9QbAmjPnmJQnDwEcerxafOq8p01cAfJ5QoFk2s6gAMnMY_23BNiizXK2e-3smriJGTe2WOZO9s5X2xejbvoKpPILOKN2-0t9ZbrurACaLAMZSmuXX9slHldVQ07B5bvw6KCm_x6CONA/GHBMNNJOOEKPMOECNNNILNNBDLOLHKHI_1_76_1_0.crx
+DEBUG:EBAY_SCRAPER:EXITING EBAY_CURRENT_SCRAPE
+DEBUG:EBAY_SCRAPER:ENTERED EBAY_SOLD_SCRAPE
+DEBUG:EBAY_SCRAPER:PARAMS REC'D {"year": 2017, "make": "Porsche", "model": "911"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_SOLD_DATA.txt
+DEBUG:EBAY_SCRAPER:OUTPUT DIR EXISTS
+DEBUG:EBAY_SCRAPER:MADE COPY OF OUTPUT FILE, STORED IN LTS 
+INFO:seleniumwire.handler:Capturing request: https://r4---sn-p5qddn7z.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=16&shardbypass=sd&rm=sn-jvhj5nu-qufe7s,sn-vgqezy76&req_id=91e1330505284767&redirect_counter=2&cms_redirect=yes&cmsv=e&ipbypass=yes&mip=98.169.21.181&mm=42&mn=sn-p5qddn7z&ms=onc&mt=1714502671&mv=m&mvi=4&rmhost=r5---sn-p5qddn7z.gvt1.com&smhost=r2---sn-p5qs7nzk.gvt1.com
+INFO:seleniumwire.handler:Capturing request: https://apis.google.com/_/scs/abc-static/_/js/k=gapi.gapi.en.SCWmpDDGjPk.O/m=gapi_iframes,googleapis_client/rt=j/sv=1/d=1/ed=1/am=AAAC/rs=AHpOoo_Pl64J0IIHlj2zBtEJ3ZwdaJC3HA/cb=gapi.loaded_0
+INFO:seleniumwire.handler:Capturing response: https://clients2.googleusercontent.com/crx/blobs/AfQPRnlBHVf9QbAmjPnmJQnDwEcerxafOq8p01cAfJ5QoFk2s6gAMnMY_23BNiizXK2e-3smriJGTe2WOZO9s5X2xejbvoKpPILOKN2-0t9ZbrurACaLAMZSmuXX9slHldVQ07B5bvw6KCm_x6CONA/GHBMNNJOOEKPMOECNNNILNNBDLOLHKHI_1_76_1_0.crx 200 
+INFO:seleniumwire.handler:Capturing request: http://edgedl.me.gvt1.com/edgedl/chromewebstore/L2Nocm9tZV9leHRlbnNpb24vYmxvYnMvNzI0QUFXNV9zT2RvdUwyMERESEZGVmJnQQ/1.0.0.6_nmmhkkegccagdldgiimedpiccmgmieda.crx
+INFO:seleniumwire.handler:Capturing response: https://apis.google.com/_/scs/abc-static/_/js/k=gapi.gapi.en.SCWmpDDGjPk.O/m=gapi_iframes,googleapis_client/rt=j/sv=1/d=1/ed=1/am=AAAC/rs=AHpOoo_Pl64J0IIHlj2zBtEJ3ZwdaJC3HA/cb=gapi.loaded_0 200 
+INFO:seleniumwire.handler:Capturing response: http://edgedl.me.gvt1.com/edgedl/chromewebstore/L2Nocm9tZV9leHRlbnNpb24vYmxvYnMvNzI0QUFXNV9zT2RvdUwyMERESEZGVmJnQQ/1.0.0.6_nmmhkkegccagdldgiimedpiccmgmieda.crx 200 OK
+INFO:seleniumwire.handler:Capturing response: https://r4---sn-p5qddn7z.gvt1.com/edgedl/chrome/dict/en-us-10-1.bdic?mh=7g&pl=16&shardbypass=sd&rm=sn-jvhj5nu-qufe7s,sn-vgqezy76&req_id=91e1330505284767&redirect_counter=2&cms_redirect=yes&cmsv=e&ipbypass=yes&mip=98.169.21.181&mm=42&mn=sn-p5qddn7z&ms=onc&mt=1714502671&mv=m&mvi=4&rmhost=r5---sn-p5qddn7z.gvt1.com&smhost=r2---sn-p5qs7nzk.gvt1.com 200 OK
+DEBUG:EBAY_SCRAPER:EXITING EBAY_SOLD_SCRAPE
+INFO:root::::DATA CLEANING FOR CURRENT_LISTINGS successful
+INFO:root::::DATA CLEANING FOR SOLD_DATA successful
+INFO:root:Data cleaning for all types successful

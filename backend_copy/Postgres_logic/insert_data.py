@@ -174,5 +174,5 @@ if __name__ == '__main__':
     cur = conn.cursor()
     # populate_vehicles_dir_table(cur, INPUT_veh_dir_file_path)
     insert_sold_data(cur,conn, clean_SOLD_LISTINGS_file)
-    insert_current_listing_data(cur, conn,clean_CURR_LISTINGS_file)
-    # insertion_check(cur)
+    # insert_current_listing_data(cur, conn,clean_CURR_LISTINGS_file)
+    insertion_check(cur)

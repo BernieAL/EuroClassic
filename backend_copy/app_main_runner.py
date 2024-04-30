@@ -130,7 +130,7 @@ def initialize_db_connection_connection():
 
 def main_runner(veh):
 
-    # db_conn,db_cursor = initialize_db_connection_connection()
+    db_conn,db_cursor = initialize_db_connection_connection()
     driver = initialize_driver()
     # veh = {
     #     'year':2017,
@@ -141,7 +141,7 @@ def main_runner(veh):
     try:
         #this is coming from scrape_worker
         print(chalk.red(f"(app_main_runner) VEH TO SCRAPE: {veh}"))
-        print(chalk.red("LAUNCHING SELENIUM PROCESS"))
+        print(chalk.red("(app_main_runner) LAUNCHING SELENIUM PROCESS"))
         # driver.get("https//google.com")
 
         #Scraping of ebay data
@@ -159,9 +159,9 @@ def main_runner(veh):
         
         #cleaning of ebay data
         # ebay_clean_data_runner(veh,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
-
+        
         #4/30 TESTING
-        TEST_prev_sold_path = os.path.join(os.path.dirname(__file__),'..','PREV_EBAY_SOL_911.txt')
+        TEST_prev_sold_path = os.path.join(os.path.dirname(__file__),'PREV_EBAY_SOL_911.txt')
         TEST_prev_sold = open(TEST_prev_sold_path,'r')
         ebay_clean_data_runner(veh,TEST_prev_sold_path,TEST_prev_sold_path)
 
@@ -188,6 +188,7 @@ def main_runner(veh):
     finally:
         db_cursor.close()
         db_conn.close()
+        pass
         
     #analysis
     #insert data to db
@@ -195,7 +196,7 @@ def main_runner(veh):
 if __name__ == "__main__":
     veh = {
         'year':2017,
-        'make':'Nissan',
-        'model':'350Z'
+        'make':'Porsche',
+        'model':'911'
     }
     main_runner(veh)
