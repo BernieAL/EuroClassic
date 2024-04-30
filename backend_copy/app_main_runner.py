@@ -98,9 +98,9 @@ def initialize_driver():
             'proxy': {
                 # 'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
                 # 'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
-                # 'http':os.getenv('PROXY_HTTP'),
-                # 'https':os.getenv('PROXY_HTTPS')
-                'no_proxy':'localhost,127.0.0.1'
+                'http':os.getenv('PROXY_HTTP'),
+                'https':os.getenv('PROXY_HTTPS')
+                # 'no_proxy':'localhost,127.0.0.1'
             },
             'detach':True
         }
@@ -130,7 +130,7 @@ def initialize_db_connection_connection():
 
 def main_runner(veh):
 
-    db_conn,db_cursor = initialize_db_connection_connection()
+    # db_conn,db_cursor = initialize_db_connection_connection()
     driver = initialize_driver()
     # veh = {
     #     'year':2017,
@@ -142,10 +142,11 @@ def main_runner(veh):
         #this is coming from scrape_worker
         print(chalk.red(f"(app_main_runner) VEH TO SCRAPE: {veh}"))
         print(chalk.red("LAUNCHING SELENIUM PROCESS"))
-        driver.get("https//google.com")
+        # driver.get("https//google.com")
+
         #Scraping of ebay data
-        # ebay_CURRENT_scrape_single_veh(veh,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
-        # ebay_SOLD_scrape_single_veh(veh,driver,EBAY_raw_SOLD_DATA_file_path)
+        ebay_CURRENT_scrape_single_veh(veh,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
+        ebay_SOLD_scrape_single_veh(veh,driver,EBAY_raw_SOLD_DATA_file_path)
 
         #Scraping of bat data
         # #bat scrape
@@ -158,6 +159,11 @@ def main_runner(veh):
         
         #cleaning of ebay data
         # ebay_clean_data_runner(veh,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
+
+        #4/30 TESTING
+        TEST_prev_sold_path = os.path.join(os.path.dirname(__file__),'..','PREV_EBAY_SOL_911.txt')
+        TEST_prev_sold = open(TEST_prev_sold_path,'r')
+        ebay_clean_data_runner(veh,TEST_prev_sold_path,TEST_prev_sold_path)
 
         # #cleaning of bat data
         # #bat_clean_data_single(car,BAT_raw_single)

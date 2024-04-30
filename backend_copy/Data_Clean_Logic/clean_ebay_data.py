@@ -167,9 +167,15 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_DATA_file):
 
 def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path):
     try:
-       
-        clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
-        clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
+        
+        #4/30 TESTING
+        TEST_prev_sold_path = os.path.join(os.path.dirname(__file__),'..','PREV_EBAY_SOL_911.txt')
+        TEST_prev_sold = open(TEST_prev_sold_path,'r')
+        clean_data_EBAY_CURRENT(car,TEST_prev_sold_path)
+        clean_data_EBAY_SOLD(car,TEST_prev_sold_path)       
+        
+        # clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
+        # clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
         
         logging.info("Data cleaning for all types successful")
         return True
@@ -180,8 +186,8 @@ def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD
 if __name__ == '__main__':
     car = {
         'year': 0000,
-        'make': 'Nissan',
-        'model': '350Z'
+        'make': 'Porsche',
+        'model': '911'
     }
     ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file,EBAY_raw_SOLD_DATA_file)
 
