@@ -98,8 +98,8 @@ def initialize_driver():
             'proxy': {
                 # 'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
                 # 'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
-                'http':os.getenv('PROXY_HTTP'),
-                'https':os.getenv('PROXY_HTTPS')
+                # 'http':os.getenv('PROXY_HTTP'),
+                # 'https':os.getenv('PROXY_HTTPS')
                 # 'no_proxy':'localhost,127.0.0.1'
             },
             'detach':True
@@ -112,7 +112,7 @@ def initialize_driver():
     uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
     uc_chrome_options.add_argument('--ignore-certificate-errors')
     uc_chrome_options.add_argument("--allow-running-insecure-content")
-    uc_chrome_options.add_argument("--headless")
+    # uc_chrome_options.add_argument("--headless")
 
     #create undetected chromedriver with proxy and matching chromedriver hanlded by ChromeDriverManager - no .exe path
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),
@@ -130,7 +130,7 @@ def initialize_db_connection_connection():
 
 def main_runner(veh):
 
-    db_conn,db_cursor = initialize_db_connection_connection()
+    # db_conn,db_cursor = initialize_db_connection_connection()
     driver = initialize_driver()
     # veh = {
     #     'year':2017,
@@ -146,7 +146,7 @@ def main_runner(veh):
 
         #Scraping of ebay data
         ebay_CURRENT_scrape_single_veh(veh,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
-        ebay_SOLD_scrape_single_veh(veh,driver,EBAY_raw_SOLD_DATA_file_path)
+        # ebay_SOLD_scrape_single_veh(veh,driver,EBAY_raw_SOLD_DATA_file_path)
 
         #Scraping of bat data
         # #bat scrape
@@ -158,12 +158,12 @@ def main_runner(veh):
         
         
         #cleaning of ebay data
+        print(chalk.red("(app_main_runner) LAUNCHING CLEANING PROCESS"))
         # ebay_clean_data_runner(veh,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
         
-        #4/30 TESTING
-        TEST_prev_sold_path = os.path.join(os.path.dirname(__file__),'PREV_EBAY_SOL_911.txt')
-        TEST_prev_sold = open(TEST_prev_sold_path,'r')
-        ebay_clean_data_runner(veh,TEST_prev_sold_path,TEST_prev_sold_path)
+        #4/30 TESTING WITH PREV SCRAPED DATA TO AVOID LIVE SCRAPE
+        # TEST_prev_sold_path = os.path.join(os.path.dirname(__file__),'PREV_EBAY_SOL_911.txt')
+        # ebay_clean_data_runner(veh,TEST_prev_sold_path,TEST_prev_sold_path)
 
         # #cleaning of bat data
         # #bat_clean_data_single(car,BAT_raw_single)
@@ -184,10 +184,14 @@ def main_runner(veh):
         
         
     except Exception as e:
-        pass
+        print(f"An error occurred during scraping: {e}")
+        driver.close()  
+        time.sleep(1)
+        # Ensure the driver is closed in case of an error
+        return e
     finally:
-        db_cursor.close()
-        db_conn.close()
+        # db_cursor.close()
+        # db_conn.close()
         pass
         
     #analysis
@@ -196,7 +200,7 @@ def main_runner(veh):
 if __name__ == "__main__":
     veh = {
         'year':2017,
-        'make':'Porsche',
-        'model':'911'
+        'make':'BMW',
+        'model':'M5'
     }
     main_runner(veh)

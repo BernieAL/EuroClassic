@@ -57,6 +57,7 @@ def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
 
         for line in raw_data:
             #if we find model in curr line
+            print(f"raw current data line: {line}")
             if model in line:
                 line = line.replace(',', '')
                 #find all groups of 4 digits in curr line
@@ -108,7 +109,7 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_DATA_file):
         #for each line in raw data
         #line looks like -> 2000 Acura Integra Type R $63966.00 2024-02-12
         for line in raw_data:
-           
+            print(f"raw sold data line: {line}")
             #if curr line contains our target veh model
             if model in line:
                 #remove all commas - if any
@@ -169,14 +170,14 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_DATA_file):
 def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path):
     try:
         
-        #4/30 TESTING
-        TEST_prev_sold_path = os.path.join(os.path.dirname(__file__),'..','PREV_EBAY_SOL_911.txt')
-        TEST_prev_sold = open(TEST_prev_sold_path,'r')
-        clean_data_EBAY_CURRENT(car,TEST_prev_sold_path)
-        clean_data_EBAY_SOLD(car,TEST_prev_sold_path)       
+        #4/30 TESTING WITH PREV SCRAPED DATA TO AVOID LIVE SCRAPE
+        # TEST_prev_sold_path = os.path.join(os.path.dirname(__file__),'..','PREV_EBAY_SOL_911.txt')
+        # TEST_prev_sold = open(TEST_prev_sold_path,'r')
+        # clean_data_EBAY_CURRENT(car,TEST_prev_sold_path)
+        # clean_data_EBAY_SOLD(car,TEST_prev_sold_path)       
         
-        # clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
-        # clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
+        clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
+        clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
         
         logging.info("Data cleaning for all types successful")
         return True
@@ -187,8 +188,8 @@ def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD
 if __name__ == '__main__':
     car = {
         'year': 0000,
-        'make': 'Porsche',
-        'model': '911'
+        'make': 'BMW',
+        'model': 'M3'
     }
     ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file,EBAY_raw_SOLD_DATA_file)
 
