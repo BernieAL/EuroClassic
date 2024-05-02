@@ -21,7 +21,7 @@ from simple_chalk import chalk
 
 from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
 # from Data_Clean_Logic.clean_bat_data import bat_clean_data_runner
-from Web_Scrape_Logic.EBAY_scraper import ebay_CURRENT_scrape_single_veh,ebay_SOLD_scrape_single_veh
+from Web_Scrape_Logic.EBAY_scraper import ebay_CURRENT_scrape_single_veh,ebay_SOLD_scrape_single_veh_2
 # from Web_Scrape_Logic.BAT_scraper import BAT_scrape_single_veh,BAT_scrape_all_for_make
 
 from Postgres_logic.insert_data import populate_vehicles_dir_table,insert_current_listing_data,insert_sold_data, insertion_check
@@ -98,8 +98,8 @@ def initialize_driver():
             'proxy': {
                 # 'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
                 # 'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
-                # 'http':os.getenv('PROXY_HTTP'),
-                # 'https':os.getenv('PROXY_HTTPS')
+                'http':os.getenv('PROXY_HTTP'),
+                'https':os.getenv('PROXY_HTTPS')
                 # 'no_proxy':'localhost,127.0.0.1'
             },
             'detach':True
@@ -144,22 +144,21 @@ def main_runner(veh):
         print(chalk.red("(app_main_runner) LAUNCHING SELENIUM PROCESS"))
         # driver.get("https//google.com")
 
-        #Scraping of ebay data
+        # #Scraping of ebay data
         ebay_CURRENT_scrape_single_veh(veh,driver,EBAY_raw_CURRENT_LISTINGS_file_path)
-        # ebay_SOLD_scrape_single_veh(veh,driver,EBAY_raw_SOLD_DATA_file_path)
+        ebay_SOLD_scrape_single_veh_2(veh,driver,EBAY_raw_SOLD_DATA_file_path)
+        
+        driver.close()  
+        time.sleep(1)
 
         #Scraping of bat data
         # #bat scrape
         # #bat scrape
         
-        #****DO NOT REMOVE
-        driver.close()
-        time.sleep(1)
-        
         
         #cleaning of ebay data
         print(chalk.red("(app_main_runner) LAUNCHING CLEANING PROCESS"))
-        # ebay_clean_data_runner(veh,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
+        ebay_clean_data_runner(veh,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path)
         
         #4/30 TESTING WITH PREV SCRAPED DATA TO AVOID LIVE SCRAPE
         # TEST_prev_sold_path = os.path.join(os.path.dirname(__file__),'PREV_EBAY_SOL_911.txt')
@@ -185,22 +184,24 @@ def main_runner(veh):
         
     except Exception as e:
         print(f"An error occurred during scraping: {e}")
+        #Ensure the driver is closed in case of an error
         driver.close()  
         time.sleep(1)
-        # Ensure the driver is closed in case of an error
-        return e
+        # # Ensure the driver is closed in case of an error
+        # return e
     finally:
         # db_cursor.close()
         # db_conn.close()
+         
         pass
         
-    #analysis
-    #insert data to db
+        #analysis
+        #insert data to db
 
 if __name__ == "__main__":
     veh = {
         'year':2017,
-        'make':'BMW',
-        'model':'M5'
+        'make':'Porsche',
+        'model':'Boxster'
     }
     main_runner(veh)

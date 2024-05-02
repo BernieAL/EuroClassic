@@ -151,6 +151,13 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
     EBAY_raw_CURRENT_output_file.truncate(0)
     logger.debug("CLEARED PREV FILE DATA")
 
+    # write date of scrape to file right before data
+    today = date.today()
+    current_date = today.strftime("%m-%d-%Y")
+    date_string = f" :::EBAY - CURRENT DATA SCRAPED ON: {current_date} \n"
+    EBAY_raw_CURRENT_output_file.write(date_string)   
+        
+
     try:
         
         ### VIA SEARCH BOX INERACTION
@@ -188,11 +195,6 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
         # Find each page link in pagination list, store in pages[]
         pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a')
 
-        # write date of scrape to file right before data
-        today = date.today()
-        current_date = today.strftime("%m-%d-%Y")
-        date_string = f" :::EBAY - CURRENT DATA SCRAPED ON: {current_date} \n"
-        EBAY_raw_CURRENT_output_file.write(date_string)   
         
 
         # if len of pages > 0, theres more than one page
@@ -347,7 +349,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
 
         # before exiting this
         time.sleep(random.uniform(4,11))
-        driver.close()
+        # driver.close()
         # DO NOT CHANGE OR REMOVE THIS SLEEP - IT HANDLES DRIVER ERROR
         time.sleep(1)
         logger.debug("EXITING EBAY_CURRENT_SCRAPE")
@@ -389,6 +391,12 @@ def ebay_SOLD_scrape_single_veh_2(car,driver,EBAY_raw_SOLD_DATA_output_file_path
     EBAY_raw_SOLD_output_file.truncate(0)
     logger.debug("CLEARED PREV FILE DATA")
 
+    #write date of scrape to file right before data
+    today = date.today()
+    current_date = today.strftime("%m-%d-%Y")
+    date_string = f" :::EBAY - SOLD DATA SCRAPED ON: {current_date} \n"
+    EBAY_raw_SOLD_output_file.write(date_string)    
+
    
 
     # https://www.ebay.com/sch/i.html?_nkw=BMW+M3&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240&LH_Sold=1&LH_Complete=1
@@ -425,15 +433,7 @@ def ebay_SOLD_scrape_single_veh_2(car,driver,EBAY_raw_SOLD_DATA_output_file_path
         pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a') 
          # for each page link in pages[], extract href and store in page links
         for links in pages:
-            pages_links.append(links.get_attribute('href'))
-
-        #write date of scrape to file right before data
-        today = date.today()
-        current_date = today.strftime("%m-%d-%Y")
-        date_string = f" :::EBAY - SOLD DATA SCRAPED ON: {current_date} \n"
-        EBAY_raw_SOLD_output_file.write(date_string)    
-
-        
+            pages_links.append(links.get_attribute('href'))        
 
 
         # if len of pages > 0, theres more than one page of results
@@ -624,6 +624,11 @@ def ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_output_file_path):
 
     sold_complete_url = intial_url + '&LH_Sold=1&LH_Complete=1'
     
+    #write date of scrape to file right before data
+    today = date.today()
+    current_date = today.strftime("%m-%d-%Y")
+    date_string = f" :::EBAY - SOLD DATA SCRAPED ON: {current_date} \n"
+    EBAY_raw_SOLD_output_file.write(date_string)        
     
     try:
         # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
@@ -646,15 +651,7 @@ def ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_output_file_path):
         pages_links=[]
         pages = driver.find_elements(By.CSS_SELECTOR,'.pagination__items li a') 
         for links in pages:
-            pages_links.append(links.get_attribute('href'))
-
-    
-
-       #write date of scrape to file right before data
-        today = date.today()
-        current_date = today.strftime("%m-%d-%Y")
-        date_string = f" :::EBAY - SOLD DATA SCRAPED ON: {current_date} \n"
-        EBAY_raw_SOLD_output_file.write(date_string)                    
+            pages_links.append(links.get_attribute('href'))            
 
         #if len of pages > 0, theres more than one page
         if len(pages) > 0:
