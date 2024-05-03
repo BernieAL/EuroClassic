@@ -170,11 +170,12 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_DATA_file):
 def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path):
     try:
         
-        #4/30 TESTING WITH PREV SCRAPED DATA TO AVOID LIVE SCRAPE
-        # TEST_prev_sold_path = os.path.join(os.path.dirname(__file__),'..','PREV_EBAY_SOL_911.txt')
-        # TEST_prev_sold = open(TEST_prev_sold_path,'r')
-        # clean_data_EBAY_CURRENT(car,TEST_prev_sold_path)
-        # clean_data_EBAY_SOLD(car,TEST_prev_sold_path)       
+        # #TESTING WITH PREV SCRAPED DATA FROM LTS DIR TO AVOID LIVE SCRAPE
+        # TEST_prev_SOLD_path = os.path.join(os.path.dirname(__file__),'..','LongTerm_prev_scrapes/EBAY','EBAY__SOLD__05-03-2024__PORSCHE-PANAMERA.txt')
+        # TEST_prev_CURR_path = os.path.join(os.path.dirname(__file__),'..','LongTerm_prev_scrapes/EBAY','EBAY__CURR__05-03-2024__PORSCHE-PANAMERA.txt')
+
+        # clean_data_EBAY_CURRENT(car,TEST_prev_CURR_path)
+        # clean_data_EBAY_SOLD(car,TEST_prev_SOLD_path)       
         
         clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
         clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
@@ -188,8 +189,8 @@ def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD
 if __name__ == '__main__':
     car = {
         'year': 0000,
-        'make': 'Porsche',
-        'model': 'Boxster'
+        'make': 'PORSCHE', #MUST BE CAPITALIZED OR WILL FAIL
+        'model': 'PANAMERA' #MUST BE CAPITALIZED OR WILL FAIL
     }
     ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file,EBAY_raw_SOLD_DATA_file)
 

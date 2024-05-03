@@ -201,7 +201,7 @@ def main_runner(veh):
 if __name__ == "__main__":
     veh = {
         'year':2017,
-        'make':'Porsche',
-        'model':'Panamera'
+        'make': 'AUDI', #MUST BE CAPITALIZED OR WILL FAIL
+        'model': 'SQ5' #MUST BE CAPITALIZED OR WILL FAIL
     }
     main_runner(veh)
