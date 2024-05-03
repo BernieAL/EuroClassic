@@ -188,8 +188,8 @@ def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD
 if __name__ == '__main__':
     car = {
         'year': 0000,
-        'make': 'BMW',
-        'model': 'M3'
+        'make': 'Porsche',
+        'model': 'Boxster'
     }
     ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file,EBAY_raw_SOLD_DATA_file)
 

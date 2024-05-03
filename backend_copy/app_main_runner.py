@@ -202,6 +202,6 @@ if __name__ == "__main__":
     veh = {
         'year':2017,
         'make':'Porsche',
-        'model':'Boxster'
+        'model':'Panamera'
     }
     main_runner(veh)
