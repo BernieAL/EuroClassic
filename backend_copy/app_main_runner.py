@@ -10,6 +10,7 @@ import time
 import random
 import sys
 from simple_chalk import chalk
+import logging
 
 # # Get the current directory of this __init__.py file
 # current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -63,10 +64,26 @@ load_dotenv(find_dotenv())
 
    -WRITING ANALYSIS DATA TO DB
     -import functions that write to db, pass file paths
-    
-
-
 """
+
+
+# get path to central logging file, and pass into config
+api_log_file_path = os.path.join(os.path.dirname(__file__),'api_log.txt')
+
+#truncate all logs from prev run
+with open(api_log_file_path,'w') as file:
+    file.truncate(0)
+
+
+# custom logger to avoid interacting with selenium using debug level wire
+logger = logging.getLogger('APP_MAIN_RUNNER')
+logger.setLevel(logging.DEBUG)
+fh = logging.FileHandler(api_log_file_path)
+formatter = logging.Formatter('%(asctime)s - APP_MAIN_RUNNER -  %(message)s')
+fh.setFormatter(formatter)
+logger.addHandler(fh)
+logger.debug("Logger initialized - prev logs cleared")
+
 
 
 #dir of current script
@@ -90,6 +107,7 @@ EBAY_raw_SOLD_DATA_file_path = os.path.join(SCRAPED_DATA_DIR, 'EBAY_raw_SOLD_DAT
 EBAY_cleaned_CURRENT_LISTINGS_file_path = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_CURRENT_LISTINGS.csv')
 #PATH-> backend/cleaned_data_dir/'EBAY_raw_SOLD_DATA.txt'
 EBAY_cleaned_SOLD_DATA_file_path = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
+
 
 
 
@@ -201,7 +219,7 @@ def main_runner(veh):
 if __name__ == "__main__":
     veh = {
         'year':2017,
-        'make': 'AUDI', #MUST BE CAPITALIZED OR WILL FAIL
-        'model': 'SQ5' #MUST BE CAPITALIZED OR WILL FAIL
+        'make': 'NISSAN', #MUST BE CAPITALIZED OR WILL FAIL
+        'model': '350Z' #MUST BE CAPITALIZED OR WILL FAIL
     }
     main_runner(veh)
