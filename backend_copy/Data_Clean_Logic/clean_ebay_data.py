@@ -51,7 +51,7 @@ def fileWrite(data, fileIn):
 
 def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
 
-    logger.debug("ENTERED clean_data_EBAY_CURRENT")
+    logger.debug("ENTERED - clean_data_EBAY_CURRENT")
     logger.debug("PARAMS REC'D car: %s  raw input file: %s",json.dumps(car),raw_CURRENT_LISTINGS_file)
     
 
@@ -121,6 +121,7 @@ def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
 
         logger.debug("DATA CLEANING FOR CURRENT_LISTINGS successful")
         print(chalk.green((":::DATA CLEANING FOR CURRENT_LISTINGS successful")))
+        logger.debug("EXITING - clean_data_EBAY_CURRENT")
 
     except Exception as e:
         logger.debug(f":::Error during data cleaning for CURRENT_LISTINGS: {str(e)}")
@@ -129,7 +130,7 @@ def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
 
 def clean_data_EBAY_SOLD(car,raw_SOLD_DATA_file):
     
-    logger.debug("ENTERED clean_data_EBAY_SOLD")
+    logger.debug("ENTERED - clean_data_EBAY_SOLD")
     logger.debug("PARAMS REC'D car: %s  raw input file: %s",json.dumps(car),raw_SOLD_DATA_file)
 
 
@@ -209,6 +210,7 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_DATA_file):
 
         logger.debug("WRITING CLEANED SOLD DATA TO OUTPUT FILE")
         logger.debug("DATA CLEANING FOR SOLD DATA successful")
+        logger.debug("EXITING - clean_data_EBAY_SOLD")
         print(chalk.green(":::DATA CLEANING FOR SOLD_DATA successful"))
     except Exception as e:
         logger.debug(f":::Error during data cleaning for SOLD_DATA: {str(e)}")
@@ -220,17 +222,18 @@ def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD
     try:
         
         # #TESTING WITH PREV SCRAPED DATA FROM LTS DIR TO AVOID LIVE SCRAPE
-        TEST_prev_SOLD_path = os.path.join(os.path.dirname(__file__),'..','LongTerm_prev_scrapes/EBAY','EBAY__SOLD__05-03-2024__NISSAN-350Z.txt')
+        # TEST_prev_SOLD_path = os.path.join(os.path.dirname(__file__),'..','LongTerm_prev_scrapes/EBAY','EBAY__SOLD__05-03-2024__NISSAN-350Z.txt')
         # TEST_prev_CURR_path = os.path.join(os.path.dirname(__file__),'..','LongTerm_prev_scrapes/EBAY','EBAY__CURR__05-03-2024__PORSCHE-PANAMERA.txt')
 
         # clean_data_EBAY_CURRENT(car,TEST_prev_CURR_path)
         # clean_data_EBAY_SOLD(car,TEST_prev_SOLD_path)       
-        
+        logger.debug("ENTERED - EBAY_CLEANED_DATA_RUNNER")
         clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
-        clean_data_EBAY_SOLD(car,TEST_prev_SOLD_path)       
+        clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
         
         logger.debug("Data cleaning for all types successful")
         print("Data cleaning for all types successful")
+        logger.debug("EXITING - EBAY_CLEANED_DATA_RUNNER")
         return True
     except Exception as e:
         logger.debug(f"Error during data cleaning for all types: {str(e)}")

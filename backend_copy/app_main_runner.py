@@ -130,7 +130,7 @@ def initialize_driver():
     uc_chrome_options.add_argument('--ignore-ssl-errors=yes')
     uc_chrome_options.add_argument('--ignore-certificate-errors')
     uc_chrome_options.add_argument("--allow-running-insecure-content")
-    # uc_chrome_options.add_argument("--headless")
+    uc_chrome_options.add_argument("--headless")
 
     #create undetected chromedriver with proxy and matching chromedriver hanlded by ChromeDriverManager - no .exe path
     driver = uc.Chrome(service=Service(ChromeDriverManager().install()),
@@ -148,7 +148,7 @@ def initialize_db_connection_connection():
 
 def main_runner(veh):
 
-    # db_conn,db_cursor = initialize_db_connection_connection()
+    db_conn,db_cursor = initialize_db_connection_connection()
     driver = initialize_driver()
     # veh = {
     #     'year':2017,
@@ -187,8 +187,8 @@ def main_runner(veh):
         # #bat_clean_data_all_make(car,BAT_raw_all_make)
         
         # #insertion of ebay data into db
-        # insert_current_listing_data(db_cursor,db_conn,EBAY_cleaned_CURRENT_LISTINGS_file_path)
-        # insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
+        insert_current_listing_data(db_cursor,db_conn,EBAY_cleaned_CURRENT_LISTINGS_file_path)
+        insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
 
         #populate veh dir tables
         # populate_vehicles_dir_table()
@@ -208,8 +208,8 @@ def main_runner(veh):
         # # Ensure the driver is closed in case of an error
         # return e
     finally:
-        # db_cursor.close()
-        # db_conn.close()
+        db_cursor.close()
+        db_conn.close()
          
         pass
         
@@ -219,7 +219,7 @@ def main_runner(veh):
 if __name__ == "__main__":
     veh = {
         'year':2017,
-        'make': 'NISSAN', #MUST BE CAPITALIZED OR WILL FAIL
-        'model': '350Z' #MUST BE CAPITALIZED OR WILL FAIL
+        'make': 'BMW', #MUST BE CAPITALIZED OR WILL FAIL
+        'model': 'Z4' #MUST BE CAPITALIZED OR WILL FAIL
     }
     main_runner(veh)

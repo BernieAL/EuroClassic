@@ -1,62 +1,32 @@
-2024-05-03 16:32:09,141 - APP_MAIN_RUNNER -  Logger initialized - prev logs cleared
-2024-05-03 16:32:10,890 - EBAY_SCRAPER -  ENTERED EBAY_CURRENT_SCRAPE
-2024-05-03 16:32:10,890 - EBAY_SCRAPER -  PARAMS REC'D {"year": 2017, "make": "NISSAN", "model": "350Z"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
-2024-05-03 16:32:10,890 - EBAY_SCRAPER -  OUTPUT DIR EXISTS
-2024-05-03 16:32:10,890 - EBAY_SCRAPER -  CLEARED PREV FILE DATA
-2024-05-03 16:32:20,143 - EBAY_SCRAPER -  NAVIGATED TO https://www.ebay.com/sch/i.html?_nkw=NISSAN+350Z&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240
-2024-05-03 16:32:25,999 - EBAY_SCRAPER -  ONLY 1 PAGE RESULT
-2024-05-03 16:32:26,250 - EBAY_SCRAPER -  WROTE EBAY_ITEMS ARRAY TO FILE
-2024-05-03 16:32:26,250 - EBAY_SCRAPER -  CLEARING EBAY ITEMS ARRAY
-2024-05-03 16:32:26,251 - EBAY_SCRAPER -  CLOSING OUTPUT FILE <_io.TextIOWrapper name='/home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt' mode='a' encoding='utf-8'> -
-2024-05-03 16:32:26,251 - EBAY_SCRAPER -  MADE COPY OF OUTPUT FILE, STORED IN LTS 
-2024-05-03 16:32:38,052 - EBAY_SCRAPER -  EXITING EBAY_CURRENT_SCRAPE
-2024-05-03 16:32:38,052 - EBAY_SCRAPER -  ENTERED EBAY_SOLD_SCRAPE
-2024-05-03 16:32:38,052 - EBAY_SCRAPER -  PARAMS REC'D {"year": 2017, "make": "NISSAN", "model": "350Z"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_SOLD_DATA.txt
-2024-05-03 16:32:38,052 - EBAY_SCRAPER -  OUTPUT DIR EXISTS
-2024-05-03 16:32:38,052 - EBAY_SCRAPER -  CLEARED PREV FILE DATA
-2024-05-03 16:32:43,737 - EBAY_SCRAPER -  NAVIGATED TO https://www.ebay.com/sch/i.html?_nkw=NISSAN+350Z&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240&LH_Sold=1&LH_Complete=1
-2024-05-03 16:32:48,383 - EBAY_SCRAPER -  ONLY 1 PAGE RESULT
-2024-05-03 16:32:48,769 - EBAY_SCRAPER -  WROTE EBAY_ITEMS ARRAY TO FILE
-2024-05-03 16:32:48,769 - EBAY_SCRAPER -  CLEARING EBAY ITEMS ARRAY
-2024-05-03 16:32:48,769 - EBAY_SCRAPER -  CLOSING OUTPUT FILE <_io.TextIOWrapper name='/home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_SOLD_DATA.txt' mode='a' encoding='utf-8'> -
-2024-05-03 16:32:48,770 - EBAY_SCRAPER -  MADE COPY OF OUTPUT FILE, STORED IN LTS 
-2024-05-03 16:32:59,981 - EBAY_SCRAPER -  EXITING EBAY_SOLD_SCRAPE
-2024-05-03 16:33:01,052 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_CURRENT
-2024-05-03 16:33:01,052 - CLEAN_EBAY_DATA -  PARAMS REC'D car: {"year": 2017, "make": "NISSAN", "model": "350Z"}  raw input file: /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
-2024-05-03 16:33:01,053 - CLEAN_EBAY_DATA -  WRITING CLEANED CURRENT LISTINGS TO OUTPUT FILE
-2024-05-03 16:33:01,053 - CLEAN_EBAY_DATA -  DATA CLEANING FOR CURRENT_LISTINGS successful
-2024-05-03 16:33:01,053 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_SOLD
-2024-05-03 16:33:01,053 - CLEAN_EBAY_DATA -  Error during data cleaning for all types: name 'raw_SOLD_file' is not defined
-2024-05-03 16:40:42,840 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_CURRENT
-2024-05-03 16:40:42,840 - CLEAN_EBAY_DATA -  PARAMS REC'D car: {"year": 0, "make": "PORSCHE", "model": "PANAMERA"}  raw input file: /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Data_Clean_Logic/../Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
-2024-05-03 16:40:42,841 - CLEAN_EBAY_DATA -  WRITING CLEANED CURRENT LISTINGS TO OUTPUT FILE
-2024-05-03 16:40:42,841 - CLEAN_EBAY_DATA -  DATA CLEANING FOR CURRENT_LISTINGS successful
-2024-05-03 16:40:42,841 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_SOLD
-2024-05-03 16:40:42,841 - CLEAN_EBAY_DATA -  Error during data cleaning for all types: name 'raw_SOLD_file' is not defined
-2024-05-03 16:47:26,986 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_CURRENT
-2024-05-03 16:47:26,987 - CLEAN_EBAY_DATA -  PARAMS REC'D car: {"year": 0, "make": "PORSCHE", "model": "PANAMERA"}  raw input file: /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Data_Clean_Logic/../Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
-2024-05-03 16:47:26,987 - CLEAN_EBAY_DATA -  WRITING CLEANED CURRENT LISTINGS TO OUTPUT FILE
-2024-05-03 16:47:26,987 - CLEAN_EBAY_DATA -  DATA CLEANING FOR CURRENT_LISTINGS successful
-2024-05-03 16:47:26,987 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_SOLD
-2024-05-03 16:47:26,987 - CLEAN_EBAY_DATA -  PARAMS REC'D car: {"year": 0, "make": "PORSCHE", "model": "PANAMERA"}  raw input file: /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Data_Clean_Logic/../LongTerm_prev_scrapes/EBAY/EBAY__SOLD__05-03-2024__NISSAN-350Z.txt
-2024-05-03 16:47:26,988 - CLEAN_EBAY_DATA -  WRITING CLEANED SOLD DATA TO OUTPUT FILE
-2024-05-03 16:47:26,988 - CLEAN_EBAY_DATA -  DATA CLEANING FOR SOLD DATA successful
-2024-05-03 16:47:26,988 - CLEAN_EBAY_DATA -  Data cleaning for all types successful
-2024-05-03 16:54:06,770 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_CURRENT
-2024-05-03 16:54:06,771 - CLEAN_EBAY_DATA -  PARAMS REC'D car: {"year": 0, "make": "PORSCHE", "model": "PANAMERA"}  raw input file: /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Data_Clean_Logic/../Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
-2024-05-03 16:54:06,771 - CLEAN_EBAY_DATA -  WRITING CLEANED CURRENT LISTINGS TO OUTPUT FILE
-2024-05-03 16:54:06,771 - CLEAN_EBAY_DATA -  DATA CLEANING FOR CURRENT_LISTINGS successful
-2024-05-03 16:54:06,771 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_SOLD
-2024-05-03 16:54:06,771 - CLEAN_EBAY_DATA -  PARAMS REC'D car: {"year": 0, "make": "PORSCHE", "model": "PANAMERA"}  raw input file: /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Data_Clean_Logic/../LongTerm_prev_scrapes/EBAY/EBAY__SOLD__05-03-2024__NISSAN-350Z.txt
-2024-05-03 16:54:06,771 - CLEAN_EBAY_DATA -  WRITING CLEANED SOLD DATA TO OUTPUT FILE
-2024-05-03 16:54:06,771 - CLEAN_EBAY_DATA -  DATA CLEANING FOR SOLD DATA successful
-2024-05-03 16:54:06,771 - CLEAN_EBAY_DATA -  Data cleaning for all types successful
-2024-05-03 16:55:21,617 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_CURRENT
-2024-05-03 16:55:21,617 - CLEAN_EBAY_DATA -  PARAMS REC'D car: {"year": 0, "make": "NISSAN", "model": "350Z"}  raw input file: /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Data_Clean_Logic/../Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
-2024-05-03 16:55:21,617 - CLEAN_EBAY_DATA -  WRITING CLEANED CURRENT LISTINGS TO OUTPUT FILE
-2024-05-03 16:55:21,617 - CLEAN_EBAY_DATA -  DATA CLEANING FOR CURRENT_LISTINGS successful
-2024-05-03 16:55:21,617 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_SOLD
-2024-05-03 16:55:21,617 - CLEAN_EBAY_DATA -  PARAMS REC'D car: {"year": 0, "make": "NISSAN", "model": "350Z"}  raw input file: /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Data_Clean_Logic/../LongTerm_prev_scrapes/EBAY/EBAY__SOLD__05-03-2024__NISSAN-350Z.txt
-2024-05-03 16:55:21,618 - CLEAN_EBAY_DATA -  WRITING CLEANED SOLD DATA TO OUTPUT FILE
-2024-05-03 16:55:21,618 - CLEAN_EBAY_DATA -  DATA CLEANING FOR SOLD DATA successful
-2024-05-03 16:55:21,618 - CLEAN_EBAY_DATA -  Data cleaning for all types successful
+2024-05-04 00:05:49,167 - APP_MAIN_RUNNER -  Logger initialized - prev logs cleared
+2024-05-04 00:05:50,428 - EBAY_SCRAPER -  ENTERED EBAY_CURRENT_SCRAPE
+2024-05-04 00:05:50,429 - EBAY_SCRAPER -  PARAMS REC'D {"year": 2017, "make": "BMW", "model": "Z4"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
+2024-05-04 00:05:50,430 - EBAY_SCRAPER -  OUTPUT DIR EXISTS
+2024-05-04 00:05:50,430 - EBAY_SCRAPER -  CLEARED PREV FILE DATA
+2024-05-04 00:05:59,200 - EBAY_SCRAPER -  NAVIGATED TO https://www.ebay.com/sch/i.html?_nkw=BMW+Z4&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240
+2024-05-04 00:06:02,320 - EBAY_SCRAPER -  ONLY 1 PAGE RESULT
+2024-05-04 00:06:02,796 - EBAY_SCRAPER -  WROTE EBAY_ITEMS ARRAY TO FILE
+2024-05-04 00:06:02,796 - EBAY_SCRAPER -  CLEARING EBAY ITEMS ARRAY
+2024-05-04 00:06:02,796 - EBAY_SCRAPER -  CLOSING OUTPUT FILE <_io.TextIOWrapper name='/home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt' mode='a' encoding='utf-8'> -
+2024-05-04 00:06:02,797 - EBAY_SCRAPER -  MADE COPY OF OUTPUT FILE, STORED IN LTS 
+2024-05-04 00:06:08,914 - EBAY_SCRAPER -  EXITING EBAY_CURRENT_SCRAPE
+2024-05-04 00:06:08,914 - EBAY_SCRAPER -  ENTERED EBAY_SOLD_SCRAPE
+2024-05-04 00:06:08,915 - EBAY_SCRAPER -  PARAMS REC'D {"year": 2017, "make": "BMW", "model": "Z4"} - /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_SOLD_DATA.txt
+2024-05-04 00:06:08,915 - EBAY_SCRAPER -  OUTPUT DIR EXISTS
+2024-05-04 00:06:08,915 - EBAY_SCRAPER -  CLEARED PREV FILE DATA
+2024-05-04 00:06:12,597 - EBAY_SCRAPER -  NAVIGATED TO https://www.ebay.com/sch/i.html?_nkw=BMW+Z4&_sacat=6001&_sop=12&rt=nc&LH_PrefLoc=2&_ipg=240&LH_Sold=1&LH_Complete=1
+2024-05-04 00:06:17,055 - EBAY_SCRAPER -  ONLY 1 PAGE RESULT
+2024-05-04 00:06:17,605 - EBAY_SCRAPER -  WROTE EBAY_ITEMS ARRAY TO FILE
+2024-05-04 00:06:17,605 - EBAY_SCRAPER -  CLEARING EBAY ITEMS ARRAY
+2024-05-04 00:06:17,605 - EBAY_SCRAPER -  CLOSING OUTPUT FILE <_io.TextIOWrapper name='/home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_SOLD_DATA.txt' mode='a' encoding='utf-8'> -
+2024-05-04 00:06:17,606 - EBAY_SCRAPER -  MADE COPY OF OUTPUT FILE, STORED IN LTS 
+2024-05-04 00:06:28,475 - EBAY_SCRAPER -  EXITING EBAY_SOLD_SCRAPE
+2024-05-04 00:06:29,538 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_CURRENT
+2024-05-04 00:06:29,538 - CLEAN_EBAY_DATA -  PARAMS REC'D car: {"year": 2017, "make": "BMW", "model": "Z4"}  raw input file: /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_CURRENT_LISTINGS_DATA.txt
+2024-05-04 00:06:29,539 - CLEAN_EBAY_DATA -  WRITING CLEANED CURRENT LISTINGS TO OUTPUT FILE
+2024-05-04 00:06:29,539 - CLEAN_EBAY_DATA -  DATA CLEANING FOR CURRENT_LISTINGS successful
+2024-05-04 00:06:29,539 - CLEAN_EBAY_DATA -  ENTERED clean_data_EBAY_SOLD
+2024-05-04 00:06:29,539 - CLEAN_EBAY_DATA -  PARAMS REC'D car: {"year": 2017, "make": "BMW", "model": "Z4"}  raw input file: /home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Scraped_data_output/EBAY_raw_SOLD_DATA.txt
+2024-05-04 00:06:29,540 - CLEAN_EBAY_DATA -  WRITING CLEANED SOLD DATA TO OUTPUT FILE
+2024-05-04 00:06:29,540 - CLEAN_EBAY_DATA -  DATA CLEANING FOR SOLD DATA successful
+2024-05-04 00:06:29,540 - CLEAN_EBAY_DATA -  Data cleaning for all types successful
