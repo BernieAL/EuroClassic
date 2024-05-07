@@ -70,7 +70,7 @@ export default function App(){
                                 className="search_form_wrapper"><SearchForm handleDataFromSearchForm={handleDataFromSearchForm} ROOT_API_URL = {ROOT_API_URL}/>
                             </div>
                             <div className="card_wrapper">
-                                <ListingCard />
+                                <ListingCard vehMake={"Mclaren"} vehModel={"P1"} />
                             </div>
                             <div className="recently_requested">
                                 <ListingCard />

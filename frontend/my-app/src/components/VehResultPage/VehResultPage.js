@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from "react"
+import {useLocation} from 'react-router-dom'
 
 import Graphs from "../Graphs/Graphs"
 import EmailCollector from "../EmailCollector/EmailCollector"
@@ -9,37 +10,71 @@ import ListingCard from "../UI/ListingCard/ListingCard"
 
 export default function VehResultPage({recievedData,ROOT_API_URL}){
 
+    const location = useLocation();
     // store recieved props data in state
     const [dataForGraphs, setDataForGraphs] = useState(null);
     const [userEmailReqd, setUserEmailReqd] = useState(false);
     const [user_uuid, setUserUUID] = useState(null)
+    const [vehicleDetails,setVehicleDetails] = useState(null)
 
-    useEffect(()=>{
-        setDataForGraphs(recievedData);
-        console.log(recievedData);
 
-        // Check if the data status is 'Not Found'
-        if (recievedData['status'] === 'Not Found') {
-            // Set graph data to an empty object
+    useEffect((recievedData)=>{
+
+
+        const response = await fetch(fullURL,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+            },
+            // body:JSON.stringify(formData)
+            body:JSON.stringify(entered_data)
+        })
+        
+
+        //defining function to call api if url params provided 
+        const fetchData = async(params) =>{
+            const response = await fetch (`${ROOT_API_URL}?${params}`)
+            const data = await response.json()
+            setVehicleData(data);
+        }
+
+
+        
+        // check if query params provided - this means the component was routed to through url request
+        const params = new URLSearchParams(location.search);
+        if(params.toString()){
+            fetchData(params.toString());
+        } else {
+            setVehicleData(searchData);
+        }
+    },[location.search,searchData]);
+
+
+        // if props status is 'NOT FOUND', then set defaults for graph
+        if (recievedData['status'] === 'Not Found'){
             setDataForGraphs({
                 all_sales_records: [0], 
                 current_records: [0], 
                 sold_stats: [0], 
                 current_stats: [0]
             });
-        
-        // Set userEmailReqd to true
-        setUserEmailReqd(true);   
-        
-        
-        // get user uuid off API response, send as prop to EmailCollector component
-        setUserUUID(recievedData['uuid'])
-        console.log("UUID:" + recievedData['uuid'])
-
+        } else {
+            // else pass props data to graphs component
+            setDataForGraphs(recievedData);
+            // console.log(recievedData);
         }
-    }, [recievedData]);
+
+         // Set userEmailReqd to true
+         setUserEmailReqd(true);   
+
+         setUserUUID(recievedData['uuid'])
+         console.log("UUID:" + recievedData['uuid'])
+ 
+    },[recievedData])
 
 
+  
+    
     
 
     return (
