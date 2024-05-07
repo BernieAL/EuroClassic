@@ -70,7 +70,7 @@ export default function App(){
                                 className="search_form_wrapper"><SearchForm handleDataFromSearchForm={handleDataFromSearchForm} ROOT_API_URL = {ROOT_API_URL}/>
                             </div>
                             <div className="card_wrapper">
-                                <ListingCard vehMake={"Mclaren"} vehModel={"P1"} />
+                                <ListingCard vehMake={"bmw"} vehModel={"m3"} />
                             </div>
                             <div className="recently_requested">
                                 <ListingCard />
@@ -82,7 +82,7 @@ export default function App(){
                 }exact />
                 <Route path="/results" element={
                     /* if recievedData not null, render vehResultPage component which renders graphs,stats, and info for selected vehicle dnd pass recievedData as prop*/
-                    recievedData !== null && <VehResultPage recievedData={recievedData} ROOT_API_URL = {ROOT_API_URL} />
+                  <VehResultPage recievedData={recievedData} ROOT_API_URL = {ROOT_API_URL} />
                 } />
                 
                 

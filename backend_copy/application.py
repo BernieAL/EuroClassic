@@ -167,7 +167,9 @@ def vehicleQuery():
         #data = request.form 
 
         #FOR TESTING WITH REACT - recieves  as json object from client
+        print(request)
         data = request.get_json()
+
         print(data)
         reqeusted_veh = {
             'year' : (data.get('year')),

@@ -3,13 +3,13 @@ import React,{useState} from "react"
 // import module_css from './Navbar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import mclarenp1 from '../../../images/mclarenp1.jpg';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function ListingCard({vehMake,vehModel,ROOT_API_URL}){
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     /*Handles click on listing cards - embeds specific veh details into url
     and makes req to /results and attaches query params to results url.
@@ -20,7 +20,8 @@ export default function ListingCard({vehMake,vehModel,ROOT_API_URL}){
     */
     const handleClick = ()=>{
         const queryParams = new URLSearchParams({vehMake,vehModel})
-        history.push('/results/${queryParams}')
+        console.log(queryParams)
+        navigate(`/results?${queryParams}`)
     }
 
    
@@ -67,7 +68,7 @@ export default function ListingCard({vehMake,vehModel,ROOT_API_URL}){
                             <p className="price_avg_30_days">numerical dollar value of change is avg listing price compared to last 30 days</p> */}
                         </div>
                         
-                            <button  onClick ={handleClick}className="view_result">View Stats</button>
+                            <button onClick ={handleClick}className="view_result">View Stats</button>
                        
                         
                     </div>
