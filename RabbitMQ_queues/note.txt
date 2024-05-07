@@ -1,0 +1,8 @@
+General Idea here
+
+-when a vehicle is not found in db a new scrape is needed - so we add veh to queue
+    -add veh to queue in api
+-worker(s) recieve msg from queue and then begin the scrape
+-when scrape complete, worker updates queue informing scrape was complete
+-another worker listens for scrape completion, then sends msg to perform email process of result to user
+
