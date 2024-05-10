@@ -40,7 +40,12 @@ export default function VehResultPage({receivedData,ROOT_API_URL}){
     */
     useEffect(()=>{
         
-      
+        // If receivedData is initially null, set userEmailReqd to true
+        if (receivedData === null) {
+            setUserEmailReqd(true);
+            return; // Exit early to prevent further execution
+        }
+            
         //defining function to call api if url params provided 
         const fetchData = async(vehQuery) =>{
         
@@ -87,7 +92,7 @@ export default function VehResultPage({receivedData,ROOT_API_URL}){
 
             
 
-            if (receivedData && receivedData?.status === 'not found') {
+            if (receivedData && receivedData?.status === 'Not Found') {
                 console.log("received Data is empty") 
 
                 // set defaults for graph if empty props or receivedData['status'] == not found]
@@ -128,6 +133,7 @@ export default function VehResultPage({receivedData,ROOT_API_URL}){
             <Graphs receivedData={dataForGraphs}/> {/* Use dataForGraphs state variable */}
 
             {/* Conditionally render EmailCollector component if userEmailReqd is set to True */}
+            {console.log(userEmailReqd)}
             {userEmailReqd && <EmailCollector user_uuid_prop={user_uuid} ROOT_API_URL = {ROOT_API_URL}/>}
         </div>
     );
