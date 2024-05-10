@@ -12,8 +12,9 @@ RUN apt-get update && apt-get install -y wget unzip && \
 
 
 COPY backend_copy/requirements.txt /backend_copy/requirements.txt
-
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+RUN apt-get update && apt-get install -y wget nano
 
 
 COPY backend_copy/.env /backend_copy/.env
@@ -21,6 +22,7 @@ COPY backend_copy/.flaskenv /backend_copy/.flaskenv
 
 COPY backend_copy/forms.py /backend_copy/forms.py
 COPY backend_copy/app_main_runner.py /backend_copy/app_main_runner.py
+COPY backend_copy/PREV_EBAY_SOL_911.txt /backend_copy/PREV_EBAY_SOL_911.txt
 
 COPY backend_copy/Data_Clean_Logic /backend_copy/Data_Clean_Logic
 COPY backend_copy/Postgres_logic /backend_copy/Postgres_logic
@@ -37,5 +39,7 @@ COPY backend_copy/RabbitMQ_queues /backend_copy/RabbitMQ_queues
 
 ENV PYTHONPATH="${PYTHONPATH}:/backend_copy"
 
+#CMD ["python", "RabbitMQ_queues/scrape_worker.py"]
 
-CMD ["python", "RabbitMQ_queues/scrape_worker.py"]
+#Set the command to keep the container open
+CMD ["tail", "-f", "/dev/null"]

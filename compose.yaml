@@ -1,7 +1,6 @@
 version: '3.8'
 services:
 
-
     container_pgsql:
       hostname: pgsql
       container_name: pgsql
@@ -10,39 +9,95 @@ services:
         context: ./
         dockerfile: Dockerfile.container_psql
       ports:
-          - 5432:5432
+          - "5432:5432"
       networks:
         - my-network
       volumes:
-        - ./sql_init_scripts:/docker-entrypoint-initdb.d 
+        - ./sql_init_scripts:/docker-entrypoint-initdb.d
 
-    container_api:
-      hostname: container_api
-      container_name: container_api
-      build:
-        context: ./
-        dockerfile: Dockerfile.container_api
-      ports: 
-          - 5000:5000
-      networks:
-        - my-network
-      stdin_open: true
-      depends_on: 
-        - container_pgsql
-      tty: true
-
-    container_rmbq:
+    container_rbmq:
       hostname: rbmq
       container_name: rbmq
       build:
         context: ./
         dockerfile: Dockerfile.container_rbmq
       ports: 
-          - 15672:15672
+          - "15672:15672"
       networks:
         - my-network
       stdin_open: true
       tty: true
+
+    container_b: 
+      container_name: container_b
+      hostname: container_b
+      build: 
+        context: ./
+        dockerfile: Dockerfile.containerB
+      ports:
+        - "7777:7777"
+      networks:
+        - my-network     
+      tty: true
+      stdin_open: true
+      # depends_on: 
+      #   - container_pgsql
+
+    nginx:
+      hostname: nginx
+      container_name: nginx
+      build: 
+          context: ./
+          dockerfile: Dockerfile.container_react_nginx
+      ports:
+        - "3000:80"
+      networks:
+        - my-network
+
+    scrape_worker:
+      hostname: scrape_worker
+      container_name: scrape_worker
+      build:
+          context: ./
+          dockerfile: Dockerfile.container_scrape_worker
+      depends_on:
+        - container_rbmq
+      networks:
+        - my-network
+      restart: on-failure
+      tty: true
+      stdin_open: true
+
+    email_worker:
+      hostname: email_worker
+      container_name: email_worker
+      build:
+          context: ./
+          dockerfile: Dockerfile.container_email_worker
+      depends_on:
+        - container_rbmq
+      networks:
+        - my-network
+      restart: on-failure
+      tty: true
+      stdin_open: true
+
+    # container_api:
+    #   hostname: container_api
+    #   container_name: container_api
+    #   build:
+    #     context: ./
+    #     dockerfile: Dockerfile.container_api
+    #   ports: 
+    #       - "5000:5000"
+    #   networks:
+    #     - my-network
+    #   stdin_open: true
+    #   depends_on: 
+    #     - container_pgsql
+    #   tty: true
+
+
     
     # nginx:
     #   hostname: nginx
@@ -53,30 +108,7 @@ services:
     #   networks:
     #     - my-network
 
-    # nginx:
-    #   hostname: nginx
-    #   container_name: nginx
-    #   build: 
-    #       context: ./
-    #       dockerfile: Dockerfile.container_react_nginx
-    #   ports:
-    #     - "3000:80"
-    #   networks:
-    #     - my-network
 
-   
-
-    # container_b: 
-    #   container_name: container_b
-    #   build: 
-    #     context: ./
-    #     dockerfile: Dockerfile.containerB
-    #   networks:
-    #     - my-network
-    #   ports:
-    #     - "7777:7777"     
-    #   tty: true
-    #   stdin_open: true   
 
 networks:
       my-network: {}

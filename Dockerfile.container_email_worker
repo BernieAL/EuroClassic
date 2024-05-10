@@ -1,0 +1,23 @@
+FROM python:3.9
+
+WORKDIR /backend_copy
+
+
+COPY backend_copy/requirements.txt /backend_copy/requirements.txt
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+
+COPY backend_copy/.env /backend_copy/.env
+COPY backend_copy/.flaskenv /backend_copy/.flaskenv
+
+COPY backend_copy/Email_Logic /backend_copy/Email_Logic
+COPY backend_copy/LongTerm_prev_scrapes /backend_copy/LongTerm_prev_scrapes
+COPY backend_copy/Scraped_data_output /backend_copy/Scraped_data_output
+COPY backend_copy/Cleaned_data_output /backend_copy/Cleaned_data_output
+COPY backend_copy/RabbitMQ_queues /backend_copy/RabbitMQ_queues  
+
+
+ENV PYTHONPATH="${PYTHONPATH}:/backend_copy"
+
+
+CMD ["python", "RabbitMQ_queues/email_worker.py"]

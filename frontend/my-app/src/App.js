@@ -29,7 +29,13 @@ export default function App(){
 
     
     // ROOT URL FOR API to be passed down to chidlren and modified for more specific routes
-    const ROOT_API_URL = "http://127.0.0.1:5000/api"
+    //Hardcoded but shouldnt be
+    const ROOT_API_URL = "http://127.0.0.1:7777/api"  
+    
+    // const ROOT_API_URL = process.env.REACT_APP_ROOT_API_URL
+    // console.log(ROOT_API_URL)
+    // console.log(process.env)
+    // console.log(process.env.REACT_APP_ROOT_API_URL)
 
     // if recievedData is updated, do something
     useEffect (()=> {

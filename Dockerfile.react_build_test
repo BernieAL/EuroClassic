@@ -7,8 +7,8 @@ COPY frontend/my-app/package-lock.json ./
 COPY frontend/my-app/src ./src
 COPY frontend/my-app/public ./public
 RUN npm install
-RUN npm run build
+RUN npm run build && ls /app/build
 
-FROM nginx:stable-alpine
-COPY --from=react-build-step /app/build /usr/share/nginx/html
-COPY /nginx.default.conf /etc/nginx/conf.d/default.conf
+
+# Run a command to keep the container alive
+CMD ["tail", "-f", "/dev/null"]
