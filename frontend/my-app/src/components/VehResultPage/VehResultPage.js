@@ -8,7 +8,7 @@ import ListingCard from "../UI/ListingCard/ListingCard"
 // import module_css from './Navbar.module.css'
 
 
-export default function VehResultPage({recievedData,ROOT_API_URL}){
+export default function VehResultPage({receivedData,ROOT_API_URL}){
 
     const location = useLocation();
     // store recieved props data in state
@@ -23,7 +23,7 @@ export default function VehResultPage({recievedData,ROOT_API_URL}){
     If requested through URL - it will have url params, we check for these and handle accordingly - making an api request, attaching the params as the reqeust body
 
     If component rendered by other components - it will have recieved props
-    we evaluate specific property ['status'] of recievedData prop to determine if data was found, 
+    we evaluate specific property ['status'] of receivedData prop to determine if data was found, 
         if found, we pass the recieved props to graphs component, 
         if not found, we set defaults as 0 and pass to graphs component 
 
@@ -38,8 +38,9 @@ export default function VehResultPage({recievedData,ROOT_API_URL}){
 
     -Handle Data Retrieval: In fetchData, you make the API request with the provided query parameters. Upon receiving a response, you extract and set the data using setVehicleData.
     */
-    useEffect((recievedData)=>{
-       
+    useEffect((receivedData)=>{
+        
+      
         //defining function to call api if url params provided 
         const fetchData = async(vehQuery) =>{
         
@@ -58,6 +59,7 @@ export default function VehResultPage({recievedData,ROOT_API_URL}){
                 }
                 const data = await response.json()
                 setVehicleData(data);
+                setDataForGraphs(data)
             } catch (error) {
                 console.error('Error fetching data:', error);
                 // Handle error state or display error message
@@ -81,8 +83,11 @@ export default function VehResultPage({recievedData,ROOT_API_URL}){
             fetchData(vehQuery);
         } else {
             // else if no params, means we rec'd props
-            // evaluate props to see if they exist
-           if ((recievedData == null ) ||(recievedData['status'] == 'not found')){
+            // evaluate props to see if they exist\
+
+            
+
+            if (receivedData && receivedData?.status === 'not found') {
                 console.log("Recieved Data is empty") 
 
                 // set defaults for graph if empty props or receivedData['status'] == not found]
@@ -92,16 +97,20 @@ export default function VehResultPage({recievedData,ROOT_API_URL}){
                     sold_stats: [0], 
                     current_stats: [0]
                 });
-
-            } else {
-                setVehicleData(recievedData);
-                setDataForGraphs(recievedData)
+                // set flag to collect user email
                 setUserEmailReqd(true);   
-                setUserUUID(recievedData['uuid'])
-                console.log("UUID:" + recievedData['uuid'])
+                setUserUUID(receivedData['uuid'])
+                console.log("UUID:" + receivedData['uuid'])
+            } else {
+                console.log(receivedData)
+                setVehicleData(receivedData);
+                setDataForGraphs(receivedData)
+                // setUserEmailReqd(true);   
+                // setUserUUID(receivedData['uuid'])
+                // console.log("UUID:" + receivedData['uuid'])
             }
         }
-},[location.search,recievedData]);
+},[location.search]);
 
 
     
@@ -115,7 +124,8 @@ export default function VehResultPage({recievedData,ROOT_API_URL}){
             <Navbar />
             
             <div className="jumbotron">test</div>
-            <Graphs recievedData={dataForGraphs}/> {/* Use dataForGraphs state variable */}
+            {console.log(receivedData)}
+            <Graphs receivedData={dataForGraphs}/> {/* Use dataForGraphs state variable */}
 
             {/* Conditionally render EmailCollector component if userEmailReqd is set to True */}
             {userEmailReqd && <EmailCollector user_uuid_prop={user_uuid} ROOT_API_URL = {ROOT_API_URL}/>}
