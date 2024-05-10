@@ -1,0 +1,26 @@
+5-7-24
+
+VehResultPage component can be reached through url /results, with routing handling by router or through component rendering flow
+-------
+url requested rendering:
+
+this would happen if a user clicks on a featured listing card with - where the vehicle listing card has its assigned vehMake and vehModel values assigned to it as props.
+
+on click of featured listing card - request is made for /results?vehMake=<make>vehModel=<model>
+
+the props for the specific listing card are attached as url params
+
+the request is routed to vehResultsPage
+vehResultsPage checks for presence of url params, if they exist, we know the component was reqeusted via url mapping - and we need to make an api reqeust to get the data for the requested vehicle.
+
+params are retrieved off URLSearchParams JS object and encapsulated into object. Object passsed to fetchData function - fetchData function attaches to reqeust body in form of string
+
+Api responds, done.
+------------
+
+In the event VehResultPage is rendered through component flow (not a url request) then we will have already rec'd props from parent. 
+we double check that props (recievedData) is not empty
+
+if not empty, send data to graphs to be rendered etc 
+
+if emtpy, populate defaults with 0's to not break graph component

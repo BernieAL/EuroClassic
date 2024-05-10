@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React,{useEffect, useState} from "react"
 import {BrowserRouter as Router,Routes,Route, useNavigate,Link} from 'react-router-dom';
 import "./styles.scss"
 
@@ -23,7 +23,7 @@ library.add(fab, fas, far)
 
 export default function App(){
 
-    const [recievedData,setRecievedData] = useState(null)
+    const [receivedData,setreceivedData] = useState(null)
     const [user_uuid, setUserUUID] = useState(null)
     const [vehExists_db,setVehExists_DB] = useState(null)
 
@@ -36,6 +36,13 @@ export default function App(){
     // console.log(ROOT_API_URL)
     // console.log(process.env)
     // console.log(process.env.REACT_APP_ROOT_API_URL)
+
+    // if recievedData is updated, do something
+    useEffect (()=> {
+        if (receivedData){
+            console.log("Received Data:",receivedData);
+        }
+    },[receivedData])
 
     // callback function passed to SearchForm
     const handleDataFromSearchForm = (data) => {
@@ -50,11 +57,8 @@ export default function App(){
                 } 
                 ***Note*** lists wont be empty if veh exists in db   
          */
-        
-        console.log('Recieved Data in app:', data)
-        setRecievedData(data)
-
-        
+        console.log('Received Data in app:', data)
+        setreceivedData(data)
         
         const VEH_EXISTS = data['VEH_EXISTS']
         setVehExists_DB(VEH_EXISTS)
@@ -76,7 +80,7 @@ export default function App(){
                                 className="search_form_wrapper"><SearchForm handleDataFromSearchForm={handleDataFromSearchForm} ROOT_API_URL = {ROOT_API_URL}/>
                             </div>
                             <div className="card_wrapper">
-                                <ListingCard />
+                                <ListingCard vehMake={"bmw"} vehModel={"m3"} />
                             </div>
                             <div className="recently_requested">
                                 <ListingCard />
@@ -87,8 +91,8 @@ export default function App(){
                         </div>
                 }exact />
                 <Route path="/results" element={
-                    /* if recievedData not null, render vehResultPage component which renders graphs,stats, and info for selected vehicle dnd pass recievedData as prop*/
-                    recievedData !== null && <VehResultPage recievedData={recievedData} ROOT_API_URL = {ROOT_API_URL} />
+                    /* if receivedData not null, render vehResultPage component which renders graphs,stats, and info for selected vehicle dnd pass receivedData as prop*/
+                  <VehResultPage receivedData={receivedData} ROOT_API_URL = {ROOT_API_URL} />
                 } />
                 
                 

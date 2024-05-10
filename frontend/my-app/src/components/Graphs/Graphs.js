@@ -2,43 +2,60 @@ import React, {useState,useEffect  } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import module_css from './Graphs.module.css'
 
-/* READ ME - RECIEVED DATA STRUCTURE
+/* READ ME - received DATA STRUCTURE
 
-Values Recieved from server encapsulated in an object 
-  {all_sales_records:[()],current_records[()],current_stats,sold_stats}
+    Values received from server encapsulated in an object 
+    {
+        all_sales_records:[()],
+        current_records[()],
+        current_stats,
+        sold_stats
+    }
 
-Then each value is itself an array of objects
+    Then each value is itself an array of objects
+
+        all_sales_records ex. 
+
+            'all_sales_records': [
+                ('645cc521-1bb4-46e6-bef4-f46ac68a1d99', 2012, 'AUDI', 'R8', 116115.34, datetime.date(2022, 8, 15)), ('80cdc5d7-76b8-48f0-bd4b-b5f5dcda6b65', 2018, 'AUDI', 'R8', 97146.08, datetime.date(2023, 5, 9)), ('c179d769-0894-4734-b8b8-016313fe61c9', 2014, 'AUDI', 'R8', 86057.47, datetime.date(2022, 2, 3)), ('b654b01d-f43e-4a80-a652-a3154bfda639', 2018, 'AUDI', 'R8', 86289.72, datetime.date(2022, 12, 5)), ('f1bca6b9-29ed-4c9c-bf1c-4ffb93d80dab', 2011, 'AUDI', 'R8', 82695.55, datetime.date(2022, 7, 27)), ('e8624243-ce92-48dd-b388-6df32eefee75', 2012, 'AUDI', 'R8', 110575.06, datetime.date(2022, 12, 17))]
 
 
-all_sales_records ex. 
+        current_records ex. 
 
-    'all_sales_records': [('645cc521-1bb4-46e6-bef4-f46ac68a1d99', 2012, 'AUDI', 'R8', 116115.34, datetime.date(2022, 8, 15)), ('80cdc5d7-76b8-48f0-bd4b-b5f5dcda6b65', 2018, 'AUDI', 'R8', 97146.08, datetime.date(2023, 5, 9)), ('c179d769-0894-4734-b8b8-016313fe61c9', 2014, 'AUDI', 'R8', 86057.47, datetime.date(2022, 2, 3)), ('b654b01d-f43e-4a80-a652-a3154bfda639', 2018, 'AUDI', 'R8', 86289.72, datetime.date(2022, 12, 5)), ('f1bca6b9-29ed-4c9c-bf1c-4ffb93d80dab', 2011, 'AUDI', 'R8', 82695.55, datetime.date(2022, 7, 27)), ('e8624243-ce92-48dd-b388-6df32eefee75', 2012, 'AUDI', 'R8', 110575.06, datetime.date(2022, 12, 17))
-
-
-current_records ex. 
-
-    'current_records': [('3f491d30-f178-4623-b93a-f04e73be33d7', 2014, 'AUDI', 'R8', 86339.0), ('a655730e-c6d8-496b-8cbd-887f21c1fb52', 2015, 'AUDI', 'R8', 104611.0), ('f47b266b-c77c-4745-8e00-ca71e3819ff6', 2019, 'AUDI', 'R8', 100867.0), ('ff59e8b7-1b1d-4ab5-bdc4-fabc09656dbc', 2013, 'AUDI', 'R8', 99298.0), ('a3db917a-c0ce-4ae5-96b3-570c84789a1b', 2019, 'AUDI', 'R8', 112348.0), 
+            'current_records': [
+                ('3f491d30-f178-4623-b93a-f04e73be33d7', 2014, 'AUDI', 'R8', 86339.0), 
+                ('a655730e-c6d8-496b-8cbd-887f21c1fb52', 2015, 'AUDI', 'R8', 104611.0), 
+                ('f47b266b-c77c-4745-8e00-ca71e3819ff6', 2019, 'AUDI', 'R8', 100867.0), 
+                ('ff59e8b7-1b1d-4ab5-bdc4-fabc09656dbc', 2013, 'AUDI', 'R8', 99298.0), 
+                ('a3db917a-c0ce-4ae5-96b3-570c84789a1b', 2019, 'AUDI', 'R8', 112348.0))] 
 
 */
 
-export default function Graphs({recievedData}){
+export default function Graphs({receivedData}){
     
-    // to hold graph/chart data recieved from parent - 
+    // to hold graph/chart data received from parent - 
     const [dataForViz,setDataForViz] = useState(null)
 
 
-
+    // update state data whenever receivedData changes
     useEffect(()=>{
-        setDataForViz(recievedData)
-        console.log("(graphs) received Data:", recievedData)
-    },[recievedData])
+        if (receivedData) {
+            setDataForViz(receivedData);
+        } else {
+            console.log("No data received yet.");
+        }
+    },[receivedData])
 
 
     /* Destructure Rec'd Data obj into indiv variables
 
         returned obj looks like this:
         
-        {'all_sales_records': [('4c9f93d8-2be1-4f60-b80b-f7eeb96b8f6e', 2010, 'AUDI', 'R8', 108846.48, datetime.date(2023, 10, 27))], 'current_records': [('ece9ef7d-b2de-4548-b84b-ddda25bc0bd9', 2010, 'AUDI', 'R8', 85484.0), ('54b95bd7-e161-482b-ad5f-729f33b68761', 2010, 'AUDI', 'R8', 91654.0)], 'sold_stats': [], 'current_stats': []} 
+        {
+            'all_sales_records': [('4c9f93d8-2be1-4f60-b80b-f7eeb96b8f6e', 2010, 'AUDI', 'R8', 108846.48, datetime.date(2023, 10, 27))], 'current_records': [('ece9ef7d-b2de-4548-b84b-ddda25bc0bd9', 2010, 'AUDI', 'R8', 85484.0), ('54b95bd7-e161-482b-ad5f-729f33b68761', 2010, 'AUDI', 'R8', 91654.0)], 
+            'sold_stats': [], 
+            'current_stats': []
+        } 
 
         
     */
@@ -48,22 +65,12 @@ export default function Graphs({recievedData}){
         current_records = [0], 
         sold_stats = [0], 
         current_stats = [0] 
-    } = recievedData || {};
+    } = receivedData || {};
 
-    // console.log("Graphs component - receievedata",recievedData)
+    // console.log("Graphs component - receievedata",receivedData)
     
-    /* HANDLING SALES DATA - SORT all_sales_records by sale date ascending
-       sale_date is last index in each record -> idx 5
-       sort() takes a custom compare function
-       compare function compares elements based on sale_date
-       for 2 records a,b, determine which sale_date comes first by subtracting a and b
-       if negative result, then a comes before b
-       if positive result, a comes after b
-       if result is 0, no change in order needed
-       
-    */
-    //get year,make,model,sale_price,sale_date from each sold record in all_sales_records array
-
+    
+    //gets year,make,model,sale_price,sale_date from each sold record in all_sales_records array
     const GRAPH_sales_data = all_sales_records.map((record)=>{
         return{
             year:record[1],
@@ -78,16 +85,20 @@ export default function Graphs({recievedData}){
         }
     })
 
-    
-
-    /*SORT into ascending sale dates
-
-     */
+    /* HANDLING SALES DATA - SORT all_sales_records by sale date ascending
+       - sale_date is last index in each record -> idx 5
+       - sort() takes a custom compare function
+       - compare function compares elements based on sale_date
+       - for 2 records a,b, determine which sale_date comes first by subtracting a and b
+       - if negative result, then a comes before b
+       - if positive result, a comes after b
+       - if result is 0, no change in order needed
+    */
     const GRAPH_sales_data_DATE_SORTED = GRAPH_sales_data.sort((a, b) => new Date(a.sale_date) - new Date(b.sale_date));
     // console.log(GRAPH_sales_data_DATE_SORTED)
 
     
-    // HANDLING CURRENT DATA
+    // HANDLING CURRENT LISTINGS DATA
     const GRAPH_current_listing_data = current_records.map((record)=>{
         return {
             year:record[1],
@@ -120,12 +131,13 @@ export default function Graphs({recievedData}){
     return (
         <div className={module_css}>
             <h3 className={module_css.graph_header}>These are the graphs</h3>
+            
             <br></br>
                 {/* SOLD LISTINGS */}
                 <LineChart className={module_css.graph_test}
                     width={600}
                     height={500}
-                    data={GRAPH_sales_data}
+                    data={GRAPH_sales_data_DATE_SORTED}
                     margin={{
                         top: 5,
                         right: 30,
@@ -147,7 +159,7 @@ export default function Graphs({recievedData}){
                 <LineChart
                     width={600}
                     height={500}
-                    data={GRAPH_current_listing_data}
+                    data={GRAPH_current_listing_data_YEAR_SORTED}
                     margin={{
                         top: 5,
                         right: 30,
@@ -164,8 +176,6 @@ export default function Graphs({recievedData}){
                     
                 </LineChart>
 
-                
-                
         </div>
         
       );
