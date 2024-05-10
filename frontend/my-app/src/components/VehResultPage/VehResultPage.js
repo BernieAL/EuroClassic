@@ -11,7 +11,7 @@ import ListingCard from "../UI/ListingCard/ListingCard"
 export default function VehResultPage({receivedData,ROOT_API_URL}){
 
     const location = useLocation();
-    // store recieved props data in state
+    // store received props data in state
     const [dataForGraphs, setDataForGraphs] = useState(null);
     const [userEmailReqd, setUserEmailReqd] = useState(false);
     const [user_uuid, setUserUUID] = useState(null)
@@ -22,9 +22,9 @@ export default function VehResultPage({receivedData,ROOT_API_URL}){
 
     If requested through URL - it will have url params, we check for these and handle accordingly - making an api request, attaching the params as the reqeust body
 
-    If component rendered by other components - it will have recieved props
+    If component rendered by other components - it will have received props
     we evaluate specific property ['status'] of receivedData prop to determine if data was found, 
-        if found, we pass the recieved props to graphs component, 
+        if found, we pass the received props to graphs component, 
         if not found, we set defaults as 0 and pass to graphs component 
 
     SUMMARY
@@ -38,7 +38,7 @@ export default function VehResultPage({receivedData,ROOT_API_URL}){
 
     -Handle Data Retrieval: In fetchData, you make the API request with the provided query parameters. Upon receiving a response, you extract and set the data using setVehicleData.
     */
-    useEffect((receivedData)=>{
+    useEffect(()=>{
         
       
         //defining function to call api if url params provided 
@@ -88,7 +88,7 @@ export default function VehResultPage({receivedData,ROOT_API_URL}){
             
 
             if (receivedData && receivedData?.status === 'not found') {
-                console.log("Recieved Data is empty") 
+                console.log("received Data is empty") 
 
                 // set defaults for graph if empty props or receivedData['status'] == not found]
                 setDataForGraphs({
@@ -102,7 +102,7 @@ export default function VehResultPage({receivedData,ROOT_API_URL}){
                 setUserUUID(receivedData['uuid'])
                 console.log("UUID:" + receivedData['uuid'])
             } else {
-                console.log(receivedData)
+                
                 setVehicleData(receivedData);
                 setDataForGraphs(receivedData)
                 // setUserEmailReqd(true);   
@@ -110,7 +110,7 @@ export default function VehResultPage({receivedData,ROOT_API_URL}){
                 // console.log("UUID:" + receivedData['uuid'])
             }
         }
-},[location.search]);
+},[location.search,receivedData]);
 
 
     

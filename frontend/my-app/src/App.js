@@ -34,7 +34,7 @@ export default function App(){
     // if recievedData is updated, do something
     useEffect (()=> {
         if (receivedData){
-            console.log("Recieved Data:",receivedData);
+            console.log("Received Data:",receivedData);
         }
     },[receivedData])
 
@@ -51,7 +51,7 @@ export default function App(){
                 } 
                 ***Note*** lists wont be empty if veh exists in db   
          */
-        console.log('Recieved Data in app:', data)
+        console.log('Received Data in app:', data)
         setreceivedData(data)
         
         const VEH_EXISTS = data['VEH_EXISTS']
