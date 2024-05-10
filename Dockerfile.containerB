@@ -17,6 +17,7 @@ COPY backend_copy/forms.py /backend_copy/forms.py
 COPY backend_copy/app_main_runner.py /backend_copy/app_main_runner.py
 
 COPY backend_copy/.flaskenv /backend_copy/.flaskenv
+COPY backend_copy/vehicle_directory.csv /backend_copy/vehicle_directory.csv 
 COPY backend_copy/Data_Clean_Logic /backend_copy/Data_Clean_Logic
 COPY backend_copy/Postgres_logic /backend_copy/Postgres_logic
 COPY backend_copy/Web_Scrape_Logic /backend_copy/Web_Scrape_Logic
@@ -26,6 +27,7 @@ COPY backend_copy/RabbitMQ_queues /backend_copy/RabbitMQ_queues
 
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN apt-get update && apt-get install -y wget nano
 
 ENV PYTHONPATH="${PYTHONPATH}:/backend_copy"
 
