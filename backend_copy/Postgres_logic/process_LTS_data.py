@@ -22,54 +22,76 @@ postgres_dir = os.path.dirname(__file__)
 #directory of 'this' file
 INPUT_veh_dir_file_path = os.path.join(postgres_dir,'..','vehicle_directory.csv')
 
-veh_dir = open(INPUT_veh_dir_file_path,'a')
+
 
 LTS_EBAY_DIR = os.path.join(postgres_dir,'..','LongTerm_prev_scrapes/EBAY')
 # print(os.path.isdir(LTS_EBAY_DIR))
 
 
 
+def build_dir_entry_from_filename(INPUT_veh_dir_file_path):
 
-# os.walk to access contents of LTS DIR
-for root,dirs,files in os.walk(LTS_EBAY_DIR):
-   
-   try:
-    for file in files:
-            #determine if file is CURR listing
-            #EX filename -> EBAY__CURR__03-30-2024__NISSAN-350Z.txt
+    veh_dir = open(INPUT_veh_dir_file_path,'a')
+
+    """
+    The filename for vehicles scrapes record in LTS looks like
+        EBAY__CURR__03-30-2024__NISSAN-350Z.txt
+    
+    From the filename, we parse the values we need to create a formatted entry for veh_dir
+        Which is in format -> NISSAN,350Z,0000,2024-03-22
+    """
+    # os.walk to access contents of LTS DIR
+    for root,dirs,files in os.walk(LTS_EBAY_DIR):
+    
+        try:
+            for file in files: #EX filename -> EBAY__CURR__03-30-2024__NISSAN-350Z.txt
+
+                
+                tokens = file.split('__') #['EBAY', 'SOLD', '05-02-2024', 'BMW-M6.txt'] 
+                
+                record_type = tokens[1] # SOLD or CURR
+                date_val = tokens[2] 
+                #must convert date_val from MM-DD-YYYY to required format by veh_dir csv YYYY-MM-DD
+                date_obj = datetime.strptime(date_val,"%m-%d-%Y")
+                date_formatted = date_obj.strftime("%Y-%m-%d")
+                
+                # NISSAN-350Z.txt -> NISSAN-350Z
+                vehicle = tokens[3].replace('.txt','')
+                
+                #NISSAN-350Z -> [NISSAN,350Z]
+                make_model_tokens = vehicle.split('-')
+                
+                make,model = make_model_tokens
+                #using "0000" for year because scraped records are not year specific and contain various years
+                veh_dir_entry = f"{make},{model},{'0000'},{date_formatted}"
+                print(veh_dir_entry)
+
+                veh_dir.write(veh_dir_entry+'\n')
+
+
+        except Exception as e:
+            print(f"error: {e}") 
+            
+
+    veh_dir.close()
         
-            tokens = file.split('__') #['EBAY', 'SOLD', '05-02-2024', 'BMW-M6.txt'] 
-            record_type = tokens[1] # SOLD or CURR
-            date_val = tokens[2]
-            
-            vehicle = tokens[3].replace('.txt','')
-            print(vehicle)
-            
-            make_model_tokens = vehicle.split('-')
-            print(make_model_tokens)
-            make,model = make_model_tokens
-            print(f"{make},{model}")
-   except Exception as e:
-       print(f"error: {e}") 
-          
-    
-    
-        # vehicle = tokens[3].replace('.txt','')
-    
-        # make_model_tokens = vehicle.split('-')
-        # make,model = make_model_tokens
-        # # print(f"{make},{model}")
 
-        #year doesnt matter - using 0000 to match veh_dir csv format
-        #veh_dir csv format is MAKE,MODEL,YEAR,LAST_SCRAPE_DATE
-        #update date to match date format in veh_dir csv YYYY-MM-DD  
-        # date_obj = datetime.strptime(date_val,"%m-%d-%Y")
-        # formatted_date = date_obj.strftime("%Y-%m-%d")
-        # print(formatted_date)
-        # veh = f"{make},{model},{'0000'},{formatted_date}"
-        # print(veh)
+def keep_latest(INPUT_veh_dir_file_path):
 
-        # veh_dir.write(veh+'\n')
-         
-    # #   elif 'SOLD' in file:
-    #     #  print(file)
+    """
+        In the Event theres multiple entries for a vehicle, keep the latest date, remove all others
+        Ex.    
+            BMW,M3,2018,2024-01-20
+            BMW,M3,0000,2024-05-01
+            BMW,M3,0000,2024-04-03
+            BMW,M3,0000,2024-05-02
+            BMW,M3,0000,2024-05-02
+        
+    """
+
+    veh_dir = open(INPUT_veh_dir_file_path,'rw')
+
+
+if __name__ == "__main__":
+     
+     build_dir_entry_from_filename()
