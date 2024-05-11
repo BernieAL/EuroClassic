@@ -98,9 +98,9 @@ def keep_latest(INPUT_veh_dir_file_path):
 
     #for each make,model group, keep the entry with latest date
     latest_date = df.groupby(['MAKE','MODEL']).tail(1).reset_index(drop=True)
-    latest_date.sort_values(by='MAKE',inplace=True)
-    print(latest_date)
     
+    sorted_by_makes = latest_date.sort_values(by='MAKE')
+    sorted_by_makes.to_csv(INPUT_veh_dir_file_path,index=False)
 
     
     # t = df.sort_values(by=['MAKE','MODEL'])
@@ -119,7 +119,7 @@ def keep_latest(INPUT_veh_dir_file_path):
 
 
 
-    veh_dir = open(INPUT_veh_dir_file_path,'r')
+    
 
 
 if __name__ == "__main__":
