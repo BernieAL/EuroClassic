@@ -17,6 +17,7 @@ from datetime import datetime
 import csv
 from dotenv import load_dotenv,find_dotenv
 from simple_chalk import chalk
+import pandas as pd
 
 postgres_dir = os.path.dirname(__file__)
 #directory of 'this' file
@@ -86,12 +87,42 @@ def keep_latest(INPUT_veh_dir_file_path):
             BMW,M3,0000,2024-04-03
             BMW,M3,0000,2024-05-02
             BMW,M3,0000,2024-05-02
-        
-    """
 
-    veh_dir = open(INPUT_veh_dir_file_path,'rw')
+            
+    """
+    df = pd.read_csv(INPUT_veh_dir_file_path)
+    #making sure last_scrape_date is datetime obj
+    df['LAST_SCRAPE_DATE'] = pd.to_datetime(df['LAST_SCRAPE_DATE'])
+    #sort by date, in place
+    df.sort_values(by='LAST_SCRAPE_DATE',inplace=True)
+
+    #for each make,model group, keep the entry with latest date
+    latest_date = df.groupby(['MAKE','MODEL']).tail(1).reset_index(drop=True)
+    latest_date.sort_values(by='MAKE',inplace=True)
+    print(latest_date)
+    
+
+    
+    # t = df.sort_values(by=['MAKE','MODEL'])
+
+    """
+    
+    group by veh - to isolate eachv veh into a group
+    on each group, keep line with newest date
+    """
+    
+    # r = t.groupby(['MAKE','MODEL'])[['LAST_SCRAPE_DATE']].apply(
+       
+    # print(r)
+
+    # print(t.head)
+
+
+
+    veh_dir = open(INPUT_veh_dir_file_path,'r')
 
 
 if __name__ == "__main__":
      
-     build_dir_entry_from_filename()
+     
+    keep_latest(INPUT_veh_dir_file_path)
