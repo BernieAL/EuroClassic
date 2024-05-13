@@ -1,13 +1,13 @@
 """
-This script will read in data from LTS dir, add vehicles to vehicle_dir csv and then insert to db
+This script will read in data from LTS dir, add vehicles to vehicle_dir.csv
+which will be written to db in insert_data.py script
 
-LTS (longterm prev scrapes dir) has previously scraped data for many vehicles, and it can be used in the DB
-as a means to reduce the need for additional scrapes.
+LTS (longterm prev scrapes dir) has previously scraped data for many vehicles, 
+and it can be used in the DB as a means to reduce the need for additional scrapes.
 
 For each file in EBAY/SOLD and EBAY/CURR
     get the vehicle name and scrape data from the file name itself- this will be added to vehicle_directory csv
 
-    Then write all records contained in the file to the db
 """
 
 
@@ -86,9 +86,9 @@ def keep_latest(INPUT_veh_dir_file_path):
             BMW,M3,0000,2024-05-01
             BMW,M3,0000,2024-04-03
             BMW,M3,0000,2024-05-02
-            BMW,M3,0000,2024-05-02
 
-            
+            output:
+                BMW,M3,0000,2024-05-02
     """
     df = pd.read_csv(INPUT_veh_dir_file_path)
     #making sure last_scrape_date is datetime obj
@@ -103,20 +103,7 @@ def keep_latest(INPUT_veh_dir_file_path):
     sorted_by_makes.to_csv(INPUT_veh_dir_file_path,index=False)
 
     
-    # t = df.sort_values(by=['MAKE','MODEL'])
-
-    """
-    
-    group by veh - to isolate eachv veh into a group
-    on each group, keep line with newest date
-    """
-    
-    # r = t.groupby(['MAKE','MODEL'])[['LAST_SCRAPE_DATE']].apply(
-       
-    # print(r)
-
-    # print(t.head)
-
+   
 
 
     
