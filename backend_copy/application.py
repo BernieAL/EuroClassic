@@ -55,7 +55,7 @@ CACHE_FILE_PATH = os.path.join(BACKEND_ROOT,'Cache','makes_cache.json')
 
 
 application = Flask(__name__)
-CORS(application,resources={r"/api/*":{"origins":"http://localhost:3000"}})
+CORS(application,resources={r"/api/*":{"origins":["http://localhost:3000","https://localhost:3443"]}})
 
 application.secret_key =  os.getenv('APPLICATION_SECRET_KEY')
 

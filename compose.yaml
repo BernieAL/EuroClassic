@@ -51,6 +51,7 @@ services:
           dockerfile: Dockerfile.container_react_nginx
       ports:
         - "3000:80"
+        - "3443:443"
       networks:
         - my-network
 
