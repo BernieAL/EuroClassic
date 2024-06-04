@@ -55,14 +55,13 @@ CACHE_FILE_PATH = os.path.join(BACKEND_ROOT,'Cache','makes_cache.json')
 
 
 application = Flask(__name__)
-CORS(application,resources={r"/api/*":{"origins":["http://localhost:3000","https://localhost:3443"]}})
+CORS(application,resources={r"/api/*":{"origins":["http://localhost:3000","https://localhost:3443","http://64.23.253.75:3443","https://64.23.253.75:3000"]}})
 
 application.secret_key =  os.getenv('APPLICATION_SECRET_KEY')
 
 #test db connection
 conn = get_db_connection()
 cur = conn.cursor()
-
 
 
 """ VEH MANUFACTURER CACHE INITIALIZATION
@@ -126,6 +125,7 @@ def initialize_cache():
     except IOError as e:
         print(f" Error writing to file: {e}")
 initialize_cache()
+
 
 @application.route('/api', methods=['GET', 'POST'])
 def home():
@@ -295,7 +295,12 @@ def update_email():
 
 @application.route('/api/retrieve_cache',methods=['GET'])
 def retrieve_cache():
-
+    
+    print(f"(api) CLIENT REQUEST: {request}")
+    print(f"(api) REQUEST HEADERS: {request.headers}")
+    print(f"(api)CLIENT REQUEST: {request}")
+	
+   
     with open(CACHE_FILE_PATH,'r') as cache_file:
         print(chalk.blue(':::::CHECKING FRESHNESS OF CACHE DATA:::::'))
         cache_data = json.load(cache_file)
@@ -308,8 +313,8 @@ def return_db_data():
     endpoint for js script to request db data
     returned data will be used to populate the graphs/charts etc
     """
-
-    #get params off request
+    
+   #get params off request
     make = request.args.get('make')
     model = request.args.get('model')
     year = request.args.get('year')

@@ -14,5 +14,10 @@ threads = int(os.environ.get('GUNICORN_THREADS','4'))
 bind = os.environ.get('GUNICORN_BIND','0.0.0.0:7777')
 
 forwarded_allow_ips = '*'
-
 secure_scheme_headers = {'X-Forwarded-Proto':'https'}
+
+
+#for logging
+accesslog = '-' #log to stdout
+errorlog = '-' #log to stdout
+loglevel = 'info'
