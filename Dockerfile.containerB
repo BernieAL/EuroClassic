@@ -25,9 +25,10 @@ COPY backend_copy/LongTerm_prev_scrapes /backend_copy/LongTerm_prev_scrapes
 COPY backend_copy/Cleaned_data_output /backend_copy/Cleaned_data_output
 COPY backend_copy/RabbitMQ_queues /backend_copy/RabbitMQ_queues  
 
-
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
-RUN apt-get update && apt-get install -y wget nano
+
+#install postgreSQL client to test for psql connection in cont_b_entrypoint.sh
+RUN apt-get update && apt-get install -y postgresql-client wget nano 
 
 ENV PYTHONPATH="${PYTHONPATH}:/backend_copy"
 
@@ -35,7 +36,9 @@ ENV PYTHONPATH="${PYTHONPATH}:/backend_copy"
 
 EXPOSE 7777
 
+
 #set entry point to custom script - starting gunicorn with config
-COPY cont_B_entrypoint.sh /cont_B_entrypoint.sh
-RUN chmod +x /cont_B_entrypoint.sh
+COPY cont_B_entrypoint.sh /cont_B_entrypoint.sh 
+COPY /wait-for-it-master/wait-for-it.sh /wait-for-it-master/wait-for-it.sh
+RUN chmod +x /cont_B_entrypoint.sh /wait-for-it-master/wait-for-it.sh
 ENTRYPOINT ["/cont_B_entrypoint.sh"]
