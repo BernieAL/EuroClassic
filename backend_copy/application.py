@@ -55,8 +55,7 @@ CACHE_FILE_PATH = os.path.join(BACKEND_ROOT,'Cache','makes_cache.json')
 
 
 application = Flask(__name__)
-CORS(application,resources={r"/api/*":{"origins":["http://localhost:3000","https://localhost:3443"]}})
-
+CORS(application,resources={r"/api/*":{"origins":["http://localhost:3000","https://localhost:3443","http://64.23.253.75:3443","https://64.23.253.75:3000"]}})
 application.secret_key =  os.getenv('APPLICATION_SECRET_KEY')
 
 #test db connection
@@ -232,15 +231,15 @@ def vehicleQuery():
             #TEMP SNIPPET - FOR TESTING W/O REACT - ADDED FOR TESTING 4-25-24
             #publish veh as message to VEH_QUEUE (RMQ PRODUCER) 
 
-            user_record_email_and_veh_obj = {
-                'email':'balmanzar883@gmail.com',
-                'veh': {
-                    'year': reqeusted_veh['year'],
-                    'make': reqeusted_veh['make'],
-                    'model': reqeusted_veh['model']         
-                }
-            }   
-            add_veh_to_queue(user_record_email_and_veh_obj)
+            # user_record_email_and_veh_obj = {
+            #     'email':'balmanzar883@gmail.com',
+            #     'veh': {
+            #         'year': reqeusted_veh['year'],
+            #         'make': reqeusted_veh['make'],
+            #         'model': reqeusted_veh['model']         
+            #     }
+            # }   
+            # add_veh_to_queue(user_record_email_and_veh_obj)
             # END TEST SNIPPET
             
 
@@ -287,7 +286,7 @@ def update_email():
         # #publish veh as message to VEH_QUEUE (RMQ PRODUCER)    
         add_veh_to_queue(user_record_email_and_veh_obj)
         
-        return jsonify("SUCCESS")
+        return jsonify("SUCCESSFULLY ADDED EMAIL")
         
     except Exception as e:
         print('Error',str(e))
@@ -295,7 +294,9 @@ def update_email():
 
 @application.route('/api/retrieve_cache',methods=['GET'])
 def retrieve_cache():
-
+    print(f"(api) CLIENT REQUEST: {request}")
+    print(f"(api) REQUEST HEADERS: {request.headers}")
+    print(f"(api)CLIENT REQUEST: {request}")
     with open(CACHE_FILE_PATH,'r') as cache_file:
         print(chalk.blue(':::::CHECKING FRESHNESS OF CACHE DATA:::::'))
         cache_data = json.load(cache_file)
@@ -476,14 +477,14 @@ def DB_check_for_empty_table(cur,veh):
                 # print(table_record_count)
 
     cur.execute(CURR_empty_check_query,(model,make))             
-    CURR_table_record_count = cur.fetchone()[0]           #TRUE for presence of 0 -  one of the 2 tables has no records for this veh, ret True
+    CURR_table_record_count = cur.fetchone()[0]           #TRUE for presence of 0, -  one of the 2 tables has no records for this veh, ret True
 
     res['sold_record_count']
     
 
     
                 
-    #False- for presence of 0 both tables have records for this veh
+    #False- for presence of 0, both tables have records for this veh, scrape not needed
     return False
                 
 

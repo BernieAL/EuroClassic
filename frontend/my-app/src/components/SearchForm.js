@@ -20,7 +20,7 @@ export default function SearchForm({handleDataFromSearchForm, ROOT_API_URL}){
         state_model:null,
     })
     const [vehMakeCacheData,setVehMakeCacheData] = useState([])
-
+    	
     // request vehMakeCacheData from server, store in state
     useEffect(()=>{
         const load_manufacturer_cache = async ()=>{

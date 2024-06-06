@@ -29,7 +29,7 @@ def add_veh_to_queue(email_and_veh):
                         properties=pika.BasicProperties(delivery_mode=pika.DeliveryMode.Persistent)
                         )
     
-    print(chalk.green(f"VEH ADDED TO SCRAPE QUEUE: {email_and_veh['veh']}"))
+    print(chalk.green(f"(scrape_producer)VEH ADDED TO SCRAPE QUEUE: {email_and_veh['veh']}"))
     
 
 if __name__ == "__main__":
