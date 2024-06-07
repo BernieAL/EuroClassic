@@ -39,5 +39,4 @@ ENV PYTHONPATH="${PYTHONPATH}:/backend_copy"
 
 CMD ["python", "RabbitMQ_queues/scrape_worker.py"]
 
-#Set the command to keep the container open
-CMD ["tail", "-f", "/dev/null"]
+

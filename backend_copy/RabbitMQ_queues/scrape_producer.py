@@ -7,13 +7,13 @@ import json
 load_dotenv(find_dotenv())
 
 
-RABBITMQ_HOST = os.getenv('RABBITMQ_HOST')
+# RABBITMQ_HOST = os.getenv('RABBITMQ_HOST')
 # RABBIT_MQ_HOST = 'rbmq_service'
 
 #called from api - acts as producer - adds veh to queue as message
 def add_veh_to_queue(email_and_veh):
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(os.getenv('RABBITMQ_HOST','rbmq')))
     channel = connection.channel()
 
     channel.queue_declare(queue='VEH_QUEUE',durable=True)

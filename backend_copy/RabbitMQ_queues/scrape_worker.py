@@ -21,13 +21,10 @@ import app_main_runner
 
 
 
-
-
-
 def main():
 
     
-    connection = pika.BlockingConnection(pika.ConnectionParameters(os.getenv('RABBITMQ_HOST')))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(os.getenv('RABBITMQ_HOST','rbmq')))
     channel = connection.channel()
 
     channel.queue_declare(queue='VEH_QUEUE',durable=True)
