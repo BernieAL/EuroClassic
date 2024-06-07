@@ -55,8 +55,7 @@ CACHE_FILE_PATH = os.path.join(BACKEND_ROOT,'Cache','makes_cache.json')
 
 
 application = Flask(__name__)
-CORS(application, resources={r"/*": {"origins": "http://localhost:3000"}})
-
+CORS(application,resources={r"/api/*":{"origins":["http://localhost:3000","https://localhost:3443","http://64.23.253.75:3443","https://64.23.253.75:3000"]}})
 application.secret_key =  os.getenv('APPLICATION_SECRET_KEY')
 
 #test db connection
@@ -167,17 +166,23 @@ def vehicleQuery():
         #data = request.form 
 
         #FOR TESTING WITH REACT - recieves  as json object from client
+        print(f"(api)CLIENT REQUEST: {request}")
+        
         data = request.get_json()
-        print(data)
+        print(f"(api)REQUEST BODY: {data}")
         reqeusted_veh = {
             'year' : (data.get('year')),
             'make': (data.get('make')).upper(),
             'model': (data.get('model')).upper()
         }
        
-        
-        #checks if veh scrape is needed - if veh isnt in db or data is old, new scrape needed
-        veh_scrape_status = DB_check_new_scrape_needed(reqeusted_veh)
+        # check if either sold or curr table have 0 records for veh
+        #returns True if one of the tables has no records, false otherwise
+        table_empty_check = DB_check_for_empty_table(cur,reqeusted_veh)
+
+        #checks if veh scrape is needed - if veh isnt in db or 
+        # data is old, new scrape needed
+        veh_scrape_status = DB_check_new_scrape_needed(cur,reqeusted_veh)
         print(chalk.green(f"veh_scrape_status: {veh_scrape_status}"))
         
         """DB_check_new_scrape_needed returns obj:
@@ -188,33 +193,23 @@ def vehicleQuery():
             }
         """
         
-        """if scrape_needed == False -> veh is in db, and veh data IS NOT old
-           retrieve all records  from DB for this veh
-           Then return to front end
-        """
-        if veh_scrape_status['scrape_needed'] == False:   
-            #get veh records from all tables and return as response
-            print(chalk.green("::::::VEH SCRAPE NOT NEEDED::::::"))
-            data_from_db = DB_execute_queries_and_store_results(cur,reqeusted_veh['make'],reqeusted_veh['model'])
-            print(chalk.green(f"data from db{data_from_db}"))
-            return jsonify(data_from_db)
-        
-        else:
-            """new scrape needed - put veh in queue to perform scrape and email user the results
 
-            write vehicle to queue file
-            get email from user
-                to get email, create uuid for this request,
+        if (veh_scrape_status['scrape_needed'] == True) or(table_empty_check == True):
+            """For new scrape needed - veh is added to queue to perform scrape and email user the results
+
+                - write vehicle to queue file
+                - get email from user
+                - to get email, create uuid for this request,
                  and store requested veh data using uuid,  
-                 then send uuid back to client in response
+                - then send uuid back to client in response
 
-                on client side, prompt user for email, put email and uuid in obj and send back over to api
+                - on client side, prompt user for email, put email and uuid in obj and send back over to api
 
-                in api, use uuid to find existing 
-            initiate scrape,clean,analyze,push to db process
+                - in api, uuid will be used to find the record for requested veh and then it will be updated with user email
+                - initiate scrape,clean,analyze,push to db process
 
             """
-            #gen uuid
+            #gen uuid for this vehicle request
             user_uuid = uuid.uuid4()
             
             #store uuid and requested veh info in db
@@ -235,18 +230,37 @@ def vehicleQuery():
             
             #TEMP SNIPPET - FOR TESTING W/O REACT - ADDED FOR TESTING 4-25-24
             #publish veh as message to VEH_QUEUE (RMQ PRODUCER) 
-            user_record_email_and_veh_obj = {
-                'email':'balmanzar883@gmail.com',
-                'veh': {
-                    'year': reqeusted_veh['year'],
-                    'make': reqeusted_veh['make'],
-                    'model': reqeusted_veh['model']         
-                }
-            }   
-            add_veh_to_queue(user_record_email_and_veh_obj)
+
+            # user_record_email_and_veh_obj = {
+            #     'email':'balmanzar883@gmail.com',
+            #     'veh': {
+            #         'year': reqeusted_veh['year'],
+            #         'make': reqeusted_veh['make'],
+            #         'model': reqeusted_veh['model']         
+            #     }
+            # }   
+            # add_veh_to_queue(user_record_email_and_veh_obj)
             # END TEST SNIPPET
+            
 
             return jsonify(res)
+        else:
+            
+            """if scrape_needed == False -> veh is in db, and veh data IS NOT old
+            retrieve all records  from DB for this veh
+            Then return to front end
+            """
+            #get veh records from all tables and return as response
+            print(chalk.green("::::::VEH SCRAPE NOT NEEDED::::::"))
+            data_from_db = DB_execute_queries_and_store_results(cur,reqeusted_veh['make'],reqeusted_veh['model'])
+            
+            print(chalk.red(f"data from db{data_from_db}"))
+            
+            return jsonify(data_from_db)
+
+
+   
+     
             
            
     except Exception as e:
@@ -272,7 +286,7 @@ def update_email():
         # #publish veh as message to VEH_QUEUE (RMQ PRODUCER)    
         add_veh_to_queue(user_record_email_and_veh_obj)
         
-        return jsonify("SUCCESS")
+        return jsonify("SUCCESSFULLY ADDED EMAIL")
         
     except Exception as e:
         print('Error',str(e))
@@ -280,7 +294,9 @@ def update_email():
 
 @application.route('/api/retrieve_cache',methods=['GET'])
 def retrieve_cache():
-
+    print(f"(api) CLIENT REQUEST: {request}")
+    print(f"(api) REQUEST HEADERS: {request.headers}")
+    print(f"(api)CLIENT REQUEST: {request}")
     with open(CACHE_FILE_PATH,'r') as cache_file:
         print(chalk.blue(':::::CHECKING FRESHNESS OF CACHE DATA:::::'))
         cache_data = json.load(cache_file)
@@ -317,7 +333,7 @@ def return_data():
 # ==============================================================
 # HELPER FUNCTIONS
 
-def DB_check_new_scrape_needed(veh:object):
+def DB_check_new_scrape_needed(cur,veh:object):
 
     """ Accepts: user request veh (year,make,model)
 
@@ -383,8 +399,8 @@ def DB_check_new_scrape_needed(veh:object):
 
     try:
         cur.execute(last_scrape_date_query,(model,make))
-        
         retrieved_veh_record = cur.fetchone() #returns tuple
+        
         #TESTING
         print(chalk.green(f"(check_new_scrape_needed)retrieved_veh - {retrieved_veh_record}"))
 
@@ -415,14 +431,63 @@ def DB_check_new_scrape_needed(veh:object):
         
         #if veh not found, set scrape_needed to true
         else:
-
             veh_scrape_status['scrape_needed']=True
             return veh_scrape_status
     
     except Exception as e:
         # Handle exceptions (print or log the error, or take applicationropriate action)
         print(f"Error: {str(e)}")
+
+def DB_check_for_empty_table(cur,veh):
+
+    """For requested veh, this function checks if SOLD or CURR LISTING tables length are 0.
+
+    Function used as part of determing if a new scrape is needed for a vehicle.
+
+    returns TRUE if SOLD listings or CURR listings tables for veh are empty, FALSE otherwise
+
+    """
+
+
+    # veh['year']
+    make = veh['make']
+    model = veh['model']
+    print('make: '+make)
+    print('model: '+model)
+
+    """
+        res = {'sold_record_count':0,'curr_record_count':0}
+    """
+    res = {'sold_record_count':0,'curr_record_count':0}
     
+    SOLD_empty_check_query =  """
+                                SELECT COUNT (*) 
+                                FROM sold_listings
+                                WHERE MODEL = %s AND MAKE = %s
+                                """
+    
+    CURR_empty_check_query = """
+                             SELECT COUNT (*) 
+                            FROM current_listings
+                            WHERE MODEL = %s AND MAKE = %s
+                            """
+    
+    cur.execute(SOLD_empty_check_query,(model,make))
+    SOLD_table_record_count = cur.fetchone()[0]
+                # print(table_record_count)
+
+    cur.execute(CURR_empty_check_query,(model,make))             
+    CURR_table_record_count = cur.fetchone()[0]           #TRUE for presence of 0, -  one of the 2 tables has no records for this veh, ret True
+
+    res['sold_record_count']
+    
+
+    
+                
+    #False- for presence of 0, both tables have records for this veh, scrape not needed
+    return False
+                
+
 def DB_execute_queries_and_store_results(cur, make, model):
     """
     This function passes params to imported queries and executes them
@@ -432,21 +497,21 @@ def DB_execute_queries_and_store_results(cur, make, model):
     # Execute the queries
     cur.execute(all_sales_records_NO_YEAR_query, (make, model))
     all_sales_records_result = cur.fetchall() #returns list
-    print(f"sales records {all_sales_records_result}")
+    print(chalk.blue(f'sales records: ", ${all_sales_records_result}'))
 
     cur.execute(all_current_records_NO_YEAR_query, (make, model))
     current_records_result = cur.fetchall() #returns list
     print(f"current records {current_records_result}")
 
-    """EMPTY CHECK
-        if theres no sales records or current records for vehicle - return early with indication that vehicle doesnt exist in DB and do not execute rest of queries
-    """
-    if len(current_records_result) == 0 or len(all_sales_records_result) == 0:
-        return {"VEH_EXISTS": False,
-                "all_sales_records": [],
-                "current_records": [],
-                "sold_stats": [],
-                "current_stats": []}
+    # """EMPTY CHECK
+    #     if theres no sales records or current records for vehicle - return early with indication that vehicle doesnt exist in DB and do not execute rest of queries
+    # """
+    # if len(current_records_result) == 0 or len(all_sales_records_result) == 0:
+    #     return {"VEH_EXISTS": False,
+    #             "all_sales_records": [],
+    #             "current_records": [],
+    #             "sold_stats": [],
+    #             "current_stats": []}
     
 
     cur.execute(sold_stats_query_NO_YEAR, (make, model))
