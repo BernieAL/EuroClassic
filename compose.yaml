@@ -15,18 +15,18 @@ services:
       volumes:
         - ./sql_init_scripts:/docker-entrypoint-initdb.d
 
-    container_rbmq:
-      hostname: rbmq
-      container_name: rbmq
-      build:
-        context: ./
-        dockerfile: Dockerfile.container_rbmq
-      ports: 
-          - "15672:15672"
-      networks:
-        - my-network
-      stdin_open: true
-      tty: true
+    # container_rbmq:
+    #   hostname: rbmq
+    #   container_name: rbmq
+    #   build:
+    #     context: ./
+    #     dockerfile: Dockerfile.container_rbmq
+    #   ports: 
+    #       - "15672:15672"
+    #   networks:
+    #     - my-network
+    #   stdin_open: true
+    #   tty: true
 
     container_b: 
       container_name: container_b
@@ -43,45 +43,45 @@ services:
       depends_on: 
         - container_pgsql
 
-    nginx:
-      hostname: nginx
-      container_name: nginx
-      build: 
-          context: ./
-          dockerfile: Dockerfile.container_react_nginx
-      ports:
-        - "3000:80"
-        - "3443:443"
-      networks:
-        - my-network
+    # nginx:
+    #   hostname: nginx
+    #   container_name: nginx
+    #   build: 
+    #       context: ./
+    #       dockerfile: Dockerfile.container_react_nginx
+    #   ports:
+    #     - "3000:80"
+    #     - "3443:443"
+    #   networks:
+    #     - my-network
 
-    scrape_worker:
-      hostname: scrape_worker
-      container_name: scrape_worker
-      build:
-          context: ./
-          dockerfile: Dockerfile.container_scrape_worker
-      depends_on:
-        - container_rbmq
-      networks:
-        - my-network
-      restart: on-failure
-      tty: true
-      stdin_open: true
+    # scrape_worker:
+    #   hostname: scrape_worker
+    #   container_name: scrape_worker
+    #   build:
+    #       context: ./
+    #       dockerfile: Dockerfile.container_scrape_worker
+    #   depends_on:
+    #     - container_rbmq
+    #   networks:
+    #     - my-network
+    #   restart: on-failure
+    #   tty: true
+    #   stdin_open: true
 
-    email_worker:
-      hostname: email_worker
-      container_name: email_worker
-      build:
-          context: ./
-          dockerfile: Dockerfile.container_email_worker
-      depends_on:
-        - container_rbmq
-      networks:
-        - my-network
-      restart: on-failure
-      tty: true
-      stdin_open: true
+    # email_worker:
+    #   hostname: email_worker
+    #   container_name: email_worker
+    #   build:
+    #       context: ./
+    #       dockerfile: Dockerfile.container_email_worker
+    #   depends_on:
+    #     - container_rbmq
+    #   networks:
+    #     - my-network
+    #   restart: on-failure
+    #   tty: true
+    #   stdin_open: true
 
     # container_api:
     #   hostname: container_api

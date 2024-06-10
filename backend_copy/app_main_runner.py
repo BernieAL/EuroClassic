@@ -25,7 +25,7 @@ from Data_Clean_Logic.clean_ebay_data import ebay_clean_data_runner
 from Web_Scrape_Logic.EBAY_scraper import ebay_CURRENT_scrape_single_veh,ebay_SOLD_scrape_single_veh_2
 # from Web_Scrape_Logic.BAT_scraper import BAT_scrape_single_veh,BAT_scrape_all_for_make
 
-from Postgres_logic.insert_data import populate_vehicles_dir_table,insert_current_listing_data,insert_sold_data, insertion_check
+from Postgres_logic.insert_data import populate_vehicles_dir_table,insert_new_scraped_veh_VEH_DIR,insert_current_listing_data,insert_sold_data, insertion_check
 from Postgres_logic.connect import get_db_connection
 # from Web_Scrape_Logic.scrape_runner_main import run_scapers
 
@@ -186,12 +186,12 @@ def main_runner(veh):
         # #bat_clean_data_single(car,BAT_raw_single)
         # #bat_clean_data_all_make(car,BAT_raw_all_make)
         
-        # #insertion of ebay data into db
+        # #insertion of newly scraped ebay data into db
         insert_current_listing_data(db_cursor,db_conn,EBAY_cleaned_CURRENT_LISTINGS_file_path)
         insert_sold_data(db_cursor,db_conn,EBAY_cleaned_SOLD_DATA_file_path)
 
-        #populate veh dir tables
-        # populate_vehicles_dir_table()
+        # insert veh into veh dir table (vehicles) with last scraped date
+        insert_new_scraped_veh_VEH_DIR(db_cursor,db_conn,veh)
         
         #BAT insertion of cleaned data - IMPLEMENT LATER
         #insert_sold_data(db_cursor,BAT_cleaned_single)
