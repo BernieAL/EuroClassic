@@ -36,7 +36,7 @@ INPUT_veh_dir_file_path = os.path.join(postgres_dir,'..','vehicle_directory.csv'
 clean_CURR_LISTINGS_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_CURRENT_LISTINGS.csv')
 clean_SOLD_LISTINGS_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
 
-
+LTR_ROOT_DIR = os.path.join(PROJ_ROOT,'Longterm_prev_scrapes') 
 
 # #TESTING - USING DUMMY DATA
 # clean_output_file_SOLD_DATA_file_path = os.path.join(postgres_dir,'..','Dummy_data_generator/sold_listings_dummy.csv')
@@ -146,6 +146,7 @@ def insert_sold_data(cur,conn,cleaned_SOLD_DATA_file_path):
         
 
 """ 
+
    -This function accepts a csv file path of current records
    and inserts them into the db 
    -The source of the data doesnt matter so long as it matches the format specified for current vehicle listings -> YEAR,MAKE,MODEL,LISTPRICE
@@ -173,6 +174,44 @@ def insert_current_listing_data(cur,conn,cleaned_CURRENT_LISTINGS_file_path):
         print(chalk.green(":::Successfully inserted all CURRENT_LISTING records into DB"))
     except Exception as e:
             print(chalk.red(f"Failed to insert current data: {e}"))
+
+
+def LTR_insert_curr_listings():
+
+    LTR_EBAY_ROOT = os.path.join(LTR_ROOT_DIR,'EBAY')
+    """
+        This function will user insert_current_listing_data()
+        to insert data into DB from files in LTR storage for current listings
+
+        -Will need path to LTR EBAY -> Longterm_prev_scrapes/EBAY
+        -Then parse file name
+            - determine if file is curr or sold
+            - extract vehicle name, and scrape data
+        - build query string and insert into db
+    """
+
+    for dirs,path,file in os.walk(LTR_EBAY_ROOT):
+
+        """
+            file name format:
+              EBAY__CURR__03-22-2024__NISSAN-350Z.txt 
+              OR 
+              EBAY__SOLD__03-22-2024__NISSAN-350Z.txt
+        """
+      
+        tokens = file.split("__")
+
+        #token [1] will be CURR or SOLD
+        listing_type = tokens[1]
+
+        #token[2] is date
+        scrape_date = tokens[3]
+
+        #token[3] is make and model, which will need to split at "-"
+        make,model = token[3].split("-")
+
+        print(f"${listing_type} ${scrape_date} ${make} ${model}")
+
 
     
 """ 

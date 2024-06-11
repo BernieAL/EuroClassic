@@ -53,7 +53,7 @@ load_dotenv(find_dotenv())
 
 # Ensure the storage_script is accessible from the path where this script is located
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from LTS_storage_script import copy_file
+from LTS_storage_script import LTS_copy_file
 
 
 SCRAPED_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
@@ -160,7 +160,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
 
     try:
         
-        ### VIA SEARCH BOX INERACTION
+        ### VIA SEARCH BOX INTERACTION
         # driver.get("https://www.ebay.com/b/Cars-Trucks/6001/bn_1865117")
         # #enter model 
         # ebay_search_box = driver.find_element(By.CSS_SELECTOR,'#gh-ac')
@@ -333,7 +333,7 @@ def ebay_CURRENT_scrape_single_veh(car,driver,EBAY_raw_CURRENT_output_file_path)
         # close file before copying or it will result in empty copied file
         EBAY_raw_CURRENT_output_file.close()
         logger.debug("CLOSING OUTPUT FILE %s -", EBAY_raw_CURRENT_output_file)
-        copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,"EBAY",current_date,carName,"CURR")
+        LTS_copy_file("EBAY",EBAY_raw_CURRENT_output_file_path,"EBAY",current_date,carName,"CURR")
 
         # FOR TESTING LTS COPY WITH PREV DATA TO AVOID LIVE SCRAPE
         # copy_file("EBAY",TEST_prev_sold_path,"EBAY",current_date,"test_prev_sold_911","CURR")
@@ -573,7 +573,7 @@ def ebay_SOLD_scrape_single_veh_2(car,driver,EBAY_raw_SOLD_DATA_output_file_path
         EBAY_raw_SOLD_output_file.close()
 
         logger.debug("CLOSING OUTPUT FILE %s -", EBAY_raw_SOLD_output_file)
-        copy_file("EBAY",EBAY_raw_SOLD_DATA_output_file_path,"EBAY",current_date,carName,"SOLD")
+        LTS_copy_file("EBAY",EBAY_raw_SOLD_DATA_output_file_path,"EBAY",current_date,carName,"SOLD")
         
 
         #FOR TESTING LTS COPY WITH PREV DATA
@@ -801,7 +801,7 @@ def ebay_SOLD_scrape_single_veh(car,driver,EBAY_raw_SOLD_DATA_output_file_path):
         carName = f"{car['make']}-{car['model']}"
         #close file before copying or it will result in empty copied file
         EBAY_raw_SOLD_output_file.close()
-        copy_file("EBAY",EBAY_raw_SOLD_DATA_output_file_path,"EBAY",current_date,carName,"SOLD")
+        LTS_copy_file("EBAY",EBAY_raw_SOLD_DATA_output_file_path,"EBAY",current_date,carName,"SOLD")
         success_obj = {
                     'success': True,
                     'function':'ebay_scrape_sold',

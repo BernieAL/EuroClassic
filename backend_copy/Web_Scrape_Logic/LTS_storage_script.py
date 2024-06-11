@@ -15,9 +15,11 @@ create new dir called long-term-prev-scrapes
 
 
     **NOTE ABOUT OVERWRITING:
-        The shutil.copy function will overwrite the destination file if it already exists. So, if there's a file with the same name in the destination directory, it will be replaced with the new file being copied.
+        The shutil.copy function will overwrite the destination file if it already exists. So, if there's a file with the same name in the destination directory, 
+        it will be replaced with the new file being copied.
 
-        Ex. if this file (BAT-ALL-MAKE__03-19-2024__PORSCHE 911.txt) exists already and has data, and the the copy_file function is coming from the same source, from the same vehicle, on the same_date, it will cause the existing one to be overwritten. 
+        Ex. if this file (BAT-ALL-MAKE__03-19-2024__PORSCHE 911.txt) exists already and has data, and 
+        the copy_file function is coming from the same source, from the same vehicle, on the same_date, it will cause the existing one to be overwritten. 
 
 """
 
@@ -26,6 +28,7 @@ import sys
 import shutil
 from datetime import date,datetime
 import time
+from simple_chalk import chalk
 
 #Gives - backend_copy\Web_Scrape_Logic\storage_script.py
 current_file_path = os.path.abspath(__file__)
@@ -41,7 +44,7 @@ current_script_dir= os.path.dirname(os.path.abspath(__file__))
 """
 This function takes a file, and creates a copy of it, storing it in curr dir
 """
-def copy_file(dest_dir_specifier,source_file,data_source,scrape_date,vehicle,data_label="NA"):
+def LTS_copy_file(dest_dir_specifier,source_file,data_source,scrape_date,vehicle,data_label="NA"):
 
     """Accepts FILE PATH of source file - NOT THE OPENED FILE OBJECT REFERENCE
     Copies the source file to a specified destination directory, creating the directory if it doesn't exist.
@@ -63,11 +66,13 @@ def copy_file(dest_dir_specifier,source_file,data_source,scrape_date,vehicle,dat
     #build destination path string
     # Ex. '../Longterm_prev_scrapes/EBAY' --> where EBAY is dest_dir_specifier
     DEST_DIR_PATH = os.path.join(PROJ_ROOT,'LongTerm_prev_scrapes', dest_dir_specifier)
+    # print(DEST_DIR_PATH)
+
 
     #create dest dir if doesnt exist 
     if not os.path.exists(DEST_DIR_PATH):
         os.makedirs(DEST_DIR_PATH)
-        print(f"Created directory: {DEST_DIR_PATH}")
+        print(chalk.green(f"Created directory: {DEST_DIR_PATH}"))
 
    
 
@@ -75,13 +80,16 @@ def copy_file(dest_dir_specifier,source_file,data_source,scrape_date,vehicle,dat
     #Ex. EBAY__03-18-24__AUDI-R8
     custom_output_file_name = f"{data_source.upper()}__{data_label.upper()}__{scrape_date}__{vehicle.upper()}.txt"
     
+
     #create file path for output file
     #Ex. '../Longterm_prev_scrapes/EBAY/EBAY__03-18-24__AUDI-R8'
+
+    #MODIFIED 6/10/24 -> '../Longterm_prev_scrapes/EBAY/CURR/EBAY__03-18-24__AUDI-R8'
     custom_output_file_path = os.path.join(DEST_DIR_PATH,custom_output_file_name)
 
     #copy source and store as output filename
     shutil.copy(source_file,custom_output_file_path)
-    print(f"SUCCESSFULLY COPIED FILE CONTENTS FROM {source_file} TO {custom_output_file_name}")
+    print(chalk.green(f"SUCCESSFULLY COPIED FILE CONTENTS FROM {source_file} TO {custom_output_file_name}"))
 
 
 
@@ -97,10 +105,20 @@ if __name__ == "__main__":
     test_file_to_copy = os.path.join(DEST_DIR_PATH,"test_data_for_copy.txt")
     print(os.path.isfile(test_file_to_copy))
 
-    dest_dir_specifier = "EBAY"
+
+    #test with SOLD
+    dest_dir_specifier = "EBAY/SOLD"
     data_label = "SOLD"
     data_source = "EBAY"
     vehicle = "AUDI R8"
     scrape_date ="03-14-2024" 
+    LTS_copy_file(dest_dir_specifier,test_file_to_copy,data_source,scrape_date,vehicle,data_label)
 
-    copy_file(dest_dir_specifier,test_file_to_copy,data_source,scrape_date,vehicle,data_label)
+    #test with curr
+    dest_dir_specifier = "EBAY/CURR"
+    data_label = "CURR"
+    data_source = "EBAY"
+    vehicle = "AUDI R8"
+    scrape_date ="03-14-2024" 
+    LTS_copy_file(dest_dir_specifier,test_file_to_copy,data_source,scrape_date,vehicle,data_label)
+
