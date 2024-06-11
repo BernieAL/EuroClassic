@@ -63,8 +63,9 @@ def LTS_copy_file(dest_dir_specifier,source_file,data_source,scrape_date,vehicle
    # Gives - \EuroClassic\backend_copy
     PROJ_ROOT = os.path.abspath(os.path.join(current_script_dir, '..'))
     
-    #build destination path string
-    # Ex. '../Longterm_prev_scrapes/EBAY' --> where EBAY is dest_dir_specifier
+    #build destination path string 
+    #DEST_DIR_SPECIFIER is data source and listing type -> "EBAY/SOLD" or "EBAY/CURR" and is rec'd from calling statement
+    # Ex. '../Longterm_prev_scrapes/EBAY/SOLD' --> where EBAY/SOLD or EBAY/CURR is dest_dir_specifier
     DEST_DIR_PATH = os.path.join(PROJ_ROOT,'LongTerm_prev_scrapes', dest_dir_specifier)
     # print(DEST_DIR_PATH)
 
@@ -82,14 +83,13 @@ def LTS_copy_file(dest_dir_specifier,source_file,data_source,scrape_date,vehicle
     
 
     #create file path for output file
-    #Ex. '../Longterm_prev_scrapes/EBAY/EBAY__03-18-24__AUDI-R8'
-
+    #Ex. '../Longterm_prev_scrapes/EBAY/SOLD/EBAY__03-18-24__AUDI-R8'  -- OR -- '../Longterm_prev_scrapes/EBAY/CURR/EBAY__03-18-24__AUDI-R8'
     #MODIFIED 6/10/24 -> '../Longterm_prev_scrapes/EBAY/CURR/EBAY__03-18-24__AUDI-R8'
     custom_output_file_path = os.path.join(DEST_DIR_PATH,custom_output_file_name)
 
     #copy source and store as output filename
     shutil.copy(source_file,custom_output_file_path)
-    print(chalk.green(f"SUCCESSFULLY COPIED FILE CONTENTS FROM {source_file} TO {custom_output_file_name}"))
+    print(chalk.green(f"SUCCESSFULLY COPIED FILE CONTENTS FROM {source_file} - TO -{custom_output_file_path} \n -----------"))
 
 
 
@@ -102,23 +102,25 @@ if __name__ == "__main__":
     #Gives - \EuroClassic\backend_copy\LongTerm_prev_scrapes
     DEST_DIR_PATH = os.path.join(PROJ_ROOT,'LongTerm_prev_scrapes')
     print(DEST_DIR_PATH)
-    test_file_to_copy = os.path.join(DEST_DIR_PATH,"test_data_for_copy.txt")
-    print(os.path.isfile(test_file_to_copy))
+    
+
+    test_file_to_copy = os.path.join(DEST_DIR_PATH,"EBAY__SOLD__04-30-2024__TEST_PREV_SOLD_911.txt")
+    # print(os.path.isfile(test_file_to_copy))
 
 
     #test with SOLD
     dest_dir_specifier = "EBAY/SOLD"
     data_label = "SOLD"
     data_source = "EBAY"
-    vehicle = "AUDI R8"
-    scrape_date ="03-14-2024" 
+    vehicle = "TEST-PORSCHE 911"
+    scrape_date ="06-11-2024" 
     LTS_copy_file(dest_dir_specifier,test_file_to_copy,data_source,scrape_date,vehicle,data_label)
 
-    #test with curr
+    #test with CURR
     dest_dir_specifier = "EBAY/CURR"
     data_label = "CURR"
     data_source = "EBAY"
-    vehicle = "AUDI R8"
-    scrape_date ="03-14-2024" 
+    vehicle = "TEST-PORSCHE 911"
+    scrape_date ="06-11-2024" 
     LTS_copy_file(dest_dir_specifier,test_file_to_copy,data_source,scrape_date,vehicle,data_label)
 
