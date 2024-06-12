@@ -190,27 +190,27 @@ def LTR_insert_curr_listings():
         - build query string and insert into db
     """
 
-    for dirs,path,file in os.walk(LTR_EBAY_ROOT):
+    for root,dirs,files in os.walk(LTR_EBAY_ROOT):
 
         """
-            file name format:
-              EBAY__CURR__03-22-2024__NISSAN-350Z.txt 
-              OR 
-              EBAY__SOLD__03-22-2024__NISSAN-350Z.txt
+        EBAY dir has SOLD and CURR sub dir
+        
         """
+        for subdir in dirs:
+            print(subdir)
       
-        tokens = file.split("__")
+        # tokens = file.split("__")
 
-        #token [1] will be CURR or SOLD
-        listing_type = tokens[1]
+        # #token [1] will be CURR or SOLD
+        # listing_type = tokens[1]
 
-        #token[2] is date
-        scrape_date = tokens[3]
+        # #token[2] is date
+        # scrape_date = tokens[3]
 
-        #token[3] is make and model, which will need to split at "-"
-        make,model = token[3].split("-")
+        # #token[3] is make and model, which will need to split at "-"
+        # make,model = token[3].split("-")
 
-        print(f"${listing_type} ${scrape_date} ${make} ${model}")
+        # print(f"${listing_type} ${scrape_date} ${make} ${model}")
 
 
     
@@ -249,11 +249,13 @@ if __name__ == '__main__':
     }
     conn = psycopg2.connect(os.getenv('DB_URI'))
     cur = conn.cursor()
-    populate_vehicles_dir_table(cur, INPUT_veh_dir_file_path)
-    insert_new_scraped_veh_VEH_DIR(cur,conn,veh)
-    insert_sold_data(cur,conn, clean_SOLD_LISTINGS_file)
-    insert_current_listing_data(cur, conn,clean_CURR_LISTINGS_file)
+    # populate_vehicles_dir_table(cur, INPUT_veh_dir_file_path)
+    # insert_new_scraped_veh_VEH_DIR(cur,conn,veh)
+    # insert_sold_data(cur,conn, clean_SOLD_LISTINGS_file)
+    # insert_current_listing_data(cur, conn,clean_CURR_LISTINGS_file)
     
+    LTR_insert_curr_listings()
+
     #insertion check of tables
     insertion_check(cur,"VEHICLES")
     insertion_check(cur,"SOLD_LISTINGS")

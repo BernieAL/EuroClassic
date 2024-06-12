@@ -5,9 +5,18 @@ import os
 from dotenv import load_dotenv, find_dotenv
 import psycopg2
 import time
+import sys
 
 load_dotenv(find_dotenv())        
 
+#get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Add the directory to sys.path
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
+from config import DB_URI
 
 """Connection Option1 - This is a test connection function using DB URI from .env
 """
@@ -98,5 +107,5 @@ def get_db_connection():
     
 
 if __name__=='__main__':
-    pass
-    # connect()
+    
+    test_connect_1()
