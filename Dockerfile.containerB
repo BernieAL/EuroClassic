@@ -11,10 +11,12 @@ COPY backend_copy/templates /backend_copy/templates
 COPY backend_copy/static /backend_copy/static
 
 
-COPY /backend_copy/.env /backend_copy/.env
+COPY /backend_copy/.env.docker /backend_copy/.env.docker
 
 COPY backend_copy/forms.py /backend_copy/forms.py
 COPY backend_copy/app_main_runner.py /backend_copy/app_main_runner.py
+COPY backend_copy/config.py /backend_copy/config.py
+
 
 COPY backend_copy/.flaskenv /backend_copy/.flaskenv
 COPY backend_copy/vehicle_directory.csv /backend_copy/vehicle_directory.csv 

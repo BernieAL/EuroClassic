@@ -2,11 +2,9 @@ import os
 from dotenv import load_dotenv,find_dotenv
 
 if os.getenv('RUNNING_IN_DOCKER') == '1':
-	load_dotenv('.env.docker')
 	load_dotenv(find_dotenv('.env.docker'))   
 	print(f"using - .env.docker")
 else:
-	load_dotenv('.env.local')
 	load_dotenv(find_dotenv('.env.local'))   
 	print(f"using - .env.local")
 

@@ -9,13 +9,13 @@ services:
         context: ./
         dockerfile: Dockerfile.container_psql
       ports:
-          - "5432:5432"
+          - "5433:5432"
       networks:
         - my-network
       volumes:
         - ./sql_init_scripts:/docker-entrypoint-initdb.d
       env_file:
-        - .env.docker
+        - backend_copy/.env.docker
       environment:
         - RUNNING_IN_DOCKER=1
 
@@ -51,7 +51,7 @@ services:
       depends_on: 
         - container_pgsql
       env_file:
-        - .env.docker
+        - backend_copy/.env.docker
       environment:
         - RUNNING_IN_DOCKER=1
 
