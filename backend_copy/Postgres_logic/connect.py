@@ -7,7 +7,7 @@ import psycopg2
 import time
 import sys
 
-load_dotenv(find_dotenv())        
+     
 
 #get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,7 +27,8 @@ def test_connect_1():
         #connect to PostgreSQL server
         print('Connecting to PostgreSQL database..')
         # conn = psycopg2.connect(os.environ['DB_URI'])
-        conn = psycopg2.connect(os.getenv("DB_URI"))    
+        print(f"DB_URI {DB_URI}")
+        conn = psycopg2.connect(DB_URI)    
 
         #create cursor
         cur = conn.cursor()
