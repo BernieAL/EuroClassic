@@ -24,8 +24,10 @@ from Postgres_logic.connect import get_db_connection
 from Postgres_logic.insert_data import populate_vehicles_dir_table
 from forms import SearchForm
 
-from dotenv import load_dotenv,find_dotenv
-load_dotenv(find_dotenv())
+#from dotenv import load_dotenv,find_dotenv
+#load_dotenv(find_dotenv())
+
+
 
 #get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -34,6 +36,7 @@ parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
+from config import DB_URI, APPLICATION_SECRET_KEY
 from RabbitMQ_queues.scrape_producer import add_veh_to_queue
 
 #import queries
@@ -56,7 +59,7 @@ CACHE_FILE_PATH = os.path.join(BACKEND_ROOT,'Cache','makes_cache.json')
 
 application = Flask(__name__)
 CORS(application,resources={r"/api/*":{"origins":["http://localhost:3000","https://localhost:3443","http://64.23.253.75:3443","https://64.23.253.75:3000"]}})
-application.secret_key =  os.getenv('APPLICATION_SECRET_KEY')
+application.secret_key =  APPLICATION_SECRET_KEY
 
 #test db connection
 conn = get_db_connection()

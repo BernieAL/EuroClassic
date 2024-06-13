@@ -4,8 +4,8 @@ import pika
 import os,sys,json
 from simple_chalk import chalk
 
-from dotenv import load_dotenv,find_dotenv
-load_dotenv(find_dotenv())
+#from dotenv import load_dotenv,find_dotenv
+#load_dotenv(find_dotenv())
 
 
 #get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
@@ -17,6 +17,8 @@ if parent_dir not in sys.path:
 
 # Can now import app_main_runner.py as if it was in the same directory
 import app_main_runner
+from config import DB_URI,RABBITMQ_HOST
+
 
 
 
@@ -24,7 +26,7 @@ import app_main_runner
 def main():
 
     
-    connection = pika.BlockingConnection(pika.ConnectionParameters(os.getenv('RABBITMQ_HOST','rbmq')))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST,'rbmq')))
     channel = connection.channel()
 
     channel.queue_declare(queue='VEH_QUEUE',durable=True)

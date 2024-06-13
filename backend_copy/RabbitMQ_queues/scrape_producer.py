@@ -4,16 +4,26 @@ from dotenv import load_dotenv,find_dotenv
 from simple_chalk import chalk
 import json
 
-load_dotenv(find_dotenv())
-
-
+#load_dotenv(find_dotenv())
 # RABBITMQ_HOST = os.getenv('RABBITMQ_HOST')
 # RABBIT_MQ_HOST = 'rbmq_service'
+
+#get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Add the directory to sys.path
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
+from config import DB_URI,RABBITMQ_HOST
+
+
+
 
 #called from api - acts as producer - adds veh to queue as message
 def add_veh_to_queue(email_and_veh):
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(os.getenv('RABBITMQ_HOST','rbmq')))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST,'rbmq'))
     channel = connection.channel()
 
     channel.queue_declare(queue='VEH_QUEUE',durable=True)

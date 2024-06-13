@@ -29,8 +29,16 @@ from Postgres_logic.insert_data import populate_vehicles_dir_table,insert_new_sc
 from Postgres_logic.connect import get_db_connection
 # from Web_Scrape_Logic.scrape_runner_main import run_scapers
 
-from dotenv import load_dotenv,find_dotenv
-load_dotenv(find_dotenv())     
+
+
+#get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Add the directory to sys.path
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
+from config import DB_URI,PROXY_HTTPS,PROXY_HTTP
 
 
 
@@ -116,8 +124,8 @@ def initialize_driver():
             'proxy': {
                 # 'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
                 # 'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
-                'http':os.getenv('PROXY_HTTP'),
-                'https':os.getenv('PROXY_HTTPS')
+                'http':PROXY_HTTP
+                'https':PROXY_HTTPS
                 # 'no_proxy':'localhost,127.0.0.1'
             },
             'detach':True

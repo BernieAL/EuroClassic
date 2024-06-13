@@ -1,12 +1,12 @@
 """
-This script will read in data from LTS dir, add vehicles to vehicle_dir.csv
-which will be written to db in insert_data.py script
+This script will read in data from LTS dir and add vehicles to vehicle_dir.csv
+which will later be written to db in insert_data.py script
 
 LTS (longterm prev scrapes dir) has previously scraped data for many vehicles, 
 and it can be used in the DB as a means to reduce the need for additional scrapes.
 
 For each file in EBAY/SOLD and EBAY/CURR
-    get the vehicle name and scrape data from the file name itself- this will be added to vehicle_directory csv
+    get the vehicle name and scrape data from the file name itself - this will be added to vehicle_directory csv
 
 """
 
@@ -15,9 +15,19 @@ import psycopg2
 import os
 from datetime import datetime
 import csv
-from dotenv import load_dotenv,find_dotenv
+#from dotenv import load_dotenv,find_dotenv
 from simple_chalk import chalk
 import pandas as pd
+
+
+#get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Add the directory to sys.path
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
+from config import DB_URI
 
 postgres_dir = os.path.dirname(__file__)
 #directory of 'this' file

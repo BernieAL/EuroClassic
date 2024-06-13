@@ -18,6 +18,8 @@ if parent_dir not in sys.path:
 
 from config import DB_URI
 
+
+
 """Connection Option1 - This is a test connection function using DB URI from .env
 """
 def test_connect_1():
@@ -86,7 +88,7 @@ def get_db_connection():
 
         #connect to PostgreSQL server
         print(chalk.green('Connecting to PostgreSQL database..'))
-        conn = psycopg2.connect(os.environ['DB_URI'])
+        conn = psycopg2.connect(DB_URI)
 
         #create cursor
         cur = conn.cursor()

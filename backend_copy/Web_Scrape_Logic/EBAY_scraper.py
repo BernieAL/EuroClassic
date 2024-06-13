@@ -48,13 +48,21 @@ logger.addHandler(fh)
 
 
 
-from dotenv import load_dotenv,find_dotenv
-load_dotenv(find_dotenv())     
+#from dotenv import load_dotenv,find_dotenv
+#load_dotenv(find_dotenv())     
 
 # Ensure the storage_script is accessible from the path where this script is located
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from LTS_storage_script import LTS_copy_file
+#sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+#get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Add the directory to sys.path
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
+from LTS_storage_script import LTS_copy_file
+from config import PROXY_HTTP
 
 SCRAPED_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
 # EBAY_raw_SOLD_output_file_path = os.path.join(SCRAPED_DATA_OUTPUT_DIR,'EBAY_raw_SOLD_DATA.txt')
@@ -837,7 +845,7 @@ if __name__ == '__main__':
 
     seleniumwire_options = {
             'proxy': {
-                'http':os.getenv('PROXY_HTTP'),
+                'http':PROXY_HTTP,
                 # 'https':os.getenv('PROXY_HTTPS')
             },
             'detach':True,
