@@ -10,7 +10,7 @@ This script inserts data from file into db
 
 
 import psycopg2
-import os
+import os,sys
 import csv
 #from dotenv import load_dotenv,find_dotenv
 from simple_chalk import chalk
@@ -18,6 +18,7 @@ from datetime import date,datetime
 
 #get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# print(os.path.isdir(parent_dir))
 
 # Add the directory to sys.path
 if parent_dir not in sys.path:
@@ -30,6 +31,7 @@ from config import DB_URI
 postgres_dir = os.path.dirname(__file__)
 #directory of 'this' file
 current_script_dir = os.path.dirname(os.path.abspath(__file__))
+#print(os.path.isdir(current_script_dir))
 
 #get ref to project root
 PROJ_ROOT = os.path.abspath(os.path.join(current_script_dir,'..'))
@@ -37,14 +39,15 @@ PROJ_ROOT = os.path.abspath(os.path.join(current_script_dir,'..'))
 
 #dir of cleaned data
 CLEANED_DATA_DIR = os.path.join(PROJ_ROOT,'Cleaned_data_output')
-print(CLEANED_DATA_DIR)
-INPUT_veh_dir_file_path = os.path.join(postgres_dir,'..','vehicle_directory.csv')
+#print(chalk.green(f"CLEANED_DATA_DIR: {os.path.isdir(CLEANED_DATA_DIR)}"))
 
+INPUT_veh_dir_file_path = os.path.join(postgres_dir,'..','vehicle_directory.csv')
 
 clean_CURR_LISTINGS_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_CURRENT_LISTINGS.csv')
 clean_SOLD_LISTINGS_file = os.path.join(CLEANED_DATA_DIR,'EBAY_cleaned_SOLD_DATA.csv')
 
-LTR_ROOT_DIR = os.path.join(PROJ_ROOT,'Longterm_prev_scrapes') 
+LTR_ROOT_DIR = os.path.join(PROJ_ROOT,'LongTerm_prev_scrapes') 
+#print(chalk.green(f"LTR_ROOT_DIR: {os.path.isdir(LTR_ROOT_DIR)}"))
 
 # #TESTING - USING DUMMY DATA
 # clean_output_file_SOLD_DATA_file_path = os.path.join(postgres_dir,'..','Dummy_data_generator/sold_listings_dummy.csv')
@@ -186,7 +189,13 @@ def insert_current_listing_data(cur,conn,cleaned_CURRENT_LISTINGS_file_path):
 
 def LTR_insert_curr_listings():
 
+    #/home/ubuntu/Documents/Projects/EuroClassic/backend_copy/Longterm_prev_scrapes/EBAY
     LTR_EBAY_ROOT = os.path.join(LTR_ROOT_DIR,'EBAY')
+    #print(os.path.isdir(LTR_EBAY_ROOT))
+   
+
+    # print(chalk.green(f"LTR EBAY ROOT: {LTR_EBAY_ROOT}"))
+    # print(os.path.isdir(LTR_EBAY_ROOT))
     """
         This function will user insert_current_listing_data()
         to insert data into DB from files in LTR storage for current listings
@@ -206,7 +215,8 @@ def LTR_insert_curr_listings():
         """
         for subdir in dirs:
             print(subdir)
-      
+    
+
         # tokens = file.split("__")
 
         # #token [1] will be CURR or SOLD
@@ -265,9 +275,9 @@ if __name__ == '__main__':
     LTR_insert_curr_listings()
 
     #insertion check of tables
-    insertion_check(cur,"VEHICLES")
-    insertion_check(cur,"SOLD_LISTINGS")
-    insertion_check(cur,"CURRENT_LISTINGS")
+    # insertion_check(cur,"VEHICLES")
+    # insertion_check(cur,"SOLD_LISTINGS")
+    # insertion_check(cur,"CURRENT_LISTINGS")
     conn.close()
     
 

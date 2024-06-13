@@ -14,11 +14,10 @@ from selenium.webdriver.common.proxy import Proxy, ProxyType
 from selenium.webdriver.support import expected_conditions as EC
 
 
-import os
+import os,sys
 from datetime import date,datetime
 import time
 import random
-import sys
 from simple_chalk import chalk
 import gzip
 import logging

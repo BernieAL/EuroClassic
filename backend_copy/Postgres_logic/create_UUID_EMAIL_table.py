@@ -1,5 +1,5 @@
 import psycopg2
-import os
+import os,sys
 import csv
 #from dotenv import load_dotenv,find_dotenv
 from simple_chalk import chalk

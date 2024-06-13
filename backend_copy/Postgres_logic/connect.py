@@ -1,11 +1,11 @@
 import psycopg2
 
 from simple_chalk import chalk
-import os
+import os,sys
 from dotenv import load_dotenv, find_dotenv
 import psycopg2
 import time
-import sys
+
 
      
 

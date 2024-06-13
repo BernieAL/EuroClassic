@@ -1,13 +1,21 @@
-import smtplib, ssl,os
+import smtplib,ssl,os,sys
 from simple_chalk import chalk
 
-from dotenv import load_dotenv,find_dotenv
-load_dotenv(find_dotenv())     
 
+#from dotenv import load_dotenv,find_dotenv
+#load_dotenv(find_dotenv())     
+
+#get parent dir'backend_copy' from current script dir - append to sys.path to be searched for modules we import
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
+from config import GOOGLE_APP_PW,GOOGLE_SENDER_EMAIL
 
 port = 465  # For SSL
-app_password = os.getenv("GOOGLE_APP_PW")
-sender_email = os.getenv("GOOGLE_SENDER_EMAIL") # Enter your address
+app_password = GOOGLE_APP_PW
+sender_email = GOOGLE_SENDER_EMAIL
 #test
 
 message = """\

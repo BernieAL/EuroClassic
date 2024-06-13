@@ -12,7 +12,7 @@ For each file in EBAY/SOLD and EBAY/CURR
 
 
 import psycopg2
-import os
+import os,sys
 from datetime import datetime
 import csv
 #from dotenv import load_dotenv,find_dotenv

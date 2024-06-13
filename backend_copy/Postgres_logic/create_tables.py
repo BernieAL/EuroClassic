@@ -1,5 +1,5 @@
 import psycopg2
-import os
+import os,sys
 import csv
 #from dotenv import load_dotenv,find_dotenv
 from simple_chalk import chalk
@@ -104,6 +104,6 @@ def create_tables(cur):
 
 if __name__ == '__main__':
      
-    conn = psycopg2.connect(DB_URI))
+    conn = psycopg2.connect(DB_URI)
     cur = conn.cursor()
     create_tables(cur)

@@ -23,8 +23,7 @@ create new dir called long-term-prev-scrapes
 
 """
 
-import os
-import sys
+import os,sys
 import shutil
 from datetime import date,datetime
 import time

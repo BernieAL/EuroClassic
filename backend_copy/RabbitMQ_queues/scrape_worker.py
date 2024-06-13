@@ -17,7 +17,7 @@ if parent_dir not in sys.path:
 
 # Can now import app_main_runner.py as if it was in the same directory
 import app_main_runner
-from config import DB_URI,RABBITMQ_HOST
+from config import RABBITMQ_HOST
 
 
 
@@ -26,7 +26,7 @@ from config import DB_URI,RABBITMQ_HOST
 def main():
 
     
-    connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST,'rbmq')))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST,'rbmq'))
     channel = connection.channel()
 
     channel.queue_declare(queue='VEH_QUEUE',durable=True)

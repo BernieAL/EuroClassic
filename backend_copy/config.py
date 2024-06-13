@@ -1,12 +1,13 @@
 import os
+from simple_chalk import chalk
 from dotenv import load_dotenv,find_dotenv
 
 if os.getenv('RUNNING_IN_DOCKER') == '1':
 	load_dotenv(find_dotenv('.env.docker'))   
-	print(f"using - .env.docker")
+	print(chalk.green(f"CONFIG - USING - .env.docker"))
 else:
 	load_dotenv(find_dotenv('.env.local'))   
-	print(f"using - .env.local")
+	print(chalk.green(f"CONFIG - USING - .env.local"))
 
 APPLICATION_SECRET_KEY = os.getenv('APPLICATION_SECRET_KEY')
 DB_URI = os.getenv('DB_URI')
