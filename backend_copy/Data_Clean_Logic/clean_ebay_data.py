@@ -12,6 +12,7 @@ current_script_dir = os.path.dirname(os.path.abspath(__file__))
 #get ref to project root
 PROJ_ROOT = os.path.abspath(os.path.join(current_script_dir,'..'))
 
+LTS_DIR_EBAY_ROOT = os.path.join(PROJ_ROOT,'LongTerm_prev_scrapes/EBAY') 
 
 #dir of raw extracted data
 SCRAPED_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'Scraped_data_output')
@@ -49,12 +50,48 @@ def fileWrite(data, fileIn):
 
 
 
-def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
+"""
+If flag is 0 (by default) this function is being called on newly scraped data
+If flag is 1, this function is being called on LTS data (Longterm-storage,prev scraped data)
+    And the output file name will be the name of the input file, appended with CLEANED
+    and it will be stored in LTS/EBAY/CURR/CLEANED
+"""
+
+def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file,flag = 0):
 
     logger.debug("ENTERED - clean_data_EBAY_CURRENT")
     logger.debug("PARAMS REC'D car: %s  raw input file: %s",json.dumps(car),raw_CURRENT_LISTINGS_file)
     
+    if flag == 1:
 
+        print(LTS_DIR_EBAY_ROOT)
+        
+        print(chalk.green(f"FLAG REC'D == 1, DATA IS FROM LTS (PREV SCRAPED)"))
+
+        #create LTS/EBAY/CURR/CLEANED if it doesnt exist
+        CLEANED_DEST_DIR = os.path.join(LTS_DIR_EBAY_ROOT,'CURR/CLEANED')
+        if not os.path.exists(CLEANED_DEST_DIR):
+            os.makedirs(CLEANED_DEST_DIR)
+            print(chalk.green(f"Created directory: {CLEANED_DEST_DIR}"))
+
+
+        #create filename of output file to be used 
+        #take input file name and append "_CLEANED to it"
+        LTS_clean_output_file = raw_CURRENT_LISTINGS_file + "_CLEANED"
+        print(chalk.green(f"OUTPUT FILE NAME {LTS_clean_output_file}"))
+
+        #LTS/EBAY/CURR/CLEANED/<file_name_CLEANED>
+        LTS_clean_output_file_path = os.path.join(CLEANED_DEST_DIR,LTS_clean_output_file)
+        print(chalk.green(f"OUTPUT FILE PATH {LTS_clean_output_file_path} "))
+        
+        clean_output_file_CURRENT_LISTINGS = open(LTS_clean_output_file,"w",encoding="utf-8")
+        # print(chalk.green(f"OUTPUT FILE PATH: {clean_output_file_CURRENT_LISTINGS}"))
+
+
+    else:
+        #open output file for writing clean data
+        clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_OUTPUT_CURRENT_LISTINGS_file, "w", encoding="utf-8")
+           
     try:
         print(chalk.red("(clean_ebay_data) - CLEAN CURR DATA"))
         
@@ -62,8 +99,6 @@ def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
         raw_input_CURRENT_LISTINGS = open(raw_CURRENT_LISTINGS_file, "r", encoding="utf-8")
         raw_data = raw_input_CURRENT_LISTINGS
 
-        #open output file for writing clean data
-        clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_OUTPUT_CURRENT_LISTINGS_file, "w", encoding="utf-8")
 
         year = car['year']
         make = car['make']
@@ -122,6 +157,7 @@ def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file):
         logger.debug("DATA CLEANING FOR CURRENT_LISTINGS successful")
         print(chalk.green((":::DATA CLEANING FOR CURRENT_LISTINGS successful")))
         logger.debug("EXITING - clean_data_EBAY_CURRENT")
+        return LTS_clean_output_file_path
 
     except Exception as e:
         logger.debug(f":::Error during data cleaning for CURRENT_LISTINGS: {str(e)}")
@@ -221,15 +257,25 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_DATA_file):
 def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD_DATA_file_path):
     try:
         
+
+        logger.debug("ENTERED - EBAY_CLEANED_DATA_RUNNER")
+        
         # #TESTING WITH PREV SCRAPED DATA FROM LTS DIR TO AVOID LIVE SCRAPE
         # TEST_prev_SOLD_path = os.path.join(os.path.dirname(__file__),'..','LongTerm_prev_scrapes/EBAY','EBAY__SOLD__05-03-2024__NISSAN-350Z.txt')
         # TEST_prev_CURR_path = os.path.join(os.path.dirname(__file__),'..','LongTerm_prev_scrapes/EBAY','EBAY__CURR__05-03-2024__PORSCHE-PANAMERA.txt')
-
         # clean_data_EBAY_CURRENT(car,TEST_prev_CURR_path)
         # clean_data_EBAY_SOLD(car,TEST_prev_SOLD_path)       
-        logger.debug("ENTERED - EBAY_CLEANED_DATA_RUNNER")
+        
+        #lts test of cleaning data
+        #using a LTS test for of curr and sold data
+        #test_LTS_curr_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"CURR/EBAY__CURR__03-20-2024__PORSCHE-911.txt")
+        #test_LTS_sold_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"SOLD/EBAY__SOLD_03-20-2024__PORSCHE-911.txt")
+        #clean_data_EBAY_CURRENT(car,test_LTS_curr_file_path,1)
+
+
         clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
         clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
+        
         
         logger.debug("Data cleaning for all types successful")
         print("Data cleaning for all types successful")
