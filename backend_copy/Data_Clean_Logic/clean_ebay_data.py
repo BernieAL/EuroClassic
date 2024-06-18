@@ -4,7 +4,7 @@ import os
 from simple_chalk import chalk
 import gzip
 import json
-
+from pathlib import Path
 
 #directory of 'this' file
 current_script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -63,34 +63,32 @@ def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file,flag = 0):
     logger.debug("PARAMS REC'D car: %s  raw input file: %s",json.dumps(car),raw_CURRENT_LISTINGS_file)
     
     if flag == 1:
+       
+        print(LTS_DIR_EBAY_ROOT + "\n")
+        print(chalk.green("FLAG REC'D == 1, DATA IS FROM LTS (PREV SCRAPED)"))
 
-        print(LTS_DIR_EBAY_ROOT)
+        # Create LTS/EBAY/CURR/CLEANED if it doesn't exist
+        EBAY_CURR_CLEANED_DIR = Path(LTS_DIR_EBAY_ROOT) / 'CURR' / 'CLEANED'
+        print(chalk.green(f"ebay curr cleaned dir::: {EBAY_CURR_CLEANED_DIR}\n"))
+
+        if not EBAY_CURR_CLEANED_DIR.exists():
+            EBAY_CURR_CLEANED_DIR.mkdir(parents=True, exist_ok=True)
+            print(chalk.green(f"Created directory: {EBAY_CURR_CLEANED_DIR}\n"))
+        else:
+            print(chalk.green(f"DIR EXISTS: {EBAY_CURR_CLEANED_DIR}"))
+
+        # Create filename of output file to be used
+        raw_file_path = Path(raw_CURRENT_LISTINGS_file)
+        cleaned_file_name = raw_file_path.stem + "_CLEANED" + raw_file_path.suffix
         
-        print(chalk.green(f"FLAG REC'D == 1, DATA IS FROM LTS (PREV SCRAPED)"))
-
-        #create LTS/EBAY/CURR/CLEANED if it doesnt exist
-        CLEANED_DEST_DIR = os.path.join(LTS_DIR_EBAY_ROOT,'CURR/CLEANED')
-        if not os.path.exists(CLEANED_DEST_DIR):
-            os.makedirs(CLEANED_DEST_DIR)
-            print(chalk.green(f"Created directory: {CLEANED_DEST_DIR}"))
-
-
-        #create filename of output file to be used 
-        #take input file name and append "_CLEANED to it"
-        LTS_clean_output_file = raw_CURRENT_LISTINGS_file + "_CLEANED"
-        print(chalk.green(f"OUTPUT FILE NAME {LTS_clean_output_file}"))
-
-        #LTS/EBAY/CURR/CLEANED/<file_name_CLEANED>
-        LTS_clean_output_file_path = os.path.join(CLEANED_DEST_DIR,LTS_clean_output_file)
+        # Construct the full path for the cleaned file
+        LTS_clean_output_file_path = EBAY_CURR_CLEANED_DIR / cleaned_file_name
         print(chalk.green(f"OUTPUT FILE PATH {LTS_clean_output_file_path} "))
-        
-        clean_output_file_CURRENT_LISTINGS = open(LTS_clean_output_file,"w",encoding="utf-8")
-        # print(chalk.green(f"OUTPUT FILE PATH: {clean_output_file_CURRENT_LISTINGS}"))
+        clean_output_file_CURRENT_LISTINGS = open(LTS_clean_output_file_path,'w',encoding="utf-8")
 
-
-    else:
-        #open output file for writing clean data
-        clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_OUTPUT_CURRENT_LISTINGS_file, "w", encoding="utf-8")
+    # else:
+    #     #open output file for writing clean data
+    #     clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_OUTPUT_CURRENT_LISTINGS_file, "w", encoding="utf-8")
            
     try:
         print(chalk.red("(clean_ebay_data) - CLEAN CURR DATA"))
@@ -103,6 +101,8 @@ def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file,flag = 0):
         year = car['year']
         make = car['make']
         model = car['model']
+        print(make)
+        print(model)
 
         #for writing cleaned concatenated strings 
         clean_output_array = []
@@ -274,7 +274,7 @@ def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD
 
 
         clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
-        clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
+        #clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
         
         
         logger.debug("Data cleaning for all types successful")

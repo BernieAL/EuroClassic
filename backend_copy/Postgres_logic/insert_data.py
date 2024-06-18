@@ -171,18 +171,26 @@ def insert_sold_data(cur,conn,cleaned_SOLD_DATA_file_path):
 def insert_current_listing_data(cur,conn,input_data,flag):
     print(chalk.green(":::Starting insert_current_listing_data"))
 
+    print(chalk.green(f"input data {input_data}"))
+    print(os.path.isfile(input_data))
+
     if flag == 1:
-        #call clean curr data and pass file path
-        print(clean_ebay_data.clean_data_EBAY_CURRENT(input_data,1))
+        #call clean curr data and pass input file path, recieve file path of newly created cleaned data
+        LTR_created_file_path = clean_ebay_data.clean_data_EBAY_CURRENT(veh,input_data,1)
+
+
+        print(chalk.green(f"::: REC'D OUTPUT FILE PATH FOR CLEANED DATA: {LTR_created_file_path}"))
         print(chalk.green("::: INPUT IS LTR RAW DATA -"))
         print(chalk.green("::: SENDING FOR CLEANING -"))
-        print(chalk.green("::: CLEANED-"))
-        clean_output_file_CURRENT_LISTINGS = open(cleaned_CURRENT_LISTINGS_file_path,"r")
+        print(chalk.green("::: CLEANED- "))
+
+        #open ltr/ebay/curr/cleaned/<file_name>
+        clean_output_file_CURRENT_LISTINGS = open(LTR_created_file_path,"r",encoding="utf-8")
     else:
         print(chalk.green("::: INPUT IS FRESH SCRAPE - ALREADY CLEANED-"))
-        clean_output_file_CURRENT_LISTINGS = open(cleaned_CURRENT_LISTINGS_file_path,"r")
+        clean_output_file_CURRENT_LISTINGS = open(clean_CURR_LISTINGS_file,"r",encoding="utf-8")
 
-    clean_output_file_CURRENT_LISTINGS = open(cleaned_CURRENT_LISTINGS_file_path,"r")
+    
 
     # if os.path.isfile(input_data)
     #     line_reader = csv.reader(clean_output_file_CURRENT_LISTINGS,delimiter=',')
@@ -389,8 +397,8 @@ if __name__ == '__main__':
 
     veh = {
         'year':2017,
-        'make':'Ferrari',
-        'model':'458'
+        'make':'NISSAN',
+        'model':'ALTIMA'
     }
     conn = psycopg2.connect(DB_URI)
     cur = conn.cursor()
@@ -411,8 +419,9 @@ if __name__ == '__main__':
     # LTS_clean_output_file_path = os.path.join(CLEANED_DEST_DIR,LTS_clean_output_file)
     # print(chalk.green(f"OUTPUT FILE PATH {LTS_clean_output_file_path} "))
         
-    TEST_prev_CURR_path = os.path.join(os.path.dirname(__file__),'..','LongTerm_prev_scrapes/EBAY','EBAY__CURR__05-03-2024__PORSCHE-PANAMERA.txt')    
-    insert_current_listing_data(cur,conn,TEST_prev_CURR_path,1)
+    TEST_prev_CURR_file = os.path.join(LTR_ROOT_DIR,"EBAY/CURR","EBAY__CURR__03-28-2024__NISSAN-ALTIMA.txt")
+    print(TEST_prev_CURR_file)
+    insert_current_listing_data(cur,conn,TEST_prev_CURR_file,1)
 
 
     #insertion check of tables
