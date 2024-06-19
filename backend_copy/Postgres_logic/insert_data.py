@@ -191,30 +191,25 @@ def insert_current_listing_data(cur,conn,input_data,flag):
         clean_output_file_CURRENT_LISTINGS = open(clean_CURR_LISTINGS_file,"r",encoding="utf-8")
 
     
+    line_reader = csv.reader(clean_output_file_CURRENT_LISTINGS,delimiter=',')
+    next(line_reader)
+    for line in line_reader:  
+        # print(line)
+        line_uppercase = [value.upper() for value in line]
+        try:
+            sql = """
+                INSERT INTO CURRENT_LISTINGS(YEAR,MAKE,MODEL,LISTPRICE)
+                VALUES(%s,%s,%s,%s)
+                """
+            cur.execute(sql,line_uppercase)
+        except (Exception, psycopg2.DatabaseError) as e:
+            print(chalk.red(f"error: {e}"))
 
-    # if os.path.isfile(input_data)
-    #     line_reader = csv.reader(clean_output_file_CURRENT_LISTINGS,delimiter=',')
-    #     # this skips the first line in file which is col names
-    # else:
-
-    # next(line_reader)
-    # for line in line_reader:  
-    #     # print(line)
-    #     line_uppercase = [value.upper() for value in line]
-    #     try:
-    #         sql = """
-    #             INSERT INTO CURRENT_LISTINGS(YEAR,MAKE,MODEL,LISTPRICE)
-    #             VALUES(%s,%s,%s,%s)
-    #             """
-    #         cur.execute(sql,line_uppercase)
-    #     except (Exception, psycopg2.DatabaseError) as e:
-    #         print(chalk.red(f"error: {e}"))
-
-    # try:
-    #     conn.commit()
-    #     print(chalk.green(":::Successfully inserted all CURRENT_LISTING records into DB"))
-    # except Exception as e:
-    #         print(chalk.red(f"Failed to insert current data: {e}"))
+    try:
+        conn.commit()
+        print(chalk.green(":::Successfully inserted all CURRENT_LISTING records into DB"))
+    except Exception as e:
+            print(chalk.red(f"Failed to insert current data: {e}"))
 
 
 
