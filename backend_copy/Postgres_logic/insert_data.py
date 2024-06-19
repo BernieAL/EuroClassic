@@ -116,7 +116,7 @@ def insert_new_scraped_veh_VEH_DIR(cur,conn,veh):
         veh_scrape_date = curr_date = (datetime.today()).strftime("%m-%d-%Y") #get curr date as scrape date
 
     sql =   """
-            INSERT INTO VEHICLES(MAKE,MODEL,YEAR,LAST_SCRAPE_DATE)
+            INSERT INTO VEHICLES(YEAR,MAKE,MODEL,LAST_SCRAPE_DATE)
             VALUES(%s,%s,%s,%s)
             """ 
     try:
@@ -214,19 +214,21 @@ def insert_current_listing_data(cur,conn,input_data,flag):
 
 
 def tokenize_filename(filename):
-    tokens = file.split("__")
+    try:
+        tokens = filename.split("__")
 
-    #token [1]  will be CURR or SOLD
-    listing_type = tokens[1]
-    #
-    token[2] is date
-    scrape_date = tokens[3]
-    
-    #token[3] is make and model, which will need to split at "-"
-    make,model = token[3].split("-")
-    print(f"${listing_type} ${scrape_date} ${make} ${model}")
-    
-    return (listing_type,make,model,scrape_date)
+        #token [1]  will be CURR or SOLD
+        listing_type = tokens[1]
+        #
+        #tokens[2] is date
+        scrape_date = tokens[2]
+        
+        #token[3] is "make-model.txt", first strip ".txt" then split at "-" to get make and model
+        make,model = (tokens[3].rstrip(".txt")).split("-")
+        # print(f"{listing_type} {scrape_date} {make} {model}")
+        return (listing_type,make,model,scrape_date)
+    except Exception as e:
+        print(chalk.green(f"(tokenize_filename) Error tokenizing {filename}"))
 
 
 def parse_filename_generator(basedir):
@@ -239,11 +241,24 @@ def parse_filename_generator(basedir):
         EBAY__CURR__03-20-2024__PORSCHE-911.txt - or - EBAY__SOLD__03-20-2024__PORSCHE-911.txt
         
     """
-    for root,dirs,files in os.walk(basedir):
-        for file in files:
-            info = tokenize_filename(file)
-            if info:
-                yield info
+    try:
+        for root,dirs,files in os.walk(basedir):
+
+            for file in files:
+                
+                #full path of curr file from root
+                filepath = os.path.join(root,file)
+                filename_tokens = tokenize_filename(file) #listing_type,make,model,scrape_date
+                # print(filename_tokens)
+                if filename_tokens:
+                    #yield parsed file and original file path - original file path will be needed in db insertion function
+                    yield {
+                            "filename_tokens":filename_tokens,
+                            "filepath": filepath
+                          } 
+    except Exception as e:
+        print(chalk.green(f"(parse_filename_generator) Error {e}"))
+
 
 
 
@@ -252,8 +267,7 @@ def parse_filename_generator(basedir):
 def LTR_insertion_driver(cur,conn):
 
 
-    """ Function Notes:
-
+    """Function Notes:
         DIR STRUCTURE OF LongTerm_prev_scrapes
 
 
@@ -275,42 +289,49 @@ def LTR_insertion_driver(cur,conn):
     #print(os.path.isdir(LTR_EBAY_ROOT))
     batch_filenames = []
     batch_size = 30
-    for info in parse_filename_generator(LTR_EBAY_ROOT):
 
-        listing_type,make,model,scrape_date = info
+    #for each parsed_filename returned from generator
+    for res in parse_filename_generator(LTR_EBAY_ROOT):
+
+        listing_type,make,model,scrape_date = res["filename_tokens"]
+        curr_filepath = res["filepath"]
+        print(res["filename_tokens"])
+        print(curr_filepath)
+        
         veh = {
-                 'year':year,
-                 'make':model,
-                 'scrape_date':scrape_date
+                 "year":0000,
+                 "make":make,
+                 "model": model,
+                 "scrape_date":scrape_date
               }
 
         #insert parsed filename as new entry in vehdir table
         insert_new_scraped_veh_VEH_DIR(cur,conn,veh)
 
 
-        #insert file contents to corresponding table
+        #insert file data into to corresponding table
         if listing_type == "sold":
+           print(chalk.green(f"listing type is SOLD - inserting to SOLD table"))
            pass
         elif listing_type == "curr":
-            insert_current_listing_data(cur,conn,file_contents)
+            print(chalk.green(f"listing type is SOLD - inserting to SOLD table"))
+            #insert_current_listing_data(cur,conn,curr_filepath,1)
 
-        """
-            if size of sold or curr list exceed batch size threschold
-                go on to insert this batch into db
-                clear list that was inserted ahead of appending next batch
-        """
-        if sold.size >= batch_size:
-            batch_insert(sold_listings,"SOLD_LISTINGS")
-        elif curr.size >= batch_size:
-            batch_insert(curr_listings)
+        # """
+        #     if size of sold or curr list exceed batch size threschold
+        #         go on to insert this batch into db
+        #         clear list that was inserted ahead of appending next batch
+        # """
+        # if sold.size >= batch_size:
+        #     batch_insert(sold_listings,"SOLD_LISTINGS")
+        # elif curr.size >= batch_size:
+        #     batch_insert(curr_listings)
 
-        batch_insert(sold_listings)
+        # batch_insert(sold_listings)
 
     
 
-"""
-
-    when on a filename:
+"""when on a filename:
         -parse out the filename, this is for vehdir entry
         -open file and load contents in mem as list
         -write parsed filename to vehdir table
@@ -414,10 +435,11 @@ if __name__ == '__main__':
     # LTS_clean_output_file_path = os.path.join(CLEANED_DEST_DIR,LTS_clean_output_file)
     # print(chalk.green(f"OUTPUT FILE PATH {LTS_clean_output_file_path} "))
         
-    TEST_prev_CURR_file = os.path.join(LTR_ROOT_DIR,"EBAY/CURR","EBAY__CURR__03-28-2024__NISSAN-ALTIMA.txt")
-    print(TEST_prev_CURR_file)
-    insert_current_listing_data(cur,conn,TEST_prev_CURR_file,1)
+    # TEST_prev_CURR_file = os.path.join(LTR_ROOT_DIR,"EBAY/CURR","EBAY__CURR__03-28-2024__NISSAN-ALTIMA.txt")
+    # print(TEST_prev_CURR_file)
+    # insert_current_listing_data(cur,conn,TEST_prev_CURR_file,1)
 
+    LTR_insertion_driver(cur,conn)
 
     #insertion check of tables
     # insertion_check(cur,"VEHICLES")
