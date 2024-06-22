@@ -267,33 +267,47 @@ def parse_filename_generator(basedir):
         EBAY__CURR__03-20-2024__PORSCHE-911.txt - or - EBAY__SOLD__03-20-2024__PORSCHE-911.txt
         
     """
+
+    skip_dirs = {'EBAY/SOLD/CLEANED','EBAY/CURR/CLEANED'}
     try:
         # max_files = 10
         # file_count = 0
         
         for root,dirs,files in os.walk(basedir):
+            
+            #modify dirs in place to skip specific dirs
+            #return list of dirs that are not found in skip dirs
+            #dirs[:] is slice operation that refers to all element of the list
+            dirs[:] = [d for d in dirs if d not in skip_dirs]
+            for dir in dirs:
 
-            for file in files:
+                subdir_path = os.path.join(root,dir)
+                for subdir_root,subdir_dirs, subdir_files in os.walk(subdir_path):
+                    for file in subdir_files:
+                        # print(os.path.join(subdir_root,file))
                 
-                #full path of curr file from root
-                filepath = os.path.join(root,file)
-                filename_tokens = tokenize_filename(file) #listing_type,make,model,scrape_date
-                # print(filename_tokens)
-                if filename_tokens:
-                    #yield parsed file and original file path - original file path will be needed in db insertion function
-                    yield {
-                            "filename_tokens":filename_tokens,
-                            "filepath": filepath
-                          } 
+                        #full path of curr file from root
+                        filepath = os.path.join(root,file)
+                        filename_tokens = tokenize_filename(file) #listing_type,make,model,scrape_date
+                        # print(filename_tokens)
+                        if filename_tokens:
+                            #yield parsed file and original file path - original file path will be needed in db insertion function
+                            yield {
+                                    "filename_tokens":filename_tokens,
+                                    "filepath": filepath
+                                } 
                 
-                # file_count +=1
-                # if file_count == 10:
-                #     return
+            #     # file_count +=1
+            #     # if file_count == 10:
+            #     #     return
 
     except Exception as e:
         print(chalk.green(f"(parse_filename_generator) Error {e}"))
 
-
+#TESTING parse_filename_generator
+# LTR_EBAY_ROOT = os.path.join(LTR_ROOT_DIR,'EBAY')
+# for res in parse_filename_generator(LTR_EBAY_ROOT):
+#     print(f"{res} \n --------------")
 
 
 
@@ -486,7 +500,7 @@ if __name__ == '__main__':
     # insert_current_listing_data(cur,conn,TEST_prev_CURR_file,1)
 
 
-    LTR_insertion_driver(cur,conn)
+    # LTR_insertion_driver(cur,conn)
 
     #insertion check of tables
     # insertion_check(cur,"VEHICLES")
