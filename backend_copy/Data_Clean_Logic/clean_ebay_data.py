@@ -196,15 +196,14 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
         print(chalk.red("(clean_ebay_data) - CLEAN SOLD DATA"))
         
         #open output file for writing clean data
-        raw_input_SOLD_DATA = open(raw_SOLD_LISTINGS_file, "r", encoding="utf-8")
-        raw_data = raw_input_SOLD_DATA
+        raw_input_SOLD_LISTINGS = open(raw_SOLD_LISTINGS_file, "r", encoding="utf-8")
+        raw_data = raw_input_SOLD_LISTINGS
 
-        #open raw data file
-        clean_output_file_SOLD_DATA = open(EBAY_clean_OUTPUT_SOLD_DATA_file, "w", encoding="utf-8")
-        
         year = car['year']
         make = car['make']
         model = car['model']
+        print(make)
+        print(model)
 
         clean_output_array = []
         
@@ -259,12 +258,12 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
                     print(error)
 
         col_headers = f"Year,Make,Model,Price,DateSold\n"
-        clean_output_file_SOLD_DATA.write(col_headers)
+        clean_output_file_SOLD_LISTINGS.write(col_headers)
 
-        fileWrite(clean_output_array, clean_output_file_SOLD_DATA)
+        fileWrite(clean_output_array, clean_output_file_SOLD_LISTINGS)
 
-        clean_output_file_SOLD_DATA.close()
-        raw_input_SOLD_DATA.close()
+        clean_output_file_SOLD_LISTINGS.close()
+        raw_input_SOLD_LISTINGS.close()
 
         logger.debug("WRITING CLEANED SOLD DATA TO OUTPUT FILE")
         logger.debug("DATA CLEANING FOR SOLD DATA successful")
@@ -274,6 +273,7 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
     except Exception as e:
         logger.debug(f":::Error during data cleaning for SOLD_DATA: {str(e)}")
         print(chalk.red(f":::Error during data cleaning for SOLD_DATA: {str(e)} \n OFFENDING LINE--> {line}"))
+        return e
 
 
 
@@ -291,12 +291,14 @@ def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD
         
         #lts test of cleaning data
         #using a LTS test for of curr and sold data
-        #test_LTS_curr_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"CURR/EBAY__CURR__03-20-2024__PORSCHE-911.txt")
-        #test_LTS_sold_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"SOLD/EBAY__SOLD_03-20-2024__PORSCHE-911.txt")
-        #clean_data_EBAY_CURRENT(car,test_LTS_curr_file_path,1)
+        # test_LTS_curr_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"CURR/EBAY__CURR__03-20-2024__PORSCHE-911.txt")
+        # clean_data_EBAY_CURRENT(car,test_LTS_curr_file_path,1)
+        # test_LTS_sold_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"SOLD/EBAY__SOLD_03-20-2024__PORSCHE-911.txt")
+        # clean_data_EBAY_SOLD(car,test_LTS_sold_file_path,1)
+        
 
-
-        clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
+        #NOT PART OF TESTING, UNCOMMENT FOR FULL RUN
+        # clean_data_EBAY_CURRENT(car,EBAY_raw_CURRENT_LISTINGS_file_path)
         #clean_data_EBAY_SOLD(car,EBAY_raw_SOLD_DATA_file_path)       
         
         
@@ -312,8 +314,12 @@ def ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file_path,EBAY_raw_SOLD
 if __name__ == '__main__':
     car = {
         'year': 0000,
-        'make': 'NISSAN', #MUST BE CAPITALIZED OR WILL FAIL
-        'model': '350Z' #MUST BE CAPITALIZED OR WILL FAIL
+        'make': 'PORSCHE', #MUST BE CAPITALIZED OR WILL FAIL
+        'model': '911' #MUST BE CAPITALIZED OR WILL FAIL
     }
-    ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file,EBAY_raw_SOLD_DATA_file)
+    # ebay_clean_data_runner(car,EBAY_raw_CURRENT_LISTINGS_file,EBAY_raw_SOLD_DATA_file)
 
+    # test_LTS_sold_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"SOLD/EBAY__SOLD__03-28-2024__PORSCHE-911.txt")
+    # clean_data_EBAY_SOLD(car,test_LTS_sold_file_path,1)
+    test_LTS_curr_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"CURR/EBAY__CURR__03-20-2024__PORSCHE-911.txt")
+    clean_data_EBAY_CURRENT(car,test_LTS_curr_file_path,1)

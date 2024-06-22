@@ -268,6 +268,9 @@ def parse_filename_generator(basedir):
         
     """
     try:
+        # max_files = 10
+        # file_count = 0
+        
         for root,dirs,files in os.walk(basedir):
 
             for file in files:
@@ -282,6 +285,11 @@ def parse_filename_generator(basedir):
                             "filename_tokens":filename_tokens,
                             "filepath": filepath
                           } 
+                
+                # file_count +=1
+                # if file_count == 10:
+                #     return
+
     except Exception as e:
         print(chalk.green(f"(parse_filename_generator) Error {e}"))
 
@@ -310,41 +318,46 @@ def LTR_insertion_driver(cur,conn):
 
     """
 
-    #/home/ubuntu/Documents/Projectsz/EuroClassic/backend_copy/Longterm_prev_scrapes/EBAY
-    LTR_EBAY_ROOT = os.path.join(LTR_ROOT_DIR,'EBAY')
-    #print(os.path.isdir(LTR_EBAY_ROOT))
-    batch_filenames = []
-    batch_size = 30
+    try:
+        #/home/ubuntu/Documents/Projectsz/EuroClassic/backend_copy/Longterm_prev_scrapes/EBAY
+        LTR_EBAY_ROOT = os.path.join(LTR_ROOT_DIR,'EBAY')
+        #print(os.path.isdir(LTR_EBAY_ROOT))
+        batch_filenames = []
+        batch_size = 30
 
-    #for each parsed_filename returned from generator
-    for res in parse_filename_generator(LTR_EBAY_ROOT):
+        #for each parsed_filename returned from generator
+        for res in parse_filename_generator(LTR_EBAY_ROOT):
 
-        listing_type,make,model,scrape_date = res["filename_tokens"]
-        
-        curr_filepath = res["filepath"]
-        print(res["filename_tokens"])
-        # print(f"curr_filepath {curr_filepath}")
+            listing_type,make,model,scrape_date = res["filename_tokens"]
+            
+            curr_filepath = res["filepath"]
+            # print(res["filename_tokens"])
+            # print(f"curr_filepath {curr_filepath}")
 
-        
-        veh = {
-                 "year":0000,
-                 "make":make,
-                 "model": model,
-                 "scrape_date":scrape_date
-              }
+            
+            veh = {
+                     "year":0000,
+                     "make":make,
+                     "model": model,
+                     "scrape_date":scrape_date
+                  }
 
-        #insert parsed filename as new entry in vehdir table
-        # insert_new_scraped_veh_VEH_DIR(cur,conn,veh)
+            #insert parsed filename as new entry in vehdir table
+            # insert_new_scraped_veh_VEH_DIR(cur,conn,veh)
 
 
-        #insert file data into to corresponding table
-        if listing_type == "SOLD":
-            print(chalk.green(f"listing type is SOLD - inserting to SOLD table"))
-            insert_sold_listing_data(cur,conn,curr_filepath,1)
-        elif listing_type == "CURR":
-            pass
-            # print(chalk.green(f"listing type is CURR - inserting to CURR table"))
-            #insert_current_listing_data(cur,conn,curr_filepath,1)
+            #insert file data into to corresponding table
+            if listing_type == "SOLD":
+                # print(res["filename_tokens"])
+                pass
+                # print(chalk.green(f"listing type is SOLD - inserting to SOLD table"))
+                # insert_sold_listing_data(cur,conn,curr_filepath,1)
+            elif listing_type == "CURR":
+                # pass
+                # print(chalk.green(f"listing type is CURR - inserting to CURR table"))
+                insert_current_listing_data(cur,conn,curr_filepath,1)
+    except Exception as e:
+            print(chalk.red(f"Error {e}"))
 
         # """
         #     if size of sold or curr list exceed batch size threschold
