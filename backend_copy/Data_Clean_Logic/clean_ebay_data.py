@@ -170,12 +170,12 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
     logger.debug("PARAMS REC'D car: %s  raw input file: %s",json.dumps(car),raw_SOLD_LISTINGS_file)
 
     if flag == 1:
-        print(LTS_DIR_EBAY_ROOT + "\n")
+        # print(LTS_DIR_EBAY_ROOT + "\n")
         print(chalk.green("FLAG REC'D == 1, DATA IS FROM LTS (PREV SCRAPED)"))
 
         # Create LTS/EBAY/CURR/CLEANED if it doesn't exist
         EBAY_SOLD_CLEANED_DIR = Path(LTS_DIR_EBAY_ROOT) / 'SOLD' / 'CLEANED'
-        print(chalk.green(f"ebay sold cleaned dir::: {EBAY_SOLD_CLEANED_DIR}\n"))
+        #print(chalk.green(chalk.yellow(f"ebay sold cleaned dir::: {EBAY_SOLD_CLEANED_DIR}\n")))
 
         if not EBAY_SOLD_CLEANED_DIR.exists():
             EBAY_SOLD_CLEANED_DIR.mkdir(parents=True,exist_ok=True)
@@ -185,8 +185,14 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
 
         # Create filename of output file to be used
         raw_file_path = Path(raw_SOLD_LISTINGS_file)
-        cleaned_file_name = raw_file_path.stem + "_CLEANED" + raw_file_path.suffix
         
+        if "_CLEANED" in str(raw_file_path):
+            print(chalk.red(f"file already has '_CLEANED' suffix {raw_file_path}"))
+            cleaned_file_name = raw_file_path
+        else:
+            cleaned_file_name = raw_file_path.stem + "_CLEANED" + raw_file_path.suffix
+            print(chalk.red(f"adding '_CLEANED' to file {raw_file_path}"))
+
         # Construct the full path for the cleaned file
         LTS_clean_output_file_path = EBAY_SOLD_CLEANED_DIR / cleaned_file_name
         print(chalk.green(f"OUTPUT FILE PATH {LTS_clean_output_file_path} "))
@@ -321,5 +327,5 @@ if __name__ == '__main__':
 
     # test_LTS_sold_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"SOLD/EBAY__SOLD__03-28-2024__PORSCHE-911.txt")
     # clean_data_EBAY_SOLD(car,test_LTS_sold_file_path,1)
-    test_LTS_curr_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"CURR/EBAY__CURR__03-20-2024__PORSCHE-911.txt")
-    clean_data_EBAY_CURRENT(car,test_LTS_curr_file_path,1)
+    # test_LTS_curr_file_path = os.path.join(LTS_DIR_EBAY_ROOT,"CURR/EBAY__CURR__03-20-2024__PORSCHE-911.txt")
+    # clean_data_EBAY_CURRENT(car,test_LTS_curr_file_path,1)

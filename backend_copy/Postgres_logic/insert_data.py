@@ -135,7 +135,7 @@ def insert_new_scraped_veh_VEH_DIR(cur,conn,veh):
    and inserts them into the db 
    -The source of the data doesnt matter so long as it matches the format specified for sold vehicles records -> YEAR,MAKE,MODEL,SALEPRICE,DATESOLD
 """
-def insert_sold_listing_data(cur,conn,input_data,flag=0):
+def insert_sold_listing_data(cur,conn,veh,input_data,flag=0):
     print(chalk.green(":::Starting insert_sold_data"))
 
 
@@ -193,7 +193,7 @@ def insert_sold_listing_data(cur,conn,input_data,flag=0):
    -This function accepts a csv file path, reads data from it and inserts it into the db 
    -The source of the data doesnt matter so long as it matches the format specified for current vehicle listings -> YEAR,MAKE,MODEL,LISTPRICE
 """
-def insert_current_listing_data(cur,conn,input_data,flag=0):
+def insert_current_listing_data(cur,conn,veh,input_data,flag=0):
     print(chalk.green(":::Starting insert_current_listing_data"))
 
     print(chalk.green(f"input data {input_data}"))
@@ -309,10 +309,10 @@ def parse_filename_generator(basedir):
         print(chalk.green(f"(parse_filename_generator) Error {e}"))
 
 #TESTING parse_filename_generator
-LTR_EBAY_ROOT = os.path.join(LTR_ROOT_DIR,'EBAY')
-for res in parse_filename_generator(LTR_EBAY_ROOT):
-    # print(f"{res} \n --------------")
-    pass
+# LTR_EBAY_ROOT = os.path.join(LTR_ROOT_DIR,'EBAY')
+# for res in parse_filename_generator(LTR_EBAY_ROOT):
+#     # print(f"{res} \n --------------")
+#     pass
 
 
 
@@ -368,12 +368,12 @@ def LTR_insertion_driver(cur,conn):
             if listing_type == "SOLD":
                 # print(res["filename_tokens"]
                 # print(chalk.green(f"listing type is SOLD - inserting to SOLD table"))
-                insert_sold_listing_data(cur,conn,curr_filepath,1)
+                insert_sold_listing_data(cur,conn,veh,curr_filepath,1)
                 pass
             elif listing_type == "CURR":
                 # pass
                 # print(chalk.green(f"listing type is CURR - inserting to CURR table"))
-                # insert_current_listing_data(cur,conn,curr_filepath,1)
+                # insert_current_listing_data(cur,conn,veh,curr_filepath,1)
                 pass
     except Exception as e:
             print(chalk.red(f"Error {e}"))

@@ -1,2 +1,1 @@
 Year,Make,Model,Price,DateSold
-2005,NISSAN,ALTIMA,6993,2024-01-24
