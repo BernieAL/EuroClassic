@@ -140,10 +140,14 @@ def insert_sold_listing_data(cur,conn,input_data,flag=0):
 
 
     print(chalk.green(f"input data {input_data}"))
-    print(os.path.isfile(input_data))
-    try:
+    
+    try:    
+        if os.path.isfile(input_data) == False:
+            raise Exception(chalk.red(f"FILE NOT ACCESSIBLE - CHECK FILE PATH {input_data} "))
+            
         #if flag == 1, being called from LTS process
         if flag == 1:
+            
             #call clean_sold_data and pass input file path, recieve file path of newly created cleaned data
             LTR_created_file_path = clean_ebay_data.clean_data_EBAY_SOLD(veh,input_data,1)
 
@@ -268,47 +272,47 @@ def parse_filename_generator(basedir):
         
     """
 
-    skip_dirs = {'EBAY/SOLD/CLEANED','EBAY/CURR/CLEANED'}
     try:
-        # max_files = 10
-        # file_count = 0
-        
+    
+        #basedir 
         for root,dirs,files in os.walk(basedir):
+            print(chalk.green(f"BASEDIR:: {basedir}"))
             
-            #modify dirs in place to skip specific dirs
-            #return list of dirs that are not found in skip dirs
-            #dirs[:] is slice operation that refers to all element of the list
-            dirs[:] = [d for d in dirs if d not in skip_dirs]
-            for dir in dirs:
+            for dir in dirs: #SOLD, CURR, CURR/CLEANED SOLD/CLEANED
+                #SKIP CURR/CLEANED and SOLD/CLEANED to not process already-cleaned files
+                print(chalk.yellow(dir))
+                
+                if dir == "CLEANED": 
+                    print(chalk.yellow(f"SKIPPING DIR: {os.path.join(root,dir)}"))
 
                 subdir_path = os.path.join(root,dir)
+                # print(chalk.red(f"ENTERING SUBDIR PATH::  {subdir_path}"))
+                
                 for subdir_root,subdir_dirs, subdir_files in os.walk(subdir_path):
                     for file in subdir_files:
                         # print(os.path.join(subdir_root,file))
-                
+                    
                         #full path of curr file from root
-                        filepath = os.path.join(root,file)
+                        filepath = os.path.join(subdir_root,file)
+                        # print(filepath)
                         filename_tokens = tokenize_filename(file) #listing_type,make,model,scrape_date
-                        # print(filename_tokens)
+                        # print(chalk.red(f"(parse_filename_gen)file_name_tokens - {filename_tokens}"))
                         if filename_tokens:
                             #yield parsed file and original file path - original file path will be needed in db insertion function
                             yield {
                                     "filename_tokens":filename_tokens,
                                     "filepath": filepath
                                 } 
-                
-            #     # file_count +=1
-            #     # if file_count == 10:
-            #     #     return
+
 
     except Exception as e:
         print(chalk.green(f"(parse_filename_generator) Error {e}"))
 
 #TESTING parse_filename_generator
-# LTR_EBAY_ROOT = os.path.join(LTR_ROOT_DIR,'EBAY')
-# for res in parse_filename_generator(LTR_EBAY_ROOT):
-#     print(f"{res} \n --------------")
-
+LTR_EBAY_ROOT = os.path.join(LTR_ROOT_DIR,'EBAY')
+for res in parse_filename_generator(LTR_EBAY_ROOT):
+    # print(f"{res} \n --------------")
+    pass
 
 
 
@@ -343,18 +347,18 @@ def LTR_insertion_driver(cur,conn):
         for res in parse_filename_generator(LTR_EBAY_ROOT):
 
             listing_type,make,model,scrape_date = res["filename_tokens"]
-            
             curr_filepath = res["filepath"]
             # print(res["filename_tokens"])
             # print(f"curr_filepath {curr_filepath}")
 
-            
+           
             veh = {
                      "year":0000,
                      "make":make,
                      "model": model,
                      "scrape_date":scrape_date
                   }
+            # print(veh)
 
             #insert parsed filename as new entry in vehdir table
             # insert_new_scraped_veh_VEH_DIR(cur,conn,veh)
@@ -362,14 +366,15 @@ def LTR_insertion_driver(cur,conn):
 
             #insert file data into to corresponding table
             if listing_type == "SOLD":
-                # print(res["filename_tokens"])
-                pass
+                # print(res["filename_tokens"]
                 # print(chalk.green(f"listing type is SOLD - inserting to SOLD table"))
-                # insert_sold_listing_data(cur,conn,curr_filepath,1)
+                insert_sold_listing_data(cur,conn,curr_filepath,1)
+                pass
             elif listing_type == "CURR":
                 # pass
                 # print(chalk.green(f"listing type is CURR - inserting to CURR table"))
-                insert_current_listing_data(cur,conn,curr_filepath,1)
+                # insert_current_listing_data(cur,conn,curr_filepath,1)
+                pass
     except Exception as e:
             print(chalk.red(f"Error {e}"))
 
@@ -447,10 +452,10 @@ def insertion_check(cur,table):
         sql = f"SELECT * FROM {table}"
         cur.execute(sql)
         rows = cur.fetchall()
-        print(chalk.green(f"BEGIN RESULTS FOR ${table}"))
+        print(chalk.green(f"BEGIN RESULTS FOR {table}"))
         for row in rows:
             print(row)
-        print(chalk.green(f"END RESULTS FOR ${table}"))
+        print(chalk.green(f"END RESULTS FOR {table}"))
 
     except(Exception,psycopg2.DatabaseError) as e:
         print(chalk.red(f"COULDNT RETRIEVE RECORDS FOR {table} - error: {e}"))
@@ -500,7 +505,7 @@ if __name__ == '__main__':
     # insert_current_listing_data(cur,conn,TEST_prev_CURR_file,1)
 
 
-    # LTR_insertion_driver(cur,conn)
+    LTR_insertion_driver(cur,conn)
 
     #insertion check of tables
     # insertion_check(cur,"VEHICLES")
