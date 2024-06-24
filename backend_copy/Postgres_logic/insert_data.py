@@ -138,13 +138,14 @@ def insert_new_scraped_veh_VEH_DIR(cur,conn,veh):
 def insert_sold_listing_data(cur,conn,veh,input_data,flag=0):
     print(chalk.green(":::Starting insert_sold_data"))
 
-
-    print(chalk.green(f"input data {input_data}"))
-    
+    print(input_data)
+    # print(chalk.green(f"(insert_sold_listing_data) {os.path.isfile(input_data)}"))
+    # print(chalk.green(f"input data {input_data}"))
+ 
     try:    
         if os.path.isfile(input_data) == False:
             raise Exception(chalk.red(f"FILE NOT ACCESSIBLE - CHECK FILE PATH {input_data} "))
-            
+        print(chalk.yellow(f"(insert_sold_listing_data){veh}"))
         #if flag == 1, being called from LTS process
         if flag == 1:
             
@@ -261,6 +262,28 @@ def tokenize_filename(filename):
         print(chalk.green(f"(tokenize_filename) Error tokenizing {filename}"))
 
 
+def skip_dir(path,basedir):
+
+    """
+    Determine whether a given directory path should be skipped.
+
+    Args:
+    path (str): The directory path to check.
+    basedir (str): The base directory path.
+
+    Returns:
+    bool: True if the directory should be skipped, False otherwise.
+    """
+
+    #dirs to be skipped
+    skip_paths = {
+        os.path.join(basedir,"SOLD","CLEANED"),
+        os.path.join(basedir,"CURR","CLEANED")
+    }
+
+    # Check if any of the skip_paths are in the rec'd path arg
+    return path in skip_paths
+
 def parse_filename_generator(basedir):
     """
         WORKS FOR BOTH SOLD AND CURR
@@ -273,28 +296,28 @@ def parse_filename_generator(basedir):
     """
 
     try:
-    
+        print(chalk.red(f"ENTERING PARSE_FILENAME_GENERATOR()::"))
         #basedir 
         for root,dirs,files in os.walk(basedir):
             print(chalk.green(f"BASEDIR:: {basedir}"))
-            
-            for dir in dirs: #SOLD, CURR, CURR/CLEANED SOLD/CLEANED
-                #SKIP CURR/CLEANED and SOLD/CLEANED to not process already-cleaned files
-                print(chalk.yellow(dir))
-                
-                if dir == "CLEANED": 
-                    print(chalk.yellow(f"SKIPPING DIR: {os.path.join(root,dir)}"))
 
-                subdir_path = os.path.join(root,dir)
-                # print(chalk.red(f"ENTERING SUBDIR PATH::  {subdir_path}"))
-                
-                for subdir_root,subdir_dirs, subdir_files in os.walk(subdir_path):
+            #filter our dirs to skip
+            # if dir not in skip_paths, return dir to be added to dirs list
+            dirs[:] = [d for d in dirs if not skip_dir(os.path.join(root,d),basedir)]
+
+            #now traverse modified dirs list with all skip_paths removed - should only be CURR and SOLD left
+            for subdir in dirs:
+               
+                subdir_path = os.path.join(root,subdir)
+                print(chalk.red(f"ENTERING SUBDIR PATH::  {subdir_path}"))
+
+                for subdir_root,subdir_dirs,subdir_files in os.walk(subdir_path):
                     for file in subdir_files:
-                        # print(os.path.join(subdir_root,file))
-                    
+                        # print(f"file: {file}")
                         #full path of curr file from root
                         filepath = os.path.join(subdir_root,file)
-                        # print(filepath)
+                         # print(chalk.red(f"file_path {filepath}"))
+                         # print(os.path.isfile(filepath))
                         filename_tokens = tokenize_filename(file) #listing_type,make,model,scrape_date
                         # print(chalk.red(f"(parse_filename_gen)file_name_tokens - {filename_tokens}"))
                         if filename_tokens:
@@ -303,16 +326,18 @@ def parse_filename_generator(basedir):
                                     "filename_tokens":filename_tokens,
                                     "filepath": filepath
                                 } 
+            
+            
 
 
     except Exception as e:
         print(chalk.green(f"(parse_filename_generator) Error {e}"))
 
-#TESTING parse_filename_generator
+# #TESTING parse_filename_generator
 # LTR_EBAY_ROOT = os.path.join(LTR_ROOT_DIR,'EBAY')
 # for res in parse_filename_generator(LTR_EBAY_ROOT):
-#     # print(f"{res} \n --------------")
-#     pass
+#     print(f"{res} \n --------------")
+
 
 
 
@@ -350,6 +375,7 @@ def LTR_insertion_driver(cur,conn):
             curr_filepath = res["filepath"]
             # print(res["filename_tokens"])
             # print(f"curr_filepath {curr_filepath}")
+            # print(os.path.isfile(curr_filepath))
 
            
             veh = {
@@ -358,7 +384,7 @@ def LTR_insertion_driver(cur,conn):
                      "model": model,
                      "scrape_date":scrape_date
                   }
-            # print(veh)
+            print(veh)
 
             #insert parsed filename as new entry in vehdir table
             # insert_new_scraped_veh_VEH_DIR(cur,conn,veh)
@@ -369,12 +395,12 @@ def LTR_insertion_driver(cur,conn):
                 # print(res["filename_tokens"]
                 # print(chalk.green(f"listing type is SOLD - inserting to SOLD table"))
                 insert_sold_listing_data(cur,conn,veh,curr_filepath,1)
-                pass
-            elif listing_type == "CURR":
-                # pass
-                # print(chalk.green(f"listing type is CURR - inserting to CURR table"))
-                # insert_current_listing_data(cur,conn,veh,curr_filepath,1)
-                pass
+           
+            # elif listing_type == "CURR":
+            #     # pass
+            #     # print(chalk.green(f"listing type is CURR - inserting to CURR table"))
+            #     # insert_current_listing_data(cur,conn,veh,curr_filepath,1)
+            #     # pass
     except Exception as e:
             print(chalk.red(f"Error {e}"))
 

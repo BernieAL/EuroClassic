@@ -168,6 +168,12 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
     
     logger.debug("ENTERED - clean_data_EBAY_SOLD")
     logger.debug("PARAMS REC'D car: %s  raw input file: %s",json.dumps(car),raw_SOLD_LISTINGS_file)
+    
+
+
+    # print(chalk.green(f"(clean_data_EBAY_sold) {os.path.isfile(raw_SOLD_LISTINGS_file)}"))
+    print(chalk.yellow(f"raw_SOLD_LISTINGS_file {raw_SOLD_LISTINGS_file}"))
+    
 
     if flag == 1:
         # print(LTS_DIR_EBAY_ROOT + "\n")
@@ -185,6 +191,7 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
 
         # Create filename of output file to be used
         raw_file_path = Path(raw_SOLD_LISTINGS_file)
+        print(str(raw_file_path))
         
         if "_CLEANED" in str(raw_file_path):
             print(chalk.red(f"file already has '_CLEANED' suffix {raw_file_path}"))
@@ -197,7 +204,7 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
         LTS_clean_output_file_path = EBAY_SOLD_CLEANED_DIR / cleaned_file_name
         print(chalk.green(f"OUTPUT FILE PATH {LTS_clean_output_file_path} "))
         clean_output_file_SOLD_LISTINGS = open(LTS_clean_output_file_path,'w',encoding="utf-8")
-
+        
     try:
         print(chalk.red("(clean_ebay_data) - CLEAN SOLD DATA"))
         
@@ -217,7 +224,7 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
         #line looks like -> 2000 Acura Integra Type R $63966.00 2024-02-12
         for line in raw_data:
 
-            #print(f"raw sold data line: {line}")
+            # print(f"raw sold data line: {line}")
 
             #only process lines that contain the specific model requested.
             if model in line:
@@ -265,7 +272,7 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
 
         col_headers = f"Year,Make,Model,Price,DateSold\n"
         clean_output_file_SOLD_LISTINGS.write(col_headers)
-
+        print(clean_output_array)
         fileWrite(clean_output_array, clean_output_file_SOLD_LISTINGS)
 
         clean_output_file_SOLD_LISTINGS.close()
