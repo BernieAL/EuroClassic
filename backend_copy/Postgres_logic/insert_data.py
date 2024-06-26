@@ -197,43 +197,55 @@ def insert_sold_listing_data(cur,conn,veh,input_data,flag=0):
    -The source of the data doesnt matter so long as it matches the format specified for current vehicle listings -> YEAR,MAKE,MODEL,LISTPRICE
 """
 def insert_current_listing_data(cur,conn,veh,input_data,flag=0):
-    print(chalk.green(":::Starting insert_current_listing_data"))
+    print(chalk.green(":::Starting insert_sold_data"))
 
-    print(chalk.green(f"input data {input_data}"))
-    print(os.path.isfile(input_data))
-
-    #if flag == 1, being called from LTS process
-    if flag == 1:
-        #call clean_curr_data and pass input file path, recieve file path of newly created cleaned data
-        LTR_created_file_path = clean_ebay_data.clean_data_EBAY_CURRENT(veh,input_data,1)
-
-
-        print(chalk.green(f"::: REC'D OUTPUT FILE PATH FOR CLEANED DATA: {LTR_created_file_path}"))
-        print(chalk.green("::: INPUT IS LTR RAW DATA -"))
-        print(chalk.green("::: SENDING FOR CLEANING -"))
-        print(chalk.green("::: CLEANED- "))
-
-        #open ltr/ebay/curr/cleaned/<file_name>
-        clean_output_file_CURRENT_LISTINGS = open(LTR_created_file_path,"r",encoding="utf-8")
-    else:
-        print(chalk.green("::: INPUT IS FRESH SCRAPE - ALREADY CLEANED-"))
-        clean_output_file_CURRENT_LISTINGS = open(clean_CURR_LISTINGS_file,"r",encoding="utf-8")
-
+    # print(input_data)
+    # print(chalk.green(f"(insert_current_listing_data) {os.path.isfile(input_data)}"))
+    # print(chalk.green(f"input data {input_data}"))
+    print(chalk.red(f"(insert_current_listing_data)-{veh} \n ---------"))
     
-    line_reader = csv.reader(clean_output_file_CURRENT_LISTINGS,delimiter=',')
-    next(line_reader)
-    for line in line_reader:  
-        # print(line)
-        line_uppercase = [value.upper() for value in line]
-        try:
-            sql = """
-                INSERT INTO CURRENT_LISTINGS(YEAR,MAKE,MODEL,LISTPRICE)
-                VALUES(%s,%s,%s,%s)
-                """
-            cur.execute(sql,line_uppercase)
-        except (Exception, psycopg2.DatabaseError) as e:
-            print(chalk.red(f"error: {e}"))
+    try:    
+        if os.path.isfile(input_data) == False:
+            raise Exception(chalk.red(f"FILE NOT ACCESSIBLE - CHECK FILE PATH {input_data} "))
+        
+        print(chalk.yellow(f"(insert_current_listing_data){veh}"))
+        #if flag == 1, being called from LTS process
+        if flag == 1:
+            
+            #call clean_sold_data and pass input file path, recieve file path of newly created cleaned data
+            LTR_created_file_path = clean_ebay_data.clean_data_EBAY_CURRENT(veh,input_data,1)
 
+            print(chalk.green(f"::: REC'D OUTPUT FILE PATH FOR CLEANED DATA: {LTR_created_file_path}"))
+            print(chalk.green("::: INPUT IS LTR RAW DATA -"))
+            print(chalk.green("::: SENDING FOR CLEANING -"))
+            print(chalk.green("::: CLEANED- "))
+
+            #open ltr/ebay/curr/cleaned/<file_name>
+            clean_output_file_CURRENT_LISTINGS = open(LTR_created_file_path,"r",encoding="utf-8")
+
+        #if flag == 0, being called from fresh scrape process   
+        else:
+            print(chalk.green("::: INPUT IS FRESH SCRAPE - ALREADY CLEANED-"))
+            clean_output_file_CURRENT_LISTINGS = open(clean_SOLD_LISTINGS_file,"r",encoding="utf-8")
+
+        line_reader = csv.reader(clean_output_file_CURRENT_LISTINGS,delimiter=',')
+        # this skips the first line in file which is col names
+        next(line_reader)
+        for line in line_reader:  
+            # print(line)
+            line_uppercase = [value.upper() for value in line]
+            try:
+                sql = """
+                    INSERT INTO CURRENT_LISTINGS(YEAR,MAKE,MODEL,LISTPRICE)
+                    VALUES(%s,%s,%s,%s)
+                    """
+                cur.execute(sql,line_uppercase)
+            except (Exception, psycopg2.DatabaseError) as e:
+                print(chalk.red(f"Error inserting line {line}: {e}"))
+                conn.rollback() #rollback to prevent transaction block errors and continue
+                continue #skip next line
+    except Exception as e:
+        print(chalk.red(f"Failed to read lines from file: {e}"))
     try:
         conn.commit()
         print(chalk.green(":::Successfully inserted all CURRENT_LISTING records into DB"))
@@ -404,14 +416,15 @@ def LTR_insertion_driver(cur,conn):
             if listing_type == "SOLD":
                 # print(res["filename_tokens"]
                 # print(chalk.green(f"listing type is SOLD - inserting to SOLD table"))
-                insert_sold_listing_data(cur,conn,veh,curr_filepath,1)
-                print("\n -------")
+                # insert_sold_listing_data(cur,conn,veh,curr_filepath,1)
+                # print("\n -------")
+                pass
                 
                 
-            # elif listing_type == "CURR":
-            #     # pass
-            #     # print(chalk.green(f"listing type is CURR - inserting to CURR table"))
-            #     # insert_current_listing_data(cur,conn,veh,curr_filepath,1)
+            elif listing_type == "CURR":
+                # pass
+                # print(chalk.green(f"listing type is CURR - inserting to CURR table"))
+                insert_current_listing_data(cur,conn,veh,curr_filepath,1)
             #     # pass
     except Exception as e:
             print(chalk.red(f"Error {e}"))

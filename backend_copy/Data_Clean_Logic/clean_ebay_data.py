@@ -58,110 +58,121 @@ If flag is 1, this function is being called on LTS data (Longterm-storage,prev s
 """
 
 def clean_data_EBAY_CURRENT(car,raw_CURRENT_LISTINGS_file,flag=0):
-
+   
     logger.debug("ENTERED - clean_data_EBAY_CURRENT")
     logger.debug("PARAMS REC'D car: %s  raw input file: %s",json.dumps(car),raw_CURRENT_LISTINGS_file)
     
+
+    
+    # print(chalk.green(f"(clean_data_EBAY_current) {os.path.isfile(raw_CURRENT_LISTINGS_file)}"))
+    print(chalk.yellow(f"raw_CURRENT_LISTINGS_file {raw_CURRENT_LISTINGS_file}"))
+    
+
     if flag == 1:
-       
-        print(LTS_DIR_EBAY_ROOT + "\n")
+        # print(LTS_DIR_EBAY_ROOT + "\n")
         print(chalk.green("FLAG REC'D == 1, DATA IS FROM LTS (PREV SCRAPED)"))
 
         # Create LTS/EBAY/CURR/CLEANED if it doesn't exist
         EBAY_CURR_CLEANED_DIR = Path(LTS_DIR_EBAY_ROOT) / 'CURR' / 'CLEANED'
-        print(chalk.green(f"ebay curr cleaned dir::: {EBAY_CURR_CLEANED_DIR}\n"))
+        #print(chalk.green(chalk.yellow(f"ebay sold cleaned dir::: {EBAY_SOLD_CLEANED_DIR}\n")))
 
         if not EBAY_CURR_CLEANED_DIR.exists():
-            EBAY_CURR_CLEANED_DIR.mkdir(parents=True, exist_ok=True)
+            EBAY_CURR_CLEANED_DIR.mkdir(parents=True,exist_ok=True)
             print(chalk.green(f"Created directory: {EBAY_CURR_CLEANED_DIR}\n"))
         else:
             print(chalk.green(f"DIR EXISTS: {EBAY_CURR_CLEANED_DIR}"))
 
         # Create filename of output file to be used
         raw_file_path = Path(raw_CURRENT_LISTINGS_file)
-        cleaned_file_name = raw_file_path.stem + "_CLEANED" + raw_file_path.suffix
-        
+        print(chalk.green(f"INPUT FILE PATH:::: {raw_file_path} "))
+       
+        if "_CLEANED" in str(raw_file_path):
+            print(chalk.red(f"file already has '_CLEANED' suffix {raw_file_path}"))
+            cleaned_file_name = raw_file_path.name
+        else:
+            print(raw_file_path.stem)
+            cleaned_file_name = raw_file_path.stem + "_CLEANED" + raw_file_path.suffix
+            print(chalk.red(f"adding '_CLEANED' to file {raw_file_path}"))
+
         # Construct the full path for the cleaned file
         LTS_clean_output_file_path = EBAY_CURR_CLEANED_DIR / cleaned_file_name
-        print(chalk.green(f"OUTPUT FILE PATH {LTS_clean_output_file_path} "))
-        clean_output_file_CURRENT_LISTINGS = open(LTS_clean_output_file_path,'w',encoding="utf-8")
-
-    # else:
-    #     #open output file for writing clean data
-    #     clean_output_file_CURRENT_LISTINGS = open(EBAY_clean_OUTPUT_CURRENT_LISTINGS_file, "w", encoding="utf-8")
-           
-    try:
-        print(chalk.red("(clean_ebay_data) - CLEAN CURR DATA"))
+        print(chalk.green(f"OUTPUT FILE PATH:::: {LTS_clean_output_file_path} "))
         
-        #open raw data file
-        raw_input_CURRENT_LISTINGS = open(raw_CURRENT_LISTINGS_file, "r", encoding="utf-8")
-        raw_data = raw_input_CURRENT_LISTINGS
-
-
-        year = car['year']
-        make = car['make']
-        model = car['model']
-        print(make)
-        print(model)
-
-        #for writing cleaned concatenated strings 
-        clean_output_array = []
-
-
-        for line in raw_data:
-            
-            #print(f"raw current data line: {line}")
-            
-            #only process lines that contain the specific model requested.
-            if model in line:
-                #remove all commas in raw line - if any
-                line = line.replace(',', '')
-
-                #find all groups of 4 digits in curr line
-                if re.findall('^\d{4}', line):
-                    try:
-                        #the first in returned group should be the year
-                        year = (re.findall('^\d{4}', line))[0]
-                    except NameError:
-                        #for any reason, year not found, default to 0000
-                        year = 0000
-                        logger.debug("COULD NOT LOCATE YEAR IN LINE - DEFAULTING TO '0000' %s ", line)
-
-
-                #locate the price by locating '$' and ending at decimal point
-                #Ex input = $28000.00 -> output 28000
-                try:
-                    price = (re.findall('\$\d[0-9][0-9].+', line))[0]
-                    if not year:
-                        year = 0000
-                    price = price.replace('$', '')
-                except IndexError as error:
-                    logger.debug("COULD NOT LOCATE PRICE IN LINE %s ", line)
-                    pass
-
-                #concat into single line for to write to csv output file -> 1999,Acura,Integra,28000
-                item_line = f"{year},{make},{model},{price}"
-
-                #append cleaned line to array
-                clean_output_array.append(item_line)
 
 
 
+        
+        # clean_output_file_SOLD_LISTINGS = open(LTS_clean_output_file_path,'w',encoding="utf-8")
+        with open(LTS_clean_output_file_path,'w',encoding="utf-8") as clean_output_file_CURRENT_LISTINGS:   
+            try:
+                print(chalk.red("(clean_ebay_data) - CLEAN CURR DATA"))
+                
+                #open raw data file
+                raw_input_CURRENT_LISTINGS = open(raw_CURRENT_LISTINGS_file, "r", encoding="utf-8")
+                raw_data = raw_input_CURRENT_LISTINGS
 
-        col_headers = f"Year,Make,Model,Price\n"
-        clean_output_file_CURRENT_LISTINGS.write(col_headers)
 
-        fileWrite(clean_output_array, clean_output_file_CURRENT_LISTINGS)
-        logger.debug("WRITING CLEANED CURRENT LISTINGS TO OUTPUT FILE")
+                year = car['year']
+                make = car['make']
+                model = car['model']
+                print(f"(clean_data_EBAY_CURRENT) {make}")
+                print(f"(clean_data_EBAY_CURRENT) {model}")
+                #for writing cleaned concatenated strings 
+                clean_output_array = []
 
-        logger.debug("DATA CLEANING FOR CURRENT_LISTINGS successful")
-        print(chalk.green((":::DATA CLEANING FOR CURRENT_LISTINGS successful")))
-        logger.debug("EXITING - clean_data_EBAY_CURRENT")
-        return LTS_clean_output_file_path
 
-    except Exception as e:
-        logger.debug(f":::Error during data cleaning for CURRENT_LISTINGS: {str(e)}")
-        print(chalk.red(f":::Error during data cleaning for CURRENT_LISTINGS: {str(e)}"))
+                for line in raw_data:
+                    
+                    #print(f"raw current data line: {line}")
+                    
+                    #only process lines that contain the specific model requested.
+                    if model in line:
+                        #remove all commas in raw line - if any
+                        line = line.replace(',', '')
+
+                        #find all groups of 4 digits in curr line
+                        if re.findall('^\d{4}', line):
+                            try:
+                                #the first in returned group should be the year
+                                year = (re.findall('^\d{4}', line))[0]
+                            except NameError:
+                                #for any reason, year not found, default to 0000
+                                year = 0000
+                                logger.debug("COULD NOT LOCATE YEAR IN LINE - DEFAULTING TO '0000' %s ", line)
+
+
+                        #locate the price by locating '$' and ending at decimal point
+                        #Ex input = $28000.00 -> output 28000
+                        try:
+                            price = (re.findall('\$\d[0-9][0-9].+', line))[0]
+                            if not year:
+                                year = 0000
+                            price = price.replace('$', '')
+                        except IndexError as error:
+                            logger.debug("COULD NOT LOCATE PRICE IN LINE %s ", line)
+                            pass
+
+                        #concat into single line for to write to csv output file -> 1999,Acura,Integra,28000
+                        item_line = f"{year},{make},{model},{price}"
+
+                        #append cleaned line to array
+                        clean_output_array.append(item_line)
+
+
+                col_headers = f"Year,Make,Model,Price\n"
+                clean_output_file_CURRENT_LISTINGS.write(col_headers)
+
+                fileWrite(clean_output_array, clean_output_file_CURRENT_LISTINGS)
+                logger.debug("WRITING CLEANED CURRENT LISTINGS TO OUTPUT FILE")
+
+                logger.debug("DATA CLEANING FOR CURRENT_LISTINGS successful")
+                print(chalk.green((":::DATA CLEANING FOR CURRENT_LISTINGS successful")))
+                logger.debug("EXITING - clean_data_EBAY_CURRENT")
+                return LTS_clean_output_file_path
+
+            except Exception as e:
+                logger.debug(f":::Error during data cleaning for CURRENT_LISTINGS: {str(e)}")
+                print(chalk.red(f":::Error during data cleaning for CURRENT_LISTINGS: {str(e)}"))
 
 
 def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
@@ -170,7 +181,7 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
     logger.debug("PARAMS REC'D car: %s  raw input file: %s",json.dumps(car),raw_SOLD_LISTINGS_file)
     
 
-   
+    
     # print(chalk.green(f"(clean_data_EBAY_sold) {os.path.isfile(raw_SOLD_LISTINGS_file)}"))
     print(chalk.yellow(f"raw_SOLD_LISTINGS_file {raw_SOLD_LISTINGS_file}"))
     
