@@ -170,7 +170,7 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
     logger.debug("PARAMS REC'D car: %s  raw input file: %s",json.dumps(car),raw_SOLD_LISTINGS_file)
     
 
-
+   
     # print(chalk.green(f"(clean_data_EBAY_sold) {os.path.isfile(raw_SOLD_LISTINGS_file)}"))
     print(chalk.yellow(f"raw_SOLD_LISTINGS_file {raw_SOLD_LISTINGS_file}"))
     
@@ -191,102 +191,108 @@ def clean_data_EBAY_SOLD(car,raw_SOLD_LISTINGS_file,flag=0):
 
         # Create filename of output file to be used
         raw_file_path = Path(raw_SOLD_LISTINGS_file)
-        print(str(raw_file_path))
-        
+        print(chalk.green(f"INPUT FILE PATH:::: {raw_file_path} "))
+       
         if "_CLEANED" in str(raw_file_path):
             print(chalk.red(f"file already has '_CLEANED' suffix {raw_file_path}"))
-            cleaned_file_name = raw_file_path
+            cleaned_file_name = raw_file_path.name
         else:
+            print(raw_file_path.stem)
             cleaned_file_name = raw_file_path.stem + "_CLEANED" + raw_file_path.suffix
             print(chalk.red(f"adding '_CLEANED' to file {raw_file_path}"))
 
         # Construct the full path for the cleaned file
         LTS_clean_output_file_path = EBAY_SOLD_CLEANED_DIR / cleaned_file_name
-        print(chalk.green(f"OUTPUT FILE PATH {LTS_clean_output_file_path} "))
-        clean_output_file_SOLD_LISTINGS = open(LTS_clean_output_file_path,'w',encoding="utf-8")
+        print(chalk.green(f"OUTPUT FILE PATH:::: {LTS_clean_output_file_path} "))
         
-    try:
-        print(chalk.red("(clean_ebay_data) - CLEAN SOLD DATA"))
+
+
+
         
-        #open output file for writing clean data
-        raw_input_SOLD_LISTINGS = open(raw_SOLD_LISTINGS_file, "r", encoding="utf-8")
-        raw_data = raw_input_SOLD_LISTINGS
-
-        year = car['year']
-        make = car['make']
-        model = car['model']
-        print(make)
-        print(model)
-
-        clean_output_array = []
-        
-        #for each line in raw data
-        #line looks like -> 2000 Acura Integra Type R $63966.00 2024-02-12
-        for line in raw_data:
-
-            # print(f"raw sold data line: {line}")
-
-            #only process lines that contain the specific model requested.
-            if model in line:
-                #remove all commas in raw line - if any
-                line = line.replace(',', '')
+        # clean_output_file_SOLD_LISTINGS = open(LTS_clean_output_file_path,'w',encoding="utf-8")
+        with open(LTS_clean_output_file_path,'w',encoding="utf-8") as clean_output_file_SOLD_LISTINGS:
+            try:
+                print(chalk.red("(clean_ebay_data) - CLEAN SOLD DATA"))
                 
-                #find all groups of 4 digits in curr line
-                if re.findall('^\d{4}', line):
-                    try:
-                        #the first in returned group should be the year
-                        veh_year = (re.findall('^\d{4}', line))[0]
-                    except NameError:
-                        #for any reason, year not found, default to 0000
-                        veh_year = 0000
-                        logger.debug("COULD NOT LOCATE YEAR IN LINE - DEFAULTING TO '0000' %s ", line)
+                #open output file for writing clean data
+                raw_input_SOLD_LISTINGS = open(raw_SOLD_LISTINGS_file, "r", encoding="utf-8")
+                raw_data = raw_input_SOLD_LISTINGS
+
+                year = car['year']
+                make = car['make']
+                model = car['model']
+                print(f"(clean_data_EBAY_SOLD) {make}")
+                print(f"(clean_data_EBAY_SOLD) {model}")
+
+                clean_output_array = []
                 
+                #for each line in raw data
+                #line looks like -> 2000 Acura Integra Type R $63966.00 2024-02-12
+                for line in raw_data:
 
-                #locate the price by locating '$' and ending at decimal point
-                #Ex input = $28000.00 -> output 28000
-                try:
-                    sale_price_match = (re.findall('\$(\d+)\.', line))[0]
-                    if not veh_year:
-                        veh_year = 0000
-                    # print(sale_price_match)
-                
-                except IndexError as error:
-                    logger.debug("COULD NOT LOCATE PRICE IN LINE %s ", line)
-                    pass
-                # print(f"{line}")
-                try:
-                    #extract date from line using pattern dddd-dd-dd , (where d is regex digit)
-                    sale_date_match = (re.findall('\d{4}-\d{2}-\d{2}',line))[0]
-                    
-                    #concat into single line for to write to csv output file -> 1999,Acura,Integra,28000,2024-02-23
-                    item_line = f"{veh_year},{make},{model},{sale_price_match},{sale_date_match}"
-                    # print(item_line)
-                    
-                    #remove any spacing
-                    item_line = item_line.replace(' ', '')
-                    # print(item_line)
-                    clean_output_array.append(item_line)
+                    # print(f"raw sold data line: {line}")
 
-                except IndexError as error:
-                    print(error)
+                    #only process lines that contain the specific model requested.
+                    if model in line:
+                        #remove all commas in raw line - if any
+                        line = line.replace(',', '')
+                        
+                        #find all groups of 4 digits in curr line
+                        if re.findall('^\d{4}', line):
+                            try:
+                                #the first in returned group should be the year
+                                veh_year = (re.findall('^\d{4}', line))[0]
+                            except NameError:
+                                #for any reason, year not found, default to 0000
+                                veh_year = 0000
+                                logger.debug("COULD NOT LOCATE YEAR IN LINE - DEFAULTING TO '0000' %s ", line)
+                        
 
-        col_headers = f"Year,Make,Model,Price,DateSold\n"
-        clean_output_file_SOLD_LISTINGS.write(col_headers)
-        print(clean_output_array)
-        fileWrite(clean_output_array, clean_output_file_SOLD_LISTINGS)
+                        #locate the price by locating '$' and ending at decimal point
+                        #Ex input = $28000.00 -> output 28000
+                        try:
+                            sale_price_match = (re.findall('\$(\d+)\.', line))[0]
+                            if not veh_year:
+                                veh_year = 0000
+                            # print(sale_price_match)
+                        
+                        except IndexError as error:
+                            logger.debug("COULD NOT LOCATE PRICE IN LINE %s ", line)
+                            pass
+                        # print(f"{line}")
+                        try:
+                            #extract date from line using pattern dddd-dd-dd , (where d is regex digit)
+                            sale_date_match = (re.findall('\d{4}-\d{2}-\d{2}',line))[0]
+                            
+                            #concat into single line for to write to csv output file -> 1999,Acura,Integra,28000,2024-02-23
+                            item_line = f"{veh_year},{make},{model},{sale_price_match},{sale_date_match}"
+                            # print(item_line)
+                            
+                            #remove any spacing
+                            item_line = item_line.replace(' ', '')
+                            # print(item_line)
+                            clean_output_array.append(item_line)
 
-        clean_output_file_SOLD_LISTINGS.close()
-        raw_input_SOLD_LISTINGS.close()
+                        except IndexError as error:
+                            print(error)
 
-        logger.debug("WRITING CLEANED SOLD DATA TO OUTPUT FILE")
-        logger.debug("DATA CLEANING FOR SOLD DATA successful")
-        logger.debug("EXITING - clean_data_EBAY_SOLD")
-        print(chalk.green(":::DATA CLEANING FOR SOLD_DATA successful"))
-        return LTS_clean_output_file_path
-    except Exception as e:
-        logger.debug(f":::Error during data cleaning for SOLD_DATA: {str(e)}")
-        print(chalk.red(f":::Error during data cleaning for SOLD_DATA: {str(e)} \n OFFENDING LINE--> {line}"))
-        return e
+                col_headers = f"Year,Make,Model,Price,DateSold\n"
+                clean_output_file_SOLD_LISTINGS.write(col_headers)
+                print(clean_output_array)
+                fileWrite(clean_output_array, clean_output_file_SOLD_LISTINGS)
+
+                # clean_output_file_SOLD_LISTINGS.close()
+                raw_input_SOLD_LISTINGS.close()
+
+                logger.debug("WRITING CLEANED SOLD DATA TO OUTPUT FILE")
+                logger.debug("DATA CLEANING FOR SOLD DATA successful")
+                logger.debug("EXITING - clean_data_EBAY_SOLD")
+                print(chalk.green(":::DATA CLEANING FOR SOLD_DATA successful"))
+                return LTS_clean_output_file_path
+            except Exception as e:
+                logger.debug(f":::Error during data cleaning for SOLD_DATA: {str(e)}")
+                print(chalk.red(f":::Error during data cleaning for SOLD_DATA: {str(e)} \n OFFENDING LINE--> {line}"))
+                return e
 
 
 

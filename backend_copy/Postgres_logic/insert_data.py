@@ -138,13 +138,15 @@ def insert_new_scraped_veh_VEH_DIR(cur,conn,veh):
 def insert_sold_listing_data(cur,conn,veh,input_data,flag=0):
     print(chalk.green(":::Starting insert_sold_data"))
 
-    print(input_data)
+    # print(input_data)
     # print(chalk.green(f"(insert_sold_listing_data) {os.path.isfile(input_data)}"))
     # print(chalk.green(f"input data {input_data}"))
- 
+    print(chalk.red(f"(insert_sold_listing_data)-{veh} \n ---------"))
+    
     try:    
         if os.path.isfile(input_data) == False:
             raise Exception(chalk.red(f"FILE NOT ACCESSIBLE - CHECK FILE PATH {input_data} "))
+        
         print(chalk.yellow(f"(insert_sold_listing_data){veh}"))
         #if flag == 1, being called from LTS process
         if flag == 1:
@@ -254,7 +256,7 @@ def tokenize_filename(filename):
         #tokens[2] is date
         scrape_date = tokens[2]
         
-        #token[3] is "make-model.txt", first strip ".txt" then split at "-" to get make and model
+        #token[3] is "make-model.txt", first strip ".txt" then split at "-" to get make and modelN
         make,model = ((tokens[3].rstrip(".txt")).upper()).split("-")
         # print(f"TEST:{listing_type} {scrape_date} {make} {model}")
         return (listing_type,make,model,scrape_date)
@@ -311,14 +313,22 @@ def parse_filename_generator(basedir):
                 subdir_path = os.path.join(root,subdir)
                 print(chalk.red(f"ENTERING SUBDIR PATH::  {subdir_path}"))
 
+                
                 for subdir_root,subdir_dirs,subdir_files in os.walk(subdir_path):
+                    
+                    subdir_dirs[:] = [d for d in subdir_dirs if not skip_dir(os.path.join(subdir_root, d), basedir)]
+
+
                     for file in subdir_files:
                         # print(f"file: {file}")
                         #full path of curr file from root
                         filepath = os.path.join(subdir_root,file)
+
                          # print(chalk.red(f"file_path {filepath}"))
                          # print(os.path.isfile(filepath))
                         filename_tokens = tokenize_filename(file) #listing_type,make,model,scrape_date
+                        
+                        
                         # print(chalk.red(f"(parse_filename_gen)file_name_tokens - {filename_tokens}"))
                         if filename_tokens:
                             #yield parsed file and original file path - original file path will be needed in db insertion function
@@ -374,7 +384,7 @@ def LTR_insertion_driver(cur,conn):
             listing_type,make,model,scrape_date = res["filename_tokens"]
             curr_filepath = res["filepath"]
             # print(res["filename_tokens"])
-            # print(f"curr_filepath {curr_filepath}")
+            print(f"(LTR_insertion_driver) - curr_filepath {curr_filepath}  \n ")
             # print(os.path.isfile(curr_filepath))
 
            
@@ -384,7 +394,7 @@ def LTR_insertion_driver(cur,conn):
                      "model": model,
                      "scrape_date":scrape_date
                   }
-            print(veh)
+            print(f"(LTR_insertion_driver) -veh -{veh} \n ")
 
             #insert parsed filename as new entry in vehdir table
             # insert_new_scraped_veh_VEH_DIR(cur,conn,veh)
@@ -395,7 +405,9 @@ def LTR_insertion_driver(cur,conn):
                 # print(res["filename_tokens"]
                 # print(chalk.green(f"listing type is SOLD - inserting to SOLD table"))
                 insert_sold_listing_data(cur,conn,veh,curr_filepath,1)
-           
+                print("\n -------")
+                
+                
             # elif listing_type == "CURR":
             #     # pass
             #     # print(chalk.green(f"listing type is CURR - inserting to CURR table"))
