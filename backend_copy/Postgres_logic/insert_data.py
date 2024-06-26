@@ -15,6 +15,7 @@ import csv
 #from dotenv import load_dotenv,find_dotenv
 from simple_chalk import chalk
 from datetime import date,datetime
+import logging
 
 #get parent dir 'backend_copy' from current script dir - append to sys.path to be searched for modules we import
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -56,7 +57,16 @@ LTR_ROOT_DIR = os.path.join(PROJ_ROOT,'LongTerm_prev_scrapes')
 # clean_output_file_CURRENT_LISTINGS_file_path = os.path.join(postgres_dir,'..','Dummy_data_generator/current_listings_dummy.csv')
 # print('SOLD_DATA FILE PATH'  + clean_output_file_CURRENT_LISTINGS_file_path)
 
+# get path to central logging file, and pass into config
+api_log_file_path = os.path.join(os.path.dirname(__file__),'..','api_log.txt')
 
+# custom logger to avoid interacting with selenium using debug level wire
+logger = logging.getLogger('CLEAN_EBAY_SCRIPT')
+logger.setLevel(logging.DEBUG)
+fh = logging.FileHandler(api_log_file_path)
+formatter = logging.Formatter('%(asctime)s - CLEAN_EBAY_DATA -  %(message)s')
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
 """
 NO LONGER NEEDED - VEH DIR TABLE POPULATED THROUGH CONT_B_ENTRYPOINT.sh
@@ -181,7 +191,11 @@ def insert_sold_listing_data(cur,conn,veh,input_data,flag=0):
                     """
                 cur.execute(sql,line_uppercase)
             except (Exception, psycopg2.DatabaseError) as e:
-                print(f"error: {e} {line}")
+                print(chalk.red(f"Error inserting line {line}: {e}"))
+                print(chalk.red("SKIPPING PROBLEM LINE"))
+                logger.debug("(insert_sold_listing_data) SKIPPING PROBLEM LINE - line: {line} - Error {e} from file: {input_data}")
+                conn.rollback() #rollback to prevent transaction block errors and continue
+                continue #skip next line
     except Exception as e:
         print(chalk.red(f"Failed to read lines from file: {e}"))
     try:
@@ -242,6 +256,8 @@ def insert_current_listing_data(cur,conn,veh,input_data,flag=0):
                 cur.execute(sql,line_uppercase)
             except (Exception, psycopg2.DatabaseError) as e:
                 print(chalk.red(f"Error inserting line {line}: {e}"))
+                print(chalk.red("SKIPPING PROBLEM LINE"))
+                logger.debug("(insert_current_listing_data) SKIPPING PROBLEM LINE - line: {line} - Error {e} from file: {input_data}")
                 conn.rollback() #rollback to prevent transaction block errors and continue
                 continue #skip next line
     except Exception as e:
@@ -416,9 +432,9 @@ def LTR_insertion_driver(cur,conn):
             if listing_type == "SOLD":
                 # print(res["filename_tokens"]
                 # print(chalk.green(f"listing type is SOLD - inserting to SOLD table"))
-                # insert_sold_listing_data(cur,conn,veh,curr_filepath,1)
+                insert_sold_listing_data(cur,conn,veh,curr_filepath,1)
                 # print("\n -------")
-                pass
+                
                 
                 
             elif listing_type == "CURR":
