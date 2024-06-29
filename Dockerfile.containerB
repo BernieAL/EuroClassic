@@ -11,7 +11,7 @@ COPY backend_copy/templates /backend_copy/templates
 COPY backend_copy/static /backend_copy/static
 
 
-COPY /backend_copy/.env.docker /backend_copy/.env.docker
+COPY backend_copy/.env.docker /backend_copy/.env.docker
 
 COPY backend_copy/forms.py /backend_copy/forms.py
 COPY backend_copy/app_main_runner.py /backend_copy/app_main_runner.py

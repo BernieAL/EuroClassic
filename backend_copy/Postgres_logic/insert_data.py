@@ -425,7 +425,7 @@ def LTR_insertion_driver(cur,conn):
             print(f"(LTR_insertion_driver) -veh -{veh} \n ")
 
             #insert parsed filename as new entry in vehdir table
-            # insert_new_scraped_veh_VEH_DIR(cur,conn,veh)
+            insert_new_scraped_veh_VEH_DIR(cur,conn,veh)
 
 
             #insert file data into to corresponding table

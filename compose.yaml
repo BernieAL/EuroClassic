@@ -19,22 +19,22 @@ services:
       environment:
         - RUNNING_IN_DOCKER=1
 
-    # container_rbmq:
-    #   hostname: rbmq
-    #   container_name: rbmq
-    #   build:
-    #     context: ./
-    #     dockerfile: Dockerfile.container_rbmq
-    #   ports: 
-    #       - "15672:15672"
-    #   networks:
-    #     - my-network
-    #   stdin_open: true
-    #   tty: true
-    #   env_file:
-    #     - .env.docker
-    #   environment:
-    #     - RUNNING_IN_DOCKER=1
+    container_rbmq:
+      hostname: rbmq
+      container_name: rbmq
+      build:
+        context: ./
+        dockerfile: Dockerfile.container_rbmq
+      ports: 
+          - "15672:15672"
+      networks:
+        - my-network
+      stdin_open: true
+      tty: true
+      env_file:
+        - backend_copy/.env.docker
+      environment:
+        - RUNNING_IN_DOCKER=1
 
     container_b: 
       container_name: container_b
@@ -55,87 +55,58 @@ services:
       environment:
         - RUNNING_IN_DOCKER=1
 
-    # nginx:
-    #   hostname: nginx
-    #   container_name: nginx
-    #   build: 
-    #       context: ./
-    #       dockerfile: Dockerfile.container_react_nginx
-    #   ports:
-    #     - "3000:80"
-    #     - "3443:443"
-    #   networks:
-    #     - my-network
-    #   env_file:
-    #    - .env.docker
-    #   environment:
-    #    - RUNNING_IN_DOCKER=1
+    nginx:
+      hostname: nginx
+      container_name: nginx
+      build: 
+          context: ./
+          dockerfile: Dockerfile.container_react_nginx
+      ports:
+        - "3000:80"
+        - "3443:443"
+      networks:
+        - my-network
+      env_file:
+        - backend_copy/.env.docker
+      environment:
+        - RUNNING_IN_DOCKER=1
 
-    # scrape_worker:
-    #   hostname: scrape_worker
-    #   container_name: scrape_worker
-    #   build:
-    #       context: ./
-    #       dockerfile: Dockerfile.container_scrape_worker
-    #   depends_on:
-    #     - container_rbmq
-    #   networks:
-    #     - my-network
-    #   restart: on-failure
-    #   tty: true
-    #   stdin_open: true
-    #   env_file:
-    #     - .env.docker
-    #   environment:
-    #     - RUNNING_IN_DOCKER=1
+    scrape_worker:
+      hostname: scrape_worker
+      container_name: scrape_worker
+      build:
+          context: ./
+          dockerfile: Dockerfile.container_scrape_worker
+      depends_on:
+        - container_rbmq
+      networks:
+        - my-network
+      restart: on-failure
+      tty: true
+      stdin_open: true
+      env_file:
+        - backend_copy/.env.docker
+      environment:
+        - RUNNING_IN_DOCKER=1
 
-    # email_worker:
-    #   hostname: email_worker
-    #   container_name: email_worker
-    #   build:
-    #       context: ./
-    #       dockerfile: Dockerfile.container_email_worker
-    #   depends_on:
-    #     - container_rbmq
-    #   networks:
-    #     - my-network
-    #   restart: on-failure
-    #   tty: true
-    #   stdin_open: true
-    #   env_file:
-    #    - .env.docker
-    #   environment:
-    #    - RUNNING_IN_DOCKER=1
+    email_worker:
+      hostname: email_worker
+      container_name: email_worker
+      build:
+          context: ./
+          dockerfile: Dockerfile.container_email_worker
+      depends_on:
+        - container_rbmq
+      networks:
+        - my-network
+      restart: on-failure
+      tty: true
+      stdin_open: true
+      env_file:
+        - backend_copy/.env.docker
+      environment:
+        - RUNNING_IN_DOCKER=1
 
-    # container_api:
-    #   hostname: container_api
-    #   container_name: container_api
-    #   build:
-    #     context: ./
-    #     dockerfile: Dockerfile.container_api
-    #   ports: 
-    #       - "5000:5000"
-    #   networks:
-    #     - my-network
-    #   stdin_open: true
-    #   depends_on: 
-    #     - container_pgsql
-    #   tty: true
-    #   env_file:
-    #     - .env.docker
-    #   environment:
-    #     - RUNNING_IN_DOCKER=1
-
-
-    
-    # nginx:
-    #   hostname: nginx
-    #   container_name: nginx
-    #   build: 
-    #       context: ./
-    #       dockerfile: Dockerfile.container_nginx
-    #   networks:
-    #     - my-network
 
 
 
