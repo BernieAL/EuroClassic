@@ -8,6 +8,7 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 
 # COPY backend_copy/.env /backend_copy/.env
+COPY backend_copy/config.py /backend_copy/config.py
 COPY backend_copy/.env.docker /backend_copy/.env.docker
 COPY backend_copy/.flaskenv /backend_copy/.flaskenv
 

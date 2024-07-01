@@ -124,7 +124,7 @@ def initialize_driver():
             'proxy': {
                 # 'http':'http://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321',
                 # 'https':'https://S9ut1ooaahvD1OLI:DGHQMuozSx9pfIDX_country-us@geo.iproyal.com:12321'
-                'http':PROXY_HTTP
+                'http':PROXY_HTTP,
                 'https':PROXY_HTTPS
                 # 'no_proxy':'localhost,127.0.0.1'
             },

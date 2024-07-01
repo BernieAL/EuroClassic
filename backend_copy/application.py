@@ -20,12 +20,6 @@ import uuid
 # from Analysis_Logic.sold_data_transformation import SOLD_max_and_avg_price_per_veh_year
 
 import psycopg2
-from Postgres_logic.connect import get_db_connection
-from Postgres_logic.insert_data import populate_vehicles_dir_table
-from forms import SearchForm
-
-#from dotenv import load_dotenv,find_dotenv
-#load_dotenv(find_dotenv())
 
 
 
@@ -35,6 +29,16 @@ parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Add the directory to sys.path
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
+    # sys.path.append(os.path.join(parent_dir,"Postgres_logic"))
+
+from Postgres_logic.connect import get_db_connection
+from Postgres_logic.insert_data import populate_vehicles_dir_table
+from forms import SearchForm
+
+#from dotenv import load_dotenv,find_dotenv
+#load_dotenv(find_dotenv())
+
+
 
 from config import DB_URI, APPLICATION_SECRET_KEY
 from RabbitMQ_queues.scrape_producer import add_veh_to_queue

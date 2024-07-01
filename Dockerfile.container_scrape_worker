@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y wget unzip && \
     apt-get clean
 
 COPY backend_copy/requirements.txt /backend_copy/requirements.txt
+COPY backend_copy/config.py /backend_copy/config.py
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 RUN apt-get update && apt-get install -y wget nano
